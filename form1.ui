@@ -314,7 +314,6 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <zorder></zorder>
        </widget>
       </item>
      </layout>

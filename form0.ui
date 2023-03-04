@@ -415,22 +415,6 @@
      </layout>
     </item>
    </layout>
-   <zorder>layoutWidget</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>widget</zorder>
-   <zorder>quit</zorder>
-   <zorder>slider1</zorder>
-   <zorder>slider2</zorder>
-   <zorder>addbeam</zorder>
-   <zorder>radioButton</zorder>
-   <zorder>radioButton_2</zorder>
-   <zorder>radioButton_3</zorder>
-   <zorder>clearbut</zorder>
-   <zorder>verticalSpacer</zorder>
-   <zorder>quit</zorder>
-   <zorder>label_4</zorder>
-   <zorder>header</zorder>
   </widget>
  </widget>
  <customwidgets>
