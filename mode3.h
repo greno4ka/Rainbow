@@ -93,7 +93,7 @@ void draw_mode3()
                 double y1=gy+tan(what_angle(w,1)*PI/180)*(-30);
                 double y2=gy+tan(what_angle(w,2)*PI/180)*(-30);
 
-                WavelengthToRGB(w,&r,&g,&b);
+                wavelengthToRGB(w,&r,&g,&b);
                 glColor3ub(r,g,b);
                 glBegin(GL_LINES);
                 glVertex2f(fxe(gx),fye(gy));
@@ -110,8 +110,8 @@ void draw_mode3()
                 xcut=eyex+rd*cos(Lm.xi()*PI/180);
                 ycut=eyey+rd*sin(Lm.xi()*PI/180);
                 if (Lm.xi()<=what_angle(780,1))
-                    WavelengthToRGB(what_wave(Lm.xi(),1),&r,&g,&b);
-                else WavelengthToRGB(what_wave(Lm.xi(),2),&r,&g,&b);
+                    wavelengthToRGB(what_wave(Lm.xi(),1),&r,&g,&b);
+                else wavelengthToRGB(what_wave(Lm.xi(),2),&r,&g,&b);
                 glBegin(GL_LINES);
                 glColor3ub(255,255,255);
                 glColor3ub(r,g,b);
@@ -130,7 +130,7 @@ void draw_mode3()
                     double y1=gy+tan(what_angle(w,1)*PI/180)*(-30);
                     double y2=gy+tan(what_angle(w,2)*PI/180)*(-30);
 
-                    WavelengthToRGB(w,&r,&g,&b);
+                    wavelengthToRGB(w,&r,&g,&b);
                     glColor3ub(r,g,b);
                     glBegin(GL_LINES);
                     glVertex2f(fxe(gx),fye(gy));

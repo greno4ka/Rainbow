@@ -33,7 +33,7 @@ void draw_beam0(Line Input)
     int r,g,b;    // color of line
     Line Reformed, Rad, Output; // Rad - Radius to the point1 , Output - first-first reflection
 
-    WavelengthToRGB(Input.l(),&r,&g,&b);
+    wavelengthToRGB(Input.l(),&r,&g,&b);
     Input.getpoint0(&x0, &y0);
 
     /// ORIGINAL BEAM
@@ -41,7 +41,7 @@ void draw_beam0(Line Input)
         if(Input.w()==1) glColor3ub(255,255,255);
         else
         {
-            WavelengthToRGB(Input.l(),&r,&g,&b);
+            wavelengthToRGB(Input.l(),&r,&g,&b);
             glColor3ub(r,g,b);
         }
         glVertex2f(0,fy(y0));
@@ -127,7 +127,7 @@ void draw_beam(Line Input)
     bool flag=false;    // if Input distance belongs to [0.9;0.95]
     Line Reformed, Rad, Output; // Rad - Radius to the point1 , Output - first-first reflection
 
-    WavelengthToRGB(Input.l(),&r,&g,&b);
+    wavelengthToRGB(Input.l(),&r,&g,&b);
     // THIS SCENE IS ABSOLUTELY FUCKING STUPID!!!
     // uncomment if want to invert colors
     /// if (mode==4) WavelengthToRGB(invert_wave(Input.l()),&r,&g,&b);
@@ -165,7 +165,7 @@ void draw_beam(Line Input)
         if(Input.w()==1) glColor3ub(255,255,255);
         else
         {
-            WavelengthToRGB(Input.l(),&r,&g,&b);
+            wavelengthToRGB(Input.l(),&r,&g,&b);
             glColor3ub(r,g,b);
         }
         glVertex2f(0,fy(y0));
@@ -173,7 +173,7 @@ void draw_beam(Line Input)
     }
     else if (mode==1 || mode==2 || mode==5)
     {
-        WavelengthToRGB(Input.l(),&r,&g,&b);
+        wavelengthToRGB(Input.l(),&r,&g,&b);
         if(!flag)
         {
             glColor3ub(r,g,b);
