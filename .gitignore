@@ -28,4 +28,5 @@
 *.app
 
 # Qt user settings
+*.user
 *.user*
