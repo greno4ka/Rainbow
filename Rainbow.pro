@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     forms/form1.cpp \
     forms/form2.cpp \
     forms/form3.cpp \
-    forms/form4.cpp
+    forms/form4.cpp \
+    scenes/scene0.cpp
 
 HEADERS  += \
     display.h \
@@ -38,7 +39,8 @@ HEADERS  += \
     forms/form1.h \
     forms/form2.h \
     forms/form3.h \
-    forms/form4.h
+    forms/form4.h \
+    scenes/scene0.h
 
 FORMS    += \
     forms/form0.ui \
