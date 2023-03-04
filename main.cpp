@@ -40,9 +40,14 @@ two=false; // flags for 2nd scene
 
 int main(int argc, char **argv)
 {
-    //mode=atoi(argv[1]);
     QApplication a(argc, argv);
-    mode=1;
+
+    if (argc > 1) {
+        mode=atoi(argv[1]);
+    } else {
+        // Temporary debugging feature
+        mode = 1;
+    }
 
     /// Initialization code here
     switch (mode)
@@ -85,8 +90,7 @@ int main(int argc, char **argv)
     }
 
     QMainWindow *w; // suppose, that using virtual class
-    switch (mode)
-    {
+    switch (mode) {
     case 0: w = new Form0; break;
     case 1: w = new Form1; break;
     case 2: w = new Form2; break;
@@ -101,5 +105,4 @@ int main(int argc, char **argv)
     // this code cuts frame around program
 
     return a.exec();
-    // rnd is free in form3.cpp
 }
