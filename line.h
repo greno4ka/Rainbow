@@ -166,14 +166,14 @@ public:
         double p1 = (-(a*c)+sqrt(D))/(1+a*a); //x1
         double p2 = (-(a*c)-sqrt(D))/(1+a*a); //x2
 
-        if (::abs(p1-x0)>0) *x1=p1;
+        if (std::abs(p1-x0)>0) *x1=p1;
         else *x1=p2;
-        if (::abs(*x1-x0)<0.00001) {
+        if (std::abs(*x1-x0)<0.00001) {
             D=b*b*c*c-(b*b+a*a)*(c*c-a*a*R*R);
             p1 = (-(b*c)+sqrt(D))/(b*b+a*a); //y1
             p2 = (-(b*c)-sqrt(D))/(b*b+a*a); //y2
 
-            if (::abs(p1-y0)>0) *y1=p1;
+            if (std::abs(p1-y0)>0) *y1=p1;
             else *y1=p2;
             *x1=fa(*y1);
         } else *y1=fl(*x1);
@@ -182,7 +182,7 @@ public:
     void getpoint2(double *x2, double *y2, double x1, double y1) {
         double x0,y0;
         getpoint1(&x0, &y0, x1, y1);
-        if (::abs(x1-x0)<0.00001) {
+        if (std::abs(x1-x0)<0.00001) {
             *y2=(y1-y0)*500;
             *x2=fa(*y2);
         } else {

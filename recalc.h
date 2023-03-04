@@ -1,3 +1,6 @@
+#ifndef RECALC_H
+#define RECALC_H
+
 #include <cmath>
 
 extern int X,Y;
@@ -60,3 +63,5 @@ inline double fr4(double r0)
     double Z=min(X/8,Y/4);
     return r0*Z/40;
 }
+
+#endif // RECALC_H

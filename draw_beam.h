@@ -1,10 +1,14 @@
 #ifndef DRAWBEAM_H
 #define DRAWBEAM_H
 
+#include <QOpenGLFunctions>
+
 #include <iostream>
 #include <cstdio>
-#include <GL/glut.h>
+
 #include "wavelength.h"
+#include "line.h"
+#include "recalc.h"
 
 using namespace std;
 
@@ -20,11 +24,6 @@ extern inline double k(double x);
 extern double what_angle(double wave, int var);
 extern int invert_wave(int wave);
 
-void draw_string_bitmap(void *font, const char* string)
-{
-    while (*string)
-        glutBitmapCharacter(font, *string++);
-}
 void draw_beam0(Line Input)
 {
     double p=1,     // GAMMA CORRECTOR of color. For dark beams
@@ -244,7 +243,7 @@ void draw_beam(Line Input)
         }
 /// DRAW REFORMED BEAM
         if(!((z==2) && x2>0)) // x2 - to kill one bug
-            if(!rainbows || z==2 && radio_ch==0 || z==3 && radio_ch==1)
+            if(!rainbows || (z==2 && radio_ch==0) || (z==3 && radio_ch==1))
             {
                 if (mode==0)
                 {
@@ -306,7 +305,8 @@ void draw_beam(Line Input)
                 if (z==3)
                     sprintf(buffer, "%2.2f", what_angle(wl,2));
 
-                        draw_string_bitmap(GLUT_BITMAP_TIMES_ROMAN_24 , buffer);
+                // TODO: print some text here
+
                 done=true;
                 glBegin(GL_TRIANGLE_FAN);
                 double tmp;

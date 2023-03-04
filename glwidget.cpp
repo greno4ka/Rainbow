@@ -1,11 +1,10 @@
 #include "glwidget.h"
 #include "display.h"
-#include <GL/glu.h>
 
 GLWidget::GLWidget(QWidget *parent) :
-    QGLWidget(parent)
+    QOpenGLWidget(parent)
 {
-    connect(&timer, SIGNAL(timeout()), this, SLOT(updateGL()));
+    connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
     if (mode==3)
         timer.start(50);
     else
@@ -28,7 +27,7 @@ void GLWidget::resizeGL(int w, int h){
         glViewport(0,0,w,h);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        gluOrtho2D(0,w,0,h);
+        glOrtho(0.0, (GLdouble) w, 0.0, (GLdouble) h, -1, 1);
 
         glMatrixMode(GL_MODELVIEW);
 }

@@ -1,11 +1,12 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
-#include <QGLWidget>
+#include <QtOpenGL>
+#include <QOpenGLWidget>
 #include <QTimer>
 
 
-class GLWidget : public QGLWidget
+class GLWidget : public QOpenGLWidget
 {
     Q_OBJECT
 public:

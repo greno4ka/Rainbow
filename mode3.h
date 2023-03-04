@@ -1,6 +1,13 @@
+#include <QOpenGLFunctions>
+
 #include <iostream>
 
-FILE *data = NULL;
+#include "line.h"
+#include "recalc.h"
+#include "questions.h"
+#include "draw3sc.h"
+#include "wavelength.h"
+
 extern int
 m3beams, // number of beams to count (but not to draw)
 radio_ch, // choice of RADIO BUTTON
@@ -17,6 +24,7 @@ void draw_mode3()
           man_height=3;       // simply man's height
     Line Ln;
     Ln.get_koefs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
+    FILE *data = NULL;
 
     /// DRAW RAIN
     glColor3ub(200,200,200);

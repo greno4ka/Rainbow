@@ -1,3 +1,6 @@
+#ifndef WAVELENGTH_H
+#define WAVELENGTH_H
+
 #include <cmath>
 
 void WavelengthToRGB(double Wavelength, int *r, int *g, int *b){
@@ -64,3 +67,5 @@ Wavelength=trunc(Wavelength);
     *g=Green;
     *b=Blue;
 }
+
+#endif // WAVELENGTH_H

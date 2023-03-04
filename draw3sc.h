@@ -1,4 +1,9 @@
-#include<GL/gl.h>
+#ifndef DRAW3SC_H
+#define DRAW3SC_H
+
+#include <QOpenGLFunctions>
+
+#include "recalc.h"
 
 extern const double PI;
 
@@ -125,3 +130,5 @@ void draw_man(float xpos, float ypos, float h)
     glVertex2f(fx(xpos-0.42),fy(ypos+1.33));
     glEnd();
 }
+
+#endif // DRAW3SC_H

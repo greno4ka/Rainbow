@@ -7,7 +7,6 @@
 #include "recalc.h"
 #include "line.h"
 #include "draw_beam.h"
-#include "questions.h"
 #include "draw3sc.h"
 #include "mode3.h"
 

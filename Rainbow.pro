@@ -4,9 +4,11 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl
-LIBS += -lglut
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui widgets opengl openglwidgets
+
+win32: LIBS += -lopengl32
+
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 
 TARGET = Rainbow
 TEMPLATE = app
