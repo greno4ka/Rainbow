@@ -14,13 +14,14 @@ TARGET = Rainbow
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        glwidget.cpp \
-    form0.cpp \
-    form1.cpp \
-    form3.cpp \
-    form4.cpp \
-    form2.cpp
+SOURCES += main.cpp \
+    glwidget.cpp \
+    \
+    forms/form0.cpp \
+    forms/form1.cpp \
+    forms/form2.cpp \
+    forms/form3.cpp \
+    forms/form4.cpp
 
 HEADERS  += \
     display.h \
@@ -32,15 +33,16 @@ HEADERS  += \
     mode3.h \
     draw3sc.h \
     wavelength.h \
-    form0.h \
-    form1.h \
-    form3.h \
-    form4.h \
-    form2.h
+    \
+    forms/form0.h \
+    forms/form1.h \
+    forms/form2.h \
+    forms/form3.h \
+    forms/form4.h
 
 FORMS    += \
-    form0.ui \
-    form1.ui \
-    form3.ui \
-    form4.ui \
-    form2.ui
+    forms/form0.ui \
+    forms/form1.ui \
+    forms/form2.ui \
+    forms/form3.ui \
+    forms/form4.ui

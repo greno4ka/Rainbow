@@ -4,11 +4,11 @@
 #include <iostream>
 #include <ctime>
 #include "line.h"
-#include "form0.h"
-#include "form1.h"
-#include "form2.h"
-#include "form3.h"
-#include "form4.h"
+#include "forms/form0.h"
+#include "forms/form1.h"
+#include "forms/form2.h"
+#include "forms/form3.h"
+#include "forms/form4.h"
 
 using namespace std;
 typedef QList<Line> Lst;    // in usual C++ using List
