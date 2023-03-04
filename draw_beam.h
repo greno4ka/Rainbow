@@ -317,12 +317,12 @@ void draw_beam(Line Input)
                 do
                 {
                     glVertex2f(tmp+fre(1)*cos(a),fye(oy)+fre(1)*sin(a));
-                    a=a*180/PI;
+                    a=a*180/M_PI;
                     a=a+0.05;
 //        cout << a << endl;
-                    a=a*PI/180;
+                    a=a*M_PI/180;
                 }
-                while (a*180/PI<=what_angle(wl,z-1)-0.01);
+                while (a*180/M_PI<=what_angle(wl,z-1)-0.01);
                 glEnd();
             }
 

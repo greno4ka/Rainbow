@@ -16,6 +16,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     glwidget.cpp \
+    line.cpp \
     \
     forms/form0.cpp \
     forms/form1.cpp \
