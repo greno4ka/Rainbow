@@ -23,6 +23,7 @@ SOURCES += main.cpp \
     forms/form2.cpp \
     forms/form3.cpp \
     forms/form4.cpp \
+    mainwindow.cpp \
     scenes/scene0.cpp
 
 HEADERS  += \
@@ -30,6 +31,7 @@ HEADERS  += \
     glwidget.h \
     line.h \
     draw_beam.h \
+    mainwindow.h \
     recalc.h \
     questions.h \
     mode3.h \
@@ -48,4 +50,5 @@ FORMS    += \
     forms/form1.ui \
     forms/form2.ui \
     forms/form3.ui \
-    forms/form4.ui
+    forms/form4.ui \
+    mainwindow.ui

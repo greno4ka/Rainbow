@@ -10,6 +10,8 @@
 #include "forms/form3.h"
 #include "forms/form4.h"
 
+#include "mainwindow.h"
+
 using namespace std;
 typedef QList<Line> Lst;    // in usual C++ using List
 Lst Beams;                  // STL list of our beams
@@ -97,9 +99,13 @@ int main(int argc, char **argv)
     case 3: w = new Form3; break;
     case 4: w = new Form4; break;
     }
-    w->setWindowFlags(Qt::FramelessWindowHint);
+
+    MainWindow m;
+    m.show();
+
+    //w->setWindowFlags(Qt::FramelessWindowHint);
     w->show();
-    w->showFullScreen();
+    // w->showFullScreen();
     w->centralWidget()->layout()->setContentsMargins(1,1,1,1);
     // 1,1,1,1 because somewhere 0,0,0,0 doesn't work
     // this code cuts frame around program
