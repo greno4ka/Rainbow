@@ -4,7 +4,7 @@
 #include <QOpenGLFunctions>
 #include <QList>
 
-#include "line.h"
+#include "beam.h"
 
 class Scene0
 {
@@ -19,7 +19,7 @@ public:
     int N,
     radio_ch;
 
-    typedef QList<Line> Lst;
+    typedef QList<Beam> Lst;
     Lst Beams;
     double d,wl;
 

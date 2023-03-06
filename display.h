@@ -5,13 +5,13 @@
 #include <list>
 #include <cmath>
 #include "recalc.h"
-#include "line.h"
+#include "beam.h"
 #include "draw_beam.h"
 #include "draw3sc.h"
 #include "mode3.h"
 
 const double PI=3.14159265359;     // We have our own PI
-typedef QList<Line> Lst;           // in usual C++ using List
+typedef QList<Beam> Lst;           // in usual C++ using List
 extern Lst Beams;                  // STL list of our beams
 extern int mode,                   // get mode from main.cpp
        angle,N,                // angle-flag and N - number of refractions

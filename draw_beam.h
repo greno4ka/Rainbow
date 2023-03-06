@@ -7,7 +7,7 @@
 #include <cstdio>
 
 #include "wavelength.h"
-#include "line.h"
+#include "beam.h"
 #include "recalc.h"
 
 using namespace std;
@@ -22,18 +22,17 @@ extern double wl;
 extern bool done;
 extern inline double k(double x);
 extern double what_angle(double wave, int var);
-extern int invert_wave(int wave);
 
-void draw_beam0(Line Input)
+void draw_beam0(Beam Input)
 {
     double p=1,     // GAMMA CORRECTOR of color. For dark beams
            x0,y0, // point0
            x1,y1, // point1
            x2,y2; // point2 - external (for reformed)
     int r,g,b;    // color of line
-    Line Reformed, Rad, Output; // Rad - Radius to the point1 , Output - first-first reflection
+    Beam Reformed, Rad, Output; // Rad - Radius to the point1 , Output - first-first reflection
 
-    wavelengthToRGB(Input.l(),&r,&g,&b);
+    wavelengthToRGB(Input.getWL(),&r,&g,&b);
     Input.getpoint0(&x0, &y0);
 
     /// ORIGINAL BEAM
@@ -41,7 +40,7 @@ void draw_beam0(Line Input)
         if(Input.w()==1) glColor3ub(255,255,255);
         else
         {
-            wavelengthToRGB(Input.l(),&r,&g,&b);
+            wavelengthToRGB(Input.getWL(),&r,&g,&b);
             glColor3ub(r,g,b);
         }
         glVertex2f(0,fy(y0));
@@ -52,7 +51,7 @@ void draw_beam0(Line Input)
     {
 // First reflection code
 // ONLY IN 0 SCENE
-        Rad.get_koefs(x0,y0,0,0);
+        Rad.calculateKoeffs(x0,y0,0,0);
         Output=Input;
         Output.reflect(Rad);
         Output.getpoint2(&x2,&y2,x0,y0);
@@ -70,7 +69,7 @@ void draw_beam0(Line Input)
 // end
 
         Reformed=Rad; // we're get reformed from radius
-        Reformed.snell(Input,k(Input.l()));
+        Reformed.snell(Input,k(Input.getWL()));
         Input=Reformed;
         glLineWidth(1);
 
@@ -85,10 +84,10 @@ void draw_beam0(Line Input)
     for (int z=1; z<=N; z++)
     {
         p-=0.2;
-        Rad.get_koefs(x1,y1,0,0);
+        Rad.calculateKoeffs(x1,y1,0,0);
 
         Reformed=Rad; // we're get reformed from radius again
-        Reformed.snell(Input,1/k(Input.l())); // 1/k cause goin' from inside out
+        Reformed.snell(Input,1/k(Input.getWL())); // 1/k cause goin' from inside out
         Reformed.getpoint2(&x2,&y2,x1,y1);
 
         glColor3ub(r*p,g*p,b*p);
@@ -117,7 +116,7 @@ void draw_beam0(Line Input)
     }
 }
 
-void draw_beam(Line Input)
+void draw_beam(Beam Input)
 {
     double p,     // GAMMA CORRECTOR of color. For dark beams
            x0,y0, // point0
@@ -125,9 +124,9 @@ void draw_beam(Line Input)
            x2,y2; // point2 - external (for reformed)
     int r,g,b;    // color of line
     bool flag=false;    // if Input distance belongs to [0.9;0.95]
-    Line Reformed, Rad, Output; // Rad - Radius to the point1 , Output - first-first reflection
+    Beam Reformed, Rad, Output; // Rad - Radius to the point1 , Output - first-first reflection
 
-    wavelengthToRGB(Input.l(),&r,&g,&b);
+    wavelengthToRGB(Input.getWL(),&r,&g,&b);
     // THIS SCENE IS ABSOLUTELY FUCKING STUPID!!!
     // uncomment if want to invert colors
     /// if (mode==4) WavelengthToRGB(invert_wave(Input.l()),&r,&g,&b);
@@ -141,7 +140,7 @@ void draw_beam(Line Input)
 
 // First reflection code
 // ONLY IN 0 SCENE
-    Rad.get_koefs(x0,y0,0,0);
+    Rad.calculateKoeffs(x0,y0,0,0);
     Output=Input;
     Output.reflect(Rad);
     Output.getpoint2(&x2,&y2,x0,y0);
@@ -165,7 +164,7 @@ void draw_beam(Line Input)
         if(Input.w()==1) glColor3ub(255,255,255);
         else
         {
-            wavelengthToRGB(Input.l(),&r,&g,&b);
+            wavelengthToRGB(Input.getWL(),&r,&g,&b);
             glColor3ub(r,g,b);
         }
         glVertex2f(0,fy(y0));
@@ -173,7 +172,7 @@ void draw_beam(Line Input)
     }
     else if (mode==1 || mode==2 || mode==5)
     {
-        wavelengthToRGB(Input.l(),&r,&g,&b);
+        wavelengthToRGB(Input.getWL(),&r,&g,&b);
         if(!flag)
         {
             glColor3ub(r,g,b);
@@ -190,7 +189,7 @@ void draw_beam(Line Input)
     glEnd();
 
     Reformed=Rad; // we're get reformed from radius
-    Reformed.snell(Input,k(Input.l()));
+    Reformed.snell(Input,k(Input.getWL()));
     Input=Reformed;
     glLineWidth(1);
 
@@ -207,10 +206,10 @@ void draw_beam(Line Input)
 
         Input.getpoint1(&x1, &y1, x0, y0);
 
-        Rad.get_koefs(x1,y1,0,0);
+        Rad.calculateKoeffs(x1,y1,0,0);
 
         Reformed=Rad; // we're get reformed from radius again
-        Reformed.snell(Input,1/k(Input.l())); // 1/k cause goin' from inside out
+        Reformed.snell(Input,1/k(Input.getWL())); // 1/k cause goin' from inside out
         Reformed.getpoint2(&x2,&y2,x1,y1);
 
         glColor3ub(r*p,g*p,b*p);
@@ -274,9 +273,9 @@ void draw_beam(Line Input)
             }
         glEnd();
         if (mode==2)
-            if ((z==2 && (Reformed.xi()>=what_angle(wl,1)-0.1 && Reformed.xi()<=what_angle(wl,1)+0.1) && done==false && angle) || (z==3 && Reformed.xi()<=what_angle(wl,2)+0.05 && done==false && angle))
+            if ((z==2 && (Reformed.getAngle()>=what_angle(wl,1)-0.1 && Reformed.getAngle()<=what_angle(wl,1)+0.1) && done==false && angle) || (z==3 && Reformed.getAngle()<=what_angle(wl,2)+0.05 && done==false && angle))
             {
-                Line Hor(0,1,14,wl);
+                Beam Hor(0,1,14,wl);
                 double ox,oy;
                 cross_ll(Reformed,Hor,&ox,&oy);
                 glLineWidth(3);

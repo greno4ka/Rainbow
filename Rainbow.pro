@@ -15,8 +15,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
+    beam.cpp \
     glwidget.cpp \
-    line.cpp \
     \
     forms/form0.cpp \
     forms/form1.cpp \
@@ -27,9 +27,9 @@ SOURCES += main.cpp \
     scenes/scene0.cpp
 
 HEADERS  += \
+    beam.h \
     display.h \
     glwidget.h \
-    line.h \
     draw_beam.h \
     mainwindow.h \
     recalc.h \

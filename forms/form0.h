@@ -3,12 +3,12 @@
 
 #include <QMainWindow>
 #include "ui_form0.h"
-#include "line.h"
+#include "beam.h"
 
 extern int N,
 radio_ch;
 
-typedef QList<Line> Lst;
+typedef QList<Beam> Lst;
 extern Lst Beams;
 extern double R,d,wl;
 
@@ -66,7 +66,7 @@ public slots:
     }
 
     void add_beam(){
-        Line Input(0,1,-d*R,wl);
+        Beam Input(0,1,-d*R,wl);
         Beams.push_back (Input);
     }
 

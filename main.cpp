@@ -3,7 +3,7 @@
 #include <QLayout>
 #include <iostream>
 #include <ctime>
-#include "line.h"
+#include "beam.h"
 #include "forms/form0.h"
 #include "forms/form1.h"
 #include "forms/form2.h"
@@ -13,7 +13,7 @@
 #include "mainwindow.h"
 
 using namespace std;
-typedef QList<Line> Lst;    // in usual C++ using List
+typedef QList<Beam> Lst;    // in usual C++ using List
 Lst Beams;                  // STL list of our beams
 
 float *rnd=NULL;            // array for random values in 3rd scene
@@ -60,7 +60,7 @@ int main(int argc, char **argv)
         d=0.86; // good inception with parallel beams
         R=3;
         rainbows=1;
-        Line Input1(0,1,-(d+0.02)*R,wl),
+        Beam Input1(0,1,-(d+0.02)*R,wl),
              Input2(0,1,-(d-0.03)*R,wl);
         Beams.push_back (Input1);
         Beams.push_back (Input2);
@@ -82,7 +82,7 @@ int main(int argc, char **argv)
             {
                 for (int w=400; w<=760; w+=(760-400)/7)
                 {
-                    Line Input(0,1,-r*R,w);
+                    Beam Input(0,1,-r*R,w);
                     Beams.push_back (Input);
                 }
                 r+=0.01;

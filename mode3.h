@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "line.h"
+#include "beam.h"
 #include "recalc.h"
 #include "questions.h"
 #include "draw3sc.h"
@@ -22,7 +22,7 @@ void draw_mode3()
           xpos=-5,ypos=-11, // position of MAN
           eyex,eyey,        // position of eye - counts in draw_man(...)
           man_height=3;       // simply man's height
-    Line Ln;
+    Beam Ln;
     Ln.get_koefs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
     FILE *data = NULL;
 
@@ -56,7 +56,7 @@ void draw_mode3()
     int j=0;
     for (double i=-4; i<5; i+=10.0/m3beams)
     {
-        Line Lc(0,1,i,0),Lm;
+        Beam Lc(0,1,i,0),Lm;
         double gx,gy,rd=40,   // rd - mini radius [pixels]
                      xcut,ycut; // cutted beam
         cross_ll(Ln,Lc,&gx,&gy);

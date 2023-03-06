@@ -1,47 +1,56 @@
-#include "line.h"
+#include "beam.h"
 
-Line::Line () {
+Beam::Beam()
+{
     a=b=c=0;
-    fi=0;
-    lambda=0;
+    phi=0;
+    wavelength=0;
     wh=0;
 }
 
-Line::Line (double x, double y, double z, double l) {
-    a=x;
-    b=y;
-    c=z;
+Beam::Beam(double A, double B, double C, double lambda)
+{
+    a=A;
+    b=B;
+    c=C;
+    wavelength=lambda;
     wh=0;
-    lambda=l;
-    devide();
-    get_angle();
+    normalizeKoeffs();
+    calculateAngle();
 }
 
-double Line::xi() {
-    return fi;
+double Beam::getAngle()
+{
+    return phi;
 }
-double Line::l() {
-    return lambda;
+
+double Beam::getWL()
+{
+    return wavelength;
 }
-double Line::w() {
+
+double Beam::w()
+{
     return wh;
 }
 
-void Line::invertz()
-{ c=-c; }
-
-void Line::white(bool choice)
+void Beam::white(bool choice)
 {
 wh=choice;
 }
 
-void Line::setwl(double wl)
-{lambda=wl;}
+void Beam::setwl(double wl)
+{
+    wavelength=wl;
+}
 
-void Line::setd(double d)
-{c=d;}
+void Beam::setd(double d)
+{
+    c=d;
+}
 
-void Line::devide () {
+void Beam::normalizeKoeffs()
+{
     if (b!=0) {
         a=a/b;
         b=1;
@@ -51,42 +60,42 @@ void Line::devide () {
         b=0;
         c=c/a;
     } else {
-        // impossible case
+        // (a == 0) && (b == 0) is impossible case
     }
 }
 
-void Line::get_angle () {
-    if (a==0 && b==0) {
-        // impossible case
-    }
-    if (a==0)
-        fi=0;
-    else if (b==0)
-        fi=90;
+void Beam::calculateAngle () {
+    if ( a==0 )
+        phi = 0;
+    else if (b == 0)
+        phi = 90;
     else {
-        fi=(atan(-a)*180)/M_PI;
-        if (fi<0) fi+=180;
-        if (fi>180) fi-=180;
+        phi = (atan(-a) * 180)/M_PI;
+        if (phi < 0)
+            phi += 180;
+        if (phi > 180)
+            phi -= 180;
     }
 }
 
-void Line::get_koefs (double x1, double y1, double x2, double y2) {
-    a=y1-y2;
-    b=x2-x1;
-    c=y2*x1-y1*x2;
-    devide();
-    get_angle();
+void Beam::calculateKoeffs (double x1, double y1, double x2, double y2) {
+    a = y1-y2;
+    b = x2-x1;
+    c = y2*x1-y1*x2;
+
+    normalizeKoeffs();
+    calculateAngle();
 }
 
-inline double Line::fl(double x) {
+inline double Beam::fl(double x) {
     return -a*x-c;
 }
 
-inline double Line::fa(double y) {
+inline double Beam::fa(double y) {
     return (b*y+c)/(-a);
 }
 
-void Line::cross_pp (Line B, double x, double y) { // not using, but extremely useful (seems that correct)
+void Beam::cross_pp (Beam B, double x, double y) { // not using, but extremely useful (seems that correct)
     if (B.b==0) {
         a=0;
         b=1;
@@ -96,44 +105,44 @@ void Line::cross_pp (Line B, double x, double y) { // not using, but extremely u
         b=1;
         c=-(a*x+y);
     }
-    get_angle();
+    calculateAngle();
 }
 
-void Line::rotate (Line A, double psi) {
+void Beam::rotate (Beam A, double psi) {
     /// ROTATE LINE ROUND LINE A
     double x,y;
     cross_ll(*this, A, &x, &y);
-    fi+=psi;
-    if (fi==90) {
+    phi+=psi;
+    if (phi==90) {
         a=1;
         b=0;
         c=x;
     } else {
-        double k=tan((fi*M_PI)/180);
+        double k=tan((phi*M_PI)/180);
         double z=y-k*x;
         a=-k;
         b=1;
         c=-z;
     }
-    if (fi<0) fi+=180;
-    if (fi>180) fi-=180;
+    if (phi<0) phi+=180;
+    if (phi>180) phi-=180;
 }
 
-void Line::reflect (Line A) {
-    double psi=A.fi-fi;
+void Beam::reflect (Beam A) {
+    double psi=A.phi-phi;
     this->rotate(A,2*psi);
 }
 
-void Line::snell (Line Input, double k) {
-    double psi=fi-Input.fi;
+void Beam::snell (Beam Input, double k) {
+    double psi=phi-Input.phi;
     if (psi>90) psi-=180;
     if (psi<-90) psi+=180;
     double betta=(asin(sin((psi*M_PI)/180)/k)*180)/M_PI;
     this->rotate(Input,-betta);
-    this->lambda=Input.lambda;
+    this->wavelength=Input.wavelength;
 }
 
-void Line::getpoint0(double *x0, double *y0) {
+void Beam::getpoint0(double *x0, double *y0) {
     double D=a*a*c*c-(1+a*a)*(c*c-R*R);
     double x1 = (-(a*c)+sqrt(D))/(1+a*a);
     double x2 = (-(a*c)-sqrt(D))/(1+a*a);
@@ -143,7 +152,7 @@ void Line::getpoint0(double *x0, double *y0) {
     *y0=fl(*x0);
 }
 
-void Line::getpoint1(double *x1, double *y1, double x0, double y0) {
+void Beam::getpoint1(double *x1, double *y1, double x0, double y0) {
     double D=a*a*c*c-(1+a*a)*(c*c-R*R);
     double p1 = (-(a*c)+sqrt(D))/(1+a*a); //x1
     double p2 = (-(a*c)-sqrt(D))/(1+a*a); //x2
@@ -161,7 +170,7 @@ void Line::getpoint1(double *x1, double *y1, double x0, double y0) {
     } else *y1=fl(*x1);
 }
 
-void Line::getpoint2(double *x2, double *y2, double x1, double y1) {
+void Beam::getpoint2(double *x2, double *y2, double x1, double y1) {
     double x0,y0;
     getpoint1(&x0, &y0, x1, y1);
     if (std::abs(x1-x0)<0.00001) {

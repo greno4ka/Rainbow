@@ -3,9 +3,9 @@
 
 #include <QMainWindow>
 #include "ui_form2.h"
-#include "line.h"
+#include "beam.h"
 
-typedef QList<Line> Lst;
+typedef QList<Beam> Lst;
 extern Lst Beams;
 extern int radio_ch,
 m2beams,
@@ -72,7 +72,7 @@ public slots:
                     //printf("%f\n",h);
                     for (float r=0.01; r<0.99; r+=h)
                     {
-                        Line Input(0,1,-r*R,wl);
+                        Beam Input(0,1,-r*R,wl);
                         if (angle && radio_ch==1)
                         {
                             Input.invertz();

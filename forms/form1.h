@@ -3,12 +3,12 @@
 
 #include <QMainWindow>
 #include "ui_form1.h"
-#include "line.h"
+#include "beam.h"
 
 extern int radio_ch;
 extern double d,wl;
 
-typedef QList<Line> Lst;
+typedef QList<Beam> Lst;
 extern Lst Beams;
 
 namespace Ui {
@@ -23,7 +23,7 @@ private:
     void initializeBeams(double d, double R, double wl)
     {
         Beams.clear();
-        Line Input1(0,1,-(d+0.02)*R,wl),
+        Beam Input1(0,1,-(d+0.02)*R,wl),
              Input2(0,1,-(d-0.03)*R,wl);
         Beams.push_back (Input1);
         Beams.push_back (Input2);
