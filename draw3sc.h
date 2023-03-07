@@ -62,19 +62,6 @@ void draw_man(float xpos, float ypos, float h)
 
     glColor3ub(0,0,0);
     glBegin(GL_POINTS);
-    ///EYE
-    /*
-    glVertex2f(fx(xpos)+5,fy(ypos+h)+4);
-//   glVertex2f(fx(xpos)+5,fy(ypos+h)+3);
-    glVertex2f(fx(xpos)+4,fy(ypos+h)+3);
-    glVertex2f(fx(xpos)+4,fy(ypos+h)+4);
-    glVertex2f(fx(xpos)+6,fy(ypos+h)+4);
-    glVertex2f(fx(xpos)+6,fy(ypos+h)+3);
-    glVertex2f(fx(xpos)+6,fy(ypos+h)+2);
-    glVertex2f(fx(xpos)+5,fy(ypos+h)+2);
-    glVertex2f(fx(xpos)+4,fy(ypos+h)+2);
-    */
-
     ///LEFT SHOULDER
     glVertex2f(fx(xpos-0.72),fy(ypos+h-0.4));
     glVertex2f(fx(xpos-0.72)+1,fy(ypos+h-0.4));

@@ -1,13 +1,10 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-#include <iostream>
-#include <list>
 #include <cmath>
 #include "recalc.h"
 #include "beam.h"
 #include "draw_beam.h"
-#include "draw3sc.h"
 #include "mode3.h"
 
 
