@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-#include "line.h"
+#include "beam.h"
 
 inline double k(double x)
 {
@@ -27,26 +27,26 @@ double what_angle(double wave, int var)
         dir=-1;
         ug=0.96;
     }
-    Line Input(0,1,-dir*ug*R,wave),Reformed, Rad; // Rad - Radius to the point1
+    Beam Input(0,1,-dir*ug*R,wave),Reformed, Rad; // Rad - Radius to the point1
 
     Input.getpoint0(&x0, &y0);
-    Rad.get_koefs(x0,y0,0,0);
+    Rad.calculateKoeffs(x0,y0,0,0);
     Reformed=Rad;                               // we're get reformed from radius
-    Reformed.snell(Input,k(Input.l()));
+    Reformed.snell(Input,k(Input.getWL()));
     Input=Reformed;
 
     Input.getpoint1(&x1, &y1, x0, y0);
-    Rad.get_koefs(x1,y1,0,0);
+    Rad.calculateKoeffs(x1,y1,0,0);
     Input.reflect(Rad);
     x0=x1;
     y0=y1;
 
     Input.getpoint1(&x1, &y1, x0, y0);
-    Rad.get_koefs(x1,y1,0,0);
+    Rad.calculateKoeffs(x1,y1,0,0);
     if (var==1)
     {
         Reformed=Rad;                         // we're get reformed from radius again
-        Reformed.snell(Input,1/k(Input.l())); // 1/k cause goin' from inside out
+        Reformed.snell(Input,1/k(Input.getWL())); // 1/k cause goin' from inside out
         Reformed.getpoint2(&x2,&y2,x1,y1);
     }
     else
@@ -56,12 +56,12 @@ double what_angle(double wave, int var)
         y0=y1;
 
         Input.getpoint1(&x1, &y1, x0, y0);
-        Rad.get_koefs(x1,y1,0,0);
+        Rad.calculateKoeffs(x1,y1,0,0);
         Reformed=Rad;                         // we're get reformed from radius again
-        Reformed.snell(Input,1/k(Input.l())); // 1/k cause goin' from inside out
+        Reformed.snell(Input,1/k(Input.getWL())); // 1/k cause goin' from inside out
         Reformed.getpoint2(&x2,&y2,x1,y1);
     }
-    return Reformed.xi();
+    return Reformed.getAngle();
 }
 
 double func(double wave, double angle, int var)
@@ -79,11 +79,6 @@ double what_wave(double angle, int var)
         b=a-(a-b)*func(a,angle,var)/(func(a,angle,var)-func(b,angle,var));
     }    // a - i-1, b - i-тый члены
     return b;
-}
-
-inline int invert_wave(int wave)
-{
-    return -wave+1160;
 }
 
 #endif // QUESTIONS_H

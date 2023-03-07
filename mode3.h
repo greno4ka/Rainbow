@@ -23,7 +23,7 @@ void draw_mode3()
           eyex,eyey,        // position of eye - counts in draw_man(...)
           man_height=3;       // simply man's height
     Beam Ln;
-    Ln.get_koefs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
+    Ln.calculateKoeffs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
     FILE *data = NULL;
 
     /// DRAW RAIN
@@ -74,7 +74,7 @@ void draw_mode3()
             fclose(data);
         }
         gx+=rnd[j++];
-        Lm.get_koefs(fxe(gx),fye(gy),eyex,eyey);
+        Lm.calculateKoeffs(fxe(gx),fye(gy),eyex,eyey);
         /// ORIGINAL BEAMS
         if (j%3==1) // draw every 3rd original beam
         {
@@ -105,13 +105,13 @@ void draw_mode3()
             draw_floor(ypos);
         }
         if (radio_ch==1)
-            if ((Lm.xi()>=what_angle(380,1) && Lm.xi()<=what_angle(780,1)) || (Lm.xi()>=what_angle(780,2) && Lm.xi()<=what_angle(380,2)))
+            if ((Lm.getAngle()>=what_angle(380,1) && Lm.getAngle()<=what_angle(780,1)) || (Lm.getAngle()>=what_angle(780,2) && Lm.getAngle()<=what_angle(380,2)))
             {
-                xcut=eyex+rd*cos(Lm.xi()*PI/180);
-                ycut=eyey+rd*sin(Lm.xi()*PI/180);
-                if (Lm.xi()<=what_angle(780,1))
-                    wavelengthToRGB(what_wave(Lm.xi(),1),&r,&g,&b);
-                else wavelengthToRGB(what_wave(Lm.xi(),2),&r,&g,&b);
+                xcut=eyex+rd*cos(Lm.getAngle()*PI/180);
+                ycut=eyey+rd*sin(Lm.getAngle()*PI/180);
+                if (Lm.getAngle()<=what_angle(780,1))
+                    wavelengthToRGB(what_wave(Lm.getAngle(),1),&r,&g,&b);
+                else wavelengthToRGB(what_wave(Lm.getAngle(),2),&r,&g,&b);
                 glBegin(GL_LINES);
                 glColor3ub(255,255,255);
                 glColor3ub(r,g,b);
@@ -122,7 +122,7 @@ void draw_mode3()
                 draw_man(xpos,ypos,man_height);
             }
         if (radio_ch==2)
-            if ((Lm.xi()>=what_angle(380,1) && Lm.xi()<=what_angle(780,1)) || (Lm.xi()>=what_angle(780,2) && Lm.xi()<=what_angle(380,2)))
+            if ((Lm.getAngle()>=what_angle(380,1) && Lm.getAngle()<=what_angle(780,1)) || (Lm.getAngle()>=what_angle(780,2) && Lm.getAngle()<=what_angle(380,2)))
             {
                 for (int w=380; w<=780; w+=30)
                 {

@@ -37,13 +37,15 @@ public:
         *x=(A.b*B.c-B.b*A.c)/(A.a*B.b-B.a*A.b);
         *y=(A.c*B.a-B.c*A.a)/(A.a*B.b-B.a*A.b);
     }
-    void cross_pp (Beam B, double x, double y);
+
     void rotate (Beam A, double psi);
     void reflect (Beam A);
     void snell (Beam Input, double k);
     void getpoint0(double *x0, double *y0);
     void getpoint1(double *x1, double *y1, double x0, double y0);
     void getpoint2(double *x2, double *y2, double x1, double y1);
+    void invertz()
+    { c=-c; }
 };
 
 #endif // BEAM_H

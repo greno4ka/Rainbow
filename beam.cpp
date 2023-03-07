@@ -95,19 +95,6 @@ inline double Beam::fa(double y) {
     return (b*y+c)/(-a);
 }
 
-void Beam::cross_pp (Beam B, double x, double y) { // not using, but extremely useful (seems that correct)
-    if (B.b==0) {
-        a=0;
-        b=1;
-        c=-y;
-    } else if (B.a!=0) {
-        a=-1/B.a;
-        b=1;
-        c=-(a*x+y);
-    }
-    calculateAngle();
-}
-
 void Beam::rotate (Beam A, double psi) {
     /// ROTATE LINE ROUND LINE A
     double x,y;
@@ -129,7 +116,7 @@ void Beam::rotate (Beam A, double psi) {
 }
 
 void Beam::reflect (Beam A) {
-    double psi=A.phi-phi;
+    double psi = A.phi - phi;
     this->rotate(A,2*psi);
 }
 
