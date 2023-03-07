@@ -1,6 +1,8 @@
 #ifndef BEAM_H
 #define BEAM_H
 
+#include <QList>
+
 #include <cmath>
 
 extern double R;
@@ -47,5 +49,7 @@ public:
     void invertz()
     { c=-c; }
 };
+
+typedef QList<Beam> Lst;           // in usual C++ using List
 
 #endif // BEAM_H

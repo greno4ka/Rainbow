@@ -5,7 +5,6 @@
 #include "ui_form2.h"
 #include "beam.h"
 
-typedef QList<Beam> Lst;
 extern Lst Beams;
 extern int radio_ch,
 m2beams,

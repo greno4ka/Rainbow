@@ -10,7 +10,7 @@
 #include "draw3sc.h"
 #include "mode3.h"
 
-typedef QList<Beam> Lst;           // in usual C++ using List
+
 extern Lst Beams;                  // STL list of our beams
 extern int mode,                   // get mode from main.cpp
        angle,N,                // angle-flag and N - number of refractions

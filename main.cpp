@@ -13,7 +13,6 @@
 #include "mainwindow.h"
 
 using namespace std;
-typedef QList<Beam> Lst;    // in usual C++ using List
 Lst Beams;                  // STL list of our beams
 
 float *rnd=NULL;            // array for random values in 3rd scene

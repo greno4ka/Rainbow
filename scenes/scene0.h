@@ -2,7 +2,6 @@
 #define SCENE0_H
 
 #include <QOpenGLFunctions>
-#include <QList>
 
 #include "beam.h"
 
@@ -19,7 +18,6 @@ public:
     int N,
     radio_ch;
 
-    typedef QList<Beam> Lst;
     Lst Beams;
     double d,wl;
 

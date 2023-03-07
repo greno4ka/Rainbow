@@ -8,7 +8,6 @@
 extern int radio_ch;
 extern double d,wl;
 
-typedef QList<Beam> Lst;
 extern Lst Beams;
 
 namespace Ui {

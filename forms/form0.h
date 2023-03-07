@@ -8,7 +8,6 @@
 extern int N,
 radio_ch;
 
-typedef QList<Beam> Lst;
 extern Lst Beams;
 extern double R,d,wl;
 
