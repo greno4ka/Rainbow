@@ -10,7 +10,6 @@
 #include "draw3sc.h"
 #include "mode3.h"
 
-const double PI=3.14159265359;     // We have our own PI
 typedef QList<Beam> Lst;           // in usual C++ using List
 extern Lst Beams;                  // STL list of our beams
 extern int mode,                   // get mode from main.cpp
@@ -43,7 +42,7 @@ void draw_drop()
         glVertex2f(fx4(0),fy4(0));
     for(int i=0;i<=50;i++) // this code belongs to Anton Standrik
     {
-        a = (float)i/50.0*PI*2.0;
+        a = (float)i/50.0*M_PI*2.0;
         if (mode==0)
             glVertex2f(fx(0)+fr(R)*cos(a),fy(0)+fr(R)*sin(a));
         else if (mode==1 || mode==2 || mode==5)

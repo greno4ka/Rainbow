@@ -5,15 +5,13 @@
 
 #include "recalc.h"
 
-extern const double PI;
-
 void draw_cloud(float w, float h, float R)
 {
     glColor3ub(100,100,100);
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(fx(15),fy(14));
     for(int i = 0; i <= 50; i++ ) {
-                 double  a=i/50.0*PI*2.0;
+                 double  a=i/50.0*M_PI*2.0;
                    glVertex2f(cos(a)*w*fr(R)+fx(15),sin(a)*h*fr(R)+fy(14));
                }
     glEnd();
@@ -37,7 +35,7 @@ void draw_man(float xpos, float ypos, float h)
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(fx(xpos),fy(ypos+h));
     for(int i = 0; i <= 50; i++ ) {
-                 double  a=i/50.0*PI*2.0;
+                 double  a=i/50.0*M_PI*2.0;
                    glVertex2f(cos(a)*fr(0.4)+fx(xpos),sin(a)*fr(0.4)+fy(ypos+h));
                }
     glEnd();

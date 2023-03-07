@@ -90,8 +90,8 @@ void draw_mode3()
             for (int w=380; w<=780; w+=30)
             {
                 double x=gx-30;
-                double y1=gy+tan(what_angle(w,1)*PI/180)*(-30);
-                double y2=gy+tan(what_angle(w,2)*PI/180)*(-30);
+                double y1=gy+tan(what_angle(w,1)*M_PI/180)*(-30);
+                double y2=gy+tan(what_angle(w,2)*M_PI/180)*(-30);
 
                 wavelengthToRGB(w,&r,&g,&b);
                 glColor3ub(r,g,b);
@@ -107,8 +107,8 @@ void draw_mode3()
         if (radio_ch==1)
             if ((Lm.getAngle()>=what_angle(380,1) && Lm.getAngle()<=what_angle(780,1)) || (Lm.getAngle()>=what_angle(780,2) && Lm.getAngle()<=what_angle(380,2)))
             {
-                xcut=eyex+rd*cos(Lm.getAngle()*PI/180);
-                ycut=eyey+rd*sin(Lm.getAngle()*PI/180);
+                xcut=eyex+rd*cos(Lm.getAngle()*M_PI/180);
+                ycut=eyey+rd*sin(Lm.getAngle()*M_PI/180);
                 if (Lm.getAngle()<=what_angle(780,1))
                     wavelengthToRGB(what_wave(Lm.getAngle(),1),&r,&g,&b);
                 else wavelengthToRGB(what_wave(Lm.getAngle(),2),&r,&g,&b);
@@ -127,8 +127,8 @@ void draw_mode3()
                 for (int w=380; w<=780; w+=30)
                 {
                     double x=gx-30;
-                    double y1=gy+tan(what_angle(w,1)*PI/180)*(-30);
-                    double y2=gy+tan(what_angle(w,2)*PI/180)*(-30);
+                    double y1=gy+tan(what_angle(w,1)*M_PI/180)*(-30);
+                    double y2=gy+tan(what_angle(w,2)*M_PI/180)*(-30);
 
                     wavelengthToRGB(w,&r,&g,&b);
                     glColor3ub(r,g,b);
