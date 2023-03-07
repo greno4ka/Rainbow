@@ -35,3 +35,17 @@ void Scene0::draw_drop()
     }
     glEnd();
 }
+
+void Scene0::draw_axes()
+{
+glColor3ub(255,255,255);
+glEnable(GL_LINE_STIPPLE); // turn on - - - - - -
+glLineStipple(1, 0x1111);  // 1 , 1111 means tiny dashes
+glBegin(GL_LINES);
+    glVertex2f(0,y(0));
+    glVertex2f(X,y(0));
+    glVertex2f(x(0),0);
+    glVertex2f(x(0),Y);
+glEnd();
+glDisable(GL_LINE_STIPPLE); // turn it off
+}

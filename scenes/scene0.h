@@ -22,6 +22,7 @@ public:
     double d,wl;
 
     void draw_drop();
+    void draw_axes();
 
 
     /// Methods of recalculation decart coords to screen coords
