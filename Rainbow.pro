@@ -24,7 +24,8 @@ SOURCES += main.cpp \
     forms/form3.cpp \
     forms/form4.cpp \
     mainwindow.cpp \
-    scenes/scene0.cpp
+    scenes/scene0.cpp \
+    scenes/scene3.cpp
 
 HEADERS  += \
     beam.h \
@@ -43,7 +44,8 @@ HEADERS  += \
     forms/form2.h \
     forms/form3.h \
     forms/form4.h \
-    scenes/scene0.h
+    scenes/scene0.h \
+    scenes/scene3.h
 
 FORMS    += \
     forms/form0.ui \
