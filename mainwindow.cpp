@@ -30,10 +30,10 @@ void MainWindow::on_pushButton_prev_clicked()
 
 void MainWindow::on_pushButton_fullscreen_clicked()
 {
-
+    isFullScreen() ? showNormal() : showFullScreen();
 }
 
 void MainWindow::on_pushButton_close_clicked()
 {
-
+    close();
 }
