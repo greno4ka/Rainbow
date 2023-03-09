@@ -24,7 +24,6 @@ void draw_mode3()
           man_height=3;       // simply man's height
     Beam Ln;
     Ln.calculateKoeffs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
-    FILE *data = NULL;
 
     /// DRAW RAIN
     glColor3ub(200,200,200);
@@ -64,15 +63,7 @@ void draw_mode3()
         if (dynamic)
             for (int i=0; i<m3beams; i++)
                 rnd[i]=(float)(rand()%500)/100;
-        else
-        {
-            data = fopen("r3rand.txt", "r");
-            if (!data)
-                printf("Oh, the file doesn't open\n");
-            for (int i=0; i<m3beams; i++)
-                fscanf(data, "%f\n", &rnd[i]);
-            fclose(data);
-        }
+
         gx+=rnd[j++];
         Lm.calculateKoeffs(fxe(gx),fye(gy),eyex,eyey);
         /// ORIGINAL BEAMS
@@ -87,7 +78,7 @@ void draw_mode3()
         // End of original beams
         if(radio_ch==0)
         {
-            for (int w=380; w<=780; w+=30)
+            for (int w=380; w<=780; w+=60)
             {
                 double x=gx-30;
                 double y1=gy+tan(what_angle(w,1)*M_PI/180)*(-30);

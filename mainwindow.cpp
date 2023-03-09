@@ -37,3 +37,23 @@ void MainWindow::on_pushButton_close_clicked()
 {
     close();
 }
+
+void MainWindow::on_radioButton0_page3_clicked()
+{
+
+}
+
+void MainWindow::on_radioButton1_page3_clicked()
+{
+
+}
+
+void MainWindow::on_radioButton2_page3_clicked()
+{
+
+}
+
+void MainWindow::on_pushButton_startpause_page3_clicked()
+{
+
+}

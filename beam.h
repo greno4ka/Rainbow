@@ -11,6 +11,8 @@ class Beam
 {
     double a,b,c,       // koefficients in equation ax+y+c=0
     phi,                // positive angle of beam line
+                        // it's physical simulation, so we need angle
+                        // only in physical sense, not in mathematical
     wavelength;
     int red,green,blue; // color components of beam
 

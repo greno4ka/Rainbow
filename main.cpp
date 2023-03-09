@@ -105,7 +105,7 @@ int main(int argc, char **argv)
     //w->setWindowFlags(Qt::FramelessWindowHint);
     w->show();
     // w->showFullScreen();
-    w->centralWidget()->layout()->setContentsMargins(1,1,1,1);
+    //w->centralWidget()->layout()->setContentsMargins(1,1,1,1);
     // 1,1,1,1 because somewhere 0,0,0,0 doesn't work
     // this code cuts frame around program
 

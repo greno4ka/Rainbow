@@ -28,6 +28,10 @@ private slots:
     void on_pushButton_close_clicked();
 
 
+    void on_radioButton0_page3_clicked();
+    void on_radioButton1_page3_clicked();
+    void on_radioButton2_page3_clicked();
+    void on_pushButton_startpause_page3_clicked();
 };
 
 #endif // MAINWINDOW_H
