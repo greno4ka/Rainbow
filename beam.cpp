@@ -87,11 +87,11 @@ void Beam::calculateKoeffs (double x1, double y1, double x2, double y2) {
     calculateAngle();
 }
 
-inline double Beam::fl(double x) {
+inline double Beam::fx(double x) {
     return -a*x-c;
 }
 
-inline double Beam::fa(double y) {
+inline double Beam::fy(double y) {
     return (b*y+c)/(-a);
 }
 
@@ -134,9 +134,10 @@ void Beam::getpoint0(double *x0, double *y0) {
     double x1 = (-(a*c)+sqrt(D))/(1+a*a);
     double x2 = (-(a*c)-sqrt(D))/(1+a*a);
 
-    if (x1<x2) *x0=x1;
+    if (x1<x2)
+        *x0=x1;
     else *x0=x2;
-    *y0=fl(*x0);
+        *y0=fx(*x0);
 }
 
 void Beam::getpoint1(double *x1, double *y1, double x0, double y0) {
@@ -153,8 +154,8 @@ void Beam::getpoint1(double *x1, double *y1, double x0, double y0) {
 
         if (std::abs(p1-y0)>0) *y1=p1;
         else *y1=p2;
-        *x1=fa(*y1);
-    } else *y1=fl(*x1);
+        *x1=fy(*y1);
+    } else *y1=fx(*x1);
 }
 
 void Beam::getpoint2(double *x2, double *y2, double x1, double y1) {
@@ -162,9 +163,9 @@ void Beam::getpoint2(double *x2, double *y2, double x1, double y1) {
     getpoint1(&x0, &y0, x1, y1);
     if (std::abs(x1-x0)<0.00001) {
         *y2=(y1-y0)*500;
-        *x2=fa(*y2);
+        *x2=fy(*y2);
     } else {
         *x2=(x1-x0)*500;
-        *y2=fl(*x2);
+        *y2=fx(*x2);
     }
 }

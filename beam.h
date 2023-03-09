@@ -35,8 +35,9 @@ public:
     void calculateAngle();
     void calculateKoeffs(double x1, double y1, double x2, double y2);
 
-    inline double fl(double x);
-    inline double fa(double y);
+    inline double fx(double x); // y=f(x) from ax+by+c=0
+    inline double fy(double y); // x=g(y) from ax+by+c=0
+
     friend void cross_ll (Beam A, Beam B, double *x, double *y) {
         *x=(A.b*B.c-B.b*A.c)/(A.a*B.b-B.a*A.b);
         *y=(A.c*B.a-B.c*A.a)/(A.a*B.b-B.a*A.b);
