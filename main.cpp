@@ -47,7 +47,7 @@ int main(int argc, char **argv)
         mode=atoi(argv[1]);
     } else {
         // Temporary debugging feature
-        mode = 3;
+        mode = 1;
     }
 
     /// Initialization code here

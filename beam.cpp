@@ -130,7 +130,7 @@ void Beam::snell (Beam Input, double k) {
 }
 
 void Beam::getpoint0(double *x0, double *y0) {
-    double D=a*a*c*c-(1+a*a)*(c*c-R*R);
+    double D = a*a*c*c - (1+a*a)*(c*c-R*R);
     double x1 = (-(a*c)+sqrt(D))/(1+a*a);
     double x2 = (-(a*c)-sqrt(D))/(1+a*a);
 
