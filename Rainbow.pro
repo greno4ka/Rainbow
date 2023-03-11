@@ -32,6 +32,7 @@ HEADERS  += \
     display.h \
     glwidget.h \
     draw_beam.h \
+    k.h \
     mainwindow.h \
     recalc.h \
     questions.h \

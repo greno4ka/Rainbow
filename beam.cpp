@@ -1,7 +1,5 @@
 #include "beam.h"
 
-#include <iostream>
-
 Beam::Beam()
 {
     a=b=c=0;

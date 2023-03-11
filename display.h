@@ -100,8 +100,7 @@ void Display()
         if (mode!=2) // mode can be 0,1 or 4
             for (Lst::iterator i=Beams.begin(); i!=Beams.end(); i++)
             {
-                if (mode==0) draw_beam0(*i);
-                else draw_beam(*i);
+                draw_beam(*i);
                 i->calculateInputPoint(&x0, &y0);
             }
 

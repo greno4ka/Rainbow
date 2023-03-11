@@ -1,9 +1,12 @@
 #include "scene0.h"
 
+#include "k.h"
+
 Scene0::Scene0()
 {
     X = 800;
     Y = 600;
+    beamStep = 0;
 }
 
 void Scene0::updateXY(int newX, int newY)
@@ -92,91 +95,104 @@ void Scene0::draw_axes()
 
 void Scene0::draw_beam(Beam beam)
 {
-    double p=1,     // GAMMA CORRECTOR of color. For dark beams
+    double p=1,     // GAMMA CORRECTOR of color. For darkening beams
         x0,y0,      // point0
         x1,y1,      // point1
-        x2,y2;      // point2 - external (for reformed)
-    Beam Reformed,
-        Radius,
-        Reflected;
+        x2,y2;      // point2 - external (for reformed outside)
+    int r,g,b;      // color of beam
+    Beam refracted,
+        radius,
+        reflected;
+
+    // Save original beam color before multiple transformations
+    r = beam.getR();
+    g = beam.getG();
+    b = beam.getB();
 
     beam.calculateInputPoint(&x0, &y0);
+    radius.calculateKoeffs(x0,y0,0,0);
+
+    // Enable antialising
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_BLEND);
 
     /// ORIGINAL BEAM
     // this part should be drawn anyway
-    glColor3ub(beam.getR(),beam.getG(),beam.getB());
+    glColor3ub(r*p,g*p,b*p);
     glBegin(GL_LINES);
     glVertex2f(0,y(y0));
     glVertex2f(x(x0),y(y0));
     glEnd();
 
-//    if(N>=0)
-//    {
-//// First reflection code
-//// ONLY IN 0 SCENE
-//        Radius.calculateKoeffs(x0,y0,0,0);
-//        Reflected=beam;
-//        Reflected.reflect(Radius);
-//        Reflected.calculateInfintyPoint(&x2,&y2,x0,y0);
-//        if (!rainbows)
-//        {
-//            if (beam.w()==true)
-//                glColor3ub(255,255,255);
-//            else
-//                glColor3ub(r,g,b);
-//            glBegin(GL_LINES);
-//            glVertex2f(fx(x0),fy(y0));
-//            glVertex2f(fx(x2),fy(y2));
-//            glEnd();
-//        }
-//// end
+    if (beamStep > 0) {
+        /// FIRST REFLECTION
+        // not shown in rainbows modes
+        p -= 0.1; // low color intensity every beam split
+        if (displayMode == 0) {
+            reflected = beam;
+            reflected.reflect(radius);
+            reflected.calculateInfintyPoint(&x2,&y2,x0,y0);
 
-//        Reformed=Radius; // we're get reformed from radius
-//        Reformed.snell(beam,k(beam.getWL()));
-//        beam=Reformed;
-//        glLineWidth(1);
+            glColor3ub(r*p,g*p,b*p);
+            glBegin(GL_LINES);
+            glVertex2f(x(x0),y(y0));
+            glVertex2f(x(x2),y(y2));
+            glEnd();
+        }
 
-//        beam.calculateOutputPoint(&x1, &y1, x0, y0);
-//        /// DRAW EXACT BEAM
+        /// FIRST REFRACTION
+        refracted = radius; // we're get reformed from radius
+        refracted.snell(beam, k(beam.getWL()));
+        beam = refracted;
+        beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
-//        glBegin(GL_LINES);
-//        glVertex2f(fx(x0),fy(y0));
-//        glVertex2f(fx(x1),fy(y1));
-//        glEnd();
-//    }
-//    for (int z=1; z<=N; z++)
-//    {
-//        p-=0.2;
-//        Radius.calculateKoeffs(x1,y1,0,0);
+        glBegin(GL_LINES);
+        glVertex2f(x(x0),y(y0));
+        glVertex2f(x(x1),y(y1));
+        glEnd();
 
-//        Reformed=Radius; // we're get reformed from radius again
-//        Reformed.snell(beam,1/k(beam.getWL())); // 1/k cause goin' from inside out
-//        Reformed.calculateInfintyPoint(&x2,&y2,x1,y1);
+        for (int stepNumber=1; stepNumber < beamStep; stepNumber++)
+        {
+            /// REFRACTION OUTSIDE
+            radius.calculateKoeffs(x1,y1,0,0);
+            refracted = radius; // we're get reformed from radius again
+            refracted.snell(beam, 1/k(beam.getWL())); // 1/k because beam is going from inside out
+            refracted.calculateInfintyPoint(&x2,&y2,x1,y1);
 
-//        glColor3ub(r*p,g*p,b*p);
-//        glBegin(GL_LINES);
-///// DRAW REFORMED BEAM
-//       // if(!((z==2) && x2>0)) // x2 - to kill one bug
-//            if(!rainbows || (radio_ch==1 && z==2) || (radio_ch==2 && z==3))
-//            {
-//                    glVertex2f(fx(x1),fy(y1));
-//                    glVertex2f(fx(x2),fy(y2));
-//            }
-//        glEnd();
+            p -= 0.1; // low color intensity every beam split
+            if ( (displayMode == 0) ||
+               ( (displayMode == 1) && (stepNumber == 2) ) ||
+               ( (displayMode == 2) && (stepNumber == 3) )
+               ) {
+                glColor3ub(r*p,g*p,b*p);
+                glBegin(GL_LINES);
+                glVertex2f(x(x1),y(y1));
+                glVertex2f(x(x2),y(y2));
+                glEnd();
+            }
 
-//        beam.reflect(Radius);
-//        x0=x1;
-//        y0=y1;
-//        beam.calculateOutputPoint(&x1, &y1, x0, y0);
-//        /// DRAW EXACT BEAM
-//        if(rainbows==0 || !(!rainbows || (radio_ch==1 && z==2) || (radio_ch==2 && z==3)))
-//        {
-//        glBegin(GL_LINES);
-//        glVertex2f(fx(x0),fy(y0));
-//        glVertex2f(fx(x1),fy(y1));
-//        glEnd();
-//        }
-//    }
+            /// REFLECTION INSIDE
+            beam.reflect(radius);
+            x0=x1; y0=y1;
+            beam.calculateOutputPoint(&x1, &y1, x0, y0);
+
+            if ( (displayMode == 0) ||
+               ( (displayMode == 1) && (stepNumber == 1) ) ||
+               ( (displayMode == 2) && (stepNumber <= 2) )
+               ) {
+                glBegin(GL_LINES);
+                glVertex2f(x(x0),y(y0));
+                glVertex2f(x(x1),y(y1));
+                glEnd();
+            }
+        }
+    }
+
+    // Disable antialising
+    glDisable(GL_LINE_SMOOTH);
+    glDisable(GL_BLEND);
 }
 
 void Scene0::display()
