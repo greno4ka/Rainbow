@@ -19,6 +19,9 @@ class Beam
     // TODO: remove
     bool wh;
 
+    constexpr static const double EPS = 0.0000000001;
+    constexpr static const double INF = 10000000000;
+
 public:
     Beam ();
     Beam (double A, double B, double C, double lambda);
@@ -28,7 +31,7 @@ public:
 
     double w();
     void white(bool choice);
-    void setwl(double wl);
+    void setWL(double wl);
     void setd(double d);
 
     void normalizeKoeffs(); // Make more familiar form: y=-a*x-c || x=-c
@@ -46,9 +49,9 @@ public:
     void rotate (Beam A, double psi);
     void reflect (Beam A);
     void snell (Beam Input, double k);
-    void getpoint0(double *x0, double *y0);
-    void getpoint1(double *x1, double *y1, double x0, double y0);
-    void getpoint2(double *x2, double *y2, double x1, double y1);
+    void calculateInputPoint(double *x0, double *y0);
+    void calculateOutputPoint(double *x1, double *y1, double x0, double y0);
+    void calculateInfintyPoint(double *x2, double *y2, double x1, double y1);
     void invertz()
     { c=-c; }
 };

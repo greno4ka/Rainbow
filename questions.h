@@ -39,25 +39,25 @@ double what_angle(double wave, int var)
         Rad; // Rad - Radius to the point1
 
     /// penetration of beam into drop
-    Input.getpoint0(&x0, &y0);
+    Input.calculateInputPoint(&x0, &y0);
     Rad.calculateKoeffs(x0,y0,0,0);
     Reformed=Rad;                               // we're get reformed from radius
     Reformed.snell(Input,k(Input.getWL()));
     Input=Reformed;
 
-    Input.getpoint1(&x1, &y1, x0, y0);
+    Input.calculateOutputPoint(&x1, &y1, x0, y0);
     Rad.calculateKoeffs(x1,y1,0,0);
     Input.reflect(Rad);
     x0=x1;
     y0=y1;
 
-    Input.getpoint1(&x1, &y1, x0, y0);
+    Input.calculateOutputPoint(&x1, &y1, x0, y0);
     Rad.calculateKoeffs(x1,y1,0,0);
     if (var==1)
     {
         Reformed=Rad;                         // we're get reformed from radius again
         Reformed.snell(Input,1/k(Input.getWL())); // 1/k cause goin' from inside out
-        Reformed.getpoint2(&x2,&y2,x1,y1);
+        Reformed.calculateInfintyPoint(&x2,&y2,x1,y1);
     }
     else
     {
@@ -65,11 +65,11 @@ double what_angle(double wave, int var)
         x0=x1;
         y0=y1;
 
-        Input.getpoint1(&x1, &y1, x0, y0);
+        Input.calculateOutputPoint(&x1, &y1, x0, y0);
         Rad.calculateKoeffs(x1,y1,0,0);
         Reformed=Rad;                         // we're get reformed from radius again
         Reformed.snell(Input,1/k(Input.getWL())); // 1/k cause goin' from inside out
-        Reformed.getpoint2(&x2,&y2,x1,y1);
+        Reformed.calculateInfintyPoint(&x2,&y2,x1,y1);
     }
     return Reformed.getAngle();
 }
@@ -87,7 +87,7 @@ double what_wave(double angle, int var)
     {
         a=b-(b-a)*func(b,angle,var)/(func(b,angle,var)-func(a,angle,var));
         b=a-(a-b)*func(a,angle,var)/(func(a,angle,var)-func(b,angle,var));
-    }    // a - i-1, b - i-òûé ÷ëåíû
+    }    // a - i-1, b - i-Ñ‚Ñ‹Ð¹ Ñ‡Ð»ÐµÐ½Ñ‹
     return b;
 }
 

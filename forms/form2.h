@@ -54,14 +54,14 @@ public slots:
         wl=id;
         this->ui->slider1->setValue(id);
         for (Lst::iterator i=Beams.begin(); i!=Beams.end(); i++)
-                        if (i->w()==false) i->setwl(wl);
+                        if (i->w()==false) i->setWL(wl);
     }
     void wave_slider_d(int id)
     {
     wl=id;
     this->ui->spin1->setValue(id);
     for (Lst::iterator i=Beams.begin(); i!=Beams.end(); i++)
-                    if (i->w()==false) i->setwl(wl);
+                    if (i->w()==false) i->setWL(wl);
     }
 
     void add_beams()

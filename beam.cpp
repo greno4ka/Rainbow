@@ -39,7 +39,7 @@ void Beam::white(bool choice)
 wh=choice;
 }
 
-void Beam::setwl(double wl)
+void Beam::setWL(double wl)
 {
     wavelength=wl;
 }
@@ -129,43 +129,53 @@ void Beam::snell (Beam Input, double k) {
     this->wavelength=Input.wavelength;
 }
 
-void Beam::getpoint0(double *x0, double *y0) {
+void Beam::calculateInputPoint(double *x0, double *y0) {
     double D = a*a*c*c - (1+a*a)*(c*c-R*R);
-    double x1 = (-(a*c)+sqrt(D))/(1+a*a);
-    double x2 = (-(a*c)-sqrt(D))/(1+a*a);
+    double p1 = (-(a*c)+sqrt(D))/(1+a*a);
+    double p2 = (-(a*c)-sqrt(D))/(1+a*a);
 
-    if (x1<x2)
-        *x0=x1;
-    else *x0=x2;
-        *y0=fx(*x0);
+    if (p1<p2)
+        *x0=p1;
+    else
+        *x0=p2;
+
+    *y0=fx(*x0);
 }
 
-void Beam::getpoint1(double *x1, double *y1, double x0, double y0) {
-    double D=a*a*c*c-(1+a*a)*(c*c-R*R);
-    double p1 = (-(a*c)+sqrt(D))/(1+a*a); //x1
-    double p2 = (-(a*c)-sqrt(D))/(1+a*a); //x2
+void Beam::calculateOutputPoint(double *x1, double *y1, double x0, double y0) {
+    double D = a*a*c*c - (1+a*a)*(c*c-R*R);
+    double p1 = (-(a*c)+sqrt(D))/(1+a*a);
+    double p2 = (-(a*c)-sqrt(D))/(1+a*a);
 
-    if (std::abs(p1-x0)>0) *x1=p1;
-    else *x1=p2;
-    if (std::abs(*x1-x0)<0.00001) {
-        D=b*b*c*c-(b*b+a*a)*(c*c-a*a*R*R);
+    if (std::abs(p1-x0) < Beam::EPS)
+        *x1=p2;
+    else
+        *x1=p1;
+
+    if (std::abs(*x1-x0) < Beam::EPS) {
+        D = b*b*c*c - (b*b+a*a)*(c*c-a*a*R*R);
         p1 = (-(b*c)+sqrt(D))/(b*b+a*a); //y1
         p2 = (-(b*c)-sqrt(D))/(b*b+a*a); //y2
 
-        if (std::abs(p1-y0)>0) *y1=p1;
-        else *y1=p2;
+        if (std::abs(p1-y0) < Beam::EPS)
+            *y1=p2;
+        else
+            *y1=p1;
+
         *x1=fy(*y1);
-    } else *y1=fx(*x1);
+    } else
+        *y1=fx(*x1);
 }
 
-void Beam::getpoint2(double *x2, double *y2, double x1, double y1) {
-    double x0,y0;
-    getpoint1(&x0, &y0, x1, y1);
-    if (std::abs(x1-x0)<0.00001) {
-        *y2=(y1-y0)*500;
-        *x2=fy(*y2);
-    } else {
-        *x2=(x1-x0)*500;
-        *y2=fx(*x2);
+void Beam::calculateInfintyPoint(double *x2, double *y2, double x1, double y1) {
+    double x0, y0; // temporary calculation of output for correct direction
+    calculateOutputPoint(&x0, &y0, x1, y1);
+
+    if (std::abs(x1-x0) < Beam::EPS) {
+        *y2 = (y1-y0) * Beam::INF;
+        *x2 = fy(*y2);
+    } else { // General case
+        *x2 = (x1-x0) * Beam::INF;
+        *y2 = fx(*x2);
     }
 }

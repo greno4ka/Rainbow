@@ -33,7 +33,7 @@ void draw_beam0(Beam Input)
     Beam Reformed, Rad, Output; // Rad - Radius to the point1 , Output - first-first reflection
 
     wavelengthToRGB(Input.getWL(),&r,&g,&b);
-    Input.getpoint0(&x0, &y0);
+    Input.calculateInputPoint(&x0, &y0);
 
     /// ORIGINAL BEAM
     glBegin(GL_LINES);
@@ -54,7 +54,7 @@ void draw_beam0(Beam Input)
         Rad.calculateKoeffs(x0,y0,0,0);
         Output=Input;
         Output.reflect(Rad);
-        Output.getpoint2(&x2,&y2,x0,y0);
+        Output.calculateInfintyPoint(&x2,&y2,x0,y0);
         if (!rainbows)
         {
             if (Input.w()==true)
@@ -73,7 +73,7 @@ void draw_beam0(Beam Input)
         Input=Reformed;
         glLineWidth(1);
 
-        Input.getpoint1(&x1, &y1, x0, y0);
+        Input.calculateOutputPoint(&x1, &y1, x0, y0);
         /// DRAW EXACT BEAM
 
         glBegin(GL_LINES);
@@ -88,7 +88,7 @@ void draw_beam0(Beam Input)
 
         Reformed=Rad; // we're get reformed from radius again
         Reformed.snell(Input,1/k(Input.getWL())); // 1/k cause goin' from inside out
-        Reformed.getpoint2(&x2,&y2,x1,y1);
+        Reformed.calculateInfintyPoint(&x2,&y2,x1,y1);
 
         glColor3ub(r*p,g*p,b*p);
         glBegin(GL_LINES);
@@ -104,7 +104,7 @@ void draw_beam0(Beam Input)
         Input.reflect(Rad);
         x0=x1;
         y0=y1;
-        Input.getpoint1(&x1, &y1, x0, y0);
+        Input.calculateOutputPoint(&x1, &y1, x0, y0);
         /// DRAW EXACT BEAM
         if(rainbows==0 || !(!rainbows || (radio_ch==1 && z==2) || (radio_ch==2 && z==3)))
         {
@@ -131,7 +131,7 @@ void draw_beam(Beam Input)
     // uncomment if want to invert colors
     /// if (mode==4) WavelengthToRGB(invert_wave(Input.l()),&r,&g,&b);
 
-    Input.getpoint0(&x0, &y0);
+    Input.calculateInputPoint(&x0, &y0);
 
     if (brbeams)
         if ((((y0>=0 && y0<=0.85*R) || y0>=0.90*R) && radio_ch==0) ||
@@ -143,7 +143,7 @@ void draw_beam(Beam Input)
     Rad.calculateKoeffs(x0,y0,0,0);
     Output=Input;
     Output.reflect(Rad);
-    Output.getpoint2(&x2,&y2,x0,y0);
+    Output.calculateInfintyPoint(&x2,&y2,x0,y0);
     if (mode==0 && !rainbows)
     {
         if (Input.w()==true)
@@ -204,13 +204,13 @@ void draw_beam(Beam Input)
             if (mode==4) p=0.55;
             else p=0.8;
 
-        Input.getpoint1(&x1, &y1, x0, y0);
+        Input.calculateOutputPoint(&x1, &y1, x0, y0);
 
         Rad.calculateKoeffs(x1,y1,0,0);
 
         Reformed=Rad; // we're get reformed from radius again
         Reformed.snell(Input,1/k(Input.getWL())); // 1/k cause goin' from inside out
-        Reformed.getpoint2(&x2,&y2,x1,y1);
+        Reformed.calculateInfintyPoint(&x2,&y2,x1,y1);
 
         glColor3ub(r*p,g*p,b*p);
         glBegin(GL_LINES);

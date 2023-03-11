@@ -102,7 +102,7 @@ void Display()
             {
                 if (mode==0) draw_beam0(*i);
                 else draw_beam(*i);
-                i->getpoint0(&x0, &y0);
+                i->calculateInputPoint(&x0, &y0);
             }
 
 /// //////////////////////////////////////////////////////////////////////////
@@ -136,7 +136,7 @@ void Display()
                 }
 
                 draw_beam(*i); // standart function
-                i->getpoint0(&x0, &y0); // too
+                i->calculateInputPoint(&x0, &y0); // too
             }
             if (miniflag1) one=true;
             if (miniflag2) two=false;
@@ -155,7 +155,7 @@ void Display()
             Lst::iterator i;
             for (i=Beams.begin(); i!=Beams.end(); i++)
             {
-                i->getpoint0(&x0, &y0);
+                i->calculateInputPoint(&x0, &y0);
                 glVertex2f(0,fy4(y0));
                 glVertex2f(fx4(x0),fy4(y0));
             }
