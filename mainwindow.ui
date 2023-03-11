@@ -65,7 +65,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page0">
            <property name="sizePolicy">
@@ -336,8 +336,17 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="minimum">
+               <number>400</number>
+              </property>
+              <property name="maximum">
+               <number>760</number>
+              </property>
+              <property name="value">
+               <number>600</number>
+              </property>
               <property name="sliderPosition">
-               <number>80</number>
+               <number>600</number>
               </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -355,6 +364,9 @@
                  <property name="text">
                   <string>Первичная радуга</string>
                  </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
                 </widget>
                </item>
                <item>
@@ -370,7 +382,7 @@
             <item>
              <widget class="QPushButton" name="pushButton_clearScr_page1">
               <property name="text">
-               <string>Очистить экран</string>
+               <string>Сбросить значения</string>
               </property>
              </widget>
             </item>

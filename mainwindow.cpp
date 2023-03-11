@@ -8,7 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     currentStackWidgetPage = 0;
     scene0 = new Scene0();
+    scene1 = new Scene1();
     ui->glWidget->connectWithScene0(*scene0);
+    ui->glWidget->connectWithScene1(*scene1);
 }
 
 MainWindow::~MainWindow()
@@ -60,28 +62,28 @@ void MainWindow::on_pushButton_startpause_page3_clicked()
 
 }
 
-void MainWindow::on_horizontalSlider_dist_page0_valueChanged(int value)
-{
-    scene0->setDistance((double)value/100);
-    ui->doubleSpinBox_dist_page0->setValue((double)value/100);
-}
-
-void MainWindow::on_horizontalSlider_wave_page0_valueChanged(int value)
-{
-    scene0->setWavelength(value);
-    ui->spinBox_wave_page0->setValue(value);
-}
-
 void MainWindow::on_doubleSpinBox_dist_page0_valueChanged(double value)
 {
     scene0->setDistance(value);
     ui->horizontalSlider_dist_page0->setValue(value*100);
 }
 
+void MainWindow::on_horizontalSlider_dist_page0_valueChanged(int value)
+{
+    scene0->setDistance((double)value/100);
+    ui->doubleSpinBox_dist_page0->setValue((double)value/100);
+}
+
 void MainWindow::on_spinBox_wave_page0_valueChanged(int value)
 {
     scene0->setWavelength(value);
     ui->horizontalSlider_wave_page0->setValue(value);
+}
+
+void MainWindow::on_horizontalSlider_wave_page0_valueChanged(int value)
+{
+    scene0->setWavelength(value);
+    ui->spinBox_wave_page0->setValue(value);
 }
 
 void MainWindow::on_radioButton0_page0_clicked()
@@ -123,5 +125,51 @@ void MainWindow::on_pushButton_clearScr_page0_clicked()
 {
     scene0->Beams.clear();
     scene0->resetBeamStep();
+}
+
+
+void MainWindow::on_doubleSpinBox_dist_page1_valueChanged(double value)
+{
+    scene1->setDistance(value);
+    ui->horizontalSlider_dist_page1->setValue(value*100);
+}
+
+
+void MainWindow::on_horizontalSlider_dist_page1_valueChanged(int value)
+{
+    scene1->setDistance((double)value/100);
+    ui->doubleSpinBox_dist_page1->setValue((double)value/100);
+}
+
+
+void MainWindow::on_spinBox_wave_page1_valueChanged(int value)
+{
+    scene1->setWavelength(value);
+    ui->horizontalSlider_wave_page1->setValue(value);
+}
+
+
+void MainWindow::on_horizontalSlider_wave_page1_valueChanged(int value)
+{
+    scene1->setWavelength(value);
+    ui->spinBox_wave_page1->setValue(value);
+}
+
+
+void MainWindow::on_radioButton1_page1_clicked()
+{
+    scene1->setDisplayMode(1);
+}
+
+
+void MainWindow::on_radioButton2_page2_clicked()
+{
+    scene1->setDisplayMode(2);
+}
+
+
+void MainWindow::on_pushButton_clearScr_page1_clicked()
+{
+
 }
 

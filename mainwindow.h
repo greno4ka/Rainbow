@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "scenes/scene0.h"
+#include "scenes/scene1.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,6 +19,7 @@ public:
     ~MainWindow();
 
     Scene0 *scene0;
+    Scene1 *scene1;
 
 private:
     Ui::MainWindow *ui;
@@ -47,6 +49,13 @@ private slots:
     void on_pushButton_beamNext_page0_clicked();
     void on_pushButton_addBeam_page0_clicked();
     void on_pushButton_clearScr_page0_clicked();
+    void on_doubleSpinBox_dist_page1_valueChanged(double value);
+    void on_horizontalSlider_dist_page1_valueChanged(int value);
+    void on_spinBox_wave_page1_valueChanged(int value);
+    void on_horizontalSlider_wave_page1_valueChanged(int value);
+    void on_radioButton1_page1_clicked();
+    void on_radioButton2_page2_clicked();
+    void on_pushButton_clearScr_page1_clicked();
 };
 
 #endif // MAINWINDOW_H
