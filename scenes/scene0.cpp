@@ -2,12 +2,7 @@
 
 Scene0::Scene0()
 {
-    // double Z=std::min(X/4,Y/2);
-}
-
-double Scene0::getDistance() const
-{
-    return distance;
+ X=1366;Y=768;
 }
 
 void Scene0::setDistance(double newDistance)
@@ -15,34 +10,51 @@ void Scene0::setDistance(double newDistance)
     distance = newDistance;
 }
 
-int Scene0::getWavelength() const
-{
-    return wavelength;
-}
-
 void Scene0::setWavelength(int newWavelength)
 {
     wavelength = newWavelength;
 }
 
+void Scene0::setDisplayMode(int newDisplayMode)
+{
+    displayMode = newDisplayMode;
+}
+
+void Scene0::incBeamStep()
+{
+    if (beamStep < MaxNumberOfReflections)
+        beamStep++;
+}
+
+void Scene0::resetBeamStep()
+{
+    beamStep = 0;
+}
+
+void Scene0::decBeamStep()
+{
+    if (beamStep > 0)
+    beamStep--;
+}
+
 inline double Scene0::x(double x0)
 {
-    return X-(X/4)+x0*Z/Scale;
+    return X-(X/4)+x0*std::min(X/4,Y/2)/Scale;
 }
 
 inline double Scene0::y(double y0)
 {
-    return (Y/2)+y0*Z/Scale;
+    return (Y/2)+y0*std::min(X/4,Y/2)/Scale;
 }
 
 inline double Scene0::r(double r0)
 {
-    return r0*Z/Scale;
+    return r0*std::min(X/4,Y/2)/Scale;
 }
 
 void Scene0::draw_drop()
 {
-    glColor3ub(100,100,255);
+    glColor3ub(100,100,155);
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(x(0),y(0));
 
@@ -72,5 +84,6 @@ void Scene0::draw_axes()
 
 void Scene0::display()
 {
-
+    draw_drop();
+    draw_axes();
 }

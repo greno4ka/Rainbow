@@ -16,18 +16,24 @@ void GLWidget::initializeGL(){
 void GLWidget::paintGL(){
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(0,0,0,0);
-    Display();
+    //Display();
+    scene0->display();
 }
 
 void GLWidget::resizeGL(int w, int h){
     /// this resize function allows to work in accustomed coordinates
-        X=w;
-        Y=h;
+    X=w;
+    Y=h;
 
-        glViewport(0,0,w,h);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0.0, (GLdouble) w, 0.0, (GLdouble) h, -1, 1);
+    glViewport(0,0,w,h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0.0, (GLdouble) w, 0.0, (GLdouble) h, -1, 1);
 
-        glMatrixMode(GL_MODELVIEW);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+void GLWidget::connectWithScene0(Scene0 &originalScene0)
+{
+    scene0 = &originalScene0;
 }

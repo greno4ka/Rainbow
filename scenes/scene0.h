@@ -9,22 +9,22 @@ class Scene0
 {
     double distance;
     int wavelength;
+    int displayMode;
+    int beamStep;
+
+    static const int MaxNumberOfReflections = 5;
 
 public:
     Scene0();
 
-    int getWavelength() const;
+    static const int DropRadius = 5;
+
     void setWavelength(int newWavelength);
-    double getDistance() const;
     void setDistance(double newDistance);
+    void setDisplayMode(int newDisplayMode);
 
     const int Scale=10;
-    int X,Y, // Window height and width
-    Z,       // Coordinates center
-    R;       // Radius of drop
-
-    int N,
-    radio_ch;
+    int X=1366,Y=768; // Window height and width
 
     Lst Beams;
 
@@ -39,6 +39,9 @@ public:
     inline double y(double y0);
     inline double r(double r0);
 
+    void incBeamStep();
+    void decBeamStep();
+    void resetBeamStep();
 };
 
 #endif // SCENE0_H
