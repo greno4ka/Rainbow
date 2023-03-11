@@ -103,7 +103,7 @@ int main(int argc, char **argv)
     m.show();
 
     //w->setWindowFlags(Qt::FramelessWindowHint);
-    w->show();
+    //w->show();
     // w->showFullScreen();
     //w->centralWidget()->layout()->setContentsMargins(1,1,1,1);
     // 1,1,1,1 because somewhere 0,0,0,0 doesn't work

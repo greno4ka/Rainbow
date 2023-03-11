@@ -33,6 +33,8 @@ public:
     void draw_drop();
     void draw_axes();
 
+    void draw_beam(Beam beam);
+
     void display();
 
 
