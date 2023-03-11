@@ -12,6 +12,8 @@
 
 #include "mainwindow.h"
 
+#include "scenes/scene0.h"
+
 using namespace std;
 Lst Beams;                  // STL list of our beams
 
@@ -47,7 +49,7 @@ int main(int argc, char **argv)
         mode=atoi(argv[1]);
     } else {
         // Temporary debugging feature
-        mode = 1;
+        mode = 0;
     }
 
     /// Initialization code here

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "scenes/scene0.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -14,6 +16,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    Scene0 scene0;
 
 private:
     Ui::MainWindow *ui;
@@ -32,6 +36,10 @@ private slots:
     void on_radioButton1_page3_clicked();
     void on_radioButton2_page3_clicked();
     void on_pushButton_startpause_page3_clicked();
+    void on_horizontalSlider_dist_page0_valueChanged(int value);
+    void on_horizontalSlider_wave_page0_valueChanged(int value);
+    void on_doubleSpinBox_dist_page0_valueChanged(double arg1);
+    void on_spinBox_wave_page0_valueChanged(int arg1);
 };
 
 #endif // MAINWINDOW_H

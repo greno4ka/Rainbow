@@ -7,8 +7,16 @@
 
 class Scene0
 {
+    double distance;
+    int wavelength;
+
 public:
     Scene0();
+
+    int getWavelength() const;
+    void setWavelength(int newWavelength);
+    double getDistance() const;
+    void setDistance(double newDistance);
 
     const int Scale=10;
     int X,Y, // Window height and width
@@ -19,16 +27,18 @@ public:
     radio_ch;
 
     Lst Beams;
-    double d,wl;
 
     void draw_drop();
     void draw_axes();
+
+    void display();
 
 
     /// Methods of recalculation decart coords to screen coords
     inline double x(double x0);
     inline double y(double y0);
     inline double r(double r0);
+
 };
 
 #endif // SCENE0_H

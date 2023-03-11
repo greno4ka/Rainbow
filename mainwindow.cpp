@@ -57,3 +57,27 @@ void MainWindow::on_pushButton_startpause_page3_clicked()
 {
 
 }
+
+void MainWindow::on_horizontalSlider_dist_page0_valueChanged(int value)
+{
+    scene0.setDistance((double)value/100);
+    ui->doubleSpinBox_dist_page0->setValue((double)value/100);
+}
+
+void MainWindow::on_horizontalSlider_wave_page0_valueChanged(int value)
+{
+    scene0.setWavelength(value);
+    ui->spinBox_wave_page0->setValue(value);
+}
+
+void MainWindow::on_doubleSpinBox_dist_page0_valueChanged(double value)
+{
+    scene0.setDistance(value);
+    ui->horizontalSlider_dist_page0->setValue(value*100);
+}
+
+void MainWindow::on_spinBox_wave_page0_valueChanged(int value)
+{
+    scene0.setWavelength(value);
+    ui->horizontalSlider_wave_page0->setValue(value);
+}

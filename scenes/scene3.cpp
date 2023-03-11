@@ -20,6 +20,11 @@ inline double Scene3::r(double r0)
     return r0*Z/Scale;
 }
 
+void Scene3::display()
+{
+
+}
+
 void Scene3::draw_cloud(float w, float h, float R)
 {
     glColor3ub(100,100,100);

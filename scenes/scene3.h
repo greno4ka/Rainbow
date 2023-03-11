@@ -3,6 +3,8 @@
 
 #include <QOpenGLFunctions>
 
+#include "beam.h"
+
 class Scene3
 {
 public:
@@ -18,6 +20,8 @@ public:
     void draw_cloud(float w, float h, float R);
     void draw_floor(float ypos);
     void draw_man(float xpos, float ypos, float h);
+
+    void display();
 
     /// Methods of recalculation decart coords to screen coords
     inline double x(double x0);
