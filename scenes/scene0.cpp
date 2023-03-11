@@ -2,7 +2,14 @@
 
 Scene0::Scene0()
 {
- X=1366;Y=768;
+    X = 800;
+    Y = 600;
+}
+
+void Scene0::updateXY(int newX, int newY)
+{
+    X = newX;
+    Y = newY;
 }
 
 void Scene0::setDistance(double newDistance)
@@ -39,22 +46,22 @@ void Scene0::decBeamStep()
 
 inline double Scene0::x(double x0)
 {
-    return X-(X/4)+x0*std::min(X/4,Y/2)/Scale;
+    return X-(X/4)+x0*std::min(X/4,Y/2)/SceneScale;
 }
 
 inline double Scene0::y(double y0)
 {
-    return (Y/2)+y0*std::min(X/4,Y/2)/Scale;
+    return (Y/2)+y0*std::min(X/4,Y/2)/SceneScale;
 }
 
 inline double Scene0::r(double r0)
 {
-    return r0*std::min(X/4,Y/2)/Scale;
+    return r0*std::min(X/4,Y/2)/SceneScale;
 }
 
 void Scene0::draw_drop()
 {
-    glColor3ub(100,100,155);
+    glColor3ub(100,100,255);
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(x(0),y(0));
 
@@ -62,8 +69,9 @@ void Scene0::draw_drop()
 
     for (int i=0; i<=DropQuality; i++)
     {
-        double currentAngle = (float)i/(float)DropQuality*M_PI*2.0;
-        glVertex2f(x(0)+r(R)*cos(currentAngle),y(0)+r(R)*sin(currentAngle));
+        double currentAngle = (double)i/DropQuality*2*M_PI;
+        glVertex2f(x(0)+r(Scene0::DropRadius)*cos(currentAngle),
+                   y(0)+r(Scene0::DropRadius)*sin(currentAngle));
     }
     glEnd();
 }

@@ -14,17 +14,19 @@ class Scene0
 
     static const int MaxNumberOfReflections = 5;
 
+    static const int SceneScale = 10;
+    int X,Y; // Window height and width
+
 public:
     Scene0();
 
     static const int DropRadius = 5;
 
+    void updateXY(int newX, int newY);
+
     void setWavelength(int newWavelength);
     void setDistance(double newDistance);
     void setDisplayMode(int newDisplayMode);
-
-    const int Scale=10;
-    int X=1366,Y=768; // Window height and width
 
     Lst Beams;
 

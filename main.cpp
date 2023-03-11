@@ -12,8 +12,6 @@
 
 #include "mainwindow.h"
 
-#include "scenes/scene0.h"
-
 using namespace std;
 Lst Beams;                  // STL list of our beams
 

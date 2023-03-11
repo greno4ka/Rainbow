@@ -22,10 +22,9 @@ void GLWidget::paintGL(){
 
 void GLWidget::resizeGL(int w, int h){
     /// this resize function allows to work in accustomed coordinates
-    X=w;
-    Y=h;
+    scene0->updateXY(w, h);
 
-    glViewport(0,0,w,h);
+    glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0.0, (GLdouble) w, 0.0, (GLdouble) h, -1, 1);
