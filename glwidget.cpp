@@ -16,15 +16,17 @@ void GLWidget::initializeGL(){
 void GLWidget::paintGL(){
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(0,0,0,0);
-    //Display();
+    Display();
     //scene0->display();
-    scene1->display();
+    //scene1->display();
+    //scene2->display();
     }
 
 void GLWidget::resizeGL(int w, int h){
     /// this resize function allows to work in accustomed coordinates
     //scene0->updateXY(w, h);
-    scene1->updateXY(w, h);
+    //scene1->updateXY(w, h);
+    //scene2->updateXY(w, h);
     X=w;Y=h;
 
     glViewport(0, 0, w, h);
@@ -43,4 +45,9 @@ void GLWidget::connectWithScene0(Scene0 &originalScene0)
 void GLWidget::connectWithScene1(Scene1 &originalScene1)
 {
     scene1 = &originalScene1;
+}
+
+void GLWidget::connectWithScene2(Scene2 &originalScene2)
+{
+    scene2 = &originalScene2;
 }

@@ -7,6 +7,7 @@
 
 #include "scenes/scene0.h"
 #include "scenes/scene1.h"
+#include "scenes/scene2.h"
 
 class GLWidget : public QOpenGLWidget
 {
@@ -20,9 +21,11 @@ public:
 
     Scene0 *scene0;
     Scene1 *scene1;
+    Scene2 *scene2;
 
     void connectWithScene0(Scene0 &originalScene0);
     void connectWithScene1(Scene1 &originalScene1);
+    void connectWithScene2(Scene2 &originalScene2);
 
 private:
     QTimer timer;

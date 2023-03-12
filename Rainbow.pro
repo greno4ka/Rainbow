@@ -26,6 +26,7 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     scenes/scene0.cpp \
     scenes/scene1.cpp \
+    scenes/scene2.cpp \
     scenes/scene3.cpp
 
 HEADERS  += \
@@ -48,6 +49,7 @@ HEADERS  += \
     forms/form4.h \
     scenes/scene0.h \
     scenes/scene1.h \
+    scenes/scene2.h \
     scenes/scene3.h
 
 FORMS    += \

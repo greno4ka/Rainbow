@@ -47,24 +47,12 @@ int main(int argc, char **argv)
         mode=atoi(argv[1]);
     } else {
         // Temporary debugging feature
-        mode = 1;
+        mode = 2;
     }
 
     /// Initialization code here
     switch (mode)
     {
-    case 0: N=-1; R=5; break; // because N=0 - makes first refraction and reflection
-    case 1:
-        {
-        d=0.86; // good inception with parallel beams
-        R=5;
-        rainbows=1;
-        Beam Input1(0,1,-(d+0.02)*R,wl),
-             Input2(0,1,-(d-0.02)*R,wl);
-        Beams.push_back (Input1);
-        Beams.push_back (Input2);
-        }
-        break;
     case 2: R=3; rainbows=1; break; // obviously
     case 3: R=3;
         srand(time(NULL));
@@ -103,7 +91,7 @@ int main(int argc, char **argv)
     m.show();
 
     //w->setWindowFlags(Qt::FramelessWindowHint);
-    //w->show();
+    w->show();
     // w->showFullScreen();
     //w->centralWidget()->layout()->setContentsMargins(1,1,1,1);
     // 1,1,1,1 because somewhere 0,0,0,0 doesn't work
