@@ -9,8 +9,10 @@ MainWindow::MainWindow(QWidget *parent) :
     currentStackWidgetPage = 0;
     scene0 = new Scene0();
     scene1 = new Scene1();
+    scene2 = new Scene2();
     ui->glWidget->connectWithScene0(*scene0);
     ui->glWidget->connectWithScene1(*scene1);
+    ui->glWidget->connectWithScene2(*scene2);
 }
 
 MainWindow::~MainWindow()
@@ -179,5 +181,59 @@ void MainWindow::on_pushButton_clearScr_page1_clicked()
     ui->radioButton1_page1->setChecked(1);
     scene1->setDisplayMode(1);
     scene1->reinitializeBeams();
+}
+
+
+void MainWindow::on_spinBox_wave_page2_valueChanged(int value)
+{
+
+}
+
+
+void MainWindow::on_horizontalSlider_wave_page2_valueChanged(int value)
+{
+
+}
+
+
+void MainWindow::on_spinBox_number_of_beams_page2_valueChanged(int value)
+{
+
+}
+
+
+void MainWindow::on_pushButton_add_beams_page2_clicked()
+{
+
+}
+
+
+void MainWindow::on_radioButton1_page2_clicked()
+{
+    scene2->setDisplayMode(1);
+}
+
+
+void MainWindow::on_radioButton2_page2_clicked()
+{
+    scene2->setDisplayMode(2);
+}
+
+
+void MainWindow::on_checkBox_show_angle_page2_stateChanged(int value)
+{
+
+}
+
+
+void MainWindow::on_checkBox_show_rainbow_beams_page2_stateChanged(int value)
+{
+
+}
+
+
+void MainWindow::on_pushButton_reset_settings_page2_clicked()
+{
+
 }
 

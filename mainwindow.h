@@ -5,6 +5,7 @@
 
 #include "scenes/scene0.h"
 #include "scenes/scene1.h"
+#include "scenes/scene2.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,6 +21,7 @@ public:
 
     Scene0 *scene0;
     Scene1 *scene1;
+    Scene2 *scene2;
 
 private:
     Ui::MainWindow *ui;
@@ -33,11 +35,6 @@ private slots:
     void on_pushButton_fullscreen_clicked();
     void on_pushButton_close_clicked();
 
-
-    void on_radioButton0_page3_clicked();
-    void on_radioButton1_page3_clicked();
-    void on_radioButton2_page3_clicked();
-    void on_pushButton_startpause_page3_clicked();
     /// PAGE0
     void on_doubleSpinBox_dist_page0_valueChanged(double arg1);
     void on_horizontalSlider_dist_page0_valueChanged(int value);
@@ -59,6 +56,20 @@ private slots:
     void on_radioButton2_page1_clicked();
     void on_pushButton_clearScr_page1_clicked();
     /// PAGE2
+    void on_spinBox_wave_page2_valueChanged(int value);
+    void on_horizontalSlider_wave_page2_valueChanged(int value);
+    void on_spinBox_number_of_beams_page2_valueChanged(int value);
+    void on_pushButton_add_beams_page2_clicked();
+    void on_radioButton1_page2_clicked();
+    void on_radioButton2_page2_clicked();
+    void on_checkBox_show_angle_page2_stateChanged(int value);
+    void on_checkBox_show_rainbow_beams_page2_stateChanged(int value);
+    void on_pushButton_reset_settings_page2_clicked();
+    /// PAGE3
+    void on_radioButton0_page3_clicked();
+    void on_radioButton1_page3_clicked();
+    void on_radioButton2_page3_clicked();
+    void on_pushButton_startpause_page3_clicked();
 };
 
 #endif // MAINWINDOW_H
