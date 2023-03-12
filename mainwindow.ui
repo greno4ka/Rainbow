@@ -65,7 +65,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page0">
            <property name="sizePolicy">
@@ -408,19 +408,145 @@
            </layout>
           </widget>
           <widget class="QWidget" name="page2">
-           <widget class="QLabel" name="label">
-            <property name="geometry">
-             <rect>
-              <x>70</x>
-              <y>220</y>
-              <width>49</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_wave_page2">
+              <item>
+               <widget class="QLabel" name="label_wave_page2">
+                <property name="text">
+                 <string>Длина волны</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBox_wave_page2">
+                <property name="minimum">
+                 <number>400</number>
+                </property>
+                <property name="maximum">
+                 <number>760</number>
+                </property>
+                <property name="value">
+                 <number>600</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QSlider" name="horizontalSlider_wave_page2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimum">
+               <number>400</number>
+              </property>
+              <property name="maximum">
+               <number>760</number>
+              </property>
+              <property name="value">
+               <number>600</number>
+              </property>
+              <property name="sliderPosition">
+               <number>600</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_number_of_beams_page2">
+              <item>
+               <widget class="QLabel" name="label_number_of_beams_page2">
+                <property name="text">
+                 <string>Количество лучей</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBox_number_of_beams_page2">
+                <property name="minimum">
+                 <number>10</number>
+                </property>
+                <property name="value">
+                 <number>30</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_add_beams_page2">
+              <property name="text">
+               <string>Добавить лучи</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_page2">
+              <property name="title">
+               <string/>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_9">
+               <item>
+                <widget class="QRadioButton" name="radioButton1_page2">
+                 <property name="text">
+                  <string>Первичная радуга</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton2_page2">
+                 <property name="text">
+                  <string>Вторичная радуга</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_show_angle_page2">
+              <property name="text">
+               <string>Показать угол</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_show_rainbow_beams_page2">
+              <property name="text">
+               <string>Показать лучи радуги</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_reset_settings_page2">
+              <property name="text">
+               <string>Сбросить настройки</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_page2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>464</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </widget>
           <widget class="QWidget" name="page3">
            <layout class="QVBoxLayout" name="verticalLayout_8">
