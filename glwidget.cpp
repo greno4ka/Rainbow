@@ -10,6 +10,7 @@ GLWidget::GLWidget(QWidget *parent) :
     else
         timer.start(1);
 }
+
 void GLWidget::initializeGL(){
 }
 
@@ -19,14 +20,22 @@ void GLWidget::paintGL(){
     //Display();
     //scene0->display();
     //scene1->display();
-    scene0->display();
-    }
+    scene2->display();
+
+//    QPainter painter(this);
+//    QColor fontColor = QColor(255,255,255);
+//    QFont font = painter.font();
+//    font.setPointSize(font.pointSize() * 2);
+//    painter.setFont(font);
+//    painter.setPen(fontColor);
+//    painter.drawText(100, 100, "test");
+}
 
 void GLWidget::resizeGL(int w, int h){
     /// this resize function allows to work in accustomed coordinates
     //scene0->updateXY(w, h);
     //scene1->updateXY(w, h);
-    scene0->updateXY(w, h);
+    scene2->updateXY(w, h);
     X=w;Y=h;
 
     glViewport(0, 0, w, h);

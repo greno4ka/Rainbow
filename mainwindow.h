@@ -59,7 +59,6 @@ private slots:
     void on_spinBox_wave_page2_valueChanged(int value);
     void on_horizontalSlider_wave_page2_valueChanged(int value);
     void on_spinBox_number_of_beams_page2_valueChanged(int value);
-    void on_pushButton_add_beams_page2_clicked();
     void on_radioButton1_page2_clicked();
     void on_radioButton2_page2_clicked();
     void on_checkBox_show_angle_page2_stateChanged(int value);
@@ -70,6 +69,7 @@ private slots:
     void on_radioButton1_page3_clicked();
     void on_radioButton2_page3_clicked();
     void on_pushButton_startpause_page3_clicked();
+    void on_horizontalSlider_number_of_beams_page2_valueChanged(int value);
 };
 
 #endif // MAINWINDOW_H

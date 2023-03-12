@@ -128,7 +128,6 @@ void MainWindow::on_pushButton_clearScr_page0_clicked()
     scene0->resetBeamStep();
 }
 
-
 void MainWindow::on_doubleSpinBox_dist_page1_valueChanged(double value)
 {
     scene1->setDistance(value);
@@ -142,13 +141,11 @@ void MainWindow::on_horizontalSlider_dist_page1_valueChanged(int value)
     ui->doubleSpinBox_dist_page1->setValue((double)value/100);
 }
 
-
 void MainWindow::on_spinBox_wave_page1_valueChanged(int value)
 {
     scene1->setWavelength(value);
     ui->horizontalSlider_wave_page1->setValue(value);
 }
-
 
 void MainWindow::on_horizontalSlider_wave_page1_valueChanged(int value)
 {
@@ -162,12 +159,10 @@ void MainWindow::on_radioButton1_page1_clicked()
     scene1->setDisplayMode(1);
 }
 
-
 void MainWindow::on_radioButton2_page1_clicked()
 {
     scene1->setDisplayMode(2);
 }
-
 
 void MainWindow::on_pushButton_clearScr_page1_clicked()
 {
@@ -182,54 +177,49 @@ void MainWindow::on_pushButton_clearScr_page1_clicked()
     scene1->reinitializeBeams();
 }
 
-
 void MainWindow::on_spinBox_wave_page2_valueChanged(int value)
 {
-
+    scene2->setWavelength(value);
+    ui->horizontalSlider_wave_page2->setValue(value);
 }
-
 
 void MainWindow::on_horizontalSlider_wave_page2_valueChanged(int value)
 {
-
+    scene2->setWavelength(value);
+    ui->spinBox_wave_page2->setValue(value);
 }
-
 
 void MainWindow::on_spinBox_number_of_beams_page2_valueChanged(int value)
 {
-
+    scene2->setNumberOfBeams(ui->spinBox_number_of_beams_page2->value());
+    ui->horizontalSlider_number_of_beams_page2->setValue(value);
 }
 
-
-void MainWindow::on_pushButton_add_beams_page2_clicked()
+void MainWindow::on_horizontalSlider_number_of_beams_page2_valueChanged(int value)
 {
-
+    scene2->setNumberOfBeams(ui->spinBox_number_of_beams_page2->value());
+    ui->spinBox_number_of_beams_page2->setValue(value);
 }
-
 
 void MainWindow::on_radioButton1_page2_clicked()
 {
     scene2->setDisplayMode(1);
 }
 
-
 void MainWindow::on_radioButton2_page2_clicked()
 {
     scene2->setDisplayMode(2);
 }
 
-
 void MainWindow::on_checkBox_show_angle_page2_stateChanged(int value)
 {
-
+    scene2->setShowAngle(value);
 }
-
 
 void MainWindow::on_checkBox_show_rainbow_beams_page2_stateChanged(int value)
 {
-
+    scene2->setShowRainbow(value);
 }
-
 
 void MainWindow::on_pushButton_reset_settings_page2_clicked()
 {

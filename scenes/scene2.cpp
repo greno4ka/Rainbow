@@ -4,6 +4,9 @@
 
 Scene2::Scene2()
 {
+    displayMode = 1;
+    wavelength = 600;
+    numberOfBeams = 30;
     reinitializeBeams();
 }
 
@@ -15,8 +18,9 @@ void Scene2::reinitializeBeams()
 
     for (float r=0.01; r<0.99; r+=h)
     {
-        Beam beam(0,1,-r*Scene2::DropRadius,wavelength);
-        Beams.push_back (beam);
+        Beam beam(0,1,-r*DropRadius,wavelength);
+        if (displayMode == 2) beam.invertz();
+        Beams.push_back(beam);
     }
 }
 
@@ -36,6 +40,16 @@ void Scene2::setDisplayMode(int newDisplayMode)
 {
     displayMode = newDisplayMode;
     reinitializeBeams();
+}
+
+void Scene2::setShowRainbow(int newShowRainbow)
+{
+    showRainbow = newShowRainbow;
+}
+
+void Scene2::setShowAngle(int newShowAngle)
+{
+    showAngle = newShowAngle;
 }
 
 void Scene2::draw_beam(Beam beam)
@@ -131,6 +145,8 @@ void Scene2::display()
 {
     draw_drop();
     draw_axes();
-    //for (Lst::iterator i=Beams.begin(); i!=Beams.end(); i++)
-    //    draw_beam(*i);
+    for (Lst::iterator i=Beams.begin(); i!=Beams.end(); i++)
+        draw_beam(*i);
+
+
 }

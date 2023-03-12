@@ -12,6 +12,12 @@
 class GLWidget : public QOpenGLWidget
 {
     Q_OBJECT
+    QTimer timer;
+
+    Scene0 *scene0;
+    Scene1 *scene1;
+    Scene2 *scene2;
+
 public:
     explicit GLWidget(QWidget *parent = 0);
 
@@ -19,16 +25,9 @@ public:
     void paintGL();
     void resizeGL(int w, int h);
 
-    Scene0 *scene0;
-    Scene1 *scene1;
-    Scene2 *scene2;
-
     void connectWithScene0(Scene0 &originalScene0);
     void connectWithScene1(Scene1 &originalScene1);
     void connectWithScene2(Scene2 &originalScene2);
-
-private:
-    QTimer timer;
 };
 
 #endif // GLWIDGET_H

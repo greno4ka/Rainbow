@@ -47,14 +47,13 @@ int main(int argc, char **argv)
         mode=atoi(argv[1]);
     } else {
         // Temporary debugging feature
-        mode = 0;
+        mode = 2;
     }
 
     R=5;
     /// Initialization code here
     switch (mode)
     {
-    case 2: R=3; rainbows=1; break; // obviously
     case 3: R=3;
         srand(time(NULL));
         if(!(rnd = (float*)malloc((m3beams) * sizeof(float))))
