@@ -107,8 +107,7 @@ void MainWindow::on_pushButton_addBeam_page0_clicked()
 {
     double d = ui->doubleSpinBox_dist_page0->value();
     int wl = ui->spinBox_wave_page0->value();
-    Beam newBeam(0, 1, -d * Scene0::DropRadius, wl);
-    scene0->Beams.push_back(newBeam);
+    scene0->addBeam(d, wl);
 }
 
 void MainWindow::on_pushButton_beamPrev_page0_clicked()

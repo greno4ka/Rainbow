@@ -4,8 +4,6 @@
 
 Scene2::Scene2()
 {
-    X = 800;
-    Y = 600;
     reinitializeBeams();
 }
 
@@ -22,71 +20,22 @@ void Scene2::reinitializeBeams()
     }
 }
 
-void Scene2::updateXY(int newX, int newY)
-{
-    X = newX;
-    Y = newY;
-}
-
 void Scene2::setWavelength(int newWavelength)
 {
     wavelength = newWavelength;
+    reinitializeBeams();
 }
 
 void Scene2::setNumberOfBeams(int newNumberOfBeams)
 {
     numberOfBeams = newNumberOfBeams;
+    reinitializeBeams();
 }
 
 void Scene2::setDisplayMode(int newDisplayMode)
 {
     displayMode = newDisplayMode;
-}
-
-inline double Scene2::x(double x0)
-{
-    return X-(X/4)+x0*std::min(X/4,Y/2)/SceneScale;
-}
-
-inline double Scene2::y(double y0)
-{
-    return (Y/2)+y0*std::min(X/4,Y/2)/SceneScale;
-}
-
-inline double Scene2::r(double r0)
-{
-    return r0*std::min(X/4,Y/2)/SceneScale;
-}
-
-void Scene2::draw_drop()
-{
-    glColor3ub(100,100,255);
-    glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(x(0),y(0));
-
-    const int DropQuality=50;
-
-    for (int i=0; i<=DropQuality; i++)
-    {
-        double currentAngle = (double)i/DropQuality*2*M_PI;
-        glVertex2f(x(0)+r(Scene2::DropRadius)*cos(currentAngle),
-                   y(0)+r(Scene2::DropRadius)*sin(currentAngle));
-    }
-    glEnd();
-}
-
-void Scene2::draw_axes()
-{
-    glColor3ub(255,255,255);
-    glEnable(GL_LINE_STIPPLE); // turn on - - - - - -
-    glLineStipple(1, 0x1111);  // 1 , 1111 means tiny dashes
-    glBegin(GL_LINES);
-    glVertex2f(0,y(0));
-    glVertex2f(X,y(0));
-    glVertex2f(x(0),0);
-    glVertex2f(x(0),Y);
-    glEnd();
-    glDisable(GL_LINE_STIPPLE); // turn it off
+    reinitializeBeams();
 }
 
 void Scene2::draw_beam(Beam beam)

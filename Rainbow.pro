@@ -27,7 +27,8 @@ SOURCES += main.cpp \
     scenes/scene0.cpp \
     scenes/scene1.cpp \
     scenes/scene2.cpp \
-    scenes/scene3.cpp
+    scenes/scene3.cpp \
+    scenes/scenebase.cpp
 
 HEADERS  += \
     beam.h \
@@ -40,6 +41,7 @@ HEADERS  += \
     questions.h \
     mode3.h \
     draw3sc.h \
+    scenes/scenebase.h \
     wavelength.h \
     \
     forms/form0.h \

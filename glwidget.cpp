@@ -19,14 +19,14 @@ void GLWidget::paintGL(){
     //Display();
     //scene0->display();
     //scene1->display();
-    scene2->display();
+    scene0->display();
     }
 
 void GLWidget::resizeGL(int w, int h){
     /// this resize function allows to work in accustomed coordinates
     //scene0->updateXY(w, h);
     //scene1->updateXY(w, h);
-    scene2->updateXY(w, h);
+    scene0->updateXY(w, h);
     X=w;Y=h;
 
     glViewport(0, 0, w, h);
