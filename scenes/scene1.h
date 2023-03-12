@@ -1,6 +1,8 @@
 #ifndef SCENE1_H
 #define SCENE1_H
 
+#include <QOpenGLFunctions>
+
 #include "beam.h"
 
 class Scene1
@@ -16,17 +18,21 @@ public:
 
     static const int DropRadius = 5;
 
+    Lst Beams;
+
+    void reinitializeBeams();
+
     void updateXY(int newX, int newY);
 
     void setWavelength(int newWavelength);
     void setDistance(double newDistance);
     void setDisplayMode(int newDisplayMode);
 
-    Lst Beams;
 
     void draw_drop();
     void draw_axes();
 
+    void draw_beam(Beam beam);
     void display();
 
 

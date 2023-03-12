@@ -38,10 +38,11 @@ private slots:
     void on_radioButton1_page3_clicked();
     void on_radioButton2_page3_clicked();
     void on_pushButton_startpause_page3_clicked();
-    void on_horizontalSlider_dist_page0_valueChanged(int value);
-    void on_horizontalSlider_wave_page0_valueChanged(int value);
+    /// PAGE0
     void on_doubleSpinBox_dist_page0_valueChanged(double arg1);
+    void on_horizontalSlider_dist_page0_valueChanged(int value);
     void on_spinBox_wave_page0_valueChanged(int arg1);
+    void on_horizontalSlider_wave_page0_valueChanged(int value);
     void on_radioButton0_page0_clicked();
     void on_radioButton1_page0_clicked();
     void on_radioButton2_page0_clicked();
@@ -49,13 +50,15 @@ private slots:
     void on_pushButton_beamNext_page0_clicked();
     void on_pushButton_addBeam_page0_clicked();
     void on_pushButton_clearScr_page0_clicked();
+    /// PAGE1
     void on_doubleSpinBox_dist_page1_valueChanged(double value);
     void on_horizontalSlider_dist_page1_valueChanged(int value);
     void on_spinBox_wave_page1_valueChanged(int value);
     void on_horizontalSlider_wave_page1_valueChanged(int value);
     void on_radioButton1_page1_clicked();
-    void on_radioButton2_page2_clicked();
+    void on_radioButton2_page1_clicked();
     void on_pushButton_clearScr_page1_clicked();
+    /// PAGE2
 };
 
 #endif // MAINWINDOW_H

@@ -57,10 +57,10 @@ int main(int argc, char **argv)
     case 1:
         {
         d=0.86; // good inception with parallel beams
-        R=3;
+        R=5;
         rainbows=1;
         Beam Input1(0,1,-(d+0.02)*R,wl),
-             Input2(0,1,-(d-0.03)*R,wl);
+             Input2(0,1,-(d-0.02)*R,wl);
         Beams.push_back (Input1);
         Beams.push_back (Input2);
         }
@@ -103,7 +103,7 @@ int main(int argc, char **argv)
     m.show();
 
     //w->setWindowFlags(Qt::FramelessWindowHint);
-    w->show();
+    //w->show();
     // w->showFullScreen();
     //w->centralWidget()->layout()->setContentsMargins(1,1,1,1);
     // 1,1,1,1 because somewhere 0,0,0,0 doesn't work
