@@ -5,15 +5,13 @@
 
 class SceneBase
 {
-protected:
+    static const int DropQuality = 100;
     static const int SceneScale = 10;
+
+protected:
     static const int DropRadius = 5;
+
     int X,Y; // Window height and width
-
-public:
-    SceneBase();
-
-    void updateXY(int newX, int newY);
 
     /// Methods of recalculation decart coords to screen coords
     double x(double x0);
@@ -22,6 +20,11 @@ public:
 
     void draw_drop();
     void draw_axes();
+
+public:
+    SceneBase();
+
+    void updateXY(int newX, int newY);
 };
 
 #endif // SCENEBASE_H

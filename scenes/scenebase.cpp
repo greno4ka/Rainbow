@@ -29,19 +29,26 @@ double SceneBase::r(double r0)
 
 void SceneBase::draw_drop()
 {
+    // Enable antialising
+    glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
+    glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_POLYGON_SMOOTH);
+    glEnable(GL_BLEND);
+
     glColor3ub(100,100,255);
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(x(0),y(0));
 
-    const int DropQuality=50;
-
-    for (int i=0; i<=DropQuality; i++)
-    {
+    for (int i=0; i<=DropQuality; i++) {
         double currentAngle = (double)i/DropQuality*2*M_PI;
         glVertex2f(x(0)+r(DropRadius)*cos(currentAngle),
                    y(0)+r(DropRadius)*sin(currentAngle));
     }
     glEnd();
+
+    // Disable antialising
+    glDisable(GL_POLYGON_SMOOTH);
+    glDisable(GL_BLEND);
 }
 
 void SceneBase::draw_axes()
