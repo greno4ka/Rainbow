@@ -11,7 +11,7 @@ Scene0::Scene0()
 void Scene0::addBeam(double newDistance, int newWavelength)
 {
     Beam newBeam(0, 1, -newDistance * DropRadius, newWavelength);
-    Beams.push_back(newBeam);
+    beams.push_back(newBeam);
 }
 
 void Scene0::setDistance(double newDistance)
@@ -152,6 +152,6 @@ void Scene0::display()
 {
     draw_drop();
     draw_axes();
-    for (Lst::iterator i=Beams.begin(); i!=Beams.end(); i++)
+    for (Beams::iterator i=beams.begin(); i!=beams.end(); i++)
         draw_beam(*i);
 }

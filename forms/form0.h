@@ -8,7 +8,7 @@
 extern int N,
 radio_ch;
 
-extern Lst Beams;
+extern Beams beams;
 extern double R,d,wl;
 
 namespace Ui {
@@ -66,12 +66,12 @@ public slots:
 
     void add_beam(){
         Beam Input(0,1,-d*R,wl);
-        Beams.push_back (Input);
+        beams.push_back (Input);
     }
 
     void clearscr(){
         N=-1;
-        Beams.clear();
+        beams.clear();
     }
 
 private:

@@ -8,13 +8,15 @@
 
 class Scene1 : public SceneBase
 {
-    double distance;
-    int wavelength;
     int displayMode;
+    int wavelength;
+
+    double distance;
+
 public:
     Scene1();
 
-    Lst Beams;
+    Beams beams;
 
     void reinitializeBeams();
 

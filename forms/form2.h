@@ -5,7 +5,7 @@
 #include "ui_form2.h"
 #include "beam.h"
 
-extern Lst Beams;
+extern Beams beams;
 extern int radio_ch,
 m2beams,
 angle,
@@ -53,20 +53,20 @@ public slots:
     {
         wl=id;
         this->ui->slider1->setValue(id);
-        for (Lst::iterator i=Beams.begin(); i!=Beams.end(); i++)
+        for (Beams::iterator i=beams.begin(); i!=beams.end(); i++)
                         if (i->w()==false) i->setWL(wl);
     }
     void wave_slider_d(int id)
     {
     wl=id;
     this->ui->spin1->setValue(id);
-    for (Lst::iterator i=Beams.begin(); i!=Beams.end(); i++)
+    for (Beams::iterator i=beams.begin(); i!=beams.end(); i++)
                     if (i->w()==false) i->setWL(wl);
     }
 
     void add_beams()
     {
-        Beams.clear();
+        beams.clear();
                     double h=1.0/m2beams;
                     //printf("%f\n",h);
                     for (float r=0.01; r<0.99; r+=h)
@@ -77,7 +77,7 @@ public slots:
                             Input.invertz();
                             reset_flags();
                         }
-                        Beams.push_back (Input);
+                        beams.push_back (Input);
                     }
     }
 
@@ -88,7 +88,7 @@ public slots:
     }
 
     void clearscr(){
-        Beams.clear();
+        beams.clear();
     }
 
 private:

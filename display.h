@@ -8,7 +8,7 @@
 #include "mode3.h"
 
 
-extern Lst Beams;                  // STL list of our beams
+extern Beams beams;                  // STL list of our beams
 extern int mode,                   // get mode from main.cpp
        angle,N,                // angle-flag and N - number of refractions
        radio_ch;               // universal variable for selection something
@@ -98,7 +98,7 @@ void Display()
 // End of Axes
 
         if (mode!=2) // mode can be 0,1 or 4
-            for (Lst::iterator i=Beams.begin(); i!=Beams.end(); i++)
+            for (Beams::iterator i=beams.begin(); i!=beams.end(); i++)
             {
                 draw_beam(*i);
                 i->calculateInputPoint(&x0, &y0);
@@ -112,7 +112,7 @@ void Display()
             done=false; // we want to draw number of degree only one time
             bool miniflag1=false,
                  miniflag2=false;
-            for (Lst::iterator i=Beams.begin(); i!=Beams.end(); i++)
+            for (Beams::iterator i=beams.begin(); i!=beams.end(); i++)
             {
                 if (radio_ch==1 && angle && !one)
                 {
@@ -151,8 +151,8 @@ void Display()
             /// ORIGINAL LIGHT STREAM
             glColor3ub(255,255,255);
             glBegin(GL_LINES);
-            Lst::iterator i;
-            for (i=Beams.begin(); i!=Beams.end(); i++)
+            Beams::iterator i;
+            for (i=beams.begin(); i!=beams.end(); i++)
             {
                 i->calculateInputPoint(&x0, &y0);
                 glVertex2f(0,fy4(y0));

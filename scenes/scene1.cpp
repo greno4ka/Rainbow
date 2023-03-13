@@ -12,11 +12,11 @@ Scene1::Scene1()
 
 void Scene1::reinitializeBeams()
 {
-    Beams.clear();
+    beams.clear();
     Beam Input1(0,1,-(distance+0.02)*DropRadius,wavelength),
          Input2(0,1,-(distance-0.02)*DropRadius,wavelength);
-    Beams.push_back (Input1);
-    Beams.push_back (Input2);
+    beams.push_back (Input1);
+    beams.push_back (Input2);
 }
 
 void Scene1::setDistance(double newDistance)
@@ -130,6 +130,6 @@ void Scene1::display()
 {
     draw_drop();
     draw_axes();
-    for (Lst::iterator i=Beams.begin(); i!=Beams.end(); i++)
+    for (Beams::iterator i=beams.begin(); i!=beams.end(); i++)
         draw_beam(*i);
 }

@@ -12,7 +12,7 @@ Scene2::Scene2()
 
 void Scene2::reinitializeBeams()
 {
-    Beams.clear();
+    beams.clear();
 
     double h=1.0/numberOfBeams;
 
@@ -20,7 +20,7 @@ void Scene2::reinitializeBeams()
     {
         Beam beam(0,1,-r*DropRadius,wavelength);
         if (displayMode == 2) beam.invertz();
-        Beams.push_back(beam);
+        beams.push_back(beam);
     }
 }
 
@@ -145,7 +145,7 @@ void Scene2::display()
 {
     draw_drop();
     draw_axes();
-    for (Lst::iterator i=Beams.begin(); i!=Beams.end(); i++)
+    for (Beams::iterator i=beams.begin(); i!=beams.end(); i++)
         draw_beam(*i);
 
 

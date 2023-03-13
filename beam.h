@@ -63,6 +63,6 @@ public:
     { c=-c; }
 };
 
-typedef QList<Beam> Lst;           // in usual C++ using List
+typedef QList<Beam> Beams;           // in usual C++ using List
 
 #endif // BEAM_H

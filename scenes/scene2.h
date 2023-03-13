@@ -18,7 +18,7 @@ class Scene2 : public SceneBase
 public:
     Scene2();
 
-    Lst Beams;
+    Beams beams;
 
     void reinitializeBeams();
 

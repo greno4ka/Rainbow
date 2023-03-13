@@ -8,10 +8,11 @@
 
 class Scene0 : public SceneBase
 {
-    double distance;
     int displayMode;
     int wavelength;
     int beamStep;
+
+    double distance;
 
     static const int MaxNumberOfReflections = 5;
 
@@ -22,7 +23,7 @@ public:
     void setDistance(double newDistance);
     void setDisplayMode(int newDisplayMode);
 
-    Lst Beams;
+    Beams beams;
 
     void addBeam(double newDistance, int newWavelength);
 

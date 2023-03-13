@@ -13,7 +13,7 @@
 #include "mainwindow.h"
 
 using namespace std;
-Lst Beams;                  // STL list of our beams
+Beams beams;                  // STL list of our beams
 
 float *rnd=NULL;            // array for random values in 3rd scene
 int mode=0,                 // program mode
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
                 for (int w=400; w<=760; w+=(760-400)/7)
                 {
                     Beam Input(0,1,-r*R,w);
-                    Beams.push_back (Input);
+                    beams.push_back (Input);
                 }
                 r+=0.01;
             }

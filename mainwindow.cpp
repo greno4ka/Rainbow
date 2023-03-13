@@ -113,19 +113,19 @@ void MainWindow::on_pushButton_addBeam_page0_clicked()
 
 void MainWindow::on_pushButton_beamPrev_page0_clicked()
 {
-    if (!scene0->Beams.empty())
+    if (!scene0->beams.empty())
         scene0->decBeamStep();
 }
 
 void MainWindow::on_pushButton_beamNext_page0_clicked()
 {
-    if (!scene0->Beams.empty())
+    if (!scene0->beams.empty())
         scene0->incBeamStep();
 }
 
 void MainWindow::on_pushButton_clearScr_page0_clicked()
 {
-    scene0->Beams.clear();
+    scene0->beams.clear();
     scene0->resetBeamStep();
 }
 

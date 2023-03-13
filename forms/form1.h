@@ -8,7 +8,7 @@
 extern int radio_ch;
 extern double d,wl;
 
-extern Lst Beams;
+extern Beams beams;
 
 namespace Ui {
 class Form1;
@@ -21,11 +21,11 @@ private:
 
     void initializeBeams(double d, double R, double wl)
     {
-        Beams.clear();
+        beams.clear();
         Beam Input1(0,1,-(d+0.02)*R,wl),
              Input2(0,1,-(d-0.03)*R,wl);
-        Beams.push_back (Input1);
-        Beams.push_back (Input2);
+        beams.push_back (Input1);
+        beams.push_back (Input2);
     }
 
 public:
