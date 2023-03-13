@@ -24,6 +24,12 @@ void Scene2::reinitializeBeams()
     }
 }
 
+void Scene2::setDisplayMode(int newDisplayMode)
+{
+    displayMode = newDisplayMode;
+    reinitializeBeams();
+}
+
 void Scene2::setWavelength(int newWavelength)
 {
     wavelength = newWavelength;
@@ -33,12 +39,6 @@ void Scene2::setWavelength(int newWavelength)
 void Scene2::setNumberOfBeams(int newNumberOfBeams)
 {
     numberOfBeams = newNumberOfBeams;
-    reinitializeBeams();
-}
-
-void Scene2::setDisplayMode(int newDisplayMode)
-{
-    displayMode = newDisplayMode;
     reinitializeBeams();
 }
 
@@ -147,6 +147,4 @@ void Scene2::display()
     draw_axes();
     for (Beams::iterator i=beams.begin(); i!=beams.end(); i++)
         draw_beam(*i);
-
-
 }

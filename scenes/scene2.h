@@ -8,29 +8,27 @@
 
 class Scene2 : public SceneBase
 {
+    int displayMode;
     int wavelength;
     int numberOfBeams;
-    int displayMode;
-
     int showRainbow;
     int showAngle;
-
-public:
-    Scene2();
 
     Beams beams;
 
     void reinitializeBeams();
+    void draw_beam(Beam beam);
 
+public:
+    Scene2();
+
+    void setDisplayMode(int newDisplayMode);
     void setWavelength(int newWavelength);
     void setNumberOfBeams(int newNumberOfBeams);
-    void setDisplayMode(int newDisplayMode);
-
-    void draw_beam(Beam beam);
-    void display();
-
     void setShowRainbow(int newShowRainbow);
     void setShowAngle(int newShowAngle);
+
+    void display();
 };
 
 #endif // SCENE2_H

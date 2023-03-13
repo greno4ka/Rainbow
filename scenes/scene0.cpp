@@ -8,15 +8,9 @@ Scene0::Scene0()
     beamStep = 0;
 }
 
-void Scene0::addBeam(double newDistance, int newWavelength)
+void Scene0::setDisplayMode(int newDisplayMode)
 {
-    Beam newBeam(0, 1, -newDistance * DropRadius, newWavelength);
-    beams.push_back(newBeam);
-}
-
-void Scene0::setDistance(double newDistance)
-{
-    distance = newDistance;
+    displayMode = newDisplayMode;
 }
 
 void Scene0::setWavelength(int newWavelength)
@@ -24,9 +18,25 @@ void Scene0::setWavelength(int newWavelength)
     wavelength = newWavelength;
 }
 
-void Scene0::setDisplayMode(int newDisplayMode)
+void Scene0::setDistance(double newDistance)
 {
-    displayMode = newDisplayMode;
+    distance = newDistance;
+}
+
+void Scene0::addBeam(double newDistance, int newWavelength)
+{
+    Beam newBeam(0, 1, -newDistance * DropRadius, newWavelength);
+    beams.push_back(newBeam);
+}
+
+void Scene0::clearBeams()
+{
+    beams.clear();
+}
+
+bool Scene0::ifNoBeams()
+{
+    return beams.empty();
 }
 
 void Scene0::incBeamStep()
@@ -35,15 +45,15 @@ void Scene0::incBeamStep()
         beamStep++;
 }
 
-void Scene0::resetBeamStep()
-{
-    beamStep = 0;
-}
-
 void Scene0::decBeamStep()
 {
     if (beamStep > 0)
     beamStep--;
+}
+
+void Scene0::resetBeamStep()
+{
+    beamStep = 0;
 }
 
 void Scene0::draw_beam(Beam beam)

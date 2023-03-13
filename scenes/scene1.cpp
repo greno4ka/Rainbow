@@ -19,6 +19,12 @@ void Scene1::reinitializeBeams()
     beams.push_back (Input2);
 }
 
+void Scene1::setDisplayMode(int newDisplayMode)
+{
+    displayMode = newDisplayMode;
+    reinitializeBeams();
+}
+
 void Scene1::setDistance(double newDistance)
 {
     distance = newDistance;
@@ -28,12 +34,6 @@ void Scene1::setDistance(double newDistance)
 void Scene1::setWavelength(int newWavelength)
 {
     wavelength = newWavelength;
-    reinitializeBeams();
-}
-
-void Scene1::setDisplayMode(int newDisplayMode)
-{
-    displayMode = newDisplayMode;
     reinitializeBeams();
 }
 

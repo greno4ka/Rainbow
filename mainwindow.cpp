@@ -113,19 +113,18 @@ void MainWindow::on_pushButton_addBeam_page0_clicked()
 
 void MainWindow::on_pushButton_beamPrev_page0_clicked()
 {
-    if (!scene0->beams.empty())
+    if (!scene0->ifNoBeams())
         scene0->decBeamStep();
 }
 
 void MainWindow::on_pushButton_beamNext_page0_clicked()
 {
-    if (!scene0->beams.empty())
+    if (!scene0->ifNoBeams())
         scene0->incBeamStep();
 }
 
 void MainWindow::on_pushButton_clearScr_page0_clicked()
 {
-    scene0->beams.clear();
     scene0->resetBeamStep();
 }
 
@@ -175,7 +174,6 @@ void MainWindow::on_pushButton_clearScr_page1_clicked()
     ui->horizontalSlider_wave_page1->setValue(wl);
     ui->radioButton1_page1->setChecked(1);
     scene1->setDisplayMode(1);
-    scene1->reinitializeBeams();
 }
 
 void MainWindow::on_spinBox_wave_page2_valueChanged(int value)

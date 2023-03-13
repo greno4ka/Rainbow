@@ -13,21 +13,19 @@ class Scene1 : public SceneBase
 
     double distance;
 
-public:
-    Scene1();
-
     Beams beams;
 
     void reinitializeBeams();
+    void draw_beam(Beam beam);
 
+public:
+    Scene1();
+
+    void setDisplayMode(int newDisplayMode);
     void setWavelength(int newWavelength);
     void setDistance(double newDistance);
-    void setDisplayMode(int newDisplayMode);
 
-
-    void draw_beam(Beam beam);
     void display();
-
 };
 
 #endif // SCENE1_H

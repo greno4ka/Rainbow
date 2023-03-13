@@ -14,26 +14,26 @@ class Scene0 : public SceneBase
 
     double distance;
 
+    Beams beams;
+
+    void draw_beam(Beam beam);
+
     static const int MaxNumberOfReflections = 5;
 
 public:
     Scene0();
 
+    void setDisplayMode(int newDisplayMode);
     void setWavelength(int newWavelength);
     void setDistance(double newDistance);
-    void setDisplayMode(int newDisplayMode);
-
-    Beams beams;
-
     void addBeam(double newDistance, int newWavelength);
-
-    void draw_beam(Beam beam);
-
-    void display();
-
+    void clearBeams();
+    bool ifNoBeams();
     void incBeamStep();
     void decBeamStep();
     void resetBeamStep();
+
+    void display();
 };
 
 #endif // SCENE0_H
