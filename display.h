@@ -9,8 +9,7 @@
 
 
 extern Beams beams;                  // STL list of our beams
-extern int mode,                   // get mode from main.cpp
-       angle,N,                // angle-flag and N - number of refractions
+extern int angle,N,                // angle-flag and N - number of refractions
        radio_ch;               // universal variable for selection something
 extern bool
 one, // flags for 2nd scene
@@ -27,6 +26,7 @@ bool done;
 
 void draw_drop()
 {
+    int mode = 0 ;
     double a;
     glColor3ub(100,100,255);
     if (mode==4) glColor3ub(150,150,150);
@@ -52,6 +52,7 @@ void draw_drop()
 
 void Display()
 {
+    int mode = 0 ;
     double x0,y0;
 
     if (mode==3) draw_mode3(); // that's simple, isn't it?

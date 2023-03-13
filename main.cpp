@@ -16,13 +16,7 @@ using namespace std;
 Beams beams;                  // STL list of our beams
 
 float *rnd=NULL;            // array for random values in 3rd scene
-int mode=0,                 // program mode
-            // 0 - XOD JIY4A B KAnJIE
-            // 1 - PACXODUMOCTb JIY4EU
-            // 2 - PADYrA DEKAPTA
-            // 3 - AHCAM6JIb KAnEJIb (CTOXACTU4ECKUU)
-            // 4 - nOJIOCA AJIEKCAHDPA
-    N=0,    // number of reformations and reflections of beam in the drop
+int N=0,    // number of reformations and reflections of beam in the drop
     radio_ch=0,                 // universal variable for selection something
     angle=0,                    // show only bright beams in 2nd scene
     brbeams=0,                  // show angle in 2nd scene
@@ -42,52 +36,45 @@ two=false; // flags for 2nd scene
 int main(int argc, char **argv)
 {
     QApplication a(argc, argv);
+    int programMode=0;  // program mode
+                        // 0 - XOD JIY4A B KAnJIE
+                        // 1 - PACXODUMOCTb JIY4EU
+                        // 2 - PADYrA DEKAPTA
+                        // 3 - AHCAM6JIb KAnEJIb (CTOXACTU4ECKUU)
+                        // 4 - nOJIOCA AJIEKCAHDPA
 
-    if (argc > 1) {
-        mode=atoi(argv[1]);
-    } else {
-        // Temporary debugging feature
-        mode = 2;
-    }
+    if (argc > 1)
+        programMode=atoi(argv[1]);
 
     R=5;
     /// Initialization code here
-    switch (mode)
-    {
-    case 3: R=3;
-        srand(time(NULL));
-        if(!(rnd = (float*)malloc((m3beams) * sizeof(float))))
-        {
-            QMessageBox::critical(0,"Ошибка 0x0001", "Не удалось выделить память. Работа программы будет завершена");
-            a.quit();
-        }
-        break;
-    case 4: R=5;
-        {
-        double r=-0.95;
-        while (r<0.95)
-            {
-                for (int w=400; w<=760; w+=(760-400)/7)
-                {
-                    Beam Input(0,1,-r*R,w);
-                    beams.push_back (Input);
-                }
-                r+=0.01;
-            }
-        }
-        break;
-    }
+//    switch (mode)
+//    {
+//    case 3: R=3;
+//        srand(time(NULL));
+//        if(!(rnd = (float*)malloc((m3beams) * sizeof(float))))
+//        {
+//            QMessageBox::critical(0,"Ошибка 0x0001", "Не удалось выделить память. Работа программы будет завершена");
+//            a.quit();
+//        }
+//        break;
+//    case 4: R=5;
+//        {
+//        double r=-0.95;
+//        while (r<0.95)
+//            {
+//                for (int w=400; w<=760; w+=(760-400)/7)
+//                {
+//                    Beam Input(0,1,-r*R,w);
+//                    beams.push_back (Input);
+//                }
+//                r+=0.01;
+//            }
+//        }
+//        break;
+//    }
 
-    QMainWindow *w; // suppose, that using virtual class
-    switch (mode) {
-    case 0: w = new Form0; break;
-    case 1: w = new Form1; break;
-    case 2: w = new Form2; break;
-    case 3: w = new Form3; break;
-    case 4: w = new Form4; break;
-    }
-
-    MainWindow m;
+    MainWindow m(programMode);
     m.show();
 
     //w->setWindowFlags(Qt::FramelessWindowHint);

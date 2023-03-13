@@ -1,14 +1,35 @@
 #include "glwidget.h"
-#include "display.h"
 
 GLWidget::GLWidget(QWidget *parent) :
     QOpenGLWidget(parent)
 {
     connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
-    if (mode==3)
+    if (sceneNumber == 3)
         timer.start(50);
     else
         timer.start(1);
+}
+
+
+void GLWidget::setSceneNumber(int programMode)
+{
+    sceneNumber = programMode;
+
+    switch (programMode) {
+    case 0:
+        scene = scene0;
+        break;
+    case 1:
+        scene = scene1;
+        break;
+    case 2:
+        scene = scene2;
+        break;
+    default:
+        break;
+    }
+
+    this->update();
 }
 
 void GLWidget::initializeGL(){
@@ -17,10 +38,7 @@ void GLWidget::initializeGL(){
 void GLWidget::paintGL(){
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(0,0,0,0);
-    //Display();
-    //scene0->display();
-    //scene1->display();
-    scene2->display();
+    scene->display();
 
 //    QPainter painter(this);
 //    QColor fontColor = QColor(255,255,255);
@@ -33,10 +51,9 @@ void GLWidget::paintGL(){
 
 void GLWidget::resizeGL(int w, int h){
     /// this resize function allows to work in accustomed coordinates
-    //scene0->updateXY(w, h);
-    //scene1->updateXY(w, h);
+    scene0->updateXY(w, h);
+    scene1->updateXY(w, h);
     scene2->updateXY(w, h);
-    X=w;Y=h;
 
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);

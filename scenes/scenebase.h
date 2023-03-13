@@ -25,6 +25,7 @@ public:
     SceneBase();
 
     void updateXY(int newX, int newY);
+    virtual void display() = 0;
 };
 
 #endif // SCENEBASE_H

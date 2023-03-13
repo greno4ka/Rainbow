@@ -12,8 +12,7 @@
 
 using namespace std;
 
-extern int mode,
-       radio_ch,
+extern int radio_ch,
        brbeams,
        rainbows,
        angle,
@@ -25,6 +24,7 @@ extern double what_angle(double wave, int var);
 
 void draw_beam(Beam Input)
 {
+    int mode = 0;
     double p,     // GAMMA CORRECTOR of color. For dark beams
            x0,y0, // point0
            x1,y1, // point1

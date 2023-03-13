@@ -1,19 +1,20 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(int programMode, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    currentStackWidgetPage = 0;
-    ui->stackedWidget->setCurrentIndex(0);
+    currentStackWidgetPage = programMode;
+    ui->stackedWidget->setCurrentIndex(currentStackWidgetPage);
     scene0 = new Scene0();
     scene1 = new Scene1();
     scene2 = new Scene2();
     ui->glWidget->connectWithScene0(*scene0);
     ui->glWidget->connectWithScene1(*scene1);
     ui->glWidget->connectWithScene2(*scene2);
+    ui->glWidget->setSceneNumber(currentStackWidgetPage);
 }
 
 MainWindow::~MainWindow()
@@ -26,6 +27,7 @@ void MainWindow::on_pushButton_next_clicked()
     if (++currentStackWidgetPage == ui->stackedWidget->count())
         currentStackWidgetPage = 0;
     ui->stackedWidget->setCurrentIndex(currentStackWidgetPage);
+    ui->glWidget->setSceneNumber(currentStackWidgetPage);
 }
 
 void MainWindow::on_pushButton_prev_clicked()
@@ -33,6 +35,7 @@ void MainWindow::on_pushButton_prev_clicked()
     if (--currentStackWidgetPage < 0)
         currentStackWidgetPage = ui->stackedWidget->count() - 1;
     ui->stackedWidget->setCurrentIndex(currentStackWidgetPage);
+    ui->glWidget->setSceneNumber(currentStackWidgetPage);
 }
 
 void MainWindow::on_pushButton_fullscreen_clicked()

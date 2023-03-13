@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+#include "scenes/scenebase.h"
 #include "scenes/scene0.h"
 #include "scenes/scene1.h"
 #include "scenes/scene2.h"
@@ -16,12 +17,14 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(int programMode, QWidget *parent = nullptr);
     ~MainWindow();
 
+    SceneBase *scene;
     Scene0 *scene0;
     Scene1 *scene1;
     Scene2 *scene2;
+
 
 private:
     Ui::MainWindow *ui;
