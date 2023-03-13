@@ -70,6 +70,10 @@ private slots:
     void on_radioButton2_page3_clicked();
     void on_pushButton_startpause_page3_clicked();
     void on_horizontalSlider_number_of_beams_page2_valueChanged(int value);
+    /// PAGE4
+    void on_radioButton0_page4_clicked();
+    void on_radioButton1_page4_clicked();
+    void on_radioButton2_page4_clicked();
 };
 
 #endif // MAINWINDOW_H

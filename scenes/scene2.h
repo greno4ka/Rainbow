@@ -2,7 +2,6 @@
 #define SCENE2_H
 
 #include <QOpenGLFunctions>
-#include <QPainter>
 
 #include "scenebase.h"
 #include "beam.h"

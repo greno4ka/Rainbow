@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     currentStackWidgetPage = 0;
+    ui->stackedWidget->setCurrentIndex(0);
     scene0 = new Scene0();
     scene1 = new Scene1();
     scene2 = new Scene2();
@@ -222,6 +223,24 @@ void MainWindow::on_checkBox_show_rainbow_beams_page2_stateChanged(int value)
 }
 
 void MainWindow::on_pushButton_reset_settings_page2_clicked()
+{
+
+}
+
+
+void MainWindow::on_radioButton0_page4_clicked()
+{
+
+}
+
+
+void MainWindow::on_radioButton1_page4_clicked()
+{
+
+}
+
+
+void MainWindow::on_radioButton2_page4_clicked()
 {
 
 }
