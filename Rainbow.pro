@@ -18,11 +18,6 @@ SOURCES += main.cpp \
     beam.cpp \
     glwidget.cpp \
     \
-    forms/form0.cpp \
-    forms/form1.cpp \
-    forms/form2.cpp \
-    forms/form3.cpp \
-    forms/form4.cpp \
     mainwindow.cpp \
     scenes/scene0.cpp \
     scenes/scene1.cpp \
@@ -44,20 +39,10 @@ HEADERS  += \
     scenes/scenebase.h \
     wavelength.h \
     \
-    forms/form0.h \
-    forms/form1.h \
-    forms/form2.h \
-    forms/form3.h \
-    forms/form4.h \
     scenes/scene0.h \
     scenes/scene1.h \
     scenes/scene2.h \
     scenes/scene3.h
 
 FORMS    += \
-    forms/form0.ui \
-    forms/form1.ui \
-    forms/form2.ui \
-    forms/form3.ui \
-    forms/form4.ui \
     mainwindow.ui
