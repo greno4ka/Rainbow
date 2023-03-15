@@ -25,6 +25,12 @@ void GLWidget::setSceneNumber(int programMode)
     case 2:
         scene = scene2;
         break;
+    case 3:
+        scene = scene3;
+        break;
+    case 4:
+        scene = scene4;
+        break;
     default:
         break;
     }
@@ -54,6 +60,8 @@ void GLWidget::resizeGL(int w, int h){
     scene0->updateXY(w, h);
     scene1->updateXY(w, h);
     scene2->updateXY(w, h);
+    scene3->updateXY(w, h);
+    scene4->updateXY(w, h);
 
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
@@ -76,4 +84,14 @@ void GLWidget::connectWithScene1(Scene1 &originalScene1)
 void GLWidget::connectWithScene2(Scene2 &originalScene2)
 {
     scene2 = &originalScene2;
+}
+
+void GLWidget::connectWithScene3(Scene3 &originalScene3)
+{
+    scene3 = &originalScene3;
+}
+
+void GLWidget::connectWithScene4(Scene4 &originalScene4)
+{
+    scene4 = &originalScene4;
 }

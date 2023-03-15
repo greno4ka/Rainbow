@@ -13,18 +13,19 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 TARGET = Rainbow
 TEMPLATE = app
 
-
 SOURCES += main.cpp \
     beam.cpp \
     glwidget.cpp \
     \
     mainwindow.cpp \
+    wavelength.cpp \
+    \
     scenes/scene0.cpp \
     scenes/scene1.cpp \
     scenes/scene2.cpp \
     scenes/scene3.cpp \
-    scenes/scenebase.cpp \
-    wavelength.cpp
+    scenes/scene4.cpp \
+    scenes/scenebase.cpp
 
 HEADERS  += \
     beam.h \
@@ -37,13 +38,14 @@ HEADERS  += \
     questions.h \
     mode3.h \
     draw3sc.h \
-    scenes/scenebase.h \
     wavelength.h \
     \
     scenes/scene0.h \
     scenes/scene1.h \
     scenes/scene2.h \
-    scenes/scene3.h
+    scenes/scene3.h \
+    scenes/scene4.h \
+    scenes/scenebase.h
 
 FORMS    += \
     mainwindow.ui

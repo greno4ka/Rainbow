@@ -7,6 +7,8 @@
 #include "scenes/scene0.h"
 #include "scenes/scene1.h"
 #include "scenes/scene2.h"
+#include "scenes/scene3.h"
+#include "scenes/scene4.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,7 +26,8 @@ public:
     Scene0 *scene0;
     Scene1 *scene1;
     Scene2 *scene2;
-
+    Scene3 *scene3;
+    Scene4 *scene4;
 
 private:
     Ui::MainWindow *ui;

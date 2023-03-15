@@ -3,17 +3,18 @@
 
 #include <QOpenGLFunctions>
 
+#include "scenebase.h"
+
 #include "beam.h"
 
-class Scene3
+class Scene3 : public SceneBase
 {
+    int displayMode;
+
 public:
     Scene3();
 
-    const int Scale=10;
-    int X,Y, // Window height and width
-    Z,       // Coordinates center
-    R;       // Radius of drop
+    const int Scale=5;
 
     bool dynamic;
 

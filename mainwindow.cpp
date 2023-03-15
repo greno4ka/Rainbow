@@ -11,9 +11,13 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     scene0 = new Scene0();
     scene1 = new Scene1();
     scene2 = new Scene2();
+    scene3 = new Scene3();
+    scene4 = new Scene4();
     ui->glWidget->connectWithScene0(*scene0);
     ui->glWidget->connectWithScene1(*scene1);
     ui->glWidget->connectWithScene2(*scene2);
+    ui->glWidget->connectWithScene3(*scene3);
+    ui->glWidget->connectWithScene4(*scene4);
     ui->glWidget->setSceneNumber(currentStackWidgetPage);
 }
 
