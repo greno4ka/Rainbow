@@ -1,6 +1,8 @@
 #ifndef K_H
 #define K_H
 
+#include <cmath>
+
 inline double k(double x)
 {
     return -2.43712 * pow(10,-20) * pow(x,7) +

@@ -14,10 +14,6 @@ class Beam
                         // it's physical simulation, so we need angle
                         // only in physical sense, not in mathematical
     wavelength;
-    int red,green,blue; // color components of beam
-
-    // TODO: remove
-    bool wh;
 
     constexpr static const double EPS = 0.0000000001;
     constexpr static const double INF = 10000000000;
@@ -26,15 +22,9 @@ public:
     Beam ();
     Beam (double A, double B, double C, double lambda);
 
-    int getR();
-    int getG();
-    int getB();
-
     double getAngle();
     double getWL();
 
-    double w();
-    void white(bool choice);
     void setWL(double wl);
     void setd(double d);
 
@@ -56,8 +46,6 @@ public:
     void calculateInputPoint(double *x0, double *y0);
     void calculateOutputPoint(double *x1, double *y1, double x0, double y0);
     void calculateInfintyPoint(double *x2, double *y2, double x1, double y1);
-
-    void wavelengthToRGB();
 
     void invertz()
     { c=-c; }

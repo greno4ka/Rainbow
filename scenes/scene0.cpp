@@ -1,6 +1,7 @@
 #include "scene0.h"
 
 #include "k.h"
+#include "wavelength.h"
 
 Scene0::Scene0()
 {
@@ -62,15 +63,13 @@ void Scene0::draw_beam(Beam beam)
         x0,y0,      // point0
         x1,y1,      // point1
         x2,y2;      // point2 - external (for reformed outside)
-    int r,g,b;      // color of beam
+
     Beam refracted,
         radius,
         reflected;
 
-    // Save original beam color before multiple transformations
-    r = beam.getR();
-    g = beam.getG();
-    b = beam.getB();
+    int r,g,b;
+    wavelengthToRGB(beam.getWL(),&r,&g,&b);
 
     beam.calculateInputPoint(&x0, &y0);
     radius.calculateKoeffs(x0,y0,0,0);
@@ -93,12 +92,13 @@ void Scene0::draw_beam(Beam beam)
         /// FIRST REFLECTION
         // not shown in rainbows modes
         p -= 0.1; // low color intensity every beam split
+        glColor3ub(r*p,g*p,b*p);
+
         if (displayMode == 0) {
             reflected = beam;
             reflected.reflect(radius);
             reflected.calculateInfintyPoint(&x2,&y2,x0,y0);
 
-            glColor3ub(r*p,g*p,b*p);
             glBegin(GL_LINES);
             glVertex2f(x(x0),y(y0));
             glVertex2f(x(x2),y(y2));
@@ -125,11 +125,11 @@ void Scene0::draw_beam(Beam beam)
             refracted.calculateInfintyPoint(&x2,&y2,x1,y1);
 
             p -= 0.1; // low color intensity every beam split
+            glColor3ub(r*p,g*p,b*p);
             if ( (displayMode == 0) ||
                ( (displayMode == 1) && (stepNumber == 2) ) ||
                ( (displayMode == 2) && (stepNumber == 3) )
                ) {
-                glColor3ub(r*p,g*p,b*p);
                 glBegin(GL_LINES);
                 glVertex2f(x(x1),y(y1));
                 glVertex2f(x(x2),y(y2));

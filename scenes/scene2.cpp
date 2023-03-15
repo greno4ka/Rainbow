@@ -1,6 +1,7 @@
 #include "scene2.h"
 
 #include "k.h"
+#include "wavelength.h"
 
 Scene2::Scene2()
 {
@@ -61,6 +62,9 @@ void Scene2::draw_beam(Beam beam)
         radius,
         reflected;
 
+    int r,g,b;
+    wavelengthToRGB(beam.getWL(),&r,&g,&b);
+
     beam.calculateInputPoint(&x0, &y0);
     radius.calculateKoeffs(x0,y0,0,0);
 
@@ -72,7 +76,7 @@ void Scene2::draw_beam(Beam beam)
 
     /// ORIGINAL BEAM
     // this part should be drawn anyway
-    glColor3ub(beam.getR(),beam.getG(),beam.getB());
+    glColor3ub(r,g,b);
     glBegin(GL_LINES);
     glVertex2f(0,y(y0));
     glVertex2f(x(x0),y(y0));

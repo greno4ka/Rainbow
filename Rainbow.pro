@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     scenes/scene1.cpp \
     scenes/scene2.cpp \
     scenes/scene3.cpp \
-    scenes/scenebase.cpp
+    scenes/scenebase.cpp \
+    wavelength.cpp
 
 HEADERS  += \
     beam.h \

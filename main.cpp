@@ -4,12 +4,6 @@
 #include <iostream>
 #include <ctime>
 #include "beam.h"
-#include "forms/form0.h"
-#include "forms/form1.h"
-#include "forms/form2.h"
-#include "forms/form3.h"
-#include "forms/form4.h"
-
 #include "mainwindow.h"
 
 using namespace std;
