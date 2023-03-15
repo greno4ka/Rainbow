@@ -3,6 +3,8 @@
 
 #include <QOpenGLFunctions>
 
+#include "beam.h"
+
 class SceneBase
 {
     static const int DropQuality = 100;
@@ -18,11 +20,15 @@ protected:
     double y(double y0);
     double r(double r0);
 
+    void drawLine(double x0, double y0, double x1, double y1);
+
     void draw_drop();
     void draw_axes();
 
 public:
     SceneBase();
+    void draw1stRainbow(Beam beam);
+    void draw2ndRainbow(Beam beam);
 
     void updateXY(int newX, int newY);
     virtual void display() = 0;

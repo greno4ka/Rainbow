@@ -59,10 +59,10 @@ void Scene0::resetBeamStep()
 
 void Scene0::draw_beam(Beam beam)
 {
-    double p=1,     // GAMMA CORRECTOR of color. For darkening beams
-        x0,y0,      // point0
-        x1,y1,      // point1
-        x2,y2;      // point2 - external (for reformed outside)
+    double p=1;        // GAMMA CORRECTOR of color. For darkening beams
+    double x0,y0,      // point0
+           x1,y1,      // point1
+           x2,y2;      // point2 - external (for reformed outside)
 
     Beam refracted,
         radius,
