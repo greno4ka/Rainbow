@@ -634,7 +634,7 @@
                <item>
                 <widget class="QRadioButton" name="radioButton0_page4">
                  <property name="text">
-                  <string>Первичная радуга</string>
+                  <string>Обе радуги</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -644,14 +644,14 @@
                <item>
                 <widget class="QRadioButton" name="radioButton1_page4">
                  <property name="text">
-                  <string>Вторичная радуга</string>
+                  <string>Первичная радуга</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QRadioButton" name="radioButton2_page4">
                  <property name="text">
-                  <string>Обе радуги</string>
+                  <string>Вторичная радуга</string>
                  </property>
                 </widget>
                </item>

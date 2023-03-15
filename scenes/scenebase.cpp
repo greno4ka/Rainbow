@@ -69,6 +69,14 @@ void SceneBase::draw_axes()
     glDisable(GL_LINE_STIPPLE); // turn it off
 }
 
+void SceneBase::drawLine(double x0, double y0, double x1, double y1)
+{
+    glBegin(GL_LINES);
+    glVertex2f(x(x0),y(y0));
+    glVertex2f(x(x1),y(y1));
+    glEnd();
+}
+
 void SceneBase::draw1stRainbow(Beam beam)
 {
     double x0,y0,      // point0
@@ -105,10 +113,7 @@ void SceneBase::draw1stRainbow(Beam beam)
     beam = refracted;
     beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
-    glBegin(GL_LINES);
-    glVertex2f(x(x0),y(y0));
-    glVertex2f(x(x1),y(y1));
-    glEnd();
+    drawLine(x0,y0,x1,y1);
 
     /// REFLECTION INSIDE
     radius.calculateKoeffs(x1,y1,0,0);
@@ -116,10 +121,7 @@ void SceneBase::draw1stRainbow(Beam beam)
     x0=x1; y0=y1;
     beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
-    glBegin(GL_LINES);
-    glVertex2f(x(x0),y(y0));
-    glVertex2f(x(x1),y(y1));
-    glEnd();
+    drawLine(x0,y0,x1,y1);
 
     /// REFRACTION OUTSIDE
     radius.calculateKoeffs(x1,y1,0,0);
@@ -127,10 +129,7 @@ void SceneBase::draw1stRainbow(Beam beam)
     refracted.snell(beam, 1/k(beam.getWL())); // 1/k because beam is going from inside out
     refracted.calculateInfintyPoint(&x2,&y2,x1,y1);
 
-    glBegin(GL_LINES);
-    glVertex2f(x(x1),y(y1));
-    glVertex2f(x(x2),y(y2));
-    glEnd();
+    drawLine(x1,y1,x2,y2);
 
     // Disable antialising
     glDisable(GL_LINE_SMOOTH);
@@ -173,10 +172,7 @@ void SceneBase::draw2ndRainbow(Beam beam)
     beam = refracted;
     beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
-    glBegin(GL_LINES);
-    glVertex2f(x(x0),y(y0));
-    glVertex2f(x(x1),y(y1));
-    glEnd();
+    drawLine(x0,y0,x1,y1);
 
     /// REFLECTION INSIDE
     radius.calculateKoeffs(x1,y1,0,0);
@@ -184,10 +180,7 @@ void SceneBase::draw2ndRainbow(Beam beam)
     x0=x1; y0=y1;
     beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
-    glBegin(GL_LINES);
-    glVertex2f(x(x0),y(y0));
-    glVertex2f(x(x1),y(y1));
-    glEnd();
+    drawLine(x0,y0,x1,y1);
 
     /// NEXT REFLECTION INSIDE
     radius.calculateKoeffs(x1,y1,0,0);
@@ -195,10 +188,7 @@ void SceneBase::draw2ndRainbow(Beam beam)
     x0=x1; y0=y1;
     beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
-    glBegin(GL_LINES);
-    glVertex2f(x(x0),y(y0));
-    glVertex2f(x(x1),y(y1));
-    glEnd();
+    drawLine(x0,y0,x1,y1);
 
     /// REFRACTION OUTSIDE
     radius.calculateKoeffs(x1,y1,0,0);
@@ -206,10 +196,7 @@ void SceneBase::draw2ndRainbow(Beam beam)
     refracted.snell(beam, 1/k(beam.getWL())); // 1/k because beam is going from inside out
     refracted.calculateInfintyPoint(&x2,&y2,x1,y1);
 
-    glBegin(GL_LINES);
-    glVertex2f(x(x1),y(y1));
-    glVertex2f(x(x2),y(y2));
-    glEnd();
+    drawLine(x1,y1,x2,y2);
 
     // Disable antialising
     glDisable(GL_LINE_SMOOTH);

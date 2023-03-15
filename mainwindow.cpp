@@ -232,21 +232,21 @@ void MainWindow::on_pushButton_reset_settings_page2_clicked()
 
 }
 
-
 void MainWindow::on_radioButton0_page4_clicked()
 {
 
+    scene4->setDisplayMode(0);
 }
-
 
 void MainWindow::on_radioButton1_page4_clicked()
 {
 
+    scene4->setDisplayMode(1);
 }
-
 
 void MainWindow::on_radioButton2_page4_clicked()
 {
 
+    scene4->setDisplayMode(2);
 }
 

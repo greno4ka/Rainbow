@@ -7,8 +7,16 @@
 
 class Scene4: public SceneBase
 {
+    int displayMode;
+    int numberOfBeams;
+
+    Beams beams1, beams2;
+
+    void reinitializeBeams();
 public:
     Scene4();
+
+    void setDisplayMode(int newDisplayMode);
 
     void display();
 };
