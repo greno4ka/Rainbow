@@ -31,13 +31,11 @@ HEADERS  += \
     beam.h \
     display.h \
     glwidget.h \
-    draw_beam.h \
     k.h \
     mainwindow.h \
     recalc.h \
     questions.h \
     mode3.h \
-    draw3sc.h \
     wavelength.h \
     \
     scenes/scene0.h \

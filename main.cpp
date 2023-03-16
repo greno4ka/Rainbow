@@ -6,26 +6,9 @@
 #include "beam.h"
 #include "mainwindow.h"
 
-using namespace std;
-Beams beams;                  // STL list of our beams
-
 float *rnd=NULL;            // array for random values in 3rd scene
-int N=0,    // number of reformations and reflections of beam in the drop
-    radio_ch=0,                 // universal variable for selection something
-    angle=0,                    // show only bright beams in 2nd scene
-    brbeams=0,                  // show angle in 2nd scene
-    dynamic=1,                  // dynamic image or not in 3rd scene
-    rainbows=0,                 // 1 if we draw only rainbow beams
-    m2beams=30,                 // number of beams in 2nd scene [dynamic]
-    m3beams=150,                // number of beams in 3rd scene [constant]
-    X=1335, Y=768;              // Screen resolution IN CURRENT moment
-double R=10,                // Drop's radius
-       wl=600,              // current WaveLength
-       d=0.8;               // current distance
-bool  // I wanted to put it in "display.h", but ups...
-// These two flags are required to display degree in 2nd scene only one time
-one=false, // flags for 2nd scene
-two=false; // flags for 2nd scene
+int dynamic=1;                  // dynamic image or not in 3rd scene
+double R=10;
 
 int main(int argc, char **argv)
 {
@@ -52,21 +35,6 @@ int main(int argc, char **argv)
 //            a.quit();
 //        }
 //        break;
-//    case 4: R=5;
-//        {
-//        double r=-0.95;
-//        while (r<0.95)
-//            {
-//                for (int w=400; w<=760; w+=(760-400)/7)
-//                {
-//                    Beam Input(0,1,-r*R,w);
-//                    beams.push_back (Input);
-//                }
-//                r+=0.01;
-//            }
-//        }
-//        break;
-//    }
 
     MainWindow m(programMode);
     m.show();
