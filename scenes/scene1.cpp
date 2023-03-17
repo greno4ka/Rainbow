@@ -11,8 +11,8 @@ Scene1::Scene1()
 void Scene1::reinitializeBeams()
 {
     beams.clear();
-    Beam beam1(0,1,-(distance+0.02)*DropRadius,wavelength),
-         beam2(0,1,-(distance-0.02)*DropRadius,wavelength);
+    Beam beam1(0,1,-(distance+0.02)*DropRadius,wavelength, DropRadius),
+         beam2(0,1,-(distance-0.02)*DropRadius,wavelength, DropRadius);
     beams.push_back (beam1);
     beams.push_back (beam2);
 }

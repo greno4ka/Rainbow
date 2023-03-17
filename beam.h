@@ -5,22 +5,24 @@
 
 #include <cmath>
 
-extern double R;
-
 class Beam
 {
     double a,b,c,       // koefficients in equation ax+y+c=0
     phi,                // positive angle of beam line
                         // it's physical simulation, so we need angle
                         // only in physical sense, not in mathematical
-    wavelength;
+    wavelength,
+    r;                  // single beam interacts with single drop, so
+                        // drop radius is one of characteristics of beam
+                        // it's name short to be short in math formulas
 
     constexpr static const double EPS = 0.0000000001;
     constexpr static const double INF = 10000000000;
 
 public:
     Beam ();
-    Beam (double A, double B, double C, double lambda);
+    Beam (double A, double B, double C, double lambda, double radius);
+    Beam (double radius);
 
     double getAngle();
     double getWL();

@@ -2,21 +2,27 @@
 
 Beam::Beam()
 {
-    a=b=c=0;
-    phi=0;
-    wavelength=0;
+    a = b = c = 0;
+    phi = 0;
+    wavelength = 0;
+    r = 1;
 }
 
-Beam::Beam(double A, double B, double C, double lambda)
+Beam::Beam(double A, double B, double C, double lambda, double radius)
 {
-    a=A;
-    b=B;
-    c=C;
-    wavelength=lambda;
+    a = A;
+    b = B;
+    c = C;
+    wavelength = lambda;
+    r = radius;
     normalizeKoeffs();
     calculateAngle();
 }
 
+Beam::Beam(double radius)
+{
+    r = radius;
+}
 
 double Beam::getAngle()
 {
@@ -119,7 +125,7 @@ void Beam::snell (Beam Input, double k) {
 }
 
 void Beam::calculateInputPoint(double *x0, double *y0) {
-    double D = a*a*c*c - (1+a*a)*(c*c-R*R);
+    double D = a*a*c*c - (1+a*a)*(c*c-r*r);
     double p1 = (-(a*c)+sqrt(D))/(1+a*a);
     double p2 = (-(a*c)-sqrt(D))/(1+a*a);
 
@@ -132,7 +138,7 @@ void Beam::calculateInputPoint(double *x0, double *y0) {
 }
 
 void Beam::calculateOutputPoint(double *x1, double *y1, double x0, double y0) {
-    double D = a*a*c*c - (1+a*a)*(c*c-R*R);
+    double D = a*a*c*c - (1+a*a)*(c*c-r*r);
     double p1 = (-(a*c)+sqrt(D))/(1+a*a);
     double p2 = (-(a*c)-sqrt(D))/(1+a*a);
 
@@ -142,7 +148,7 @@ void Beam::calculateOutputPoint(double *x1, double *y1, double x0, double y0) {
         *x1=p1;
 
     if (std::abs(*x1-x0) < Beam::EPS) {
-        D = b*b*c*c - (b*b+a*a)*(c*c-a*a*R*R);
+        D = b*b*c*c - (b*b+a*a)*(c*c-a*a*r*r);
         p1 = (-(b*c)+sqrt(D))/(b*b+a*a); //y1
         p2 = (-(b*c)-sqrt(D))/(b*b+a*a); //y2
 

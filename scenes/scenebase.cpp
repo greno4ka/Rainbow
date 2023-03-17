@@ -83,9 +83,9 @@ void SceneBase::draw1stRainbow(Beam beam)
            x1,y1,      // point1
            x2,y2;      // point2 - external (for reformed outside)
 
-    Beam refracted,
-         radius,
-         reflected;
+    Beam refracted(DropRadius),
+         radius(DropRadius),
+         reflected(DropRadius);
 
     int r,g,b;
     wavelengthToRGB(beam.getWL(),&r,&g,&b);
@@ -142,9 +142,9 @@ void SceneBase::draw2ndRainbow(Beam beam)
            x1,y1,      // point1
            x2,y2;      // point2 - external (for reformed outside)
 
-    Beam refracted,
-         radius,
-         reflected;
+    Beam refracted(DropRadius),
+         radius(DropRadius),
+         reflected(DropRadius);
 
     int r,g,b;
     wavelengthToRGB(beam.getWL(),&r,&g,&b);

@@ -18,7 +18,7 @@ void Scene4::reinitializeBeams()
     {
         for (int wavelength=400; wavelength<=760; wavelength+=(760-400)/7)
         {
-            Beam beam(0, 1, -r*DropRadius, wavelength);
+            Beam beam(0, 1, -r*DropRadius, wavelength, DropRadius);
             beams1.push_back(beam);
             beam.invertz();
             beams2.push_back(beam);
