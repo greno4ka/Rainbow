@@ -46,7 +46,7 @@ double what_angle(double wave, int var)
     {
         Reformed=Rad;                         // we're get reformed from radius again
         Reformed.snell(Input,1/k(Input.getWL())); // 1/k cause goin' from inside out
-        Reformed.calculateInfintyPoint(&x2,&y2,x1,y1);
+
     }
     else
     {
@@ -58,7 +58,6 @@ double what_angle(double wave, int var)
         Rad.calculateKoeffs(x1,y1,0,0);
         Reformed=Rad;                         // we're get reformed from radius again
         Reformed.snell(Input,1/k(Input.getWL())); // 1/k cause goin' from inside out
-        Reformed.calculateInfintyPoint(&x2,&y2,x1,y1);
     }
     return Reformed.getAngle();
 }

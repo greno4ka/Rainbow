@@ -127,7 +127,7 @@ void SceneBase::draw1stRainbow(Beam beam)
     radius.calculateKoeffs(x1,y1,0,0);
     refracted = radius;
     refracted.snell(beam, 1/k(beam.getWL())); // 1/k because beam is going from inside out
-    refracted.calculateInfintyPoint(&x2,&y2,x1,y1);
+    refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
     drawLine(x1,y1,x2,y2);
 
@@ -194,7 +194,7 @@ void SceneBase::draw2ndRainbow(Beam beam)
     radius.calculateKoeffs(x1,y1,0,0);
     refracted = radius;
     refracted.snell(beam, 1/k(beam.getWL())); // 1/k because beam is going from inside out
-    refracted.calculateInfintyPoint(&x2,&y2,x1,y1);
+    refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
     drawLine(x1,y1,x2,y2);
 

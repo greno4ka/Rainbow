@@ -156,7 +156,7 @@ void Beam::calculateOutputPoint(double *x1, double *y1, double x0, double y0) {
         *y1=fx(*x1);
 }
 
-void Beam::calculateInfintyPoint(double *x2, double *y2, double x1, double y1) {
+void Beam::calculateInfinityPoint(double *x2, double *y2, double x1, double y1) {
     double x0, y0; // temporary calculation of output for correct direction
     calculateOutputPoint(&x0, &y0, x1, y1);
 

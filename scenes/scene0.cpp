@@ -97,7 +97,7 @@ void Scene0::draw_beam(Beam beam)
         if (displayMode == 0) {
             reflected = beam;
             reflected.reflect(radius);
-            reflected.calculateInfintyPoint(&x2,&y2,x0,y0);
+            reflected.calculateInfinityPoint(&x2,&y2,x0,y0);
 
             glBegin(GL_LINES);
             glVertex2f(x(x0),y(y0));
@@ -122,7 +122,7 @@ void Scene0::draw_beam(Beam beam)
             radius.calculateKoeffs(x1,y1,0,0);
             refracted = radius; // we're get reformed from radius again
             refracted.snell(beam, 1/k(beam.getWL())); // 1/k because beam is going from inside out
-            refracted.calculateInfintyPoint(&x2,&y2,x1,y1);
+            refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
             p -= 0.1; // low color intensity every beam split
             glColor3ub(r*p,g*p,b*p);
