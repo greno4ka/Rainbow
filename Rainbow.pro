@@ -29,7 +29,6 @@ SOURCES += main.cpp \
 
 HEADERS  += \
     beam.h \
-    display.h \
     glwidget.h \
     mainwindow.h \
     recalc.h \
