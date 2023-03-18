@@ -32,7 +32,6 @@ HEADERS  += \
     glwidget.h \
     mainwindow.h \
     recalc.h \
-    questions.h \
     mode3.h \
     wavelength.h \
     \
