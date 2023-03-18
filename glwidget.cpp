@@ -4,9 +4,6 @@ GLWidget::GLWidget(QWidget *parent) :
     QOpenGLWidget(parent)
 {
     connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
-    if (sceneNumber == 3)
-        timer.start(50);
-    else
         timer.start(1);
 }
 

@@ -10,13 +10,15 @@
 class Scene3 : public SceneBase
 {
     int displayMode;
+    bool dynamicMode;
 
 public:
     Scene3();
 
-    const int Scale=5;
+    void setDisplayMode(int newDisplayMode);
+    void switchDynamicMode();
 
-    bool dynamic;
+    const int Scale=10;
 
     void draw_cloud(float w, float h, float R);
     void draw_floor(float ypos);

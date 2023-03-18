@@ -31,8 +31,6 @@ HEADERS  += \
     beam.h \
     glwidget.h \
     mainwindow.h \
-    recalc.h \
-    mode3.h \
     wavelength.h \
     \
     scenes/scene0.h \

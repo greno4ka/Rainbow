@@ -54,22 +54,22 @@ void MainWindow::on_pushButton_close_clicked()
 
 void MainWindow::on_radioButton0_page3_clicked()
 {
-
+    scene3->setDisplayMode(0);
 }
 
 void MainWindow::on_radioButton1_page3_clicked()
 {
-
+    scene3->setDisplayMode(1);
 }
 
 void MainWindow::on_radioButton2_page3_clicked()
 {
-
+    scene3->setDisplayMode(2);
 }
 
 void MainWindow::on_pushButton_startpause_page3_clicked()
 {
-
+    scene3->switchDynamicMode();
 }
 
 void MainWindow::on_doubleSpinBox_dist_page0_valueChanged(double value)
