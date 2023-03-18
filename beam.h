@@ -49,6 +49,9 @@ public:
     void calculateOutputPoint(double *x1, double *y1, double x0, double y0);
     void calculateInfinityPoint(double *x2, double *y2, double x1, double y1);
 
+    double refractIn();
+    double refractOut();
+
     void invertz()
     { c=-c; }
 };

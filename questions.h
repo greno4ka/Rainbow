@@ -4,7 +4,6 @@
 #include <cmath>
 
 #include "beam.h"
-#include "k.h"
 
 double what_angle(double wave, int rainbowMode)
 {
@@ -29,7 +28,7 @@ double what_angle(double wave, int rainbowMode)
     input.calculateInputPoint(&x0, &y0);
     radius.calculateKoeffs(x0,y0,0,0);
     refracted = radius;
-    refracted.snell(input,k(input.getWL()));
+    refracted.snell(input,input.refractIn());
     input = refracted;
 
     /// first reflection
@@ -42,7 +41,7 @@ double what_angle(double wave, int rainbowMode)
     radius.calculateKoeffs(x1,y1,0,0);
     if (rainbowMode == 1) {
         refracted = radius;
-        refracted.snell(input,1/k(input.getWL()));
+        refracted.snell(input,input.refractOut());
     } else {
         input.reflect(radius);
         x0=x1; y0=y1;
@@ -50,7 +49,7 @@ double what_angle(double wave, int rainbowMode)
         input.calculateOutputPoint(&x1, &y1, x0, y0);
         radius.calculateKoeffs(x1,y1,0,0);
         refracted = radius;
-        refracted.snell(input,1/k(input.getWL()));
+        refracted.snell(input,input.refractOut());
     }
     return refracted.getAngle();
 }

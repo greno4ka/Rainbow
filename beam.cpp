@@ -174,3 +174,19 @@ void Beam::calculateInfinityPoint(double *x2, double *y2, double x1, double y1) 
         *y2 = fx(*x2);
     }
 }
+
+double Beam::refractIn()
+{
+    return -2.43712 * pow(10,-20) * pow(wavelength,7) +
+            1.12669 * pow(10,-16) * pow(wavelength,6) -
+            2.17325 * pow(10,-13) * pow(wavelength,5) +
+            2.27935 * pow(10,-10) * pow(wavelength,4) -
+            1.41146 * pow(10,-7)  * pow(wavelength,3) +
+            5.19794 * pow(10,-5)  * pow(wavelength,2) -
+            0.010683 * wavelength + 2.30172;
+}
+
+double Beam::refractOut()
+{
+    return 1 / refractIn();
+}

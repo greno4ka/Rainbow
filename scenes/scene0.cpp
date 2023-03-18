@@ -1,6 +1,5 @@
 #include "scene0.h"
 
-#include "k.h"
 #include "wavelength.h"
 
 Scene0::Scene0()
@@ -107,7 +106,7 @@ void Scene0::draw_beam(Beam beam)
 
         /// FIRST REFRACTION
         refracted = radius; // we're get reformed from radius
-        refracted.snell(beam, k(beam.getWL()));
+        refracted.snell(beam, beam.refractIn());
         beam = refracted;
         beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
@@ -121,7 +120,7 @@ void Scene0::draw_beam(Beam beam)
             /// REFRACTION OUTSIDE
             radius.calculateKoeffs(x1,y1,0,0);
             refracted = radius; // we're get reformed from radius again
-            refracted.snell(beam, 1/k(beam.getWL())); // 1/k because beam is going from inside out
+            refracted.snell(beam, beam.refractOut());
             refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
             p -= 0.1; // low color intensity every beam split

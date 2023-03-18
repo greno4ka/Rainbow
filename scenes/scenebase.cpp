@@ -2,7 +2,6 @@
 
 #include "beam.h"
 #include "wavelength.h"
-#include "k.h"
 
 SceneBase::SceneBase()
 {
@@ -109,7 +108,7 @@ void SceneBase::draw1stRainbow(Beam beam)
 
     /// FIRST REFRACTION
     refracted = radius;
-    refracted.snell(beam, k(beam.getWL()));
+    refracted.snell(beam, beam.refractIn());
     beam = refracted;
     beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
@@ -126,7 +125,7 @@ void SceneBase::draw1stRainbow(Beam beam)
     /// REFRACTION OUTSIDE
     radius.calculateKoeffs(x1,y1,0,0);
     refracted = radius;
-    refracted.snell(beam, 1/k(beam.getWL())); // 1/k because beam is going from inside out
+    refracted.snell(beam, beam.refractOut());
     refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
     drawLine(x1,y1,x2,y2);
@@ -168,7 +167,7 @@ void SceneBase::draw2ndRainbow(Beam beam)
 
     /// FIRST REFRACTION
     refracted = radius;
-    refracted.snell(beam, k(beam.getWL()));
+    refracted.snell(beam, beam.refractIn());
     beam = refracted;
     beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
@@ -193,7 +192,7 @@ void SceneBase::draw2ndRainbow(Beam beam)
     /// REFRACTION OUTSIDE
     radius.calculateKoeffs(x1,y1,0,0);
     refracted = radius;
-    refracted.snell(beam, 1/k(beam.getWL())); // 1/k because beam is going from inside out
+    refracted.snell(beam, beam.refractOut());
     refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
     drawLine(x1,y1,x2,y2);
