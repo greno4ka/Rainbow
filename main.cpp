@@ -1,14 +1,11 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QLayout>
-#include <iostream>
 #include <ctime>
-#include "beam.h"
 #include "mainwindow.h"
 
 float *rnd=NULL;            // array for random values in 3rd scene
 int dynamic=1;                  // dynamic image or not in 3rd scene
-double R=10;
 
 int main(int argc, char **argv)
 {
@@ -23,7 +20,6 @@ int main(int argc, char **argv)
     if (argc > 1)
         programMode=atoi(argv[1]);
 
-    R=5;
     /// Initialization code here
 //    switch (mode)
 //    {
