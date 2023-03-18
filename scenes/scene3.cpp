@@ -5,12 +5,18 @@
 Scene3::Scene3()
 {
     displayMode = 0;
+    desiredFPS = 60;
     // double Z=std::min(X/4,Y/2);
 }
 
 void Scene3::setDisplayMode(int newDisplayMode)
 {
     displayMode = newDisplayMode;
+}
+
+void Scene3::setDesiredFPS(int newDesiredFPS)
+{
+    desiredFPS = newDesiredFPS;
 }
 
 void Scene3::switchDynamicMode()
@@ -20,17 +26,17 @@ void Scene3::switchDynamicMode()
 
 inline double Scene3::x(double x0)
 {
-    return X-(X/8)+x0*std::min(X/8,Y/4)/Scale;
+    return X-(X/4)+x0*std::min(X/4,Y/2)/Scale;
 }
 
 inline double Scene3::y(double y0)
 {
-    return (Y/4)+y0*std::min(X/8,Y/4)/Scale;
+    return (Y/2)+y0*std::min(X/4,Y/2)/Scale;
 }
 
 inline double Scene3::r(double r0)
 {
-    return r0*std::min(X/8,Y/4)/Scale;
+    return r0*std::min(X/4,Y/2)/Scale;
 }
 
 void Scene3::display()
@@ -43,14 +49,18 @@ void Scene3::display()
     float *rnd; // array for random values in 3rd scene
     int m3beams = 100;
     Beam Ln(1);
+
     Ln.calculateKoeffs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
+
     rnd = (float*)malloc((m3beams) * sizeof(float));
+
     /// DRAW RAIN
     glColor3ub(200,200,200);
     glEnable(GL_LINE_SMOOTH); // begin of antialiasing
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     glHint(GL_LINE_SMOOTH_HINT, GL_NICEST); // end of antialiasing
+
     glEnable(GL_LINE_STIPPLE); // dashed line
     glLineStipple(10, 0xAAAA); // style of dashes
     glBegin(GL_LINES);
@@ -61,7 +71,7 @@ void Scene3::display()
         glVertex2f(xcur,y(6+(rand()%500)/100));
         glVertex2f(xcur-50,0);
     }
-    // Sleep(0.05);
+    Sleep(888/desiredFPS);
     glEnd();
     glDisable(GL_LINE_SMOOTH);
     glDisable(GL_BLEND);
@@ -87,14 +97,11 @@ void Scene3::display()
         gx+=rnd[j++];
         Lm.calculateKoeffs(x(gx),y(gy),eyex,eyey);
         /// ORIGINAL BEAMS
-        if (j%3==1) // draw every 3rd original beam
-        {
             glBegin(GL_LINES);
             glColor3ub(255,255,255);
             glVertex2f(0,y(gy));
             glVertex2f(x(gx),y(gy));
             glEnd();
-        }
 
         // End of original beams
         if(displayMode==0)
@@ -159,6 +166,12 @@ void Scene3::display()
 
 void Scene3::draw_cloud(float w, float h, float R)
 {
+    // Enable antialising
+    glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
+    glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_POLYGON_SMOOTH);
+    glEnable(GL_BLEND);
+
     glColor3ub(100,100,100);
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(x(15),y(14));
@@ -167,6 +180,10 @@ void Scene3::draw_cloud(float w, float h, float R)
                    glVertex2f(cos(a)*w*r(R)+x(15),sin(a)*h*r(R)+y(14));
                }
     glEnd();
+
+    // Disable antialising
+    glDisable(GL_POLYGON_SMOOTH);
+    glDisable(GL_BLEND);
 }
 
 void Scene3::draw_floor(float ypos)

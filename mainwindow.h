@@ -69,13 +69,15 @@ private slots:
     void on_radioButton2_page2_clicked();
     void on_checkBox_show_angle_page2_stateChanged(int value);
     void on_checkBox_show_rainbow_beams_page2_stateChanged(int value);
+    void on_horizontalSlider_number_of_beams_page2_valueChanged(int value);
     void on_pushButton_reset_settings_page2_clicked();
     /// PAGE3
     void on_radioButton0_page3_clicked();
     void on_radioButton1_page3_clicked();
     void on_radioButton2_page3_clicked();
     void on_pushButton_startpause_page3_clicked();
-    void on_horizontalSlider_number_of_beams_page2_valueChanged(int value);
+    void on_spinBox_FPS_page3_valueChanged(int value);
+    void on_horizontalSlider_FPS_page3_valueChanged(int value);
     /// PAGE4
     void on_radioButton0_page4_clicked();
     void on_radioButton1_page4_clicked();

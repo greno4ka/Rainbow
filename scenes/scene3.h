@@ -11,11 +11,13 @@ class Scene3 : public SceneBase
 {
     int displayMode;
     bool dynamicMode;
+    int desiredFPS;
 
 public:
     Scene3();
 
     void setDisplayMode(int newDisplayMode);
+    void setDesiredFPS(int newDesiredFPS);
     void switchDynamicMode();
 
     const int Scale=10;
