@@ -23,6 +23,7 @@ void GLWidget::setSceneNumber(int programMode)
         scene = scene2;
         break;
     case 3:
+        scene3->regenerateRain();
         scene = scene3;
         break;
     case 4:
@@ -59,6 +60,9 @@ void GLWidget::resizeGL(int w, int h){
     scene2->updateXY(w, h);
     scene3->updateXY(w, h);
     scene4->updateXY(w, h);
+
+    if (sceneNumber == 3)
+        scene3->regenerateRain();
 
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);

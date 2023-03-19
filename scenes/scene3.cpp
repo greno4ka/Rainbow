@@ -6,7 +6,18 @@ Scene3::Scene3()
 {
     displayMode = 0;
     desiredFPS = 60;
-    // double Z=std::min(X/4,Y/2);
+    currentRainSpeed = 0;
+    initialRainSwift = 0;
+    currentRainFrame = 0;
+    regenerateRain();
+    currentRainFrame = 0;
+}
+
+Scene3::~Scene3()
+{
+    if (currentRainSpeed) delete [] currentRainSpeed;
+    if (initialRainSwift) delete [] initialRainSwift;
+    if (currentRainFrame) delete [] currentRainFrame;
 }
 
 void Scene3::setDisplayMode(int newDisplayMode)
@@ -22,6 +33,27 @@ void Scene3::setDesiredFPS(int newDesiredFPS)
 void Scene3::switchDynamicMode()
 {
     dynamicMode = !dynamicMode;
+}
+
+void Scene3::regenerateRain()
+{
+    if (currentRainSpeed) delete [] currentRainSpeed;
+    if (initialRainSwift) delete [] initialRainSwift;
+    if (currentRainFrame) delete [] currentRainFrame;
+
+    cloudBegin = -CloudWidth * r(CloudRadius-1.5) + x(CloudCenterX);
+    cloudEnd = CloudWidth * r(CloudRadius-1.5) + x(CloudCenterX);
+    numberOfRainDashes = 0;
+    for (int i=cloudBegin; i<=cloudEnd; i+=RainStep)
+        numberOfRainDashes++;
+    currentRainSpeed = new int[numberOfRainDashes+1];
+    initialRainSwift = new int[numberOfRainDashes+1];
+    currentRainFrame = new int[numberOfRainDashes+1];
+    for (int i=0; i<numberOfRainDashes; i++) {
+        currentRainSpeed[i] = rand()%3 + 1; // speed should be >0, at least 1
+        initialRainSwift[i] = rand()%5;
+        currentRainFrame[i] = 0;
+    }
 }
 
 inline double Scene3::x(double x0)
@@ -42,43 +74,21 @@ inline double Scene3::r(double r0)
 void Scene3::display()
 {
     int r,g,b;
-    double ManPositionX=-5,ManPositionY=-11, // position of MAN
-          eyex,eyey,        // position of eye - counts in draw_man(...)
-          man_height=3;       // simply man's height
-    float *rnd; // array for random values in 3rd scene
+    double eyex,eyey;        // position of eye - counts in draw_man(...)
+
+    drawRain();
+
+    eyex=x(ManPositionX)+6;            // count here because
+    eyey=y(ManPositionY+3)+4; // we want to know where is our eye
+
+    float *rnd;
+
     int m3beams = 100;
     Beam Ln(1);
 
     Ln.calculateKoeffs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
 
-    rnd = (float*)malloc((m3beams) * sizeof(float));
-
-    /// DRAW RAIN
-    glColor3ub(200,200,200);
-    glEnable(GL_LINE_SMOOTH); // begin of antialiasing
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST); // end of antialiasing
-
-    glEnable(GL_LINE_STIPPLE); // dashed line
-    glLineStipple(10, 0xAAAA); // style of dashes
-    glBegin(GL_LINES);
-    double xbeg = x(5),
-           xend = x(12);
-    for (double xcur=xbeg; xcur<=xend; xcur+=10)
-    {
-        glVertex2f(xcur,y(6+(rand()%500)/100));
-        glVertex2f(xcur-50,0);
-    }
-    Sleep(888/desiredFPS);
-    glEnd();
-    glDisable(GL_LINE_SMOOTH);
-    glDisable(GL_BLEND);
-    glDisable(GL_LINE_STIPPLE);
-
-    drawFloor();
-    eyex=x(ManPositionX)+6;            // count here because
-    eyey=y(ManPositionY+man_height)+4; // we want to know where is our eye
+    rnd = new float[m3beams+1];
 
 //    glEnable(GL_LINE_SMOOTH); // begin of antialiasing
 //    glEnable(GL_BLEND);
@@ -124,7 +134,6 @@ void Scene3::display()
                 glVertex2f(x(x0),y(y2));
                 glEnd();
             }
-            drawFloor();
         }
         if (displayMode == 1)
             if ( (Lm.getAngle() >= whatAngle(380,1) && Lm.getAngle() <= whatAngle(780,1) ) ||
@@ -143,7 +152,6 @@ void Scene3::display()
                 glVertex2f(xcut,ycut);
                 glEnd();
                 drawMan();
-                drawFloor();
             }
         if (displayMode == 2)
             if ( (Lm.getAngle() >= whatAngle(380,1) && Lm.getAngle() <= whatAngle(780,1) ) ||
@@ -165,25 +173,61 @@ void Scene3::display()
                     glVertex2f(x(x0),y(y2));
                     glEnd();
                 }
-                drawFloor();
                 drawMan();
             }
     }
 
+    drawFloor();
     drawCloud();
 
+    delete [] rnd; // array for random values in 3rd scene
 //    glDisable(GL_LINE_SMOOTH);
 //    glDisable(GL_BLEND);
 }
 
+void Scene3::drawRain()
+{
+    glColor3ub(200,200,200);
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_BLEND);
+
+    glEnable(GL_LINE_STIPPLE); // dashed line
+    glLineStipple(15, 0xAAAA); // style of dashes
+    glBegin(GL_LINES);
+
+    int dashNumber = 0;
+    for (int currentX=cloudBegin; currentX<=cloudEnd; currentX+=RainStep) {
+        /// Our rain goes from underground upstairs to the cloud :3
+        glVertex2f(currentX + initialRainSwift[dashNumber]
+                   -currentRainFrame[dashNumber]*currentRainSpeed[dashNumber]
+                   -y(CloudCenterY)/RainKoef ,
+
+                   initialRainSwift[dashNumber]*RainKoef
+                   -currentRainFrame[dashNumber]*RainKoef*currentRainSpeed[dashNumber]);
+
+        glVertex2f(currentX ,y(CloudCenterY));
+
+        if (currentRainFrame[dashNumber] < currentRainSpeed[dashNumber]*30)
+            currentRainFrame[dashNumber]++;
+        else
+            currentRainFrame[dashNumber] = 0;
+        dashNumber++;
+    }
+
+
+    Sleep(888/desiredFPS);
+
+    glEnd();
+    glDisable(GL_LINE_STIPPLE);
+
+    glDisable(GL_LINE_SMOOTH);
+    glDisable(GL_BLEND);
+}
+
 void Scene3::drawCloud()
 {
-    const double CloudWidth = 3,
-                 CloudHeight = 1,
-                 CloudRadius = 6,
-                 CloudCenterX = 15,
-                 CloudCenterY = 15;
-
     // Enable antialising
     glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
     glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
