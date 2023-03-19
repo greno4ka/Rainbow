@@ -52,26 +52,6 @@ void MainWindow::on_pushButton_close_clicked()
     close();
 }
 
-void MainWindow::on_radioButton0_page3_clicked()
-{
-    scene3->setDisplayMode(0);
-}
-
-void MainWindow::on_radioButton1_page3_clicked()
-{
-    scene3->setDisplayMode(1);
-}
-
-void MainWindow::on_radioButton2_page3_clicked()
-{
-    scene3->setDisplayMode(2);
-}
-
-void MainWindow::on_pushButton_startpause_page3_clicked()
-{
-    scene3->switchDynamicMode();
-}
-
 void MainWindow::on_doubleSpinBox_dist_page0_valueChanged(double value)
 {
     scene0->setDistance(value);
@@ -232,6 +212,38 @@ void MainWindow::on_pushButton_reset_settings_page2_clicked()
 
 }
 
+void MainWindow::on_radioButton0_page3_clicked()
+{
+    scene3->setDisplayMode(0);
+}
+
+void MainWindow::on_radioButton1_page3_clicked()
+{
+    scene3->setDisplayMode(1);
+}
+
+void MainWindow::on_radioButton2_page3_clicked()
+{
+    scene3->setDisplayMode(2);
+}
+
+void MainWindow::on_pushButton_startpause_page3_clicked()
+{
+    scene3->switchDynamicMode();
+}
+
+void MainWindow::on_spinBox_FPS_page3_valueChanged(int value)
+{
+    ui->horizontalSlider_FPS_page3->setValue(value);
+    scene3->setDesiredFPS(value);
+}
+
+void MainWindow::on_horizontalSlider_FPS_page3_valueChanged(int value)
+{
+    ui->spinBox_FPS_page3->setValue(value);
+    scene3->setDesiredFPS(value);
+}
+
 void MainWindow::on_radioButton0_page4_clicked()
 {
     scene4->setDisplayMode(0);
@@ -245,16 +257,4 @@ void MainWindow::on_radioButton1_page4_clicked()
 void MainWindow::on_radioButton2_page4_clicked()
 {
     scene4->setDisplayMode(2);
-}
-
-void MainWindow::on_spinBox_FPS_page3_valueChanged(int value)
-{
-    ui->horizontalSlider_FPS_page3->setValue(value);
-    scene3->setDesiredFPS(value);
-}
-
-void MainWindow::on_horizontalSlider_FPS_page3_valueChanged(int value)
-{
-    ui->spinBox_FPS_page3->setValue(value);
-    scene3->setDesiredFPS(value);
 }

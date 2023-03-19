@@ -22,15 +22,15 @@ public:
     explicit MainWindow(int programMode, QWidget *parent = nullptr);
     ~MainWindow();
 
+private:
+    Ui::MainWindow *ui;
+
     SceneBase *scene;
     Scene0 *scene0;
     Scene1 *scene1;
     Scene2 *scene2;
     Scene3 *scene3;
     Scene4 *scene4;
-
-private:
-    Ui::MainWindow *ui;
 
     int currentStackWidgetPage;
 

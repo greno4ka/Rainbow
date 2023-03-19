@@ -5,8 +5,6 @@
 
 #include "scenebase.h"
 
-#include "beam.h"
-
 class Scene3 : public SceneBase
 {
     int displayMode;

@@ -1,11 +1,6 @@
 #include <QApplication>
-#include <QMessageBox>
-#include <QLayout>
-#include <ctime>
-#include "mainwindow.h"
 
-float *rnd=NULL;            // array for random values in 3rd scene
-int dynamic=1;                  // dynamic image or not in 3rd scene
+#include "mainwindow.h"
 
 int main(int argc, char **argv)
 {
@@ -20,24 +15,10 @@ int main(int argc, char **argv)
     if (argc > 1)
         programMode=atoi(argv[1]);
 
-    /// Initialization code here
-//    switch (mode)
-//    {
-//    case 3: R=3;
-//        srand(time(NULL));
-//        if(!(rnd = (float*)malloc((m3beams) * sizeof(float))))
-//        {
-//            QMessageBox::critical(0,"Ошибка 0x0001", "Не удалось выделить память. Работа программы будет завершена");
-//            a.quit();
-//        }
-//        break;
-
     MainWindow m(programMode);
     m.show();
 
     //w->setWindowFlags(Qt::FramelessWindowHint);
-    //w->show();
-    // w->showFullScreen();
     //w->centralWidget()->layout()->setContentsMargins(1,1,1,1);
     // 1,1,1,1 because somewhere 0,0,0,0 doesn't work
     // this code cuts frame around program
