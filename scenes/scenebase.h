@@ -7,10 +7,10 @@
 
 class SceneBase
 {
-    static const int DropQuality = 100;
     static const int SceneScale = 10;
 
 protected:
+    static const int ImageQuality = 100;
     static const int DropRadius = 5;
 
     int X,Y; // Window height and width

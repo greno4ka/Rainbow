@@ -11,6 +11,11 @@ class Scene3 : public SceneBase
     bool dynamicMode;
     int desiredFPS;
 
+    // used for floor and man
+    const double ManPositionX = -5,
+                 ManPositionY = -11,
+                 ManHeight = 3;
+
 public:
     Scene3();
 
@@ -20,9 +25,9 @@ public:
 
     const int Scale=10;
 
-    void draw_cloud(float w, float h, float R);
-    void draw_floor(float ypos);
-    void draw_man(float xpos, float ypos, float h);
+    void drawCloud();
+    void drawFloor();
+    void drawMan();
 
     void display();
 

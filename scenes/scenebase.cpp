@@ -42,8 +42,8 @@ void SceneBase::draw_drop()
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(x(0),y(0));
 
-    for (int i=0; i<=DropQuality; i++) {
-        double currentAngle = (double)i/DropQuality*2*M_PI;
+    for (int i=0; i<=ImageQuality; i++) {
+        double currentAngle = (double)i/ImageQuality*2*M_PI;
         glVertex2f(x(0)+r(DropRadius)*cos(currentAngle),
                    y(0)+r(DropRadius)*sin(currentAngle));
     }

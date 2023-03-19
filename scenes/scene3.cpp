@@ -42,8 +42,7 @@ inline double Scene3::r(double r0)
 void Scene3::display()
 {
     int r,g,b;
-    float w=3,h=1,          // koeffs for the ellipse w-width, h-height
-          xpos=-5,ypos=-11, // position of MAN
+    double ManPositionX=-5,ManPositionY=-11, // position of MAN
           eyex,eyey,        // position of eye - counts in draw_man(...)
           man_height=3;       // simply man's height
     float *rnd; // array for random values in 3rd scene
@@ -77,10 +76,14 @@ void Scene3::display()
     glDisable(GL_BLEND);
     glDisable(GL_LINE_STIPPLE);
 
-    draw_cloud(w,h,6);
-    draw_floor(ypos);
-    eyex=x(xpos)+6;            // count here because
-    eyey=y(ypos+man_height)+4; // we want to know where is our eye
+    drawFloor();
+    eyex=x(ManPositionX)+6;            // count here because
+    eyey=y(ManPositionY+man_height)+4; // we want to know where is our eye
+
+//    glEnable(GL_LINE_SMOOTH); // begin of antialiasing
+//    glEnable(GL_BLEND);
+//    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+//    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST); // end of antialiasing
 
     int j=0;
     for (double i=-4; i<5; i+=10.0/m3beams)
@@ -104,7 +107,7 @@ void Scene3::display()
             glEnd();
 
         // End of original beams
-        if(displayMode==0)
+        if (displayMode == 0)
         {
             for (int w=380; w<=780; w+=60)
             {
@@ -121,10 +124,12 @@ void Scene3::display()
                 glVertex2f(x(x0),y(y2));
                 glEnd();
             }
-            draw_floor(ypos);
+            drawFloor();
         }
         if (displayMode == 1)
-            if ((Lm.getAngle()>=whatAngle(380,1) && Lm.getAngle()<=whatAngle(780,1)) || (Lm.getAngle()>=whatAngle(780,2) && Lm.getAngle()<=whatAngle(380,2)))
+            if ( (Lm.getAngle() >= whatAngle(380,1) && Lm.getAngle() <= whatAngle(780,1) ) ||
+                 (Lm.getAngle() >= whatAngle(780,2) && Lm.getAngle() <= whatAngle(380,2) )
+               )
             {
                 xcut=eyex+rd*cos(Lm.getAngle()*M_PI/180);
                 ycut=eyey+rd*sin(Lm.getAngle()*M_PI/180);
@@ -137,11 +142,13 @@ void Scene3::display()
                 glVertex2f(x(gx),y(gy));
                 glVertex2f(xcut,ycut);
                 glEnd();
-                draw_floor(ypos);
-                draw_man(xpos,ypos,man_height);
+                drawMan();
+                drawFloor();
             }
         if (displayMode == 2)
-            if ((Lm.getAngle()>=whatAngle(380,1) && Lm.getAngle()<=whatAngle(780,1)) || (Lm.getAngle()>=whatAngle(780,2) && Lm.getAngle()<=whatAngle(380,2)))
+            if ( (Lm.getAngle() >= whatAngle(380,1) && Lm.getAngle() <= whatAngle(780,1) ) ||
+                 (Lm.getAngle() >= whatAngle(780,2) && Lm.getAngle() <= whatAngle(380,2) )
+               )
             {
                 for (int w=380; w<=780; w+=30)
                 {
@@ -158,14 +165,25 @@ void Scene3::display()
                     glVertex2f(x(x0),y(y2));
                     glEnd();
                 }
-                draw_floor(ypos);
-                draw_man(xpos,ypos,man_height);
+                drawFloor();
+                drawMan();
             }
     }
+
+    drawCloud();
+
+//    glDisable(GL_LINE_SMOOTH);
+//    glDisable(GL_BLEND);
 }
 
-void Scene3::draw_cloud(float w, float h, float R)
+void Scene3::drawCloud()
 {
+    const double CloudWidth = 3,
+                 CloudHeight = 1,
+                 CloudRadius = 6,
+                 CloudCenterX = 15,
+                 CloudCenterY = 15;
+
     // Enable antialising
     glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
     glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
@@ -174,11 +192,12 @@ void Scene3::draw_cloud(float w, float h, float R)
 
     glColor3ub(100,100,100);
     glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(x(15),y(14));
-    for(int i = 0; i <= 50; i++ ) {
-                 double  a=i/50.0*M_PI*2.0;
-                   glVertex2f(cos(a)*w*r(R)+x(15),sin(a)*h*r(R)+y(14));
-               }
+    glVertex2f(x(CloudCenterX),y(CloudCenterY));
+    for (int i = 0; i <= ImageQuality; i++) {
+        double a = (double)i/ImageQuality*M_PI*2;
+        glVertex2f(cos(a) * CloudWidth * r(CloudRadius) + x(CloudCenterX),
+                   sin(a) * CloudHeight * r(CloudRadius) + y(CloudCenterY));
+    }
     glEnd();
 
     // Disable antialising
@@ -186,101 +205,196 @@ void Scene3::draw_cloud(float w, float h, float R)
     glDisable(GL_BLEND);
 }
 
-void Scene3::draw_floor(float ypos)
+void Scene3::drawFloor()
 {
+    // Enable antialising
+    glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
+    glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_POLYGON_SMOOTH);
+    glEnable(GL_BLEND);
+
     glColor3ub(0,180,0);
     glBegin(GL_QUADS);
-    glVertex2f(0,y(ypos));
-    glVertex2f(X,y(ypos));
+    glVertex2f(0,y(ManPositionY));
+    glVertex2f(X,y(ManPositionY));
     glVertex2f(X,0);
     glVertex2f(0,0);
     glEnd();
+
+    // Disable antialising
+    glDisable(GL_POLYGON_SMOOTH);
+    glDisable(GL_BLEND);
 }
 
-void Scene3::draw_man(float xpos, float ypos, float h)
+void Scene3::drawMan()
 {
+    const double ManHeadRadius = 0.4,
+                 ManArmWidth = 0.3,
+                 ManArmHeight = 1.2;
+
     glColor3ub(255,255,255);
+
+    // Enable antialising
+    glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
+    glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_POLYGON_SMOOTH);
+    glEnable(GL_BLEND);
+
     ///HEAD
     glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(x(xpos),y(ypos+h));
-    for(int i = 0; i <= 50; i++ ) {
-                 double  a=i/50.0*M_PI*2.0;
-                   glVertex2f(cos(a)*r(0.4)+x(xpos),sin(a)*r(0.4)+y(ypos+h));
-               }
+    glVertex2f(x(ManPositionX),y(ManPositionY+ManHeight));
+    for (int i = 0; i <= ImageQuality; i++ ) {
+        double  a = (double)i/ImageQuality*M_PI*2;
+        glVertex2f(cos(a)*r(ManHeadRadius)+x(ManPositionX),
+                   sin(a)*r(ManHeadRadius)+y(ManPositionY+ManHeight));
+    }
     glEnd();
+
+    // Disable antialising
+    glDisable(GL_POLYGON_SMOOTH);
+    glDisable(GL_BLEND);
 
     glBegin(GL_QUADS);
-    ///BODY
-    glVertex2f(x(xpos-0.4),y(ypos+h-0.4));
-    glVertex2f(x(xpos+0.4),y(ypos+h-0.4));
-    glVertex2f(x(xpos+0.4),y(ypos));
-    glVertex2f(x(xpos-0.4),y(ypos));
+    // points go in clockwise order
+    // 1 2
+    // 4 3
+    /// BODY
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY));
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY));
 
-    ///LEFT HAND
-    glVertex2f(x(xpos+0.7),y(ypos+h-0.4));
-    glVertex2f(x(xpos+0.4),y(ypos+h-0.4));
-    glVertex2f(x(xpos+0.4),y(ypos+h-1.7));
-    glVertex2f(x(xpos+0.7),y(ypos+h-1.7));
+    /// LEFT HAND
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
 
-    ///RIGHT HAND
-    glVertex2f(x(xpos-0.72),y(ypos+h-0.4));
-    glVertex2f(x(xpos-0.4),y(ypos+h-0.4));
-    glVertex2f(x(xpos-0.4),y(ypos+h-1.7));
-    glVertex2f(x(xpos-0.72),y(ypos+h-1.7));
+    /// RIGHT HAND
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
     glEnd();
+
+    // Enable antialising
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_POINT_SMOOTH);
+    glEnable(GL_BLEND);
 
     glColor3ub(0,0,0);
     glBegin(GL_POINTS);
-    ///LEFT SHOULDER
-    glVertex2f(x(xpos-0.72),y(ypos+h-0.4));
-    glVertex2f(x(xpos-0.72)+1,y(ypos+h-0.4));
-    glVertex2f(x(xpos-0.72)+2,y(ypos+h-0.4));
-    glVertex2f(x(xpos-0.72),y(ypos+h-0.4)-1);
-    glVertex2f(x(xpos-0.72)+1,y(ypos+h-0.4)-1);
-    glVertex2f(x(xpos-0.72),y(ypos+h-0.4)-2);
-    ///RIGHT SHOULDER
-    glVertex2f(x(xpos+0.7),y(ypos+h-0.4));
-    glVertex2f(x(xpos+0.7)-1,y(ypos+h-0.4));
-    glVertex2f(x(xpos+0.7)-2,y(ypos+h-0.4));
-    glVertex2f(x(xpos+0.7),y(ypos+h-0.4)-1);
-    glVertex2f(x(xpos+0.7)-1,y(ypos+h-0.4)-1);
-    glVertex2f(x(xpos+0.7),y(ypos+h-0.4)-2);
-    ///LEFT HAND
-    glVertex2f(x(xpos-0.72),y(ypos+h-1.7));
-    glVertex2f(x(xpos-0.4)-1,y(ypos+h-1.7));
-    glVertex2f(x(xpos-0.72)+1,y(ypos+h-1.7));
-    glVertex2f(x(xpos-0.4)-2,y(ypos+h-1.7));
-    glVertex2f(x(xpos-0.72),y(ypos+h-1.7)+1);
-    glVertex2f(x(xpos-0.4)-1,y(ypos+h-1.7)+1);
-    ///RIGHT HAND
-    glVertex2f(x(xpos+0.7),y(ypos+h-1.7));
-    glVertex2f(x(xpos+0.4),y(ypos+h-1.7));
-    glVertex2f(x(xpos+0.7)-1,y(ypos+h-1.7));
-    glVertex2f(x(xpos+0.4)+1,y(ypos+h-1.7));
-    glVertex2f(x(xpos+0.7),y(ypos+h-1.7)+1);
-    glVertex2f(x(xpos+0.4),y(ypos+h-1.7)+1);
-    ///LEFT LEG
-    glVertex2f(x(xpos-0.4),y(ypos));
-    glVertex2f(x(xpos)-1,y(ypos));
-    glVertex2f(x(xpos-0.4)+1,y(ypos));
-    glVertex2f(x(xpos)-2,y(ypos));
-    glVertex2f(x(xpos-0.4),y(ypos)+1);
-    glVertex2f(x(xpos)-1,y(ypos)+1);
-    ///RIGHT LEG
-    glVertex2f(x(xpos+0.4)-1,y(ypos));
-    glVertex2f(x(xpos)+1,y(ypos));
-    glVertex2f(x(xpos+0.4)-2,y(ypos));
-    glVertex2f(x(xpos)+2,y(ypos));
-    glVertex2f(x(xpos+0.4)-1,y(ypos)+1);
-    glVertex2f(x(xpos)+1,y(ypos)+1);
+    /// LEFT SHOULDER
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+1,y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+2,y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+3,y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius)-1);
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+1,y(ManPositionY+ManHeight-ManHeadRadius)-1);
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius)-2);
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius)-3);
+
+    /// RIGHT SHOULDER
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-1,y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-2,y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-3,y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius)-1);
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-1,y(ManPositionY+ManHeight-ManHeadRadius)-1);
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius)-2);
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius)-3);
+
+    /// LEFT HAND
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+2,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+3,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+2);
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+3);
+
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1-2,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1-3,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+2);
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+3);
+
+    /// RIGHT HAND
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-2,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-3,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+2);
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+3);
+
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1+2,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1+3,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+2);
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+3);
+
+    /// LEFT LEG
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY));
+    glVertex2f(x(ManPositionX-ManHeadRadius)+1,y(ManPositionY));
+    glVertex2f(x(ManPositionX-ManHeadRadius)+2,y(ManPositionY));
+    glVertex2f(x(ManPositionX-ManHeadRadius)+3,y(ManPositionY));
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX-ManHeadRadius)+1,y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY)+2);
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY)+3);
+
+    glVertex2f(x(ManPositionX)-1,y(ManPositionY));
+    glVertex2f(x(ManPositionX)-1-1,y(ManPositionY));
+    glVertex2f(x(ManPositionX)-1-2,y(ManPositionY));
+    glVertex2f(x(ManPositionX)-1-3,y(ManPositionY));
+    glVertex2f(x(ManPositionX)-1,y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX)-1-1,y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX)-1,y(ManPositionY)+2);
+    glVertex2f(x(ManPositionX)-1,y(ManPositionY)+3);
+
+    /// RIGHT LEG
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY));
+    glVertex2f(x(ManPositionX+ManHeadRadius)-1,y(ManPositionY));
+    glVertex2f(x(ManPositionX+ManHeadRadius)-2,y(ManPositionY));
+    glVertex2f(x(ManPositionX+ManHeadRadius)-3,y(ManPositionY));
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX+ManHeadRadius)-1,y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY)+2);
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY)+3);
+
+    glVertex2f(x(ManPositionX)+1,y(ManPositionY));
+    glVertex2f(x(ManPositionX)+1+1,y(ManPositionY));
+    glVertex2f(x(ManPositionX)+1+2,y(ManPositionY));
+    glVertex2f(x(ManPositionX)+1+3,y(ManPositionY));
+    glVertex2f(x(ManPositionX)+1,y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX)+1+1,y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX)+1,y(ManPositionY)+2);
+    glVertex2f(x(ManPositionX)+1,y(ManPositionY)+3);
+
     glEnd();
+
+    // Disable antialising
+    glDisable(GL_POINT_SMOOTH);
+    glDisable(GL_BLEND);
+
     ///SOME LINES
     glBegin(GL_LINES);
-    glVertex2f(x(xpos),y(ypos));
-    glVertex2f(x(xpos),y(ypos+1.33));
-    glVertex2f(x(xpos+0.4),y(ypos+2.3));
-    glVertex2f(x(xpos+0.4),y(ypos+1.33));
-    glVertex2f(x(xpos-0.42),y(ypos+2.3));
-    glVertex2f(x(xpos-0.42),y(ypos+1.33));
+    glVertex2f(x(ManPositionX),y(ManPositionY));
+    glVertex2f(x(ManPositionX),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmWidth));
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmWidth));
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
     glEnd();
 }
