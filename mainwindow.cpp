@@ -253,6 +253,10 @@ void MainWindow::on_radioButton2_page3_clicked()
 void MainWindow::on_pushButton_startpause_page3_clicked()
 {
     scene3->switchDynamicMode();
+    if (scene3->getDynamicMode())
+        ui->pushButton_startpause_page3->setText("Пауза");
+    else
+        ui->pushButton_startpause_page3->setText("Старт");
 }
 
 void MainWindow::on_spinBox_FPS_page3_valueChanged(int value)

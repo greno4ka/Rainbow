@@ -5,6 +5,7 @@
 Scene3::Scene3()
 {
     displayMode = 0;
+    dynamicMode = 1;
     desiredFPS = 60;
     currentRainSpeed = 0;
     initialRainSwift = 0;
@@ -33,6 +34,11 @@ void Scene3::setDesiredFPS(int newDesiredFPS)
 void Scene3::switchDynamicMode()
 {
     dynamicMode = !dynamicMode;
+}
+
+bool Scene3::getDynamicMode() const
+{
+    return dynamicMode;
 }
 
 void Scene3::regenerateRain()
@@ -96,7 +102,7 @@ void Scene3::display()
 //    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST); // end of antialiasing
 
     int j=0;
-    for (double i=-4; i<5; i+=10.0/m3beams)
+    for (double i=-10; i<=0; i+=10.0/m3beams)
     {
         Beam Lc(0,1,i,0,1),Lm(1);
         double gx,gy,rd=40,   // rd - mini radius [pixels]
@@ -105,7 +111,7 @@ void Scene3::display()
 
         if (dynamicMode)
             for (int i=0; i<m3beams; i++)
-                rnd[i]=(float)(rand()%500)/100;
+                rnd[i]=(float)(rand()%5);
 
         gx+=rnd[j++];
         Lm.calculateKoeffs(x(gx),y(gy),eyex,eyey);
@@ -180,6 +186,8 @@ void Scene3::display()
     drawFloor();
     drawCloud();
 
+    Sleep(888/desiredFPS);
+
     delete [] rnd; // array for random values in 3rd scene
 //    glDisable(GL_LINE_SMOOTH);
 //    glDisable(GL_BLEND);
@@ -215,9 +223,6 @@ void Scene3::drawRain()
             currentRainFrame[dashNumber] = 0;
         dashNumber++;
     }
-
-
-    Sleep(888/desiredFPS);
 
     glEnd();
     glDisable(GL_LINE_STIPPLE);

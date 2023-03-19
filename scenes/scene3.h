@@ -12,7 +12,7 @@ class Scene3 : public SceneBase
     int desiredFPS;
 
     // used for floor and man
-    const double ManPositionX = -5,
+    const double ManPositionX = -10,
                  ManPositionY = -11,
                  ManHeight = 3; // To be honest, it's height of his eye
 
@@ -54,6 +54,7 @@ public:
     inline double x(double x0);
     inline double y(double y0);
     inline double r(double r0);
+    bool getDynamicMode() const;
 };
 
 #endif // SCENE3_H
