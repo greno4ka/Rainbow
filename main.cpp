@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QLayout>
 
 #include "mainwindow.h"
 
@@ -16,12 +17,9 @@ int main(int argc, char **argv)
         programMode=atoi(argv[1]);
 
     MainWindow m(programMode);
+    // thin bounds around window please
+    m.centralWidget()->layout()->setContentsMargins(1,1,1,1);
     m.show();
-
-    //w->setWindowFlags(Qt::FramelessWindowHint);
-    //w->centralWidget()->layout()->setContentsMargins(1,1,1,1);
-    // 1,1,1,1 because somewhere 0,0,0,0 doesn't work
-    // this code cuts frame around program
 
     return a.exec();
 }
