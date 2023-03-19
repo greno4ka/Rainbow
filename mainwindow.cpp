@@ -7,7 +7,6 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
 {
     ui->setupUi(this);
     currentStackWidgetPage = programMode;
-    ui->stackedWidget->setCurrentIndex(currentStackWidgetPage);
     scene0 = new Scene0();
     scene1 = new Scene1();
     scene2 = new Scene2();
@@ -18,7 +17,7 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     ui->glWidget->connectWithScene2(*scene2);
     ui->glWidget->connectWithScene3(*scene3);
     ui->glWidget->connectWithScene4(*scene4);
-    ui->glWidget->setSceneNumber(currentStackWidgetPage);
+    switchScene();
 }
 
 MainWindow::~MainWindow()
@@ -26,20 +25,44 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::switchScene()
+{
+    switch (currentStackWidgetPage) {
+    case 0:
+        ui->label_pageName->setText("Ход луча в капле");
+        break;
+    case 1:
+        ui->label_pageName->setText("Расходимость лучей");
+        break;
+    case 2:
+        ui->label_pageName->setText("Радуга Декарта");
+        break;
+    case 3:
+        ui->label_pageName->setText("Ансамбль капель");
+        break;
+    case 4:
+        ui->label_pageName->setText("Полоса Александра");
+        break;
+    default:
+        break;
+    }
+
+    ui->stackedWidget->setCurrentIndex(currentStackWidgetPage);
+    ui->glWidget->setSceneNumber(currentStackWidgetPage);
+}
+
 void MainWindow::on_pushButton_next_clicked()
 {
     if (++currentStackWidgetPage == ui->stackedWidget->count())
         currentStackWidgetPage = 0;
-    ui->stackedWidget->setCurrentIndex(currentStackWidgetPage);
-    ui->glWidget->setSceneNumber(currentStackWidgetPage);
+    switchScene();
 }
 
 void MainWindow::on_pushButton_prev_clicked()
 {
     if (--currentStackWidgetPage < 0)
         currentStackWidgetPage = ui->stackedWidget->count() - 1;
-    ui->stackedWidget->setCurrentIndex(currentStackWidgetPage);
-    ui->glWidget->setSceneNumber(currentStackWidgetPage);
+    switchScene();
 }
 
 void MainWindow::on_pushButton_fullscreen_clicked()

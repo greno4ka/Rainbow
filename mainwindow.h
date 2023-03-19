@@ -34,6 +34,8 @@ private:
 
     int currentStackWidgetPage;
 
+    void switchScene();
+
 private slots:
     /// Main controls
     void on_pushButton_next_clicked();
