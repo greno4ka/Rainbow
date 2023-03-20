@@ -12,6 +12,7 @@ Scene3::Scene3()
     currentRainFrame = 0;
     regenerateRain();
     currentRainFrame = 0;
+    sunlightPenetration = new double[NumberOfBeams];
 }
 
 Scene3::~Scene3()
@@ -19,6 +20,7 @@ Scene3::~Scene3()
     if (currentRainSpeed) delete [] currentRainSpeed;
     if (initialRainSwift) delete [] initialRainSwift;
     if (currentRainFrame) delete [] currentRainFrame;
+    if (sunlightPenetration) delete [] sunlightPenetration;
 }
 
 void Scene3::setDisplayMode(int newDisplayMode)
@@ -80,41 +82,38 @@ inline double Scene3::r(double r0)
 void Scene3::display()
 {
     int r,g,b;
-    double eyex,eyey;        // position of eye - counts in draw_man(...)
+    double eyeX,eyeY;
+
+    Beam rainEdge(1),
+         sunLight(1),
+         observed(1);
+
+    if (dynamicMode)
+        for (int i=0; i<NumberOfBeams; i++)
+            sunlightPenetration[i] = (double)(rand()%500/100.0);
 
     drawRain();
 
-    eyex=x(ManPositionX)+6;            // count here because
-    eyey=y(ManPositionY+3)+4; // we want to know where is our eye
+    eyeX=x(ManPositionX)+6;
+    eyeY=y(ManPositionY+ManHeight)+4;
 
-    float *rnd;
+    rainEdge.calculateKoeffs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
 
-    int m3beams = 100;
-    Beam Ln(1);
 
-    Ln.calculateKoeffs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
 
-    rnd = new float[m3beams+1];
-
-//    glEnable(GL_LINE_SMOOTH); // begin of antialiasing
-//    glEnable(GL_BLEND);
-//    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-//    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST); // end of antialiasing
 
     int j=0;
-    for (double i=-10; i<=0; i+=10.0/m3beams)
+    for (double i=0; i<=10; i+=10.0/(NumberOfBeams-1))
     {
-        Beam Lc(0,1,i,0,1),Lm(1);
-        double gx,gy,rd=40,   // rd - mini radius [pixels]
+        sunLight.calculateKoeffs(0,i,1,i);
+
+        double gx,gy,
+                rd=40,   // rd - mini radius [pixels]
                      xcut,ycut; // cutted beam
-        cross_ll(Ln,Lc,&gx,&gy);
+        cross_ll(rainEdge,sunLight,&gx,&gy);
 
-        if (dynamicMode)
-            for (int i=0; i<m3beams; i++)
-                rnd[i]=(float)(rand()%5);
-
-        gx+=rnd[j++];
-        Lm.calculateKoeffs(x(gx),y(gy),eyex,eyey);
+        gx+=sunlightPenetration[j++];
+        observed.calculateKoeffs(x(gx),y(gy),eyeX,eyeY);
         /// ORIGINAL BEAMS
             glBegin(GL_LINES);
             glColor3ub(255,255,255);
@@ -122,7 +121,12 @@ void Scene3::display()
             glVertex2f(x(gx),y(gy));
             glEnd();
 
-        // End of original beams
+
+            glEnable(GL_LINE_SMOOTH); // begin of antialiasing
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+            glHint(GL_LINE_SMOOTH_HINT, GL_NICEST); // end of antialiasing
+
         if (displayMode == 0)
         {
             for (int w=380; w<=780; w+=60)
@@ -142,15 +146,15 @@ void Scene3::display()
             }
         }
         if (displayMode == 1)
-            if ( (Lm.getAngle() >= whatAngle(380,1) && Lm.getAngle() <= whatAngle(780,1) ) ||
-                 (Lm.getAngle() >= whatAngle(780,2) && Lm.getAngle() <= whatAngle(380,2) )
+            if ( (observed.getAngle() >= whatAngle(380,1) && observed.getAngle() <= whatAngle(780,1) ) ||
+                 (observed.getAngle() >= whatAngle(780,2) && observed.getAngle() <= whatAngle(380,2) )
                )
             {
-                xcut=eyex+rd*cos(Lm.getAngle()*M_PI/180);
-                ycut=eyey+rd*sin(Lm.getAngle()*M_PI/180);
-                if (Lm.getAngle()<=whatAngle(780,1))
-                    wavelengthToRGB(whatWave(Lm.getAngle(),1),&r,&g,&b);
-                else wavelengthToRGB(whatWave(Lm.getAngle(),2),&r,&g,&b);
+                xcut=eyeX+rd*cos(observed.getAngle()*M_PI/180);
+                ycut=eyeY+rd*sin(observed.getAngle()*M_PI/180);
+                if (observed.getAngle()<=whatAngle(780,1))
+                    wavelengthToRGB(whatWave(observed.getAngle(),1),&r,&g,&b);
+                else wavelengthToRGB(whatWave(observed.getAngle(),2),&r,&g,&b);
                 glBegin(GL_LINES);
                 glColor3ub(255,255,255);
                 glColor3ub(r,g,b);
@@ -160,8 +164,8 @@ void Scene3::display()
                 drawMan();
             }
         if (displayMode == 2)
-            if ( (Lm.getAngle() >= whatAngle(380,1) && Lm.getAngle() <= whatAngle(780,1) ) ||
-                 (Lm.getAngle() >= whatAngle(780,2) && Lm.getAngle() <= whatAngle(380,2) )
+            if ( (observed.getAngle() >= whatAngle(380,1) && observed.getAngle() <= whatAngle(780,1) ) ||
+                 (observed.getAngle() >= whatAngle(780,2) && observed.getAngle() <= whatAngle(380,2) )
                )
             {
                 for (int w=380; w<=780; w+=30)
@@ -181,6 +185,8 @@ void Scene3::display()
                 }
                 drawMan();
             }
+        glDisable(GL_LINE_SMOOTH);
+        glDisable(GL_BLEND);
     }
 
     drawFloor();
@@ -188,9 +194,6 @@ void Scene3::display()
 
     Sleep(888/desiredFPS);
 
-    delete [] rnd; // array for random values in 3rd scene
-//    glDisable(GL_LINE_SMOOTH);
-//    glDisable(GL_BLEND);
 }
 
 void Scene3::drawRain()

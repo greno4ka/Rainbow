@@ -24,6 +24,11 @@ class Scene3 : public SceneBase
 
     const int RainStep = 20,    // pixels between two rain dashes
               RainKoef = 5;     // simply k in y=kx
+
+    const int NumberOfBeams = 100;
+
+    double *sunlightPenetration;
+
     int cloudBegin, cloudEnd,   // x-bounds of cloud
         numberOfRainDashes;     // number of elements of currentRainSpeed
 
