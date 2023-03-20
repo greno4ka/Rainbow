@@ -28,7 +28,8 @@ public:
     double getWL();
 
     void setWL(double wl);
-    void setd(double d);
+    void setDistance(double d);
+    double getDistance();
 
     void normalizeKoeffs(); // Make more familiar form: y=-a*x-c || x=-c
     void calculateAngle();

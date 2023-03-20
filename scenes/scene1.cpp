@@ -1,5 +1,7 @@
 #include "scene1.h"
 
+#include "wavelength.h"
+
 Scene1::Scene1()
 {
     displayMode = 1;
@@ -37,6 +39,10 @@ void Scene1::setWavelength(int newWavelength)
 
 void Scene1::draw_beam(Beam beam)
 {
+    int r,g,b;
+    wavelengthToRGB(beam.getWL(),&r,&g,&b);
+    glColor3ub(r,g,b);
+
     if (displayMode == 1)
         draw1stRainbow(beam);
     else

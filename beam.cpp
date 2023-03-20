@@ -39,9 +39,14 @@ void Beam::setWL(double wl)
     wavelength=wl;
 }
 
-void Beam::setd(double d)
+void Beam::setDistance(double d)
 {
-    c=d;
+    c=-d*r;
+}
+
+double Beam::getDistance()
+{
+    return -c/r;
 }
 
 void Beam::normalizeKoeffs()

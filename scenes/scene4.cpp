@@ -1,5 +1,7 @@
 #include "scene4.h"
 
+#include "wavelength.h"
+
 Scene4::Scene4()
 {
     displayMode = 0;
@@ -37,20 +39,33 @@ void Scene4::display()
     draw_drop();
     draw_axes();
 
+    int r,g,b;
     switch (displayMode) {
     case 0:
-        for (Beams::iterator i=beams1.begin(); i!=beams1.end(); i++)
-            draw1stRainbow(*i);
-        for (Beams::iterator i=beams2.begin(); i!=beams2.end(); i++)
-            draw2ndRainbow(*i);
+        for (Beams::iterator beam=beams1.begin(); beam!=beams1.end(); beam++) {
+            wavelengthToRGB(beam->getWL(),&r,&g,&b);
+            glColor3ub(r,g,b);
+            draw1stRainbow(*beam);
+        }
+        for (Beams::iterator beam=beams2.begin(); beam!=beams2.end(); beam++) {
+            wavelengthToRGB(beam->getWL(),&r,&g,&b);
+            glColor3ub(r,g,b);
+            draw2ndRainbow(*beam);
+        }
         break;
     case 1:
-        for (Beams::iterator i=beams1.begin(); i!=beams1.end(); i++)
-            draw1stRainbow(*i);
+        for (Beams::iterator beam=beams1.begin(); beam!=beams1.end(); beam++) {
+            wavelengthToRGB(beam->getWL(),&r,&g,&b);
+            glColor3ub(r,g,b);
+            draw1stRainbow(*beam);
+        }
         break;
     case 2:
-        for (Beams::iterator i=beams2.begin(); i!=beams2.end(); i++)
-            draw2ndRainbow(*i);
+        for (Beams::iterator beam=beams2.begin(); beam!=beams2.end(); beam++) {
+            wavelengthToRGB(beam->getWL(),&r,&g,&b);
+            glColor3ub(r,g,b);
+            draw2ndRainbow(*beam);
+        }
         break;
     default:
         break;

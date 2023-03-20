@@ -1,8 +1,12 @@
 #include "scene2.h"
 
+#include "wavelength.h"
+
 Scene2::Scene2()
 {
     displayMode = 1;
+    showAngle = 0;
+    showRainbow = 0;
     wavelength = 600;
     numberOfBeams = 30;
     reinitializeBeams();
@@ -52,6 +56,18 @@ void Scene2::setShowAngle(int newShowAngle)
 
 void Scene2::draw_beam(Beam beam)
 {
+    int r,g,b;
+    wavelengthToRGB(beam.getWL(),&r,&g,&b);
+    glColor3ub(r,g,b);
+    if (showRainbow)
+        if (displayMode == 1) {
+            if (!(beam.getDistance() >= 0.84 && beam.getDistance() <= 0.88))
+                glColor3ub(r*0.5,g*0.5,b*0.5);
+        } else {
+            if (!(beam.getDistance() >= -0.97 && beam.getDistance() <= -0.93))
+                glColor3ub(r*0.5,g*0.5,b*0.5);
+        }
+
     if (displayMode == 1)
         draw1stRainbow(beam);
     else
@@ -62,6 +78,6 @@ void Scene2::display()
 {
     draw_drop();
     draw_axes();
-    for (Beams::iterator i=beams.begin(); i!=beams.end(); i++)
-        draw_beam(*i);
+    for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)
+        draw_beam(*beam);
 }
