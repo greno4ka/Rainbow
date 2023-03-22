@@ -99,48 +99,43 @@ void Scene3::display()
 
     rainEdge.calculateKoeffs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
 
-
-
-
-    int j=0;
+    int beamNumber = 0;
     for (double i=0; i<=10; i+=10.0/(NumberOfBeams-1))
     {
         sunLight.calculateKoeffs(0,i,1,i);
 
-        double gx,gy,
-                rd=40,   // rd - mini radius [pixels]
-                     xcut,ycut; // cutted beam
-        cross_ll(rainEdge,sunLight,&gx,&gy);
+        double dropX, dropY;
+        cross_ll(rainEdge, sunLight, &dropX, &dropY);
+        dropX+=sunlightPenetration[beamNumber++];
 
-        gx+=sunlightPenetration[j++];
-        observed.calculateKoeffs(x(gx),y(gy),eyeX,eyeY);
+        observed.calculateKoeffs(x(dropX), y(dropY), eyeX, eyeY);
         /// ORIGINAL BEAMS
-            glBegin(GL_LINES);
-            glColor3ub(255,255,255);
-            glVertex2f(0,y(gy));
-            glVertex2f(x(gx),y(gy));
-            glEnd();
+        glColor3ub(255,255,255);
+        glBegin(GL_LINES);
+        glVertex2f(0,y(dropY));
+        glVertex2f(x(dropX),y(dropY));
+        glEnd();
 
-
-            glEnable(GL_LINE_SMOOTH); // begin of antialiasing
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-            glHint(GL_LINE_SMOOTH_HINT, GL_NICEST); // end of antialiasing
+        glEnable(GL_LINE_SMOOTH); // begin of antialiasing
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST); // end of antialiasing
 
         if (displayMode == 0)
         {
-            for (int w=380; w<=780; w+=60)
+            for (int wavelength=380; wavelength<=780; wavelength+=60)
             {
-                double x0=gx-30;
-                double y1=gy+tan(whatAngle(w,1)*M_PI/180)*(-30);
-                double y2=gy+tan(whatAngle(w,2)*M_PI/180)*(-30);
+                const double LocalInf = 100;
+                double x0=dropX-LocalInf;
+                double y1=dropY-tan(whatAngle(wavelength,1)*M_PI/180)*LocalInf;
+                double y2=dropY-tan(whatAngle(wavelength,2)*M_PI/180)*LocalInf;
 
-                wavelengthToRGB(w,&r,&g,&b);
+                wavelengthToRGB(wavelength,&r,&g,&b);
                 glColor3ub(r,g,b);
                 glBegin(GL_LINES);
-                glVertex2f(x(gx),y(gy));
+                glVertex2f(x(dropX),y(dropY));
                 glVertex2f(x(x0),y(y1));
-                glVertex2f(x(gx),y(gy));
+                glVertex2f(x(dropX),y(dropY));
                 glVertex2f(x(x0),y(y2));
                 glEnd();
             }
@@ -148,8 +143,10 @@ void Scene3::display()
         if (displayMode == 1)
             if ( (observed.getAngle() >= whatAngle(380,1) && observed.getAngle() <= whatAngle(780,1) ) ||
                  (observed.getAngle() >= whatAngle(780,2) && observed.getAngle() <= whatAngle(380,2) )
-               )
+                 )
             {
+                double rd=40,   // rd - mini radius [pixels]
+                       xcut,ycut; // cutted beam
                 xcut=eyeX+rd*cos(observed.getAngle()*M_PI/180);
                 ycut=eyeY+rd*sin(observed.getAngle()*M_PI/180);
                 if (observed.getAngle()<=whatAngle(780,1))
@@ -158,7 +155,7 @@ void Scene3::display()
                 glBegin(GL_LINES);
                 glColor3ub(255,255,255);
                 glColor3ub(r,g,b);
-                glVertex2f(x(gx),y(gy));
+                glVertex2f(x(dropX),y(dropY));
                 glVertex2f(xcut,ycut);
                 glEnd();
                 drawMan();
@@ -166,20 +163,20 @@ void Scene3::display()
         if (displayMode == 2)
             if ( (observed.getAngle() >= whatAngle(380,1) && observed.getAngle() <= whatAngle(780,1) ) ||
                  (observed.getAngle() >= whatAngle(780,2) && observed.getAngle() <= whatAngle(380,2) )
-               )
+                 )
             {
                 for (int w=380; w<=780; w+=30)
                 {
-                    double x0=gx-30;
-                    double y1=gy+tan(whatAngle(w,1)*M_PI/180)*(-30);
-                    double y2=gy+tan(whatAngle(w,2)*M_PI/180)*(-30);
+                    double x0=dropX-30;
+                    double y1=dropY+tan(whatAngle(w,1)*M_PI/180)*(-30);
+                    double y2=dropY+tan(whatAngle(w,2)*M_PI/180)*(-30);
 
                     wavelengthToRGB(w,&r,&g,&b);
                     glColor3ub(r,g,b);
                     glBegin(GL_LINES);
-                    glVertex2f(x(gx),y(gy));
+                    glVertex2f(x(dropX),y(dropY));
                     glVertex2f(x(x0),y(y1));
-                    glVertex2f(x(gx),y(gy));
+                    glVertex2f(x(dropX),y(dropY));
                     glVertex2f(x(x0),y(y2));
                     glEnd();
                 }

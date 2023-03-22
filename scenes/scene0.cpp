@@ -48,7 +48,7 @@ void Scene0::incBeamStep()
 void Scene0::decBeamStep()
 {
     if (beamStep > 0)
-    beamStep--;
+        beamStep--;
 }
 
 void Scene0::resetBeamStep()
@@ -64,8 +64,8 @@ void Scene0::draw_beam(Beam beam)
            x2,y2;      // point2 - external (for reformed outside)
 
     Beam refracted(DropRadius),
-        radius(DropRadius),
-        reflected(DropRadius);
+         radius(DropRadius),
+         reflected(DropRadius);
 
     int r,g,b;
     wavelengthToRGB(beam.getWL(),&r,&g,&b);
@@ -126,8 +126,8 @@ void Scene0::draw_beam(Beam beam)
             p -= 0.1; // low color intensity every beam split
             glColor3ub(r*p,g*p,b*p);
             if ( (displayMode == 0) ||
-               ( (displayMode == 1) && (stepNumber == 2) ) ||
-               ( (displayMode == 2) && (stepNumber == 3) )
+                 ( (displayMode == 1) && (stepNumber == 2) ) ||
+                 ( (displayMode == 2) && (stepNumber == 3) )
                ) {
                 glBegin(GL_LINES);
                 glVertex2f(x(x1),y(y1));
@@ -141,8 +141,8 @@ void Scene0::draw_beam(Beam beam)
             beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
             if ( (displayMode == 0) ||
-               ( (displayMode == 1) && (stepNumber == 1) ) ||
-               ( (displayMode == 2) && (stepNumber <= 2) )
+                 ( (displayMode == 1) && (stepNumber == 1) ) ||
+                 ( (displayMode == 2) && (stepNumber <= 2) )
                ) {
                 glBegin(GL_LINES);
                 glVertex2f(x(x0),y(y0));
