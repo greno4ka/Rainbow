@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "settingswindow.h"
+
 MainWindow::MainWindow(int programMode, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -73,6 +75,12 @@ void MainWindow::on_pushButton_fullscreen_clicked()
 void MainWindow::on_pushButton_close_clicked()
 {
     close();
+}
+
+void MainWindow::on_pushButton_settings_clicked()
+{
+    SettingsWindow *w = new SettingsWindow();
+    w->show();
 }
 
 void MainWindow::on_doubleSpinBox_dist_page0_valueChanged(double value)

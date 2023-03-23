@@ -18,6 +18,7 @@ SOURCES += main.cpp \
     glwidget.cpp \
     \
     mainwindow.cpp \
+    settingswindow.cpp \
     wavelength.cpp \
     \
     scenes/scene0.cpp \
@@ -30,7 +31,9 @@ SOURCES += main.cpp \
 HEADERS  += \
     beam.h \
     glwidget.h \
+    \
     mainwindow.h \
+    settingswindow.h \
     wavelength.h \
     \
     scenes/scene0.h \
@@ -41,6 +44,7 @@ HEADERS  += \
     scenes/scenebase.h
 
 FORMS    += \
-    mainwindow.ui
+    mainwindow.ui \
+    settingswindow.ui
 
 TRANSLATIONS = rainbow_ru.ts

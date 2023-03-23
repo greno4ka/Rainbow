@@ -42,6 +42,7 @@ private slots:
     void on_pushButton_prev_clicked();
     void on_pushButton_fullscreen_clicked();
     void on_pushButton_close_clicked();
+    void on_pushButton_settings_clicked();
 
     /// PAGE0
     void on_doubleSpinBox_dist_page0_valueChanged(double arg1);
