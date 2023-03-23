@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Rainbow demonstration</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -33,7 +33,7 @@
       <item>
        <widget class="QLabel" name="label_pageName">
         <property name="text">
-         <string>Название вкладки</string>
+         <string>Page name</string>
         </property>
        </widget>
       </item>
@@ -65,7 +65,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>4</number>
           </property>
           <widget class="QWidget" name="page0">
            <property name="sizePolicy">
@@ -80,7 +80,7 @@
               <item>
                <widget class="QLabel" name="label_dist_page0">
                 <property name="text">
-                 <string>Прицельный параметр</string>
+                 <string>Impact parameter</string>
                 </property>
                </widget>
               </item>
@@ -129,7 +129,7 @@
               <item>
                <widget class="QLabel" name="label_wave_page0">
                 <property name="text">
-                 <string>Длина волны</string>
+                 <string>Wavelength</string>
                 </property>
                </widget>
               </item>
@@ -176,7 +176,7 @@
             <item>
              <widget class="QPushButton" name="pushButton_addBeam_page0">
               <property name="text">
-               <string>Добавить луч</string>
+               <string>Add beam</string>
               </property>
              </widget>
             </item>
@@ -185,14 +185,14 @@
               <item>
                <widget class="QPushButton" name="pushButton_beamPrev_page0">
                 <property name="text">
-                 <string>&lt; Ход луча</string>
+                 <string>&lt; Beam tracking</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_beamNext_page0">
                 <property name="text">
-                 <string>Ход луча &gt;</string>
+                 <string>Beam tracking &gt;</string>
                 </property>
                </widget>
               </item>
@@ -207,7 +207,7 @@
                <item>
                 <widget class="QRadioButton" name="radioButton0_page0">
                  <property name="text">
-                  <string>Показать все лучи</string>
+                  <string>Show all beams</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -217,14 +217,14 @@
                <item>
                 <widget class="QRadioButton" name="radioButton1_page0">
                  <property name="text">
-                  <string>Первичная радуга</string>
+                  <string>Primary rainbow</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QRadioButton" name="radioButton2_page0">
                  <property name="text">
-                  <string>Вторичная радуга</string>
+                  <string>Secondary rainbow</string>
                  </property>
                 </widget>
                </item>
@@ -234,7 +234,7 @@
             <item>
              <widget class="QPushButton" name="pushButton_clearScr_page0">
               <property name="text">
-               <string>Очистить экран</string>
+               <string>Clear screen</string>
               </property>
              </widget>
             </item>
@@ -260,7 +260,7 @@
               <item>
                <widget class="QLabel" name="label_dist_page1">
                 <property name="text">
-                 <string>Прицельный параметр</string>
+                 <string>Impact parameter</string>
                 </property>
                </widget>
               </item>
@@ -315,7 +315,7 @@
               <item>
                <widget class="QLabel" name="label_wave_page1">
                 <property name="text">
-                 <string>Длина волны</string>
+                 <string>Wavelength</string>
                 </property>
                </widget>
               </item>
@@ -368,7 +368,7 @@
                <item>
                 <widget class="QRadioButton" name="radioButton1_page1">
                  <property name="text">
-                  <string>Первичная радуга</string>
+                  <string>Primary rainbow</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -378,7 +378,7 @@
                <item>
                 <widget class="QRadioButton" name="radioButton2_page1">
                  <property name="text">
-                  <string>Вторичная радуга</string>
+                  <string>Secondary rainbow</string>
                  </property>
                 </widget>
                </item>
@@ -388,7 +388,7 @@
             <item>
              <widget class="QPushButton" name="pushButton_clearScr_page1">
               <property name="text">
-               <string>Сбросить значения</string>
+               <string>Reset settings</string>
               </property>
              </widget>
             </item>
@@ -414,7 +414,7 @@
               <item>
                <widget class="QLabel" name="label_wave_page2">
                 <property name="text">
-                 <string>Длина волны</string>
+                 <string>Wavelength</string>
                 </property>
                </widget>
               </item>
@@ -463,7 +463,7 @@
               <item>
                <widget class="QLabel" name="label_number_of_beams_page2">
                 <property name="text">
-                 <string>Количество лучей</string>
+                 <string>Number of beams</string>
                 </property>
                </widget>
               </item>
@@ -513,7 +513,7 @@
                <item>
                 <widget class="QRadioButton" name="radioButton1_page2">
                  <property name="text">
-                  <string>Первичная радуга</string>
+                  <string>Primary rainbow</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -523,7 +523,7 @@
                <item>
                 <widget class="QRadioButton" name="radioButton2_page2">
                  <property name="text">
-                  <string>Вторичная радуга</string>
+                  <string>Secondary rainbow</string>
                  </property>
                 </widget>
                </item>
@@ -533,21 +533,21 @@
             <item>
              <widget class="QCheckBox" name="checkBox_show_angle_page2">
               <property name="text">
-               <string>Показать угол</string>
+               <string>Show angle</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QCheckBox" name="checkBox_show_rainbow_beams_page2">
               <property name="text">
-               <string>Показать лучи радуги</string>
+               <string>Show rainbow beams</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="pushButton_reset_settings_page2">
               <property name="text">
-               <string>Сбросить настройки</string>
+               <string>Reset settings</string>
               </property>
              </widget>
             </item>
@@ -577,7 +577,7 @@
                <item>
                 <widget class="QRadioButton" name="radioButton0_page3">
                  <property name="text">
-                  <string>Все лучи</string>
+                  <string>All beams</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -587,14 +587,14 @@
                <item>
                 <widget class="QRadioButton" name="radioButton1_page3">
                  <property name="text">
-                  <string>Наблюдаемые лучи</string>
+                  <string>Observed beams</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QRadioButton" name="radioButton2_page3">
                  <property name="text">
-                  <string>Лучи из областей наблюдения</string>
+                  <string>Beams from regions of observation</string>
                  </property>
                 </widget>
                </item>
@@ -606,7 +606,7 @@
               <item>
                <widget class="QLabel" name="label_FPS_page3">
                 <property name="text">
-                 <string>Кадров в секунду</string>
+                 <string>Frames per second</string>
                 </property>
                </widget>
               </item>
@@ -644,7 +644,7 @@
             <item>
              <widget class="QPushButton" name="pushButton_startpause_page3">
               <property name="text">
-               <string>Пауза</string>
+               <string>Pause</string>
               </property>
              </widget>
             </item>
@@ -674,7 +674,7 @@
                <item>
                 <widget class="QRadioButton" name="radioButton0_page4">
                  <property name="text">
-                  <string>Обе радуги</string>
+                  <string>Both rainbows</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -684,14 +684,14 @@
                <item>
                 <widget class="QRadioButton" name="radioButton1_page4">
                  <property name="text">
-                  <string>Первичная радуга</string>
+                  <string>Primary rainbow</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QRadioButton" name="radioButton2_page4">
                  <property name="text">
-                  <string>Вторичная радуга</string>
+                  <string>Secondary rainbow</string>
                  </property>
                 </widget>
                </item>

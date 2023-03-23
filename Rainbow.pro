@@ -42,3 +42,5 @@ HEADERS  += \
 
 FORMS    += \
     mainwindow.ui
+
+TRANSLATIONS = rainbow_ru.ts
