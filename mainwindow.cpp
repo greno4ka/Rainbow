@@ -29,19 +29,19 @@ void MainWindow::switchScene()
 {
     switch (currentStackWidgetPage) {
     case 0:
-        ui->label_pageName->setText("Beams in a droplet");
+        ui->label_pageName->setText(tr("Beams in a droplet"));
         break;
     case 1:
-        ui->label_pageName->setText("Beam divergence");
+        ui->label_pageName->setText(tr("Beam divergence"));
         break;
     case 2:
-        ui->label_pageName->setText("Descartes' rainbow");
+        ui->label_pageName->setText(tr("Descartes' rainbow"));
         break;
     case 3:
-        ui->label_pageName->setText("Ensemble of droplets");
+        ui->label_pageName->setText(tr("Ensemble of droplets"));
         break;
     case 4:
-        ui->label_pageName->setText("Alexander's dark band");
+        ui->label_pageName->setText(tr("Alexander's dark band"));
         break;
     default:
         break;
@@ -254,9 +254,9 @@ void MainWindow::on_pushButton_startpause_page3_clicked()
 {
     scene3->switchDynamicMode();
     if (scene3->getDynamicMode())
-        ui->pushButton_startpause_page3->setText("Pause");
+        ui->pushButton_startpause_page3->setText(tr("Pause"));
     else
-        ui->pushButton_startpause_page3->setText("Start");
+        ui->pushButton_startpause_page3->setText(tr("Start"));
 }
 
 void MainWindow::on_spinBox_FPS_page3_valueChanged(int value)

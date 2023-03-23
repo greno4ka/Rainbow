@@ -110,6 +110,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="647"/>
+        <location filename="mainwindow.cpp" line="257"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
@@ -136,6 +137,36 @@
     <message>
         <location filename="mainwindow.ui" line="795"/>
         <source>X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="32"/>
+        <source>Beams in a droplet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="35"/>
+        <source>Beam divergence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="38"/>
+        <source>Descartes&apos; rainbow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="41"/>
+        <source>Ensemble of droplets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="44"/>
+        <source>Alexander&apos;s dark band</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="259"/>
+        <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
