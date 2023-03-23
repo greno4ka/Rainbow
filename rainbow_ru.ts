@@ -142,32 +142,32 @@
     <message>
         <location filename="mainwindow.cpp" line="32"/>
         <source>Beams in a droplet</source>
-        <translation type="unfinished"></translation>
+        <translation>Ход луча в капле</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="35"/>
         <source>Beam divergence</source>
-        <translation type="unfinished"></translation>
+        <translation>Расходимость лучей</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="38"/>
         <source>Descartes&apos; rainbow</source>
-        <translation type="unfinished"></translation>
+        <translation>Радуга Декарта</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="41"/>
         <source>Ensemble of droplets</source>
-        <translation type="unfinished"></translation>
+        <translation>Ансамбль капель</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="44"/>
         <source>Alexander&apos;s dark band</source>
-        <translation type="unfinished"></translation>
+        <translation>Полоса Александра</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="259"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Старт</translation>
     </message>
 </context>
 </TS>
