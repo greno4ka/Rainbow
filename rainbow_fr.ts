@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>MainWindow</name>
     <message>
         <location filename="mainwindow.ui" line="14"/>
         <source>Rainbow demonstration</source>
-        <translation>Демонстрация радуги</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="36"/>
         <source>Page name</source>
-        <translation>Название страницы</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="83"/>
         <location filename="mainwindow.ui" line="263"/>
         <source>Impact parameter</source>
-        <translation>Прицельный параметр</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="132"/>
         <location filename="mainwindow.ui" line="318"/>
         <location filename="mainwindow.ui" line="417"/>
         <source>Wavelength</source>
-        <translation>Длина волны</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="179"/>
         <source>Add beam</source>
-        <translation>Добавить луч</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="188"/>
         <source>&lt; Beam tracking</source>
-        <translation>&lt; Ход луча</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="195"/>
         <source>Beam tracking &gt;</source>
-        <translation>Ход луча &gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="210"/>
         <source>Show all beams</source>
-        <translation>Показать все лучи</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="220"/>
@@ -52,7 +52,7 @@
         <location filename="mainwindow.ui" line="516"/>
         <location filename="mainwindow.ui" line="687"/>
         <source>Primary rainbow</source>
-        <translation>Первичная радуга</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="227"/>
@@ -60,64 +60,64 @@
         <location filename="mainwindow.ui" line="526"/>
         <location filename="mainwindow.ui" line="694"/>
         <source>Secondary rainbow</source>
-        <translation>Вторичная радуга</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="237"/>
         <source>Clear screen</source>
-        <translation>Очистить экран</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="391"/>
         <location filename="mainwindow.ui" line="550"/>
         <source>Reset settings</source>
-        <translation>Сбросить настройки</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="466"/>
         <source>Number of beams</source>
-        <translation>Количество лучей</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="536"/>
         <source>Show angle</source>
-        <translation>Показать угол</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="543"/>
         <source>Show rainbow beams</source>
-        <translation>Показать лучи радуги</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="580"/>
         <source>All beams</source>
-        <translation>Все лучи</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="590"/>
         <source>Observed beams</source>
-        <translation>Наблюдаемые лучи</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="597"/>
         <source>Beams from regions of observation</source>
-        <translation>Лучи из областей наблюдения</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="609"/>
         <source>Frames per second</source>
-        <translation>Кадров в секунду</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="647"/>
         <location filename="mainwindow.cpp" line="265"/>
         <source>Pause</source>
-        <translation>Пауза</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="677"/>
         <source>Both rainbows</source>
-        <translation>Обе радуги</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="729"/>
@@ -147,32 +147,32 @@
     <message>
         <location filename="mainwindow.cpp" line="34"/>
         <source>Beams in a droplet</source>
-        <translation>Ход луча в капле</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="37"/>
         <source>Beam divergence</source>
-        <translation>Расходимость лучей</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="40"/>
         <source>Descartes&apos; rainbow</source>
-        <translation>Радуга Декарта</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="43"/>
         <source>Ensemble of droplets</source>
-        <translation>Ансамбль капель</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="46"/>
         <source>Alexander&apos;s dark band</source>
-        <translation>Полоса Александра</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="267"/>
         <source>Start</source>
-        <translation>Старт</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

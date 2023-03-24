@@ -47,4 +47,5 @@ FORMS    += \
     mainwindow.ui \
     settingswindow.ui
 
-TRANSLATIONS = rainbow_ru.ts
+TRANSLATIONS = rainbow_ru.ts \
+               rainbow_fr.ts
