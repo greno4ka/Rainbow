@@ -11,23 +11,23 @@ Scene4::Scene4()
 
 inline double Scene4::x(double x0)
 {
-    return X-(X/8)+x0*std::min(X/8,Y/4);
+    return X-(X/18)+x0*std::min(X/16,Y/8)/SceneScale/2;
 }
 
 inline double Scene4::y(double y0)
 {
-    return (Y/4)+y0*std::min(X/8,Y/4);
+    return (7*Y/8)+y0*std::min(X/16,Y/8)/SceneScale/2;
 }
 
 inline double Scene4::r(double r0)
 {
-    return r0*std::min(X/8,Y/4);
+    return r0*std::min(X/16,Y/8)/SceneScale/2;
 }
 
 void Scene4::reinitializeBeams()
 {
-    beams1.clear();
-    beams2.clear();
+    beams.clear();
+    beams.clear();
 
     double h=1.0/numberOfBeams;
 
@@ -36,9 +36,9 @@ void Scene4::reinitializeBeams()
         for (int wavelength=400; wavelength<=760; wavelength+=(760-400)/7)
         {
             Beam beam(0, 1, -r*DropRadius, wavelength, DropRadius);
-            beams1.push_back(beam);
+            beams.push_back(beam);
             beam.invertz();
-            beams2.push_back(beam);
+            beams.push_back(beam);
         }
     }
 }
@@ -49,40 +49,139 @@ void Scene4::setDisplayMode(int newDisplayMode)
     reinitializeBeams();
 }
 
-void Scene4::display()
+void Scene4::draw_drop()
 {
-    draw_drop();
-    draw_axes();
+    // Enable antialising
+    glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
+    glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_POLYGON_SMOOTH);
+    glEnable(GL_BLEND);
+
+    glColor3ub(100,100,255);
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(x(0),y(0));
+
+    for (int i=0; i<=ImageQuality; i++) {
+        double currentAngle = (double)i/ImageQuality*2*M_PI;
+        glVertex2f(x(0)+r(DropRadius)*cos(currentAngle),
+                   y(0)+r(DropRadius)*sin(currentAngle));
+    }
+    glEnd();
+
+    // Disable antialising
+    glDisable(GL_POLYGON_SMOOTH);
+    glDisable(GL_BLEND);
+}
+
+void Scene4::draw_axes()
+{
+    glColor3ub(255,255,255);
+    glEnable(GL_LINE_STIPPLE); // turn on - - - - - -
+    glLineStipple(1, 0x1111);  // 1 , 1111 means tiny dashes
+    glBegin(GL_LINES);
+    glVertex2f(0,y(0));
+    glVertex2f(X,y(0));
+    glVertex2f(x(0),0);
+    glVertex2f(x(0),Y);
+    glEnd();
+    glDisable(GL_LINE_STIPPLE); // turn it off
+}
+
+void Scene4::drawLine(double x0, double y0, double x1, double y1)
+{
+    glBegin(GL_LINES);
+    glVertex2f(x(x0),y(y0));
+    glVertex2f(x(x1),y(y1));
+    glEnd();
+}
+
+void Scene4::draw_beam(Beam beam)
+{
+    double x0,y0,      // point0
+           x1,y1,      // point1
+           x2,y2;      // point2 - external (for reformed outside)
 
     int r,g,b;
-    switch (displayMode) {
-    case 0:
-        for (Beams::iterator beam=beams1.begin(); beam!=beams1.end(); beam++) {
-            wavelengthToRGB(beam->getWL(),&r,&g,&b);
-            glColor3ub(r,g,b);
-            draw1stRainbow(*beam);
-        }
-        for (Beams::iterator beam=beams2.begin(); beam!=beams2.end(); beam++) {
-            wavelengthToRGB(beam->getWL(),&r,&g,&b);
-            glColor3ub(r,g,b);
-            draw2ndRainbow(*beam);
-        }
-        break;
-    case 1:
-        for (Beams::iterator beam=beams1.begin(); beam!=beams1.end(); beam++) {
-            wavelengthToRGB(beam->getWL(),&r,&g,&b);
-            glColor3ub(r,g,b);
-            draw1stRainbow(*beam);
-        }
-        break;
-    case 2:
-        for (Beams::iterator beam=beams2.begin(); beam!=beams2.end(); beam++) {
-            wavelengthToRGB(beam->getWL(),&r,&g,&b);
-            glColor3ub(r,g,b);
-            draw2ndRainbow(*beam);
-        }
-        break;
-    default:
-        break;
+
+
+    Beam refracted(DropRadius),
+         radius(DropRadius),
+         reflected(DropRadius);
+
+    beam.calculateInputPoint(&x0, &y0);
+    radius.calculateKoeffs(x0,y0,0,0);
+
+    // Enable antialising
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_BLEND);
+
+    glColor3ub(255,255,255);
+
+    /// ORIGINAL BEAM
+    // this part should be drawn anyway
+    glBegin(GL_LINES);
+    glVertex2f(0,y(y0));
+    glVertex2f(x(x0),y(y0));
+    glEnd();
+
+    wavelengthToRGB(beam.getWL(),&r,&g,&b);
+    glColor3ub(r,g,b);
+
+    /// FIRST REFRACTION
+    refracted = radius;
+    refracted.snell(beam, beam.refractIn());
+    beam = refracted;
+    beam.calculateOutputPoint(&x1, &y1, x0, y0);
+
+    drawLine(x0,y0,x1,y1);
+
+    /// REFLECTION INSIDE
+    radius.calculateKoeffs(x1,y1,0,0);
+    beam.reflect(radius);
+    x0=x1; y0=y1;
+    beam.calculateOutputPoint(&x1, &y1, x0, y0);
+
+    drawLine(x0,y0,x1,y1);
+
+    if ( displayMode == 0 || displayMode == 1) {
+        /// REFRACTION OUTSIDE
+        radius.calculateKoeffs(x1,y1,0,0);
+        refracted = radius;
+        refracted.snell(beam, beam.refractOut());
+        refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
+
+        drawLine(x1,y1,x2,y2);
     }
+    if ( displayMode == 0 || displayMode == 2) {
+        /// NEXT REFLECTION INSIDE
+        radius.calculateKoeffs(x1,y1,0,0);
+        beam.reflect(radius);
+        x0=x1; y0=y1;
+        beam.calculateOutputPoint(&x1, &y1, x0, y0);
+
+        drawLine(x0,y0,x1,y1);
+
+        /// REFRACTION OUTSIDE
+        radius.calculateKoeffs(x1,y1,0,0);
+        refracted = radius;
+        refracted.snell(beam, beam.refractOut());
+        refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
+
+        drawLine(x1,y1,x2,y2);
+    }
+
+    // Disable antialising
+    glDisable(GL_LINE_SMOOTH);
+    glDisable(GL_BLEND);
+}
+
+void Scene4::display()
+{
+    draw_axes();
+    for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)
+        draw_beam(*beam);
+
+    draw_drop();
 }
