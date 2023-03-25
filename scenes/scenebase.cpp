@@ -31,12 +31,6 @@ double SceneBase::r(double r0)
 
 void SceneBase::draw_drop()
 {
-    // Enable antialising
-    glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
-    glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-    glEnable(GL_POLYGON_SMOOTH);
-    glEnable(GL_BLEND);
-
     glColor3ub(100,100,255);
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(x(0),y(0));
@@ -47,10 +41,6 @@ void SceneBase::draw_drop()
                    y(0)+r(DropRadius)*sin(currentAngle));
     }
     glEnd();
-
-    // Disable antialising
-    glDisable(GL_POLYGON_SMOOTH);
-    glDisable(GL_BLEND);
 }
 
 void SceneBase::draw_axes()
@@ -88,12 +78,6 @@ void SceneBase::draw1stRainbow(Beam beam)
     beam.calculateInputPoint(&x0, &y0);
     radius.calculateKoeffs(x0,y0,0,0);
 
-    // Enable antialising
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-    glEnable(GL_LINE_SMOOTH);
-    glEnable(GL_BLEND);
-
     /// ORIGINAL BEAM
     // this part should be drawn anyway
     glBegin(GL_LINES);
@@ -124,10 +108,6 @@ void SceneBase::draw1stRainbow(Beam beam)
     refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
     drawLine(x1,y1,x2,y2);
-
-    // Disable antialising
-    glDisable(GL_LINE_SMOOTH);
-    glDisable(GL_BLEND);
 }
 
 void SceneBase::draw2ndRainbow(Beam beam)
@@ -142,12 +122,6 @@ void SceneBase::draw2ndRainbow(Beam beam)
 
     beam.calculateInputPoint(&x0, &y0);
     radius.calculateKoeffs(x0,y0,0,0);
-
-    // Enable antialising
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-    glEnable(GL_LINE_SMOOTH);
-    glEnable(GL_BLEND);
 
     /// ORIGINAL BEAM
     // this part should be drawn anyway
@@ -187,8 +161,4 @@ void SceneBase::draw2ndRainbow(Beam beam)
     refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
     drawLine(x1,y1,x2,y2);
-
-    // Disable antialising
-    glDisable(GL_LINE_SMOOTH);
-    glDisable(GL_BLEND);
 }

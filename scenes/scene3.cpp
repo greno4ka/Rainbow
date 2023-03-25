@@ -100,12 +100,7 @@ void Scene3::display()
         glVertex2f(0,y(dropY));
         glVertex2f(x(dropX),y(dropY));
         glEnd();
-/*
-        glEnable(GL_LINE_SMOOTH); // begin of antialiasing
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST); // end of antialiasing
-*/
+
         if (displayMode == 0)
         {
             for (int wavelength=380; wavelength<=780; wavelength+=60)
@@ -167,8 +162,6 @@ void Scene3::display()
                 }
                 drawMan();
             }
-      //  glDisable(GL_LINE_SMOOTH);
-     //   glDisable(GL_BLEND);
     }
 
     drawFloor();
@@ -181,11 +174,7 @@ void Scene3::display()
 void Scene3::drawRain()
 {
     glColor3ub(200,200,200);
- /*   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-    glEnable(GL_LINE_SMOOTH);
-    glEnable(GL_BLEND);
-*/
+
     glEnable(GL_LINE_STIPPLE); // dashed line
     glLineStipple(15, 0xAAAA); // style of dashes
     glBegin(GL_LINES);
@@ -211,19 +200,10 @@ void Scene3::drawRain()
 
     glEnd();
     glDisable(GL_LINE_STIPPLE);
-
-  //  glDisable(GL_LINE_SMOOTH);
-   // glDisable(GL_BLEND);
 }
 
 void Scene3::drawCloud()
 {
-/*    // Enable antialising
-    glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
-    glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-    glEnable(GL_POLYGON_SMOOTH);
-    glEnable(GL_BLEND);
-*/
     glColor3ub(100,100,100);
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(x(CloudCenterX),y(CloudCenterY));
@@ -233,20 +213,10 @@ void Scene3::drawCloud()
                    sin(a) * CloudHeight * r(CloudRadius) + y(CloudCenterY));
     }
     glEnd();
-
-    // Disable antialising
- /*   glDisable(GL_POLYGON_SMOOTH);
-    glDisable(GL_BLEND);*/
 }
 
 void Scene3::drawFloor()
-{/*
-    // Enable antialising
-    glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
-    glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-    glEnable(GL_POLYGON_SMOOTH);
-    glEnable(GL_BLEND);
-*/
+{
     glColor3ub(0,180,0);
     glBegin(GL_QUADS);
     glVertex2f(0,y(ManPositionY));
@@ -254,10 +224,6 @@ void Scene3::drawFloor()
     glVertex2f(X,0);
     glVertex2f(0,0);
     glEnd();
-
-    // Disable antialising
- //   glDisable(GL_POLYGON_SMOOTH);
-  //  glDisable(GL_BLEND);
 }
 
 void Scene3::drawMan()
@@ -268,12 +234,6 @@ void Scene3::drawMan()
 
     glColor3ub(255,255,255);
 
-/*    // Enable antialising
-    glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
-    glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-    glEnable(GL_POLYGON_SMOOTH);
-    glEnable(GL_BLEND);
-*/
     ///HEAD
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(x(ManPositionX),y(ManPositionY+ManHeight));
@@ -283,10 +243,6 @@ void Scene3::drawMan()
                    sin(a)*r(ManHeadRadius)+y(ManPositionY+ManHeight));
     }
     glEnd();
-
-    // Disable antialising
- //   glDisable(GL_POLYGON_SMOOTH);
-//    glDisable(GL_BLEND);
 
     glBegin(GL_QUADS);
     // points go in clockwise order
@@ -311,12 +267,6 @@ void Scene3::drawMan()
     glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
     glEnd();
 
-    // Enable antialising
-/*    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
-    glEnable(GL_POINT_SMOOTH);
-    glEnable(GL_BLEND);
-*/
     glColor3ub(0,0,0);
     glBegin(GL_POINTS);
     /// LEFT SHOULDER
@@ -416,10 +366,6 @@ void Scene3::drawMan()
     glVertex2f(x(ManPositionX)+1,y(ManPositionY)+3);
 
     glEnd();
-
-    // Disable antialising
-//    glDisable(GL_POINT_SMOOTH);
-//    glDisable(GL_BLEND);
 
     ///SOME LINES
     glBegin(GL_LINES);

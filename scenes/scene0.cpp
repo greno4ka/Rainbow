@@ -73,12 +73,6 @@ void Scene0::draw_beam(Beam beam)
     beam.calculateInputPoint(&x0, &y0);
     radius.calculateKoeffs(x0,y0,0,0);
 
-    // Enable antialising
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-    glEnable(GL_LINE_SMOOTH);
-    glEnable(GL_BLEND);
-
     /// ORIGINAL BEAM
     // this part should be drawn anyway
     glColor3ub(r*p,g*p,b*p);
@@ -151,10 +145,6 @@ void Scene0::draw_beam(Beam beam)
             }
         }
     }
-
-    // Disable antialising
-    glDisable(GL_LINE_SMOOTH);
-    glDisable(GL_BLEND);
 }
 
 void Scene0::display()

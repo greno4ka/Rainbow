@@ -17,7 +17,6 @@ class Scene4: public SceneBase
     void drawLine(double x0, double y0, double x1, double y1);
     void draw_beam(Beam beam);
     void draw_drop();
-    void draw_axes();
 
 public:
     Scene4();
