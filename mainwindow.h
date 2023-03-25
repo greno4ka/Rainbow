@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+#include "glwidget.h"
 #include "scenes/scenebase.h"
 #include "scenes/scene0.h"
 #include "scenes/scene1.h"
@@ -24,6 +25,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    GLWidget *glWidget;
 
     SceneBase *scene;
     Scene0 *scene0;

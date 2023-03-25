@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QtGui/QSurfaceFormat>
+
+#include "glwidget.h"
+
 #include "settingswindow.h"
 
 MainWindow::MainWindow(int programMode, QWidget *parent) :
@@ -8,17 +12,28 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    glWidget = new GLWidget(this);
+
+    QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    glWidget->setSizePolicy(sizePolicy);
+
+    QSurfaceFormat format;
+    format.setSamples(8); //this creates a 8x MSAA surface format
+    glWidget->setFormat(format);
+    ui->glWidgetLayout->addWidget(glWidget);
     currentStackWidgetPage = programMode;
     scene0 = new Scene0();
     scene1 = new Scene1();
     scene2 = new Scene2();
     scene3 = new Scene3();
     scene4 = new Scene4();
-    ui->glWidget->connectWithScene0(*scene0);
-    ui->glWidget->connectWithScene1(*scene1);
-    ui->glWidget->connectWithScene2(*scene2);
-    ui->glWidget->connectWithScene3(*scene3);
-    ui->glWidget->connectWithScene4(*scene4);
+
+    glWidget->connectWithScene0(*scene0);
+    glWidget->connectWithScene1(*scene1);
+    glWidget->connectWithScene2(*scene2);
+    glWidget->connectWithScene3(*scene3);
+    glWidget->connectWithScene4(*scene4);
     switchScene();
 }
 
@@ -50,7 +65,7 @@ void MainWindow::switchScene()
     }
 
     ui->stackedWidget->setCurrentIndex(currentStackWidgetPage);
-    ui->glWidget->setSceneNumber(currentStackWidgetPage);
+    glWidget->setSceneNumber(currentStackWidgetPage);
 }
 
 void MainWindow::on_pushButton_next_clicked()
