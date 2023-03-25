@@ -44,13 +44,16 @@ void GLWidget::paintGL(){
     glClearColor(0,0,0,0);
     scene->display();
 
-//    QPainter painter(this);
-//    QColor fontColor = QColor(255,255,255);
-//    QFont font = painter.font();
-//    font.setPointSize(font.pointSize() * 2);
-//    painter.setFont(font);
-//    painter.setPen(fontColor);
-//    painter.drawText(100, 100, "test");
+    if (sceneNumber == 2 && scene2->getShowAngle()) {
+        QPainter painter(this);
+        QColor fontColor = QColor(255,255,255);
+        QFont font = painter.font();
+        font.setPointSize(font.pointSize() * 2);
+        painter.setFont(font);
+        painter.setPen(fontColor);
+        painter.drawText(scene2->getCoordX(), scene2->getCoordY(),
+                         QString::number(scene2->getCurrentAngle()));
+    }
 }
 
 void GLWidget::resizeGL(int w, int h){

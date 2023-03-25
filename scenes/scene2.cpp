@@ -12,6 +12,30 @@ Scene2::Scene2()
     reinitializeBeams();
 }
 
+double Scene2::getCoordX()
+{
+    if (displayMode == 1)
+    return x(coordX)+100;
+    else
+        return x(coordX)-400;
+
+}
+
+double Scene2::getCoordY()
+{
+    return Y-y(coordY)-5;
+}
+
+double Scene2::getCurrentAngle() const
+{
+    return currentAngle;
+}
+
+int Scene2::getShowAngle() const
+{
+    return showAngle;
+}
+
 void Scene2::reinitializeBeams()
 {
     beams.clear();
@@ -73,6 +97,8 @@ void Scene2::draw_beam(Beam beam)
                 glColor3ub(r*0.5,g*0.5,b*0.5);
         }
 
+    Beam originalBeam = beam;
+
     Beam refracted(DropRadius),
          radius(DropRadius),
          reflected(DropRadius);
@@ -110,6 +136,13 @@ void Scene2::draw_beam(Beam beam)
         refracted.snell(beam, beam.refractOut());
         refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
+        if (showAngle && (originalBeam.getDistance() >= 0.84 && originalBeam.getDistance() <= 0.88) ) {
+            Beam horizontal(0,1,2*DropRadius,0,DropRadius);
+            cross_ll(refracted,horizontal,&coordX,&coordY);
+            currentAngle = refracted.getAngle();
+
+        }
+
         drawLine(x1,y1,x2,y2);
     } else {
         /// NEXT REFLECTION INSIDE
@@ -128,6 +161,14 @@ void Scene2::draw_beam(Beam beam)
 
         drawLine(x1,y1,x2,y2);
     }
+
+    if (showAngle) {
+    glColor3ub(255,255,255);
+    glBegin(GL_LINES);
+    glVertex2f(x(coordX),y(coordY));
+    glVertex2f(x(coordX)+100,y(coordY));
+    glEnd();
+}
 }
 
 void Scene2::display()

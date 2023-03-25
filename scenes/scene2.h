@@ -14,6 +14,9 @@ class Scene2 : public SceneBase
     int showRainbow;
     int showAngle;
 
+    double coordX, coordY, // point of crossing refracted beam with horizontal
+           currentAngle;
+
     Beams beams;
 
     void reinitializeBeams();
@@ -29,6 +32,10 @@ public:
     void setShowAngle(int newShowAngle);
 
     void display();
+    double getCoordX();
+    double getCoordY();
+    double getCurrentAngle() const;
+    int getShowAngle() const;
 };
 
 #endif // SCENE2_H
