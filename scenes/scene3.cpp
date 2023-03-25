@@ -64,21 +64,6 @@ void Scene3::regenerateRain()
     }
 }
 
-inline double Scene3::x(double x0)
-{
-    return X-(X/4)+x0*std::min(X/4,Y/2)/Scale;
-}
-
-inline double Scene3::y(double y0)
-{
-    return (Y/2)+y0*std::min(X/4,Y/2)/Scale;
-}
-
-inline double Scene3::r(double r0)
-{
-    return r0*std::min(X/4,Y/2)/Scale;
-}
-
 void Scene3::display()
 {
     int r,g,b;

@@ -7,9 +7,8 @@
 
 class SceneBase
 {
-    static const int SceneScale = 10;
-
 protected:
+    static const int SceneScale = 10;
     static const int ImageQuality = 100;
     static const int DropRadius = 5;
 

@@ -46,7 +46,6 @@ public:
 
     void regenerateRain();
 
-    const int Scale=10;
 
     void drawCloud();
     void drawRain();
@@ -55,10 +54,6 @@ public:
 
     void display();
 
-    /// Methods of recalculation decart coords to screen coords
-    inline double x(double x0);
-    inline double y(double y0);
-    inline double r(double r0);
     bool getDynamicMode() const;
 };
 

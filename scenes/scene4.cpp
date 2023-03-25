@@ -9,6 +9,21 @@ Scene4::Scene4()
     reinitializeBeams();
 }
 
+inline double Scene4::x(double x0)
+{
+    return X-(X/8)+x0*std::min(X/8,Y/4);
+}
+
+inline double Scene4::y(double y0)
+{
+    return (Y/4)+y0*std::min(X/8,Y/4);
+}
+
+inline double Scene4::r(double r0)
+{
+    return r0*std::min(X/8,Y/4);
+}
+
 void Scene4::reinitializeBeams()
 {
     beams1.clear();

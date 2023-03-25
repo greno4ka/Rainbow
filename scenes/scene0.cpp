@@ -161,6 +161,6 @@ void Scene0::display()
 {
     draw_drop();
     draw_axes();
-    for (Beams::iterator i=beams.begin(); i!=beams.end(); i++)
-        draw_beam(*i);
+    for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)
+        draw_beam(*beam);
 }

@@ -8,6 +8,8 @@
 
 class Scene0 : public SceneBase
 {
+    static const int MaxNumberOfReflections = 5;
+
     int displayMode;
     int wavelength;
     int beamStep;
@@ -17,8 +19,6 @@ class Scene0 : public SceneBase
     Beams beams;
 
     void draw_beam(Beam beam);
-
-    static const int MaxNumberOfReflections = 5;
 
 public:
     Scene0();
