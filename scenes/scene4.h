@@ -4,6 +4,7 @@
 #include <QOpenGLFunctions>
 
 #include "scenebase.h"
+#include "beam.h"
 
 class Scene4: public SceneBase
 {

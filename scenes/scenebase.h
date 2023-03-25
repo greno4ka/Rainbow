@@ -3,8 +3,6 @@
 
 #include <QOpenGLFunctions>
 
-#include "beam.h"
-
 class SceneBase
 {
 protected:
@@ -26,8 +24,6 @@ protected:
 
 public:
     SceneBase();
-    void draw1stRainbow(Beam beam);
-    void draw2ndRainbow(Beam beam);
 
     void updateXY(int newX, int newY);
     virtual void display() = 0;
