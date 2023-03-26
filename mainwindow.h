@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+#include "settingswindow.h"
 #include "glwidget.h"
 #include "scenes/scenebase.h"
 #include "scenes/scene0.h"
@@ -23,8 +24,11 @@ public:
     explicit MainWindow(int programMode, QWidget *parent = nullptr);
     ~MainWindow();
 
+    void setTranslator(QTranslator *newTranslator);
+
 private:
     Ui::MainWindow *ui;
+    SettingsWindow *settingsWindow;
     GLWidget *glWidget;
 
     SceneBase *scene;
@@ -34,11 +38,14 @@ private:
     Scene3 *scene3;
     Scene4 *scene4;
 
+    QTranslator *translator = nullptr;
+
     int currentStackWidgetPage;
 
     void switchScene();
 
 private slots:
+    void retranslate();
     /// Main controls
     void on_pushButton_next_clicked();
     void on_pushButton_prev_clicked();

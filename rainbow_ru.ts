@@ -110,7 +110,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="647"/>
-        <location filename="mainwindow.cpp" line="265"/>
+        <location filename="mainwindow.cpp" line="294"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
@@ -145,32 +145,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="34"/>
+        <location filename="mainwindow.cpp" line="62"/>
         <source>Beams in a droplet</source>
         <translation>Ход луча в капле</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="37"/>
+        <location filename="mainwindow.cpp" line="65"/>
         <source>Beam divergence</source>
         <translation>Расходимость лучей</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="40"/>
+        <location filename="mainwindow.cpp" line="68"/>
         <source>Descartes&apos; rainbow</source>
         <translation>Радуга Декарта</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="43"/>
+        <location filename="mainwindow.cpp" line="71"/>
         <source>Ensemble of droplets</source>
         <translation>Ансамбль капель</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="46"/>
+        <location filename="mainwindow.cpp" line="74"/>
         <source>Alexander&apos;s dark band</source>
         <translation>Полоса Александра</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="267"/>
+        <location filename="mainwindow.cpp" line="296"/>
         <source>Start</source>
         <translation>Старт</translation>
     </message>
@@ -180,11 +180,23 @@
     <message>
         <location filename="settingswindow.ui" line="14"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="settingswindow.ui" line="51"/>
         <source>Program language</source>
+        <translation>Язык приложения</translation>
+    </message>
+    <message>
+        <location filename="settingswindow.cpp" line="35"/>
+        <location filename="settingswindow.cpp" line="40"/>
+        <source>Error: 0xDEADBEE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="settingswindow.cpp" line="35"/>
+        <location filename="settingswindow.cpp" line="40"/>
+        <source>Can&apos;t change language.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

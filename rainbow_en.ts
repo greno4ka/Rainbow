@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<TS version="2.1" language="en_US">
 <context>
     <name>MainWindow</name>
     <message>
         <location filename="mainwindow.ui" line="14"/>
         <source>Rainbow demonstration</source>
-        <translation>Démonstration d&apos;arc-en-ciel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="36"/>
         <source>Page name</source>
-        <translation>Titre de la page</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="83"/>
         <location filename="mainwindow.ui" line="263"/>
         <source>Impact parameter</source>
-        <translation>Paramètre de visée</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="132"/>
         <location filename="mainwindow.ui" line="318"/>
         <location filename="mainwindow.ui" line="417"/>
         <source>Wavelength</source>
-        <translation>Longueur d&apos;onde</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="179"/>
         <source>Add beam</source>
-        <translation>Ajouter un rayon</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="188"/>
         <source>&lt; Beam tracking</source>
-        <translation>&lt; Trajet du rayon</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="195"/>
         <source>Beam tracking &gt;</source>
-        <translation>Trajet du rayon &gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="210"/>
         <source>Show all beams</source>
-        <translation>Afficher tous les rayons</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="220"/>
@@ -52,7 +52,7 @@
         <location filename="mainwindow.ui" line="516"/>
         <location filename="mainwindow.ui" line="687"/>
         <source>Primary rainbow</source>
-        <translation>Arc-en-ciel primaire</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="227"/>
@@ -60,64 +60,64 @@
         <location filename="mainwindow.ui" line="526"/>
         <location filename="mainwindow.ui" line="694"/>
         <source>Secondary rainbow</source>
-        <translation>Arc-en-ciel secondaire</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="237"/>
         <source>Clear screen</source>
-        <translation>Clair écran</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="391"/>
         <location filename="mainwindow.ui" line="550"/>
         <source>Reset settings</source>
-        <translation>Réinitialiser les options</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="466"/>
         <source>Number of beams</source>
-        <translation>Nombre de rayons</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="536"/>
         <source>Show angle</source>
-        <translation>Afficher l&apos;angle</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="543"/>
         <source>Show rainbow beams</source>
-        <translation>Afficher les rayons de l&apos;arc-en-ciel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="580"/>
         <source>All beams</source>
-        <translation>Tous les rayons</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="590"/>
         <source>Observed beams</source>
-        <translation>Rayons observés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="597"/>
         <source>Beams from regions of observation</source>
-        <translation>Rayons des zones d&apos;observation</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="609"/>
         <source>Frames per second</source>
-        <translation>Cadres par seconde</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="647"/>
         <location filename="mainwindow.cpp" line="294"/>
         <source>Pause</source>
-        <translation>Pause</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="677"/>
         <source>Both rainbows</source>
-        <translation>Les deux arcs-en-ciel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="729"/>
@@ -147,32 +147,32 @@
     <message>
         <location filename="mainwindow.cpp" line="62"/>
         <source>Beams in a droplet</source>
-        <translation>Rayons dans une goutte</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="65"/>
         <source>Beam divergence</source>
-        <translation>Divergence des rayons</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="68"/>
         <source>Descartes&apos; rainbow</source>
-        <translation>Arc-en-ciel Descartes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="71"/>
         <source>Ensemble of droplets</source>
-        <translation>Ensemble de gouttes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="74"/>
         <source>Alexander&apos;s dark band</source>
-        <translation>Trait sombre d&apos;Alexandre</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="296"/>
         <source>Start</source>
-        <translation>Commencer</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -180,12 +180,12 @@
     <message>
         <location filename="settingswindow.ui" line="14"/>
         <source>Settings</source>
-        <translation>Paramètres</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="settingswindow.ui" line="51"/>
         <source>Program language</source>
-        <translation>Langue du programme</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="settingswindow.cpp" line="35"/>

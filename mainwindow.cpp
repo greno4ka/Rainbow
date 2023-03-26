@@ -13,6 +13,9 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    settingsWindow = new SettingsWindow(this);
+    connect(settingsWindow, SIGNAL(language_change()), this, SLOT(retranslate()));
+
     glWidget = new GLWidget(this);
 
     QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -37,9 +40,28 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     switchScene();
 }
 
+void MainWindow::retranslate()
+{
+    ui->retranslateUi(this);
+}
+
 MainWindow::~MainWindow()
 {
+    delete scene0;
+    delete scene1;
+    delete scene2;
+    delete scene3;
+    delete scene4;
+
+    delete translator;
+    delete settingsWindow;
+
     delete ui;
+}
+
+void MainWindow::setTranslator(QTranslator *newTranslator)
+{
+    translator = newTranslator;
 }
 
 void MainWindow::switchScene()
@@ -94,8 +116,8 @@ void MainWindow::on_pushButton_close_clicked()
 
 void MainWindow::on_pushButton_settings_clicked()
 {
-    SettingsWindow *w = new SettingsWindow();
-    w->show();
+    settingsWindow->setTranslator(translator);
+    settingsWindow->show();
 }
 
 void MainWindow::on_doubleSpinBox_dist_page0_valueChanged(double value)
