@@ -27,7 +27,6 @@ inline double Scene4::r(double r0)
 void Scene4::reinitializeBeams()
 {
     beams.clear();
-    beams.clear();
 
     double h=1.0/numberOfBeams;
 
@@ -79,7 +78,6 @@ void Scene4::draw_beam(Beam beam)
 
     int r,g,b;
 
-
     Beam refracted(DropRadius),
          radius(DropRadius),
          reflected(DropRadius);
@@ -97,7 +95,10 @@ void Scene4::draw_beam(Beam beam)
     glEnd();
 
     wavelengthToRGB(beam.getWL(),&r,&g,&b);
-    glColor3ub(r,g,b);
+    if (beam.getDistance() > 0)
+        glColor3ub(r,g,b);
+    else
+        glColor3ub(r*0.7,g*0.7,b*0.7);
 
     /// FIRST REFRACTION
     refracted = radius;
