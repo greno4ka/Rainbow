@@ -36,7 +36,7 @@ void Scene4::reinitializeBeams()
         {
             Beam beam(0, 1, -r*DropRadius, wavelength, DropRadius);
             beams.push_back(beam);
-            beam.invertz();
+            beam.invertDistance();
             beams.push_back(beam);
         }
     }

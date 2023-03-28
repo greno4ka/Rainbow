@@ -45,7 +45,7 @@ void Scene2::reinitializeBeams()
     for (float r=0.01; r<0.99; r+=h)
     {
         Beam beam(0,1,-r*DropRadius,wavelength,DropRadius);
-        if (displayMode == 2) beam.invertz();
+        if (displayMode == 2) beam.invertDistance();
         beams.push_back(beam);
     }
 }

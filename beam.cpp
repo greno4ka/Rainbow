@@ -36,12 +36,17 @@ double Beam::getWL()
 
 void Beam::setWL(double wl)
 {
-    wavelength=wl;
+    wavelength = wl;
 }
 
 void Beam::setDistance(double d)
 {
-    c=-d*r;
+    c = -d*r;
+}
+
+void Beam::invertDistance()
+{
+    c = -c;
 }
 
 double Beam::getDistance()

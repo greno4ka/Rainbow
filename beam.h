@@ -20,15 +20,16 @@ class Beam
     constexpr static const double INF = 10000000000;
 
 public:
-    Beam ();
-    Beam (double A, double B, double C, double lambda, double radius);
-    Beam (double radius);
+    Beam();
+    Beam(double A, double B, double C, double lambda, double radius);
+    Beam(double radius);
 
     double getAngle();
     double getWL();
 
     void setWL(double wl);
     void setDistance(double d);
+    void invertDistance();
     double getDistance();
 
     void normalizeKoeffs(); // Make more familiar form: y=-a*x-c || x=-c
@@ -41,20 +42,17 @@ public:
     inline double fx(double x); // y=f(x) from ax+by+c=0
     inline double fy(double y); // x=g(y) from ax+by+c=0
 
-    friend void cross_ll (Beam A, Beam B, double *x, double *y) {
+    friend void cross_ll(Beam A, Beam B, double *x, double *y) {
         *x=(A.b*B.c-B.b*A.c)/(A.a*B.b-B.a*A.b);
         *y=(A.c*B.a-B.c*A.a)/(A.a*B.b-B.a*A.b);
     }
 
-    void rotate (Beam A, double psi);
-    void reflect (Beam A);
-    void snell (Beam Input, double k);
+    void rotate(Beam A, double psi);
+    void reflect(Beam A);
+    void snell(Beam Input, double k);
 
     double refractIn();
     double refractOut();
-
-    void invertz()
-    { c=-c; }
 };
 
 typedef QList<Beam> Beams;           // in usual C++ using List
