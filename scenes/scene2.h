@@ -25,6 +25,8 @@ class Scene2 : public SceneBase
 public:
     Scene2();
 
+    void resetScene();
+
     void setDisplayMode(int newDisplayMode);
     void setWavelength(int newWavelength);
     void setNumberOfBeams(int newNumberOfBeams);

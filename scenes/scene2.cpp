@@ -4,6 +4,11 @@
 
 Scene2::Scene2()
 {
+    resetScene();
+}
+
+void Scene2::resetScene()
+{
     displayMode = 1;
     showAngle = 0;
     showRainbow = 0;

@@ -277,7 +277,14 @@ void MainWindow::on_checkBox_show_rainbow_beams_page2_stateChanged(int value)
 
 void MainWindow::on_pushButton_reset_settings_page2_clicked()
 {
-
+    scene2->resetScene();
+    ui->spinBox_wave_page2->setValue(600);
+    ui->horizontalSlider_wave_page2->setValue(600);
+    ui->spinBox_number_of_beams_page2->setValue(30);
+    ui->horizontalSlider_number_of_beams_page2->setValue(30);
+    ui->radioButton1_page2->setChecked(1);
+    ui->checkBox_show_angle_page2->setChecked(0);
+    ui->checkBox_show_rainbow_beams_page2->setChecked(0);
 }
 
 void MainWindow::on_radioButton0_page3_clicked()
