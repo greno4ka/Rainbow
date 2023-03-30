@@ -17,16 +17,19 @@ void GLWidget::setSceneNumber(int programMode)
         scene = scene0;
         break;
     case 1:
-        scene = scene1;
+        scene = scene0;
         break;
     case 2:
-        scene = scene2;
+        scene = scene1;
         break;
     case 3:
+        scene = scene2;
+        break;
+    case 4:
         scene3->regenerateRain();
         scene = scene3;
         break;
-    case 4:
+    case 5:
         scene = scene4;
         break;
     default:

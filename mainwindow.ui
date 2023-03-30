@@ -65,9 +65,9 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>5</number>
           </property>
-          <widget class="QWidget" name="page">
+          <widget class="QWidget" name="page0">
            <widget class="QGroupBox" name="groupBox">
             <property name="geometry">
              <rect>
@@ -82,28 +82,28 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_13">
              <item>
-              <widget class="QRadioButton" name="radioButton">
+              <widget class="QRadioButton" name="radioButton0_page0">
                <property name="text">
                 <string>1</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="radioButton_2">
+              <widget class="QRadioButton" name="radioButton1_page0">
                <property name="text">
                 <string>2</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="radioButton_3">
+              <widget class="QRadioButton" name="radioButton2_page0">
                <property name="text">
                 <string>3</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="radioButton_4">
+              <widget class="QRadioButton" name="radioButton3_page0">
                <property name="text">
                 <string>4</string>
                </property>
@@ -112,7 +112,7 @@
             </layout>
            </widget>
           </widget>
-          <widget class="QWidget" name="page0">
+          <widget class="QWidget" name="page1">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -121,16 +121,16 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_dist_page0">
+             <layout class="QHBoxLayout" name="horizontalLayout_dist_page1">
               <item>
-               <widget class="QLabel" name="label_dist_page0">
+               <widget class="QLabel" name="label_dist_page1">
                 <property name="text">
                  <string>Impact parameter</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_dist_page0">
+               <widget class="QDoubleSpinBox" name="doubleSpinBox_dist_page1">
                 <property name="decimals">
                  <number>2</number>
                 </property>
@@ -151,7 +151,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QSlider" name="horizontalSlider_dist_page0">
+             <widget class="QSlider" name="horizontalSlider_dist_page1">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -163,192 +163,6 @@
               </property>
               <property name="sliderPosition">
                <number>80</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_wave_page0">
-              <item>
-               <widget class="QLabel" name="label_wave_page0">
-                <property name="text">
-                 <string>Wavelength</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSpinBox" name="spinBox_wave_page0">
-                <property name="minimum">
-                 <number>400</number>
-                </property>
-                <property name="maximum">
-                 <number>760</number>
-                </property>
-                <property name="value">
-                 <number>600</number>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QSlider" name="horizontalSlider_wave_page0">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimum">
-               <number>400</number>
-              </property>
-              <property name="maximum">
-               <number>760</number>
-              </property>
-              <property name="value">
-               <number>600</number>
-              </property>
-              <property name="sliderPosition">
-               <number>600</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_addBeam_page0">
-              <property name="text">
-               <string>Add beam</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_beamControls_page0">
-              <item>
-               <widget class="QPushButton" name="pushButton_beamPrev_page0">
-                <property name="text">
-                 <string>&lt; Beam tracking</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_beamNext_page0">
-                <property name="text">
-                 <string>Beam tracking &gt;</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="groupBox_page0">
-              <property name="title">
-               <string/>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_2">
-               <item>
-                <widget class="QRadioButton" name="radioButton0_page0">
-                 <property name="text">
-                  <string>Show all beams</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="radioButton1_page0">
-                 <property name="text">
-                  <string>Primary rainbow</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="radioButton2_page0">
-                 <property name="text">
-                  <string>Secondary rainbow</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_clearScr_page0">
-              <property name="text">
-               <string>Clear screen</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_page0">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>439</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="page1">
-           <layout class="QVBoxLayout" name="verticalLayout_6">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_dist_page1">
-              <item>
-               <widget class="QLabel" name="label_dist_page1">
-                <property name="text">
-                 <string>Impact parameter</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_dist_page1">
-                <property name="decimals">
-                 <number>2</number>
-                </property>
-                <property name="minimum">
-                 <double>-0.970000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>0.970000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.860000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QSlider" name="horizontalSlider_dist_page1">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimum">
-               <number>-97</number>
-              </property>
-              <property name="maximum">
-               <number>97</number>
-              </property>
-              <property name="value">
-               <number>86</number>
-              </property>
-              <property name="sliderPosition">
-               <number>86</number>
               </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -405,18 +219,50 @@
              </widget>
             </item>
             <item>
+             <widget class="QPushButton" name="pushButton_addBeam_page1">
+              <property name="text">
+               <string>Add beam</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_beamControls_page1">
+              <item>
+               <widget class="QPushButton" name="pushButton_beamPrev_page1">
+                <property name="text">
+                 <string>&lt; Beam tracking</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_beamNext_page1">
+                <property name="text">
+                 <string>Beam tracking &gt;</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
              <widget class="QGroupBox" name="groupBox_page1">
               <property name="title">
                <string/>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout_4">
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <item>
+                <widget class="QRadioButton" name="radioButton0_page1">
+                 <property name="text">
+                  <string>Show all beams</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
                <item>
                 <widget class="QRadioButton" name="radioButton1_page1">
                  <property name="text">
                   <string>Primary rainbow</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
@@ -433,7 +279,7 @@
             <item>
              <widget class="QPushButton" name="pushButton_clearScr_page1">
               <property name="text">
-               <string>Reset settings</string>
+               <string>Clear screen</string>
               </property>
              </widget>
             </item>
@@ -445,7 +291,7 @@
               <property name="sizeHint" stdset="0">
                <size>
                 <width>20</width>
-                <height>529</height>
+                <height>439</height>
                </size>
               </property>
              </spacer>
@@ -453,7 +299,62 @@
            </layout>
           </widget>
           <widget class="QWidget" name="page2">
-           <layout class="QVBoxLayout" name="verticalLayout_10">
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_dist_page2">
+              <item>
+               <widget class="QLabel" name="label_dist_page2">
+                <property name="text">
+                 <string>Impact parameter</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDoubleSpinBox" name="doubleSpinBox_dist_page2">
+                <property name="decimals">
+                 <number>2</number>
+                </property>
+                <property name="minimum">
+                 <double>-0.970000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>0.970000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.010000000000000</double>
+                </property>
+                <property name="value">
+                 <double>0.860000000000000</double>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QSlider" name="horizontalSlider_dist_page2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimum">
+               <number>-97</number>
+              </property>
+              <property name="maximum">
+               <number>97</number>
+              </property>
+              <property name="value">
+               <number>86</number>
+              </property>
+              <property name="sliderPosition">
+               <number>86</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_wave_page2">
               <item>
@@ -504,16 +405,115 @@
              </widget>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_number_of_beams_page2">
+             <widget class="QGroupBox" name="groupBox_page2">
+              <property name="title">
+               <string/>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <item>
+                <widget class="QRadioButton" name="radioButton1_page2">
+                 <property name="text">
+                  <string>Primary rainbow</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton2_page2">
+                 <property name="text">
+                  <string>Secondary rainbow</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_clearScr_page2">
+              <property name="text">
+               <string>Reset settings</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_page2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>529</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page3">
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_wave_page3">
               <item>
-               <widget class="QLabel" name="label_number_of_beams_page2">
+               <widget class="QLabel" name="label_wave_page3">
+                <property name="text">
+                 <string>Wavelength</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBox_wave_page3">
+                <property name="minimum">
+                 <number>400</number>
+                </property>
+                <property name="maximum">
+                 <number>760</number>
+                </property>
+                <property name="value">
+                 <number>600</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QSlider" name="horizontalSlider_wave_page3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimum">
+               <number>400</number>
+              </property>
+              <property name="maximum">
+               <number>760</number>
+              </property>
+              <property name="value">
+               <number>600</number>
+              </property>
+              <property name="sliderPosition">
+               <number>600</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_number_of_beams_page3">
+              <item>
+               <widget class="QLabel" name="label_number_of_beams_page3">
                 <property name="text">
                  <string>Number of beams</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_number_of_beams_page2">
+               <widget class="QSpinBox" name="spinBox_number_of_beams_page3">
                 <property name="minimum">
                  <number>10</number>
                 </property>
@@ -525,7 +525,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QSlider" name="horizontalSlider_number_of_beams_page2">
+             <widget class="QSlider" name="horizontalSlider_number_of_beams_page3">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -550,13 +550,13 @@
              </widget>
             </item>
             <item>
-             <widget class="QGroupBox" name="groupBox_page2">
+             <widget class="QGroupBox" name="groupBox_page3">
               <property name="title">
                <string/>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_9">
                <item>
-                <widget class="QRadioButton" name="radioButton1_page2">
+                <widget class="QRadioButton" name="radioButton1_page3">
                  <property name="text">
                   <string>Primary rainbow</string>
                  </property>
@@ -566,7 +566,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton2_page2">
+                <widget class="QRadioButton" name="radioButton2_page3">
                  <property name="text">
                   <string>Secondary rainbow</string>
                  </property>
@@ -576,28 +576,28 @@
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_show_angle_page2">
+             <widget class="QCheckBox" name="checkBox_show_angle_page3">
               <property name="text">
                <string>Show angle</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_show_rainbow_beams_page2">
+             <widget class="QCheckBox" name="checkBox_show_rainbow_beams_page3">
               <property name="text">
                <string>Show rainbow beams</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_reset_settings_page2">
+             <widget class="QPushButton" name="pushButton_reset_settings_page3">
               <property name="text">
                <string>Reset settings</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="verticalSpacer_page2">
+             <spacer name="verticalSpacer_page3">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
@@ -611,16 +611,16 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="page3">
+          <widget class="QWidget" name="page4">
            <layout class="QVBoxLayout" name="verticalLayout_8">
             <item>
-             <widget class="QGroupBox" name="groupBox_page3">
+             <widget class="QGroupBox" name="groupBox_page4">
               <property name="title">
                <string/>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">
                <item>
-                <widget class="QRadioButton" name="radioButton0_page3">
+                <widget class="QRadioButton" name="radioButton0_page4">
                  <property name="text">
                   <string>All beams</string>
                  </property>
@@ -630,14 +630,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton1_page3">
+                <widget class="QRadioButton" name="radioButton1_page4">
                  <property name="text">
                   <string>Observed beams</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton2_page3">
+                <widget class="QRadioButton" name="radioButton2_page4">
                  <property name="text">
                   <string>Beams from regions of observation</string>
                  </property>
@@ -649,14 +649,14 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <item>
-               <widget class="QLabel" name="label_FPS_page3">
+               <widget class="QLabel" name="label_FPS_page4">
                 <property name="text">
                  <string>Frames per second</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QSpinBox" name="spinBox_FPS_page3">
+               <widget class="QSpinBox" name="spinBox_FPS_page4">
                 <property name="minimum">
                  <number>1</number>
                 </property>
@@ -671,7 +671,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QSlider" name="horizontalSlider_FPS_page3">
+             <widget class="QSlider" name="horizontalSlider_FPS_page4">
               <property name="minimum">
                <number>1</number>
               </property>
@@ -687,14 +687,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_startpause_page3">
+             <widget class="QPushButton" name="pushButton_startpause_page4">
               <property name="text">
                <string>Pause</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="verticalSpacer_page3">
+             <spacer name="verticalSpacer_page4">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
@@ -708,16 +708,16 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="page4">
+          <widget class="QWidget" name="page5">
            <layout class="QVBoxLayout" name="verticalLayout_12">
             <item>
-             <widget class="QGroupBox" name="groupBox_page4">
+             <widget class="QGroupBox" name="groupBox_page5">
               <property name="title">
                <string/>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_11">
                <item>
-                <widget class="QRadioButton" name="radioButton0_page4">
+                <widget class="QRadioButton" name="radioButton0_page5">
                  <property name="text">
                   <string>Both rainbows</string>
                  </property>
@@ -727,14 +727,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton1_page4">
+                <widget class="QRadioButton" name="radioButton1_page5">
                  <property name="text">
                   <string>Primary rainbow</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton2_page4">
+                <widget class="QRadioButton" name="radioButton2_page5">
                  <property name="text">
                   <string>Secondary rainbow</string>
                  </property>
@@ -744,7 +744,7 @@
              </widget>
             </item>
             <item>
-             <spacer name="verticalSpacer_page4">
+             <spacer name="verticalSpacer_page5">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>

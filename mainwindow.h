@@ -53,47 +53,47 @@ private slots:
     void on_pushButton_close_clicked();
     void on_pushButton_settings_clicked();
 
-    /// PAGE0
-    void on_doubleSpinBox_dist_page0_valueChanged(double arg1);
-    void on_horizontalSlider_dist_page0_valueChanged(int value);
-    void on_spinBox_wave_page0_valueChanged(int arg1);
-    void on_horizontalSlider_wave_page0_valueChanged(int value);
-    void on_radioButton0_page0_clicked();
-    void on_radioButton1_page0_clicked();
-    void on_radioButton2_page0_clicked();
-    void on_pushButton_beamPrev_page0_clicked();
-    void on_pushButton_beamNext_page0_clicked();
-    void on_pushButton_addBeam_page0_clicked();
-    void on_pushButton_clearScr_page0_clicked();
-    /// PAGE1
-    void on_doubleSpinBox_dist_page1_valueChanged(double value);
+    /// page1
+    void on_doubleSpinBox_dist_page1_valueChanged(double arg1);
     void on_horizontalSlider_dist_page1_valueChanged(int value);
-    void on_spinBox_wave_page1_valueChanged(int value);
+    void on_spinBox_wave_page1_valueChanged(int arg1);
     void on_horizontalSlider_wave_page1_valueChanged(int value);
+    void on_radioButton0_page1_clicked();
     void on_radioButton1_page1_clicked();
     void on_radioButton2_page1_clicked();
+    void on_pushButton_beamPrev_page1_clicked();
+    void on_pushButton_beamNext_page1_clicked();
+    void on_pushButton_addBeam_page1_clicked();
     void on_pushButton_clearScr_page1_clicked();
-    /// PAGE2
+    /// page2
+    void on_doubleSpinBox_dist_page2_valueChanged(double value);
+    void on_horizontalSlider_dist_page2_valueChanged(int value);
     void on_spinBox_wave_page2_valueChanged(int value);
     void on_horizontalSlider_wave_page2_valueChanged(int value);
-    void on_spinBox_number_of_beams_page2_valueChanged(int value);
     void on_radioButton1_page2_clicked();
     void on_radioButton2_page2_clicked();
-    void on_checkBox_show_angle_page2_stateChanged(int value);
-    void on_checkBox_show_rainbow_beams_page2_stateChanged(int value);
-    void on_horizontalSlider_number_of_beams_page2_valueChanged(int value);
-    void on_pushButton_reset_settings_page2_clicked();
-    /// PAGE3
-    void on_radioButton0_page3_clicked();
+    void on_pushButton_clearScr_page2_clicked();
+    /// page3
+    void on_spinBox_wave_page3_valueChanged(int value);
+    void on_horizontalSlider_wave_page3_valueChanged(int value);
+    void on_spinBox_number_of_beams_page3_valueChanged(int value);
     void on_radioButton1_page3_clicked();
     void on_radioButton2_page3_clicked();
-    void on_pushButton_startpause_page3_clicked();
-    void on_spinBox_FPS_page3_valueChanged(int value);
-    void on_horizontalSlider_FPS_page3_valueChanged(int value);
-    /// PAGE4
+    void on_checkBox_show_angle_page3_stateChanged(int value);
+    void on_checkBox_show_rainbow_beams_page3_stateChanged(int value);
+    void on_horizontalSlider_number_of_beams_page3_valueChanged(int value);
+    void on_pushButton_reset_settings_page3_clicked();
+    /// page4
     void on_radioButton0_page4_clicked();
     void on_radioButton1_page4_clicked();
     void on_radioButton2_page4_clicked();
+    void on_pushButton_startpause_page4_clicked();
+    void on_spinBox_FPS_page4_valueChanged(int value);
+    void on_horizontalSlider_FPS_page4_valueChanged(int value);
+    /// page5
+    void on_radioButton0_page5_clicked();
+    void on_radioButton1_page5_clicked();
+    void on_radioButton2_page5_clicked();
 };
 
 #endif // MAINWINDOW_H
