@@ -5,149 +5,376 @@
 Scene4::Scene4()
 {
     displayMode = 0;
-    numberOfBeams = 30;
-    reinitializeBeams();
+    dynamicMode = 1;
+    desiredFPS = 60;
+    currentRainSpeed = 0;
+    initialRainSwift = 0;
+    currentRainFrame = 0;
+    regenerateRain();
+    currentRainFrame = 0;
+    sunlightPenetration = new double[NumberOfBeams];
 }
 
-inline double Scene4::x(double x0)
+Scene4::~Scene4()
 {
-    return X-(X/18)+x0*std::min(X/16,Y/8)/SceneScale/2;
-}
-
-inline double Scene4::y(double y0)
-{
-    return (7*Y/8)+y0*std::min(X/16,Y/8)/SceneScale/2;
-}
-
-inline double Scene4::r(double r0)
-{
-    return r0*std::min(X/16,Y/8)/SceneScale/2;
-}
-
-void Scene4::reinitializeBeams()
-{
-    beams.clear();
-
-    double h=1.0/numberOfBeams;
-
-    for (float r=0.01; r<0.99; r+=h)
-    {
-        for (int wavelength=400; wavelength<=760; wavelength+=(760-400)/7)
-        {
-            Beam beam(0, 1, -r*DropRadius, wavelength, DropRadius);
-            beams.push_back(beam);
-            beam.invertDistance();
-            beams.push_back(beam);
-        }
-    }
+    if (currentRainSpeed) delete [] currentRainSpeed;
+    if (initialRainSwift) delete [] initialRainSwift;
+    if (currentRainFrame) delete [] currentRainFrame;
+    if (sunlightPenetration) delete [] sunlightPenetration;
 }
 
 void Scene4::setDisplayMode(int newDisplayMode)
 {
     displayMode = newDisplayMode;
-    reinitializeBeams();
 }
 
-void Scene4::draw_drop()
+void Scene4::setDesiredFPS(int newDesiredFPS)
 {
-    glColor3ub(100,100,255);
-    glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(x(0),y(0));
-
-    for (int i=0; i<=ImageQuality; i++) {
-        double currentAngle = (double)i/ImageQuality*2*M_PI;
-        glVertex2f(x(0)+r(DropRadius)*cos(currentAngle),
-                   y(0)+r(DropRadius)*sin(currentAngle));
-    }
-    glEnd();
+    desiredFPS = newDesiredFPS;
 }
 
-void Scene4::drawLine(double x0, double y0, double x1, double y1)
+void Scene4::switchDynamicMode()
 {
-    glBegin(GL_LINES);
-    glVertex2f(x(x0),y(y0));
-    glVertex2f(x(x1),y(y1));
-    glEnd();
+    dynamicMode = !dynamicMode;
 }
 
-void Scene4::draw_beam(Beam beam)
+bool Scene4::getDynamicMode() const
 {
-    double x0,y0,      // point0
-           x1,y1,      // point1
-           x2,y2;      // point2 - external (for reformed outside)
+    return dynamicMode;
+}
 
-    int r,g,b;
+void Scene4::regenerateRain()
+{
+    if (currentRainSpeed) delete [] currentRainSpeed;
+    if (initialRainSwift) delete [] initialRainSwift;
+    if (currentRainFrame) delete [] currentRainFrame;
 
-    Beam refracted(DropRadius),
-         radius(DropRadius),
-         reflected(DropRadius);
-
-    beam.calculateInputPoint(&x0, &y0);
-    radius.calculateKoeffs(x0,y0,0,0);
-
-    glColor3ub(255,255,255);
-
-    /// ORIGINAL BEAM
-    // this part should be drawn anyway
-    glBegin(GL_LINES);
-    glVertex2f(0,y(y0));
-    glVertex2f(x(x0),y(y0));
-    glEnd();
-
-    wavelengthToRGB(beam.getWL(),&r,&g,&b);
-    if (beam.getDistance() > 0)
-        glColor3ub(r,g,b);
-    else
-        glColor3ub(r*0.7,g*0.7,b*0.7);
-
-    /// FIRST REFRACTION
-    refracted = radius;
-    refracted.snell(beam, beam.refractIn());
-    beam = refracted;
-    beam.calculateOutputPoint(&x1, &y1, x0, y0);
-
-    drawLine(x0,y0,x1,y1);
-
-    /// REFLECTION INSIDE
-    radius.calculateKoeffs(x1,y1,0,0);
-    beam.reflect(radius);
-    x0=x1; y0=y1;
-    beam.calculateOutputPoint(&x1, &y1, x0, y0);
-
-    drawLine(x0,y0,x1,y1);
-
-    if ( displayMode == 0 || displayMode == 1) {
-        /// REFRACTION OUTSIDE
-        radius.calculateKoeffs(x1,y1,0,0);
-        refracted = radius;
-        refracted.snell(beam, beam.refractOut());
-        refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
-
-        drawLine(x1,y1,x2,y2);
-    }
-    if ( displayMode == 0 || displayMode == 2) {
-        /// NEXT REFLECTION INSIDE
-        radius.calculateKoeffs(x1,y1,0,0);
-        beam.reflect(radius);
-        x0=x1; y0=y1;
-        beam.calculateOutputPoint(&x1, &y1, x0, y0);
-
-        drawLine(x0,y0,x1,y1);
-
-        /// REFRACTION OUTSIDE
-        radius.calculateKoeffs(x1,y1,0,0);
-        refracted = radius;
-        refracted.snell(beam, beam.refractOut());
-        refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
-
-        drawLine(x1,y1,x2,y2);
+    cloudBegin = -CloudWidth * r(CloudRadius-1.5) + x(CloudCenterX);
+    cloudEnd = CloudWidth * r(CloudRadius-1.5) + x(CloudCenterX);
+    numberOfRainDashes = 0;
+    for (int i=cloudBegin; i<=cloudEnd; i+=RainStep)
+        numberOfRainDashes++;
+    currentRainSpeed = new int[numberOfRainDashes+1];
+    initialRainSwift = new int[numberOfRainDashes+1];
+    currentRainFrame = new int[numberOfRainDashes+1];
+    for (int i=0; i<numberOfRainDashes; i++) {
+        currentRainSpeed[i] = rand()%3 + 1; // speed should be >0, at least 1
+        initialRainSwift[i] = rand()%5;
+        currentRainFrame[i] = 0;
     }
 }
 
 void Scene4::display()
 {
-    for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)
-        draw_beam(*beam);
+    int r,g,b;
+    double eyeX,eyeY;
 
-    draw_drop();
+    Beam rainEdge(1),
+         sunLight(1),
+         observed(1);
+
+    if (dynamicMode)
+        for (int i=0; i<NumberOfBeams; i++)
+            sunlightPenetration[i] = (double)(rand()%500/100.0);
+
+    drawRain();
+
+    eyeX=x(ManPositionX)+6;
+    eyeY=y(ManPositionY+ManHeight)+4;
+
+    rainEdge.calculateKoeffs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
+
+    int beamNumber = 0;
+    for (double i=0; i<=10; i+=10.0/(NumberOfBeams-1))
+    {
+        sunLight.calculateKoeffs(0,i,1,i);
+
+        double dropX, dropY;
+        cross_ll(rainEdge, sunLight, &dropX, &dropY);
+        dropX+=sunlightPenetration[beamNumber++];
+
+        observed.calculateKoeffs(x(dropX), y(dropY), eyeX, eyeY);
+        /// ORIGINAL BEAMS
+        glColor3ub(255,255,255);
+        glBegin(GL_LINES);
+        glVertex2f(0,y(dropY));
+        glVertex2f(x(dropX),y(dropY));
+        glEnd();
+
+        if (displayMode == 0)
+        {
+            for (int wavelength=380; wavelength<=780; wavelength+=60)
+            {
+                const double LocalInf = 100;
+                double x0=dropX-LocalInf;
+                double y1=dropY-tan(whatAngle(wavelength,1)*M_PI/180)*LocalInf;
+                double y2=dropY-tan(whatAngle(wavelength,2)*M_PI/180)*LocalInf;
+
+                wavelengthToRGB(wavelength,&r,&g,&b);
+                glColor3ub(r,g,b);
+                glBegin(GL_LINES);
+                glVertex2f(x(dropX),y(dropY));
+                glVertex2f(x(x0),y(y1));
+                glVertex2f(x(dropX),y(dropY));
+                glVertex2f(x(x0),y(y2));
+                glEnd();
+            }
+        }
+        if (displayMode == 1)
+            if ( (observed.getAngle() >= whatAngle(380,1) && observed.getAngle() <= whatAngle(780,1) ) ||
+                 (observed.getAngle() >= whatAngle(780,2) && observed.getAngle() <= whatAngle(380,2) )
+                 )
+            {
+                double rd=40,   // rd - mini radius [pixels]
+                       xcut,ycut; // cutted beam
+                xcut=eyeX+rd*cos(observed.getAngle()*M_PI/180);
+                ycut=eyeY+rd*sin(observed.getAngle()*M_PI/180);
+                if (observed.getAngle()<=whatAngle(780,1))
+                    wavelengthToRGB(whatWave(observed.getAngle(),1),&r,&g,&b);
+                else wavelengthToRGB(whatWave(observed.getAngle(),2),&r,&g,&b);
+                glBegin(GL_LINES);
+                glColor3ub(255,255,255);
+                glColor3ub(r,g,b);
+                glVertex2f(x(dropX),y(dropY));
+                glVertex2f(xcut,ycut);
+                glEnd();
+                drawMan();
+            }
+        if (displayMode == 2)
+            if ( (observed.getAngle() >= whatAngle(380,1) && observed.getAngle() <= whatAngle(780,1) ) ||
+                 (observed.getAngle() >= whatAngle(780,2) && observed.getAngle() <= whatAngle(380,2) )
+                 )
+            {
+                for (int w=380; w<=780; w+=30)
+                {
+                    double x0=dropX-30;
+                    double y1=dropY+tan(whatAngle(w,1)*M_PI/180)*(-30);
+                    double y2=dropY+tan(whatAngle(w,2)*M_PI/180)*(-30);
+
+                    wavelengthToRGB(w,&r,&g,&b);
+                    glColor3ub(r,g,b);
+                    glBegin(GL_LINES);
+                    glVertex2f(x(dropX),y(dropY));
+                    glVertex2f(x(x0),y(y1));
+                    glVertex2f(x(dropX),y(dropY));
+                    glVertex2f(x(x0),y(y2));
+                    glEnd();
+                }
+                drawMan();
+            }
+    }
+
+    drawFloor();
+    drawCloud();
+
+    Sleep(888/desiredFPS);
+
+}
+
+void Scene4::drawRain()
+{
+    glColor3ub(200,200,200);
+
+    glEnable(GL_LINE_STIPPLE); // dashed line
+    glLineStipple(15, 0xAAAA); // style of dashes
+    glBegin(GL_LINES);
+
+    int dashNumber = 0;
+    for (int currentX=cloudBegin; currentX<=cloudEnd; currentX+=RainStep) {
+        /// Our rain goes from underground upstairs to the cloud :3
+        glVertex2f(currentX + initialRainSwift[dashNumber]
+                   -currentRainFrame[dashNumber]*currentRainSpeed[dashNumber]
+                   -y(CloudCenterY)/RainKoef ,
+
+                   initialRainSwift[dashNumber]*RainKoef
+                   -currentRainFrame[dashNumber]*RainKoef*currentRainSpeed[dashNumber]);
+
+        glVertex2f(currentX ,y(CloudCenterY));
+
+        if (currentRainFrame[dashNumber] < currentRainSpeed[dashNumber]*30)
+            currentRainFrame[dashNumber]++;
+        else
+            currentRainFrame[dashNumber] = 0;
+        dashNumber++;
+    }
+
+    glEnd();
+    glDisable(GL_LINE_STIPPLE);
+}
+
+void Scene4::drawCloud()
+{
+    glColor3ub(100,100,100);
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(x(CloudCenterX),y(CloudCenterY));
+    for (int i = 0; i <= ImageQuality; i++) {
+        double a = (double)i/ImageQuality*M_PI*2;
+        glVertex2f(cos(a) * CloudWidth * r(CloudRadius) + x(CloudCenterX),
+                   sin(a) * CloudHeight * r(CloudRadius) + y(CloudCenterY));
+    }
+    glEnd();
+}
+
+void Scene4::drawFloor()
+{
+    glColor3ub(0,180,0);
+    glBegin(GL_QUADS);
+    glVertex2f(0,y(ManPositionY));
+    glVertex2f(X,y(ManPositionY));
+    glVertex2f(X,0);
+    glVertex2f(0,0);
+    glEnd();
+}
+
+void Scene4::drawMan()
+{
+    const double ManHeadRadius = 0.4,
+                 ManArmWidth = 0.3,
+                 ManArmHeight = 1.2;
+
+    glColor3ub(255,255,255);
+
+    ///HEAD
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(x(ManPositionX),y(ManPositionY+ManHeight));
+    for (int i = 0; i <= ImageQuality; i++ ) {
+        double  a = (double)i/ImageQuality*M_PI*2;
+        glVertex2f(cos(a)*r(ManHeadRadius)+x(ManPositionX),
+                   sin(a)*r(ManHeadRadius)+y(ManPositionY+ManHeight));
+    }
+    glEnd();
+
+    glBegin(GL_QUADS);
+    // points go in clockwise order
+    // 1 2
+    // 4 3
+    /// BODY
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY));
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY));
+
+    /// LEFT HAND
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+
+    /// RIGHT HAND
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glEnd();
+
+    glColor3ub(0,0,0);
+    glBegin(GL_POINTS);
+    /// LEFT SHOULDER
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+1,y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+2,y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+3,y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius)-1);
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+1,y(ManPositionY+ManHeight-ManHeadRadius)-1);
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius)-2);
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius)-3);
+
+    /// RIGHT SHOULDER
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-1,y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-2,y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-3,y(ManPositionY+ManHeight-ManHeadRadius));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius)-1);
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-1,y(ManPositionY+ManHeight-ManHeadRadius)-1);
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius)-2);
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius)-3);
+
+    /// LEFT HAND
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+2,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+3,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth)+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+2);
+    glVertex2f(x(ManPositionX-ManHeadRadius-ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+3);
+
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1-2,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1-3,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+2);
+    glVertex2f(x(ManPositionX-ManHeadRadius)-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+3);
+
+    /// RIGHT HAND
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-2,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-3,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth)-1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+2);
+    glVertex2f(x(ManPositionX+ManHeadRadius+ManArmWidth),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+3);
+
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1+2,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1+3,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+1);
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+2);
+    glVertex2f(x(ManPositionX+ManHeadRadius)+1,y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight)+3);
+
+    /// LEFT LEG
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY));
+    glVertex2f(x(ManPositionX-ManHeadRadius)+1,y(ManPositionY));
+    glVertex2f(x(ManPositionX-ManHeadRadius)+2,y(ManPositionY));
+    glVertex2f(x(ManPositionX-ManHeadRadius)+3,y(ManPositionY));
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX-ManHeadRadius)+1,y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY)+2);
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY)+3);
+
+    glVertex2f(x(ManPositionX)-1,y(ManPositionY));
+    glVertex2f(x(ManPositionX)-1-1,y(ManPositionY));
+    glVertex2f(x(ManPositionX)-1-2,y(ManPositionY));
+    glVertex2f(x(ManPositionX)-1-3,y(ManPositionY));
+    glVertex2f(x(ManPositionX)-1,y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX)-1-1,y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX)-1,y(ManPositionY)+2);
+    glVertex2f(x(ManPositionX)-1,y(ManPositionY)+3);
+
+    /// RIGHT LEG
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY));
+    glVertex2f(x(ManPositionX+ManHeadRadius)-1,y(ManPositionY));
+    glVertex2f(x(ManPositionX+ManHeadRadius)-2,y(ManPositionY));
+    glVertex2f(x(ManPositionX+ManHeadRadius)-3,y(ManPositionY));
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX+ManHeadRadius)-1,y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY)+2);
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY)+3);
+
+    glVertex2f(x(ManPositionX)+1,y(ManPositionY));
+    glVertex2f(x(ManPositionX)+1+1,y(ManPositionY));
+    glVertex2f(x(ManPositionX)+1+2,y(ManPositionY));
+    glVertex2f(x(ManPositionX)+1+3,y(ManPositionY));
+    glVertex2f(x(ManPositionX)+1,y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX)+1+1,y(ManPositionY)+1);
+    glVertex2f(x(ManPositionX)+1,y(ManPositionY)+2);
+    glVertex2f(x(ManPositionX)+1,y(ManPositionY)+3);
+
+    glEnd();
+
+    ///SOME LINES
+    glBegin(GL_LINES);
+    glVertex2f(x(ManPositionX),y(ManPositionY));
+    glVertex2f(x(ManPositionX),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmWidth));
+    glVertex2f(x(ManPositionX+ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmWidth));
+    glVertex2f(x(ManPositionX-ManHeadRadius),y(ManPositionY+ManHeight-ManHeadRadius-ManArmHeight));
+    glEnd();
 }

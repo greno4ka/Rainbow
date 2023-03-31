@@ -9,53 +9,35 @@
 class Scene3 : public SceneBase
 {
     int displayMode;
-    bool dynamicMode;
-    int desiredFPS;
+    int wavelength;
+    int numberOfBeams;
+    int showRainbow;
+    int showAngle;
 
-    // used for floor and man
-    const double ManPositionX = -10,
-                 ManPositionY = -11,
-                 ManHeight = 3; // To be honest, it's height of his eye
+    double coordX, coordY, // point of crossing refracted beam with horizontal
+           currentAngle;
 
-    const double CloudWidth = 3,
-                 CloudHeight = 1,
-                 CloudRadius = 6,
-                 CloudCenterX = 15,
-                 CloudCenterY = 15;
+    Beams beams;
 
-    const int RainStep = 20,    // pixels between two rain dashes
-              RainKoef = 5;     // simply k in y=kx
-
-    const int NumberOfBeams = 100;
-
-    double *sunlightPenetration;
-
-    int cloudBegin, cloudEnd,   // x-bounds of cloud
-        numberOfRainDashes;     // number of elements of currentRainSpeed
-
-    int *currentRainSpeed,
-        *initialRainSwift,
-        *currentRainFrame;
+    void reinitializeBeams();
+    void draw_beam(Beam beam);
 
 public:
     Scene3();
-    ~Scene3();
+
+    void resetScene();
 
     void setDisplayMode(int newDisplayMode);
-    void setDesiredFPS(int newDesiredFPS);
-    void switchDynamicMode();
-
-    void regenerateRain();
-
-
-    void drawCloud();
-    void drawRain();
-    void drawFloor();
-    void drawMan();
+    void setWavelength(int newWavelength);
+    void setNumberOfBeams(int newNumberOfBeams);
+    void setShowRainbow(int newShowRainbow);
+    void setShowAngle(int newShowAngle);
 
     void display();
-
-    bool getDynamicMode() const;
+    double getCoordX();
+    double getCoordY();
+    double getCurrentAngle() const;
+    int getShowAngle() const;
 };
 
 #endif // SCENE3_H

@@ -26,11 +26,11 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     glWidget->setFormat(format);
     ui->glWidgetLayout->addWidget(glWidget);
     currentStackWidgetPage = programMode;
-    scene0 = new Scene0();
-    scene1 = new Scene1();
-    scene2 = new Scene2();
-    scene3 = new Scene3();
-    scene4 = new Scene4();
+    scene0 = new Scene1();
+    scene1 = new Scene2();
+    scene2 = new Scene3();
+    scene3 = new Scene4();
+    scene4 = new Scene5();
 
     glWidget->connectWithScene0(*scene0);
     glWidget->connectWithScene1(*scene1);

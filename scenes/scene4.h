@@ -6,30 +6,56 @@
 #include "scenebase.h"
 #include "beam.h"
 
-class Scene4: public SceneBase
+class Scene4 : public SceneBase
 {
     int displayMode;
-    int numberOfBeams;
+    bool dynamicMode;
+    int desiredFPS;
 
-    Beams beams;
+    // used for floor and man
+    const double ManPositionX = -10,
+                 ManPositionY = -11,
+                 ManHeight = 3; // To be honest, it's height of his eye
 
-    void reinitializeBeams();
+    const double CloudWidth = 3,
+                 CloudHeight = 1,
+                 CloudRadius = 6,
+                 CloudCenterX = 15,
+                 CloudCenterY = 15;
 
-    void drawLine(double x0, double y0, double x1, double y1);
-    void draw_beam(Beam beam);
-    void draw_drop();
+    const int RainStep = 20,    // pixels between two rain dashes
+              RainKoef = 5;     // simply k in y=kx
+
+    const int NumberOfBeams = 100;
+
+    double *sunlightPenetration;
+
+    int cloudBegin, cloudEnd,   // x-bounds of cloud
+        numberOfRainDashes;     // number of elements of currentRainSpeed
+
+    int *currentRainSpeed,
+        *initialRainSwift,
+        *currentRainFrame;
 
 public:
     Scene4();
+    ~Scene4();
 
     void setDisplayMode(int newDisplayMode);
+    void setDesiredFPS(int newDesiredFPS);
+    void switchDynamicMode();
+
+    void regenerateRain();
+
+
+    void drawCloud();
+    void drawRain();
+    void drawFloor();
+    void drawMan();
 
     void display();
 
-    /// Methods of recalculation decart coords to screen coords
-    inline double x(double x0);
-    inline double y(double y0);
-    inline double r(double r0);
+    bool getDynamicMode() const;
 };
 
 #endif // SCENE4_H

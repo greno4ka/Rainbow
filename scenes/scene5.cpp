@@ -1,51 +1,82 @@
-#include "scene2.h"
+#include "scene5.h"
 
 #include "wavelength.h"
 
-Scene2::Scene2()
+Scene5::Scene5()
 {
-    displayMode = 1;
-    distance = 0.86;
-    wavelength = 600;
+    displayMode = 0;
+    numberOfBeams = 30;
     reinitializeBeams();
 }
 
-void Scene2::reinitializeBeams()
+inline double Scene5::x(double x0)
 {
-    beams.clear();
-    Beam beam1(0,1,-(distance+0.02)*DropRadius,wavelength, DropRadius),
-         beam2(0,1,-(distance-0.02)*DropRadius,wavelength, DropRadius);
-    beams.push_back (beam1);
-    beams.push_back (beam2);
+    return X-(X/18)+x0*std::min(X/16,Y/8)/SceneScale/2;
 }
 
-void Scene2::setDisplayMode(int newDisplayMode)
+inline double Scene5::y(double y0)
+{
+    return (7*Y/8)+y0*std::min(X/16,Y/8)/SceneScale/2;
+}
+
+inline double Scene5::r(double r0)
+{
+    return r0*std::min(X/16,Y/8)/SceneScale/2;
+}
+
+void Scene5::reinitializeBeams()
+{
+    beams.clear();
+
+    double h=1.0/numberOfBeams;
+
+    for (float r=0.01; r<0.99; r+=h)
+    {
+        for (int wavelength=400; wavelength<=760; wavelength+=(760-400)/7)
+        {
+            Beam beam(0, 1, -r*DropRadius, wavelength, DropRadius);
+            beams.push_back(beam);
+            beam.invertDistance();
+            beams.push_back(beam);
+        }
+    }
+}
+
+void Scene5::setDisplayMode(int newDisplayMode)
 {
     displayMode = newDisplayMode;
     reinitializeBeams();
 }
 
-void Scene2::setDistance(double newDistance)
+void Scene5::draw_drop()
 {
-    distance = newDistance;
-    reinitializeBeams();
+    glColor3ub(100,100,255);
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(x(0),y(0));
+
+    for (int i=0; i<=ImageQuality; i++) {
+        double currentAngle = (double)i/ImageQuality*2*M_PI;
+        glVertex2f(x(0)+r(DropRadius)*cos(currentAngle),
+                   y(0)+r(DropRadius)*sin(currentAngle));
+    }
+    glEnd();
 }
 
-void Scene2::setWavelength(int newWavelength)
+void Scene5::drawLine(double x0, double y0, double x1, double y1)
 {
-    wavelength = newWavelength;
-    reinitializeBeams();
+    glBegin(GL_LINES);
+    glVertex2f(x(x0),y(y0));
+    glVertex2f(x(x1),y(y1));
+    glEnd();
 }
 
-void Scene2::draw_beam(Beam beam)
+void Scene5::draw_beam(Beam beam)
 {
     double x0,y0,      // point0
            x1,y1,      // point1
            x2,y2;      // point2 - external (for reformed outside)
 
     int r,g,b;
-    wavelengthToRGB(beam.getWL(),&r,&g,&b);
-    glColor3ub(r,g,b);
 
     Beam refracted(DropRadius),
          radius(DropRadius),
@@ -54,12 +85,20 @@ void Scene2::draw_beam(Beam beam)
     beam.calculateInputPoint(&x0, &y0);
     radius.calculateKoeffs(x0,y0,0,0);
 
+    glColor3ub(255,255,255);
+
     /// ORIGINAL BEAM
     // this part should be drawn anyway
     glBegin(GL_LINES);
     glVertex2f(0,y(y0));
     glVertex2f(x(x0),y(y0));
     glEnd();
+
+    wavelengthToRGB(beam.getWL(),&r,&g,&b);
+    if (beam.getDistance() > 0)
+        glColor3ub(r,g,b);
+    else
+        glColor3ub(r*0.7,g*0.7,b*0.7);
 
     /// FIRST REFRACTION
     refracted = radius;
@@ -77,7 +116,7 @@ void Scene2::draw_beam(Beam beam)
 
     drawLine(x0,y0,x1,y1);
 
-    if (displayMode == 1) {
+    if ( displayMode == 0 || displayMode == 1) {
         /// REFRACTION OUTSIDE
         radius.calculateKoeffs(x1,y1,0,0);
         refracted = radius;
@@ -85,7 +124,8 @@ void Scene2::draw_beam(Beam beam)
         refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
         drawLine(x1,y1,x2,y2);
-    } else {
+    }
+    if ( displayMode == 0 || displayMode == 2) {
         /// NEXT REFLECTION INSIDE
         radius.calculateKoeffs(x1,y1,0,0);
         beam.reflect(radius);
@@ -104,10 +144,10 @@ void Scene2::draw_beam(Beam beam)
     }
 }
 
-void Scene2::display()
+void Scene5::display()
 {
-    draw_drop();
-    draw_axes();
     for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)
         draw_beam(*beam);
+
+    draw_drop();
 }

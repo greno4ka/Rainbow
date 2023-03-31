@@ -78,27 +78,27 @@ void GLWidget::resizeGL(int w, int h){
     glMatrixMode(GL_MODELVIEW);
 }
 
-void GLWidget::connectWithScene0(Scene0 &originalScene0)
+void GLWidget::connectWithScene0(Scene1 &originalScene0)
 {
     scene0 = &originalScene0;
 }
 
-void GLWidget::connectWithScene1(Scene1 &originalScene1)
+void GLWidget::connectWithScene1(Scene2 &originalScene1)
 {
     scene1 = &originalScene1;
 }
 
-void GLWidget::connectWithScene2(Scene2 &originalScene2)
+void GLWidget::connectWithScene2(Scene3 &originalScene2)
 {
     scene2 = &originalScene2;
 }
 
-void GLWidget::connectWithScene3(Scene3 &originalScene3)
+void GLWidget::connectWithScene3(Scene4 &originalScene3)
 {
     scene3 = &originalScene3;
 }
 
-void GLWidget::connectWithScene4(Scene4 &originalScene4)
+void GLWidget::connectWithScene4(Scene5 &originalScene4)
 {
     scene4 = &originalScene4;
 }

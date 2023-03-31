@@ -10,12 +10,8 @@ class Scene2 : public SceneBase
 {
     int displayMode;
     int wavelength;
-    int numberOfBeams;
-    int showRainbow;
-    int showAngle;
 
-    double coordX, coordY, // point of crossing refracted beam with horizontal
-           currentAngle;
+    double distance;
 
     Beams beams;
 
@@ -25,19 +21,11 @@ class Scene2 : public SceneBase
 public:
     Scene2();
 
-    void resetScene();
-
     void setDisplayMode(int newDisplayMode);
     void setWavelength(int newWavelength);
-    void setNumberOfBeams(int newNumberOfBeams);
-    void setShowRainbow(int newShowRainbow);
-    void setShowAngle(int newShowAngle);
+    void setDistance(double newDistance);
 
     void display();
-    double getCoordX();
-    double getCoordY();
-    double getCurrentAngle() const;
-    int getShowAngle() const;
 };
 
 #endif // SCENE2_H

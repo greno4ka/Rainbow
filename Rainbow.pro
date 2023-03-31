@@ -18,14 +18,14 @@ SOURCES += main.cpp \
     glwidget.cpp \
     \
     mainwindow.cpp \
-    settingswindow.cpp \
-    wavelength.cpp \
-    \
-    scenes/scene0.cpp \
     scenes/scene1.cpp \
     scenes/scene2.cpp \
     scenes/scene3.cpp \
     scenes/scene4.cpp \
+    scenes/scene5.cpp \
+    settingswindow.cpp \
+    wavelength.cpp \
+    \
     scenes/scenebase.cpp
 
 HEADERS  += \
@@ -33,14 +33,14 @@ HEADERS  += \
     glwidget.h \
     \
     mainwindow.h \
-    settingswindow.h \
-    wavelength.h \
-    \
-    scenes/scene0.h \
     scenes/scene1.h \
     scenes/scene2.h \
     scenes/scene3.h \
     scenes/scene4.h \
+    scenes/scene5.h \
+    settingswindow.h \
+    wavelength.h \
+    \
     scenes/scenebase.h
 
 FORMS    += \

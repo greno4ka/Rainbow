@@ -6,11 +6,11 @@
 #include "settingswindow.h"
 #include "glwidget.h"
 #include "scenes/scenebase.h"
-#include "scenes/scene0.h"
 #include "scenes/scene1.h"
 #include "scenes/scene2.h"
 #include "scenes/scene3.h"
 #include "scenes/scene4.h"
+#include "scenes/scene5.h"
 
 namespace Ui {
 class MainWindow;
@@ -32,11 +32,11 @@ private:
     GLWidget *glWidget;
 
     SceneBase *scene;
-    Scene0 *scene0;
-    Scene1 *scene1;
-    Scene2 *scene2;
-    Scene3 *scene3;
-    Scene4 *scene4;
+    Scene1 *scene0;
+    Scene2 *scene1;
+    Scene3 *scene2;
+    Scene4 *scene3;
+    Scene5 *scene4;
 
     QTranslator *translator = nullptr;
 
