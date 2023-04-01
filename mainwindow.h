@@ -32,11 +32,11 @@ private:
     GLWidget *glWidget;
 
     SceneBase *scene;
-    Scene1 *scene0;
-    Scene2 *scene1;
-    Scene3 *scene2;
-    Scene4 *scene3;
-    Scene5 *scene4;
+    Scene1 *scene1;
+    Scene2 *scene2;
+    Scene3 *scene3;
+    Scene4 *scene4;
+    Scene5 *scene5;
 
     QTranslator *translator = nullptr;
 
