@@ -65,7 +65,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>5</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page0">
            <widget class="QGroupBox" name="groupBox">
@@ -859,7 +859,14 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="glWidgetLayout"/>
+       <layout class="QHBoxLayout" name="glWidgetLayout">
+        <item>
+         <widget class="QStackedWidget" name="presentationWidget">
+          <widget class="QWidget" name="slide1"/>
+          <widget class="QWidget" name="slide2"/>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>

@@ -64,6 +64,24 @@ void MainWindow::setTranslator(QTranslator *newTranslator)
     translator = newTranslator;
 }
 
+void MainWindow::switchWidget()
+{
+    switch (currentStackWidgetPage) {
+    case 0:
+        glWidget->hide();
+        ui->presentationWidget->show();
+        break;
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+        glWidget->show();
+        ui->presentationWidget->hide();
+        break;
+    }
+}
+
 void MainWindow::switchScene()
 {
     switch (currentStackWidgetPage) {
@@ -91,6 +109,7 @@ void MainWindow::switchScene()
 
     ui->stackedWidget->setCurrentIndex(currentStackWidgetPage);
     glWidget->setSceneNumber(currentStackWidgetPage);
+    switchWidget();
 }
 
 void MainWindow::on_pushButton_next_clicked()

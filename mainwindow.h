@@ -43,6 +43,7 @@ private:
     int currentStackWidgetPage;
 
     void switchScene();
+    void switchWidget();
 
 private slots:
     void retranslate();
