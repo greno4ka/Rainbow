@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets opengl openglwidgets
+QT       += core gui widgets opengl
+win32: QT += openglwidgets
 
 win32: LIBS += -lopengl32
 

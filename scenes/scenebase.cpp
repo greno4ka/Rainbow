@@ -1,5 +1,7 @@
 #include "scenebase.h"
 
+#include <cmath>
+
 SceneBase::SceneBase()
 {
     X = 800;

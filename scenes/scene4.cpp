@@ -1,5 +1,7 @@
 #include "scene4.h"
 
+#include <QThread>
+
 #include "wavelength.h"
 
 Scene4::Scene4()
@@ -167,7 +169,7 @@ void Scene4::display()
     drawFloor();
     drawCloud();
 
-    Sleep(888/desiredFPS);
+    QThread::sleep(888/desiredFPS);
 
 }
 
