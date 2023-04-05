@@ -16,8 +16,8 @@ class Beam
                         // drop radius is one of characteristics of beam
                         // it's name short to be short in math formulas
 
-    constexpr static const double EPS = 0.0000000001;
-    constexpr static const double INF = 10000000000;
+    constexpr static const double EPS = 0.000001;
+    constexpr static const double INF = 100000;
 
 public:
     Beam();
