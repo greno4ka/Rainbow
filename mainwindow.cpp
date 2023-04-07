@@ -202,7 +202,7 @@ void MainWindow::on_pushButton_beamNext_page1_clicked()
 
 void MainWindow::on_pushButton_clearScr_page1_clicked()
 {
-    scene1->resetBeamStep();
+    scene1->clearBeams();
 }
 
 void MainWindow::on_doubleSpinBox_dist_page2_valueChanged(double value)

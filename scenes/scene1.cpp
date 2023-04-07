@@ -32,6 +32,7 @@ void Scene1::addBeam(double newDistance, int newWavelength)
 void Scene1::clearBeams()
 {
     beams.clear();
+    beamStep = 0;
 }
 
 bool Scene1::ifNoBeams()
@@ -49,11 +50,6 @@ void Scene1::decBeamStep()
 {
     if (beamStep > 0)
         beamStep--;
-}
-
-void Scene1::resetBeamStep()
-{
-    beamStep = 0;
 }
 
 void Scene1::draw_beam(Beam beam)

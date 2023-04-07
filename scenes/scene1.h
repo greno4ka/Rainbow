@@ -31,7 +31,6 @@ public:
     bool ifNoBeams();
     void incBeamStep();
     void decBeamStep();
-    void resetBeamStep();
 
     void display();
 };
