@@ -2,7 +2,7 @@
 #define GLWIDGET_H
 
 #include <QtOpenGL>
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include <QTimer>
 
 #include "scenes/scenebase.h"
