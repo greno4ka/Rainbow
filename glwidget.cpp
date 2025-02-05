@@ -65,7 +65,7 @@ void GLWidget::resizeGL(int w, int h){
     scene4->updateXY(w, h);
     scene5->updateXY(w, h);
 
-    if (sceneNumber == 3)
+    if (sceneNumber == 4)
         scene4->regenerateRain();
 
     glViewport(0, 0, w, h);
