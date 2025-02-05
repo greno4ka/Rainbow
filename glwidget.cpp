@@ -41,6 +41,7 @@ void GLWidget::initializeGL(){
 }
 
 void GLWidget::paintGL(){
+    setAttribute(Qt::WA_AlwaysStackOnTop);
     glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(0,0,0,0);
     scene->display();
