@@ -15,15 +15,16 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
 
     settingsWindow = new SettingsWindow(this);
     connect(settingsWindow, SIGNAL(language_change()), this, SLOT(retranslate()));
+    connect(settingsWindow, SIGNAL(theme_change(bool)), this, SLOT(onThemeChanged(bool)));
+    connect(settingsWindow, SIGNAL(multisampling_change(bool)), this, SLOT(onMultisamplingChanged(bool)));
+    connect(settingsWindow, SIGNAL(fullscreen_change(bool)), this, SLOT(onFullscreenChanged(bool)));
 
     glWidget = new GLWidget(this);
 
     QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     glWidget->setSizePolicy(sizePolicy);
 
-    QSurfaceFormat format;
-    format.setSamples(8); //this creates a 8x MSAA surface format
-    glWidget->setFormat(format);
+    // Initial format will be set by the settings loaded in SettingsWindow constructor
     ui->glWidgetLayout->addWidget(glWidget);
     currentStackWidgetPage = programMode;
     scene1 = new Scene1();
@@ -358,4 +359,80 @@ void MainWindow::on_radioButton1_page5_clicked()
 void MainWindow::on_radioButton2_page5_clicked()
 {
     scene5->setDisplayMode(2);
+}
+
+void MainWindow::onThemeChanged(bool isDark)
+{
+    applyTheme(isDark);
+}
+
+void MainWindow::applyTheme(bool isDark)
+{
+    // Create the base stylesheet
+    QString baseStyle;
+    if (isDark) {
+        baseStyle = "QWidget { background-color: #2b2b2b; color: #ffffff; }"
+                   "QPushButton { background-color: #3b3b3b; border: 1px solid #555555; padding: 5px; }"
+                   "QPushButton:hover { background-color: #4b4b4b; }"
+                   "QComboBox { background-color: #3b3b3b; border: 1px solid #555555; padding: 5px; }"
+                   "QSpinBox, QDoubleSpinBox { background-color: #3b3b3b; border: 1px solid #555555; padding: 5px; }"
+                   "QSlider::handle:horizontal { background-color: #555555; }"
+                   "QSlider::groove:horizontal { background-color: #3b3b3b; }"
+                   "QCheckBox { color: #ffffff; }"
+                   "QRadioButton { color: #ffffff; }"
+                   "QGroupBox { border: 1px solid #555555; margin-top: 5px; }"
+                   "QGroupBox::title { color: #ffffff; }";
+    } else {
+        baseStyle = "QWidget { background-color: #f0f0f0; color: #000000; }"
+                   "QPushButton { background-color: #e0e0e0; border: 1px solid #c0c0c0; padding: 5px; }"
+                   "QPushButton:hover { background-color: #d0d0d0; }"
+                   "QComboBox { background-color: #ffffff; border: 1px solid #c0c0c0; padding: 5px; }"
+                   "QSpinBox, QDoubleSpinBox { background-color: #ffffff; border: 1px solid #c0c0c0; padding: 5px; }"
+                   "QSlider::handle:horizontal { background-color: #c0c0c0; }"
+                   "QSlider::groove:horizontal { background-color: #e0e0e0; }"
+                   "QCheckBox { color: #000000; }"
+                   "QRadioButton { color: #000000; }"
+                   "QGroupBox { border: 1px solid #c0c0c0; margin-top: 5px; }"
+                   "QGroupBox::title { color: #000000; }";
+    }
+
+    // Apply the stylesheet to both windows
+    this->setStyleSheet(baseStyle);
+    settingsWindow->setStyleSheet(baseStyle);
+
+    // Update GL widget background color
+    if (glWidget) {
+        glWidget->makeCurrent();
+        if (isDark) {
+            glClearColor(0.17f, 0.17f, 0.17f, 1.0f);  // Dark gray for dark theme
+        } else {
+            glClearColor(0.94f, 0.94f, 0.94f, 1.0f);  // Light gray for light theme
+        }
+        glWidget->update();
+    }
+}
+
+void MainWindow::applyMultisampling(bool enabled)
+{
+    if (glWidget) {
+        QSurfaceFormat format = glWidget->format();
+        format.setSamples(enabled ? 8 : 0);
+        glWidget->setFormat(format);
+        glWidget->hide();  // Force a context recreation
+        glWidget->show();
+    }
+}
+
+void MainWindow::onMultisamplingChanged(bool enabled)
+{
+    applyMultisampling(enabled);
+}
+
+void MainWindow::onFullscreenChanged(bool enabled)
+{
+    if (enabled) {
+        showFullScreen();
+    } else {
+        showNormal();
+    }
 }

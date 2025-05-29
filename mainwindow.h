@@ -44,9 +44,14 @@ private:
 
     void switchScene();
     void switchWidget();
+    void applyTheme(bool isDark);
+    void applyMultisampling(bool enabled);
 
 private slots:
     void retranslate();
+    void onThemeChanged(bool isDark);
+    void onMultisamplingChanged(bool enabled);
+    void onFullscreenChanged(bool enabled);
     /// Main controls
     void on_pushButton_next_clicked();
     void on_pushButton_prev_clicked();

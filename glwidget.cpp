@@ -43,12 +43,11 @@ void GLWidget::initializeGL(){
 void GLWidget::paintGL(){
     setAttribute(Qt::WA_AlwaysStackOnTop);
     glClear(GL_COLOR_BUFFER_BIT);
-    glClearColor(0,0,0,0);
     scene->display();
 
     if (sceneNumber == 2 && scene3->getShowAngle()) {
         QPainter painter(this);
-        QColor fontColor = QColor(255,255,255);
+        QColor fontColor = palette().color(QPalette::WindowText);
         QFont font = painter.font();
         font.setPointSize(font.pointSize() * 2);
         painter.setFont(font);
