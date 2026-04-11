@@ -1,0 +1,52 @@
+QWidget {
+    background-color: #f0f0f0;
+    color: #000000;
+}
+
+QPushButton {
+    background-color: #e0e0e0;
+    border: 1px solid #c0c0c0;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: #d0d0d0;
+}
+
+QComboBox {
+    background-color: #ffffff;
+    border: 1px solid #c0c0c0;
+    padding: 5px;
+}
+
+QSpinBox,
+QDoubleSpinBox {
+    background-color: #ffffff;
+    border: 1px solid #c0c0c0;
+    padding: 5px;
+}
+
+QSlider::handle:horizontal {
+    background-color: #c0c0c0;
+}
+
+QSlider::groove:horizontal {
+    background-color: #e0e0e0;
+}
+
+QCheckBox {
+    color: #000000;
+}
+
+QRadioButton {
+    color: #000000;
+}
+
+QGroupBox {
+    border: 1px solid #c0c0c0;
+    margin-top: 5px;
+}
+
+QGroupBox::title {
+    color: #000000;
+}

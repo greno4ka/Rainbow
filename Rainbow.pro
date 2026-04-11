@@ -51,3 +51,6 @@ FORMS    += \
 TRANSLATIONS = rainbow_en.ts \
                rainbow_ru.ts \
                rainbow_fr.ts
+
+RESOURCES += \
+    styles/styles.qrc

@@ -10,6 +10,15 @@
 #include <QStandardPaths>
 #include <QSettings>
 
+static QString loadStyle(const QString &path)
+{
+    QFile file(path);
+    if (!file.open(QFile::ReadOnly))
+        return {};
+
+    return QString::fromUtf8(file.readAll());
+}
+
 MainWindow::MainWindow(int programMode, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -414,37 +423,12 @@ void MainWindow::onThemeChanged(bool isDark)
 
 void MainWindow::applyTheme(bool isDark)
 {
-    // Create the base stylesheet
-    QString baseStyle;
-    if (isDark) {
-        baseStyle = "QWidget { background-color: #2b2b2b; color: #ffffff; }"
-                   "QPushButton { background-color: #3b3b3b; border: 1px solid #555555; padding: 5px; }"
-                   "QPushButton:hover { background-color: #4b4b4b; }"
-                   "QComboBox { background-color: #3b3b3b; border: 1px solid #555555; padding: 5px; }"
-                   "QSpinBox, QDoubleSpinBox { background-color: #3b3b3b; border: 1px solid #555555; padding: 5px; }"
-                   "QSlider::handle:horizontal { background-color: #555555; }"
-                   "QSlider::groove:horizontal { background-color: #3b3b3b; }"
-                   "QCheckBox { color: #ffffff; }"
-                   "QRadioButton { color: #ffffff; }"
-                   "QGroupBox { border: 1px solid #555555; margin-top: 5px; }"
-                   "QGroupBox::title { color: #ffffff; }";
-    } else {
-        baseStyle = "QWidget { background-color: #f0f0f0; color: #000000; }"
-                   "QPushButton { background-color: #e0e0e0; border: 1px solid #c0c0c0; padding: 5px; }"
-                   "QPushButton:hover { background-color: #d0d0d0; }"
-                   "QComboBox { background-color: #ffffff; border: 1px solid #c0c0c0; padding: 5px; }"
-                   "QSpinBox, QDoubleSpinBox { background-color: #ffffff; border: 1px solid #c0c0c0; padding: 5px; }"
-                   "QSlider::handle:horizontal { background-color: #c0c0c0; }"
-                   "QSlider::groove:horizontal { background-color: #e0e0e0; }"
-                   "QCheckBox { color: #000000; }"
-                   "QRadioButton { color: #000000; }"
-                   "QGroupBox { border: 1px solid #c0c0c0; margin-top: 5px; }"
-                   "QGroupBox::title { color: #000000; }";
-    }
+    QString style = loadStyle(isDark ? ":/dark.qss"
+                                     : ":/light.qss");
 
     // Apply the stylesheet to both windows
-    this->setStyleSheet(baseStyle);
-    settingsWindow->setStyleSheet(baseStyle);
+    this->setStyleSheet(style);
+    settingsWindow->setStyleSheet(style);
 
     // Update GL widget background color
     if (glWidget) {
