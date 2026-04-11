@@ -14,11 +14,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     
     // Set up settings file path
     QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
-    QDir().mkpath(configPath);
+    QDir().mkpath(configPath);  // Ensure the directory exists
     settingsFilePath = configPath + "/settings.ini";
-    
-    // Load settings on startup
-    loadSettings();
 }
 
 SettingsWindow::~SettingsWindow()
@@ -31,6 +28,13 @@ SettingsWindow::~SettingsWindow()
 void SettingsWindow::setTranslator(QTranslator *newTranslator)
 {
     translator = newTranslator;
+}
+
+void SettingsWindow::showEvent(QShowEvent *event)
+{
+    QDialog::showEvent(event);
+    // Load current settings when window is shown
+    loadSettings();
 }
 
 void SettingsWindow::on_comboBox_activated(int value)
@@ -69,26 +73,18 @@ void SettingsWindow::loadSettings()
     // Load language setting
     int languageIndex = settings.value("language", 0).toInt();
     ui->comboBox->setCurrentIndex(languageIndex);
-    if (languageIndex != 0) {
-        on_comboBox_activated(languageIndex);
-    }
     
     // Load theme setting
     int themeIndex = settings.value("theme", 0).toInt();
     ui->comboBox_2->setCurrentIndex(themeIndex);
-    if (themeIndex != 0) {
-        on_comboBox_2_activated(themeIndex);
-    }
     
     // Load multisampling setting
     bool multisamplingEnabled = settings.value("multisampling", true).toBool();
     ui->checkBox_multisampling->setChecked(multisamplingEnabled);
-    emit multisampling_change(multisamplingEnabled);
     
     // Load fullscreen setting
     bool fullscreenEnabled = settings.value("fullscreen", false).toBool();
     ui->checkBox_fullscreen->setChecked(fullscreenEnabled);
-    emit fullscreen_change(fullscreenEnabled);
 }
 
 void SettingsWindow::saveSettings()

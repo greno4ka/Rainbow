@@ -28,6 +28,9 @@ public:
     void loadSettings();
     void saveSettings();
 
+protected:
+    void showEvent(QShowEvent *event) override;
+
 private slots:
     void on_comboBox_activated(int value);
     void on_comboBox_2_activated(int index);

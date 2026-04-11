@@ -7,26 +7,63 @@
 
 #include "settingswindow.h"
 
+#include <QStandardPaths>
+#include <QSettings>
+
 MainWindow::MainWindow(int programMode, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
+    // Create settings window first
     settingsWindow = new SettingsWindow(this);
     connect(settingsWindow, SIGNAL(language_change()), this, SLOT(retranslate()));
     connect(settingsWindow, SIGNAL(theme_change(bool)), this, SLOT(onThemeChanged(bool)));
     connect(settingsWindow, SIGNAL(multisampling_change(bool)), this, SLOT(onMultisamplingChanged(bool)));
     connect(settingsWindow, SIGNAL(fullscreen_change(bool)), this, SLOT(onFullscreenChanged(bool)));
 
-    glWidget = new GLWidget(this);
+    // Load initial settings before creating GLWidget
+    QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+    QString settingsFilePath = configPath + "/settings.ini";
+    QSettings settings(settingsFilePath, QSettings::IniFormat);
 
+    // Apply initial settings
+    bool multisamplingEnabled = settings.value("multisampling", true).toBool();
+    bool fullscreenEnabled = settings.value("fullscreen", false).toBool();
+    bool isDarkTheme = settings.value("theme", 0).toInt() == 0;
+
+    // Load language setting
+    translator = new QTranslator(this);
+    int languageIndex = settings.value("language", 0).toInt();
+    QString langCode;
+    switch (languageIndex) {
+        case 1: langCode = "ru"; break;
+        case 2: langCode = "fr"; break;
+        default: langCode = "en"; break;
+    }
+    if (languageIndex > 0) {  // Only load if not English (default)
+        if (translator->load(QString("rainbow_") + langCode)) {
+            qApp->installTranslator(translator);
+            ui->retranslateUi(this);
+        }
+    }
+    settingsWindow->setTranslator(translator);
+
+    // Create GLWidget with proper initial settings
+    glWidget = new GLWidget(this);
     QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     glWidget->setSizePolicy(sizePolicy);
 
-    // Initial format will be set by the settings loaded in SettingsWindow constructor
+    // Apply multisampling setting
+    QSurfaceFormat format;
+    format.setSamples(multisamplingEnabled ? 8 : 0);
+    glWidget->setFormat(format);
+
     ui->glWidgetLayout->addWidget(glWidget);
     currentStackWidgetPage = programMode;
+
+    // Create scenes
     scene1 = new Scene1();
     scene2 = new Scene2();
     scene3 = new Scene3();
@@ -38,6 +75,15 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     glWidget->connectWithScene3(*scene3);
     glWidget->connectWithScene4(*scene4);
     glWidget->connectWithScene5(*scene5);
+
+    // Apply theme
+    applyTheme(isDarkTheme);
+
+    // Apply fullscreen if needed
+    if (fullscreenEnabled) {
+        showFullScreen();
+    }
+
     switchScene();
 }
 
