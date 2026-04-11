@@ -58,12 +58,12 @@ void Beam::normalizeKoeffs()
 {
     if (b!=0) {
         a=a/b;
-        b=1;
         c=c/b;
+        b=1;
     } else if (a!=0) {
+        c=c/a;
         a=1;
         b=0;
-        c=c/a;
     } else {
         // (a == 0) && (b == 0) is impossible case
     }
