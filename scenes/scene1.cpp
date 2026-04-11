@@ -6,6 +6,8 @@ Scene1::Scene1()
 {
     displayMode = 0;
     beamStep = 0;
+    wavelength = 600;
+    distance = 0.8;
 }
 
 void Scene1::setDisplayMode(int newDisplayMode)
