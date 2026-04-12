@@ -5,6 +5,7 @@
 #include <QtGui/QSurfaceFormat>
 #include <QStandardPaths>
 #include <QSettings>
+#include <QResizeEvent>
 
 #include "settingswindow.h"
 #include "glwidget.h"
@@ -31,6 +32,9 @@ public:
 
     void setTranslator(QTranslator *newTranslator);
 
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 private:
     Ui::MainWindow *ui;
     SettingsWindow *settingsWindow;
@@ -49,6 +53,8 @@ private:
     QTranslator *translator = nullptr;
 
     int currentStackWidgetPage;
+
+    QPixmap rainbowPixmap;
 
     void switchScene();
     void switchWidget();

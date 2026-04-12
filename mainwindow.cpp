@@ -50,6 +50,12 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     }
     settingsWindow->setTranslator(translator);
 
+    rainbowPixmap = QPixmap(":/double-rainbow-1000.jpg");
+    ui->rainbow->setAlignment(Qt::AlignCenter);
+    ui->rainbow->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->rainbow->setPixmap(rainbowPixmap);
+    ui->rainbow->setMinimumSize(1, 1);
+
     glWidget = new GLWidget(this);
     glWidget3d = new GLWidget3D(this);
 
@@ -93,6 +99,19 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     }
 
     switchScene();
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+
+        ui->rainbow->setPixmap(
+            rainbowPixmap.scaled(
+                ui->rainbow->size(),
+                Qt::KeepAspectRatio,
+                Qt::SmoothTransformation
+                )
+            );
 }
 
 void MainWindow::retranslate()
