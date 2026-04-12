@@ -7,6 +7,7 @@
 QT       += core gui widgets opengl openglwidgets
 win32: QT += openglwidgets
 
+LIBS +=  -lGLU
 win32: LIBS += -lopengl32
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
@@ -25,6 +26,7 @@ SOURCES += main.cpp \
     scenes/scene3.cpp \
     scenes/scene4.cpp \
     scenes/scene5.cpp \
+    scenes/scenex.cpp \
     settingswindow.cpp \
     wavelength.cpp \
     \
@@ -41,6 +43,7 @@ HEADERS  += \
     scenes/scene3.h \
     scenes/scene4.h \
     scenes/scene5.h \
+    scenes/scenex.h \
     settingswindow.h \
     wavelength.h \
     \

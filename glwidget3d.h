@@ -9,9 +9,17 @@
 
 #include <GL/glu.h> // for gluPerspective
 
+#include "scenes/scenex.h"
+
 class GLWidget3D : public QOpenGLWidget
 {
     Q_OBJECT
+
+private:
+    QTimer *timer = nullptr;
+
+    SceneX *scenex;
+
 protected:
     int mouse_x, mouse_y; // for mouse tracking
     int mouse_button; // mouse pressed flag: 0 - mouse up, 1 - mouse down
@@ -35,10 +43,10 @@ protected:
     void wheelEvent(QWheelEvent *event);
     void keyPressEvent(QKeyEvent *event);
 
-    virtual void display(){}
-
 public:
-    explicit GLWidget3D();
+    explicit GLWidget3D(QWidget *parent = 0);
+
+    void connectWithSceneX(SceneX &originalSceneX);
 };
 
 #endif // GLWIDGET3D_H

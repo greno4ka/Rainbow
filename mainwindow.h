@@ -2,15 +2,20 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtGui/QSurfaceFormat>
+#include <QStandardPaths>
+#include <QSettings>
 
 #include "settingswindow.h"
 #include "glwidget.h"
+#include "glwidget3d.h"
 #include "scenes/scenebase.h"
 #include "scenes/scene1.h"
 #include "scenes/scene2.h"
 #include "scenes/scene3.h"
 #include "scenes/scene4.h"
 #include "scenes/scene5.h"
+#include "scenes/scenex.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +35,7 @@ private:
     Ui::MainWindow *ui;
     SettingsWindow *settingsWindow;
     GLWidget *glWidget;
+    GLWidget3D *glWidget3d;
 
     SceneBase *scene;
     Scene1 *scene1;
@@ -37,6 +43,8 @@ private:
     Scene3 *scene3;
     Scene4 *scene4;
     Scene5 *scene5;
+
+    SceneX *scenex;
 
     QTranslator *translator = nullptr;
 

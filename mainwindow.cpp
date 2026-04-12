@@ -1,15 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QtGui/QSurfaceFormat>
-
-#include "glwidget.h"
-
-#include "settingswindow.h"
-
-#include <QStandardPaths>
-#include <QSettings>
-
 static QString loadStyle(const QString &path)
 {
     QFile file(path);
@@ -59,17 +50,21 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     }
     settingsWindow->setTranslator(translator);
 
-    // Create GLWidget with proper initial settings
     glWidget = new GLWidget(this);
+    glWidget3d = new GLWidget3D(this);
+
     QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     glWidget->setSizePolicy(sizePolicy);
+    glWidget3d->setSizePolicy(sizePolicy);
 
     // Apply multisampling setting
     QSurfaceFormat format;
     format.setSamples(multisamplingEnabled ? 8 : 0);
     glWidget->setFormat(format);
+    glWidget3d->setFormat(format);
 
     ui->glWidgetLayout->addWidget(glWidget);
+    ui->glWidgetLayout->addWidget(glWidget3d);
     currentStackWidgetPage = programMode;
 
     // Create scenes
@@ -79,11 +74,15 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     scene4 = new Scene4();
     scene5 = new Scene5();
 
+    scenex = new SceneX();
+
     glWidget->connectWithScene1(*scene1);
     glWidget->connectWithScene2(*scene2);
     glWidget->connectWithScene3(*scene3);
     glWidget->connectWithScene4(*scene4);
     glWidget->connectWithScene5(*scene5);
+
+    glWidget3d->connectWithSceneX(*scenex);
 
     // Apply theme
     applyTheme(isDarkTheme);
@@ -125,6 +124,7 @@ void MainWindow::switchWidget()
     switch (currentStackWidgetPage) {
     case 0:
         glWidget->hide();
+        glWidget3d->hide();
         ui->presentationWidget->show();
         break;
     case 1:
@@ -133,6 +133,12 @@ void MainWindow::switchWidget()
     case 4:
     case 5:
         glWidget->show();
+        glWidget3d->hide();
+        ui->presentationWidget->hide();
+        break;
+    case 6:
+        glWidget->hide();
+        glWidget3d->show();
         ui->presentationWidget->hide();
         break;
     }
@@ -158,6 +164,9 @@ void MainWindow::switchScene()
         break;
     case 5:
         ui->label_pageName->setText(tr("Alexander's dark band"));
+        break;
+    case 6:
+        ui->label_pageName->setText(tr("Formation of a rainbow"));
         break;
     default:
         break;

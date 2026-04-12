@@ -1,7 +1,8 @@
 #include "glwidget3d.h"
 #include <QOpenGLFunctions>
 
-GLWidget3D::GLWidget3D()
+GLWidget3D::GLWidget3D(QWidget *parent) :
+    QOpenGLWidget(parent)
 {
     this->setMouseTracking(true);
     QTimer *timer = new QTimer(this);
@@ -20,6 +21,11 @@ GLWidget3D::GLWidget3D()
     cz = sin(psy) * distance; // camera coordinates
 }
 
+void GLWidget3D::connectWithSceneX(SceneX &originalSceneX)
+{
+    scenex = &originalSceneX;
+}
+
 void GLWidget3D::initializeGL(){
     glColor3f(1,1,1);
 //    glClearColor(Qt::white);
@@ -28,11 +34,29 @@ void GLWidget3D::initializeGL(){
 }
 
 void GLWidget3D::paintGL(){
-    display();
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+
+    glLoadIdentity();
+    glEnable(GL_DEPTH_TEST);
+    gluLookAt(cx, cy, cz, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslated(ox,oy,oz);
+
+
+    scenex->display();
 }
 
 void GLWidget3D::resizeGL(int w, int h){
+    scenex->updateXY(w, h);
     width = w; height = h;
+
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, static_cast<double>(width)/height, 0.01, 100000);
+    glMatrixMode(GL_MODELVIEW);
 }
 
 void GLWidget3D::keyPressEvent(QKeyEvent *event)
