@@ -10,8 +10,13 @@ class Scene1 : public SceneBase
 {
     static const int MaxNumberOfReflections = 5;
 
+    /// DisplayMode values
+    // 0 - show all beams
+    // 1 - only 1st rainbow beams
+    // 2 - only 2nd rainbow beams
     int displayMode;
     int wavelength;
+    // current beam step from 0 to MaxNumberOfReflections
     int beamStep;
 
     double distance;
