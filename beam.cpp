@@ -69,18 +69,11 @@ void Beam::normalizeKoeffs()
     }
 }
 
-void Beam::calculateAngle () {
-    if ( a==0 )
-        phi = 0;
-    else if (b == 0)
-        phi = 90;
-    else {
-        phi = (atan(-a) * 180)/M_PI;
-        if (phi < 0)
-            phi += 180;
-        if (phi > 180)
-            phi -= 180;
-    }
+void Beam::calculateAngle() {
+    phi = atan2(-a, b) * 180.0 / M_PI;
+
+    if (phi < 0)
+        phi += 180.0;
 }
 
 void Beam::calculateKoeffs (double x1, double y1, double x2, double y2) {
