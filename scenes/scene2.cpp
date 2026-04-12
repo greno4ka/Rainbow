@@ -17,6 +17,7 @@ void Scene2::reinitializeBeams()
          beam2(0,1,-(distance-0.02)*DropRadius,wavelength, DropRadius);
     beams.push_back (beam1);
     beams.push_back (beam2);
+    emit requestUpdate();
 }
 
 void Scene2::setDisplayMode(int newDisplayMode)

@@ -3,8 +3,20 @@
 GLWidget::GLWidget(QWidget *parent) :
     QOpenGLWidget(parent)
 {
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
 }
 
+void GLWidget::timerStart()
+{
+    int interval = 1000 / scene4->getDesiredFPS();
+    timer->start(interval);
+}
+
+void GLWidget::timerStop()
+{
+    timer->stop();
+}
 
 void GLWidget::setSceneNumber(int programMode)
 {
@@ -23,6 +35,7 @@ void GLWidget::setSceneNumber(int programMode)
     case 4:
         scene4->regenerateRain();
         scene = scene4;
+        timerStart();
         break;
     case 5:
         scene = scene5;
@@ -33,6 +46,10 @@ void GLWidget::setSceneNumber(int programMode)
     }
     connect(scene, &SceneBase::requestUpdate,
             this, static_cast<void (QOpenGLWidget::*)()>(&QOpenGLWidget::update));
+    connect(scene4, &Scene4::timerStart,
+            this, &GLWidget::timerStart);
+    connect(scene4, &Scene4::timerStop,
+            this, &GLWidget::timerStop);
 
     this->update();
 }

@@ -53,6 +53,7 @@ void Scene3::reinitializeBeams()
         if (displayMode == 2) beam.invertDistance();
         beams.push_back(beam);
     }
+    emit requestUpdate();
 }
 
 void Scene3::setDisplayMode(int newDisplayMode)
@@ -76,11 +77,13 @@ void Scene3::setNumberOfBeams(int newNumberOfBeams)
 void Scene3::setShowRainbow(int newShowRainbow)
 {
     showRainbow = newShowRainbow;
+    emit requestUpdate();
 }
 
 void Scene3::setShowAngle(int newShowAngle)
 {
     showAngle = newShowAngle;
+    emit requestUpdate();
 }
 
 void Scene3::draw_beam(Beam beam)

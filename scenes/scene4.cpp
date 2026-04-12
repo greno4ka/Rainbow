@@ -28,16 +28,27 @@ Scene4::~Scene4()
 void Scene4::setDisplayMode(int newDisplayMode)
 {
     displayMode = newDisplayMode;
+    emit requestUpdate();
 }
 
 void Scene4::setDesiredFPS(int newDesiredFPS)
 {
     desiredFPS = newDesiredFPS;
+    emit timerStart();
+}
+
+int Scene4::getDesiredFPS()
+{
+    return desiredFPS;
 }
 
 void Scene4::switchDynamicMode()
 {
     dynamicMode = !dynamicMode;
+    if (dynamicMode)
+        emit timerStart();
+    else
+        emit timerStop();
 }
 
 bool Scene4::getDynamicMode() const

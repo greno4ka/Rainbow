@@ -8,6 +8,8 @@
 
 class Scene4 : public SceneBase
 {
+    Q_OBJECT
+
     int displayMode;
     bool dynamicMode;
     int desiredFPS;
@@ -37,12 +39,17 @@ class Scene4 : public SceneBase
         *initialRainSwift,
         *currentRainFrame;
 
+signals:
+    void timerStart();
+    void timerStop();
+
 public:
     Scene4();
     ~Scene4();
 
     void setDisplayMode(int newDisplayMode);
     void setDesiredFPS(int newDesiredFPS);
+    int getDesiredFPS();
     void switchDynamicMode();
 
     void regenerateRain();

@@ -40,6 +40,7 @@ void Scene5::reinitializeBeams()
             beams.push_back(beam);
         }
     }
+    emit requestUpdate();
 }
 
 void Scene5::setDisplayMode(int newDisplayMode)

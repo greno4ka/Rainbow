@@ -11,9 +11,14 @@
 #include "scenes/scene4.h"
 #include "scenes/scene5.h"
 
+#include <QTimer>
+
 class GLWidget : public QOpenGLWidget
 {
     Q_OBJECT
+
+private:
+    QTimer *timer = nullptr;
 
     SceneBase *scene;
     Scene1 *scene1;
@@ -23,6 +28,9 @@ class GLWidget : public QOpenGLWidget
     Scene5 *scene5;
 
     int sceneNumber;
+
+    void timerStart();
+    void timerStop();
 
 public:
     explicit GLWidget(QWidget *parent = 0);
