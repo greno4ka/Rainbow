@@ -95,7 +95,7 @@ void Scene5::draw_beam(Beam beam)
     glVertex2f(x(x0),y(y0));
     glEnd();
 
-    wavelengthToRGB(beam.getWL(),&r,&g,&b);
+    wavelengthToRGB(beam.getWavelength(),&r,&g,&b);
     if (beam.getDistance() > 0)
         glColor3ub(r,g,b);
     else

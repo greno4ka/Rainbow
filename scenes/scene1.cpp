@@ -71,7 +71,7 @@ void Scene1::draw_beam(Beam beam)
          reflected(DropRadius);
 
     int r,g,b;
-    wavelengthToRGB(beam.getWL(),&r,&g,&b);
+    wavelengthToRGB(beam.getWavelength(),&r,&g,&b);
 
     beam.calculateInputPoint(&x0, &y0);
     radius.calculateKoeffs(x0,y0,0,0);

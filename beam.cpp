@@ -29,14 +29,9 @@ double Beam::getAngle()
     return phi;
 }
 
-double Beam::getWL()
+double Beam::getWavelength()
 {
     return wavelength;
-}
-
-void Beam::setWL(double wl)
-{
-    wavelength = wl;
 }
 
 void Beam::setDistance(double d)
@@ -56,27 +51,29 @@ double Beam::getDistance()
 
 void Beam::normalizeKoeffs()
 {
-    if (b!=0) {
-        a=a/b;
-        c=c/b;
-        b=1;
-    } else if (a!=0) {
-        c=c/a;
-        a=1;
-        b=0;
+    if (b != 0) {
+        a = a/b;
+        c = c/b;
+        b = 1;
+    } else if (a != 0) {
+        c = c/a;
+        a = 1;
+        b = 0;
     } else {
         // (a == 0) && (b == 0) is impossible case
     }
 }
 
-void Beam::calculateAngle() {
+void Beam::calculateAngle()
+{
     phi = atan2(-a, b) * 180.0 / M_PI;
 
     if (phi < 0)
         phi += 180.0;
 }
 
-void Beam::calculateKoeffs (double x1, double y1, double x2, double y2) {
+void Beam::calculateKoeffs (double x1, double y1, double x2, double y2)
+{
     a = y1-y2;
     b = x2-x1;
     c = y2*x1-y1*x2;
@@ -85,91 +82,99 @@ void Beam::calculateKoeffs (double x1, double y1, double x2, double y2) {
     calculateAngle();
 }
 
-inline double Beam::fx(double x) {
+inline double Beam::fx(double x)
+{
     return -a*x-c;
 }
 
-inline double Beam::fy(double y) {
+inline double Beam::fy(double y)
+{
     return (b*y+c)/(-a);
 }
 
-void Beam::rotate (Beam A, double psi) {
+void Beam::rotate (Beam A, double psi)
+{
     /// ROTATE LINE ROUND LINE A
-    double x,y;
+    double x, y;
     cross_ll(*this, A, &x, &y);
-    phi+=psi;
-    if (phi==90) {
-        a=1;
-        b=0;
-        c=x;
+    phi += psi;
+    if (phi == 90) {
+        a = 1;
+        b = 0;
+        c = x;
     } else {
-        double k=tan((phi*M_PI)/180);
-        double z=y-k*x;
-        a=-k;
-        b=1;
-        c=-z;
+        double k = tan((phi*M_PI)/180);
+        double z = y-k*x;
+        a = -k;
+        b = 1;
+        c = -z;
     }
-    if (phi<0) phi+=180;
-    if (phi>180) phi-=180;
+    if (phi < 0) phi += 180;
+    if (phi > 180) phi -= 180;
 }
 
-void Beam::reflect (Beam A) {
+void Beam::reflect (Beam A)
+{
     double psi = A.phi - phi;
-    this->rotate(A,2*psi);
+    this->rotate(A, 2*psi);
 }
 
-void Beam::snell (Beam Input, double k) {
-    double psi=phi-Input.phi;
-    if (psi>90) psi-=180;
-    if (psi<-90) psi+=180;
-    double betta=(asin(sin((psi*M_PI)/180)/k)*180)/M_PI;
-    this->rotate(Input,-betta);
-    this->wavelength=Input.wavelength;
+void Beam::snell (Beam Input, double k)
+{
+    double psi = phi-Input.phi;
+    if (psi > 90) psi -= 180;
+    if (psi < -90) psi += 180;
+    double betta = (asin(sin((psi*M_PI)/180)/k)*180)/M_PI;
+    this->rotate(Input, -betta);
+    this->wavelength = Input.wavelength;
 }
 
-void Beam::calculateInputPoint(double *x0, double *y0) {
+void Beam::calculateInputPoint(double *x0, double *y0)
+{
     double D = a*a*c*c - (1+a*a)*(c*c-r*r);
     double p1 = (-(a*c)+sqrt(D))/(1+a*a);
     double p2 = (-(a*c)-sqrt(D))/(1+a*a);
 
-    if (p1<p2)
-        *x0=p1;
+    if (p1 < p2)
+        *x0 = p1;
     else
-        *x0=p2;
+        *x0 = p2;
 
-    *y0=fx(*x0);
+    *y0 = fx(*x0);
 }
 
-void Beam::calculateOutputPoint(double *x1, double *y1, double x0, double y0) {
+void Beam::calculateOutputPoint(double *x1, double *y1, double x0, double y0)
+{
     double D = a*a*c*c - (1+a*a)*(c*c-r*r);
     double p1 = (-(a*c)+sqrt(D))/(1+a*a);
     double p2 = (-(a*c)-sqrt(D))/(1+a*a);
 
-    if (std::abs(p1-x0) < Beam::EPS)
-        *x1=p2;
+    if (abs(p1-x0) < Beam::EPS)
+        *x1 = p2;
     else
         *x1=p1;
 
-    if (std::abs(*x1-x0) < Beam::EPS) {
+    if (abs(*x1-x0) < Beam::EPS) {
         D = b*b*c*c - (b*b+a*a)*(c*c-a*a*r*r);
         p1 = (-(b*c)+sqrt(D))/(b*b+a*a); //y1
         p2 = (-(b*c)-sqrt(D))/(b*b+a*a); //y2
 
-        if (std::abs(p1-y0) < Beam::EPS)
-            *y1=p2;
+        if (abs(p1-y0) < Beam::EPS)
+            *y1 = p2;
         else
-            *y1=p1;
+            *y1 = p1;
 
-        *x1=fy(*y1);
+        *x1 = fy(*y1);
     } else
-        *y1=fx(*x1);
+        *y1 = fx(*x1);
 }
 
-void Beam::calculateInfinityPoint(double *x2, double *y2, double x1, double y1) {
+void Beam::calculateInfinityPoint(double *x2, double *y2, double x1, double y1)
+{
     double x0, y0; // temporary calculation of output for correct direction
     calculateOutputPoint(&x0, &y0, x1, y1);
 
-    if (std::abs(x1-x0) < Beam::EPS) {
+    if (abs(x1-x0) < Beam::EPS) {
         *y2 = (y1-y0) * Beam::INF;
         *x2 = fy(*y2);
     } else { // General case
@@ -181,12 +186,12 @@ void Beam::calculateInfinityPoint(double *x2, double *y2, double x1, double y1) 
 double Beam::refractIn()
 {
     return -2.43712 * pow(10,-20) * pow(wavelength,7) +
-            1.12669 * pow(10,-16) * pow(wavelength,6) -
-            2.17325 * pow(10,-13) * pow(wavelength,5) +
-            2.27935 * pow(10,-10) * pow(wavelength,4) -
-            1.41146 * pow(10,-7)  * pow(wavelength,3) +
-            5.19794 * pow(10,-5)  * pow(wavelength,2) -
-            0.010683 * wavelength + 2.30172;
+           1.12669 * pow(10,-16) * pow(wavelength,6) -
+           2.17325 * pow(10,-13) * pow(wavelength,5) +
+           2.27935 * pow(10,-10) * pow(wavelength,4) -
+           1.41146 * pow(10,-7)  * pow(wavelength,3) +
+           5.19794 * pow(10,-5)  * pow(wavelength,2) -
+           0.010683 * wavelength + 2.30172;
 }
 
 double Beam::refractOut()

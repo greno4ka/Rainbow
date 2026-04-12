@@ -25,9 +25,8 @@ public:
     Beam(double radius);
 
     double getAngle();
-    double getWL();
+    double getWavelength();
 
-    void setWL(double wl);
     void setDistance(double d);
     void invertDistance();
     double getDistance();
@@ -42,9 +41,10 @@ public:
     inline double fx(double x); // y=f(x) from ax+by+c=0
     inline double fy(double y); // x=g(y) from ax+by+c=0
 
-    friend void cross_ll(Beam A, Beam B, double *x, double *y) {
-        *x=(A.b*B.c-B.b*A.c)/(A.a*B.b-B.a*A.b);
-        *y=(A.c*B.a-B.c*A.a)/(A.a*B.b-B.a*A.b);
+    friend void cross_ll(Beam A, Beam B, double *x, double *y)
+    {
+        *x = (A.b*B.c-B.b*A.c)/(A.a*B.b-B.a*A.b);
+        *y = (A.c*B.a-B.c*A.a)/(A.a*B.b-B.a*A.b);
     }
 
     void rotate(Beam A, double psi);
@@ -55,6 +55,6 @@ public:
     double refractOut();
 };
 
-typedef QList<Beam> Beams;           // in usual C++ using List
+typedef QList<Beam> Beams;
 
 #endif // BEAM_H

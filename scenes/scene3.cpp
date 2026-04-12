@@ -93,7 +93,7 @@ void Scene3::draw_beam(Beam beam)
            x2,y2;      // point2 - external (for reformed outside)
 
     int r,g,b;
-    wavelengthToRGB(beam.getWL(),&r,&g,&b);
+    wavelengthToRGB(beam.getWavelength(),&r,&g,&b);
     glColor3ub(r,g,b);
 
     if (showRainbow)
