@@ -18,6 +18,7 @@ SOURCES += main.cpp \
     beam.cpp \
     glwidget.cpp \
     \
+    glwidget3d.cpp \
     mainwindow.cpp \
     scenes/scene1.cpp \
     scenes/scene2.cpp \
@@ -33,6 +34,7 @@ HEADERS  += \
     beam.h \
     glwidget.h \
     \
+    glwidget3d.h \
     mainwindow.h \
     scenes/scene1.h \
     scenes/scene2.h \
