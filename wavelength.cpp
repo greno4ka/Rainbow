@@ -77,10 +77,10 @@ double whatAngle(double wave, int rainbowMode)
 
     if (rainbowMode == 1) {
         direction = 1;
-        distance = 0.87;
+        distance = 0.86;
     } else {
         direction = -1;
-        distance = 0.96;
+        distance = 0.95;
     }
 
     /// use drop with radius 1 for example
