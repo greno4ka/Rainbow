@@ -13,6 +13,7 @@ Scene1::Scene1()
 void Scene1::setDisplayMode(int newDisplayMode)
 {
     displayMode = newDisplayMode;
+    emit requestUpdate();
 }
 
 void Scene1::setWavelength(int newWavelength)
@@ -29,12 +30,14 @@ void Scene1::addBeam(double newDistance, int newWavelength)
 {
     Beam newBeam(0, 1, -newDistance * DropRadius, newWavelength, DropRadius);
     beams.push_back(newBeam);
+    emit requestUpdate();
 }
 
 void Scene1::clearBeams()
 {
     beams.clear();
     beamStep = 0;
+    emit requestUpdate();
 }
 
 bool Scene1::ifNoBeams()
@@ -46,12 +49,14 @@ void Scene1::incBeamStep()
 {
     if (beamStep < MaxNumberOfReflections)
         beamStep++;
+    emit requestUpdate();
 }
 
 void Scene1::decBeamStep()
 {
     if (beamStep > 0)
         beamStep--;
+    emit requestUpdate();
 }
 
 void Scene1::draw_beam(Beam beam)

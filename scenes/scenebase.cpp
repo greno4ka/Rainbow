@@ -2,7 +2,8 @@
 
 #include <cmath>
 
-SceneBase::SceneBase()
+SceneBase::SceneBase(QObject *parent)
+    : QObject(parent)
 {
     X = 800;
     Y = 600;

@@ -3,8 +3,6 @@
 GLWidget::GLWidget(QWidget *parent) :
     QOpenGLWidget(parent)
 {
-    connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
-        timer.start(1);
 }
 
 
@@ -33,6 +31,8 @@ void GLWidget::setSceneNumber(int programMode)
         scene = scene1;
         break;
     }
+    connect(scene, &SceneBase::requestUpdate,
+            this, static_cast<void (QOpenGLWidget::*)()>(&QOpenGLWidget::update));
 
     this->update();
 }
@@ -74,6 +74,7 @@ void GLWidget::resizeGL(int w, int h){
     glOrtho(0.0, (GLdouble) w, 0.0, (GLdouble) h, -1, 1);
 
     glMatrixMode(GL_MODELVIEW);
+    this->update();
 }
 
 void GLWidget::connectWithScene1(Scene1 &originalScene1)

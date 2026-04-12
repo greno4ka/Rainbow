@@ -3,7 +3,6 @@
 
 #include <QtOpenGL>
 #include <QtOpenGLWidgets/QOpenGLWidget>
-#include <QTimer>
 
 #include "scenes/scenebase.h"
 #include "scenes/scene1.h"
@@ -15,7 +14,6 @@
 class GLWidget : public QOpenGLWidget
 {
     Q_OBJECT
-    QTimer timer;
 
     SceneBase *scene;
     Scene1 *scene1;

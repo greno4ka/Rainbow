@@ -2,15 +2,20 @@
 #define SCENEBASE_H
 
 #include <QOpenGLFunctions>
+#include <QObject>
 
-class SceneBase
+class SceneBase : public QObject
 {
+    Q_OBJECT
+signals:
+    void requestUpdate();
+
 protected:
     static const int SceneScale = 10;
     static const int ImageQuality = 100;
     static const int DropRadius = 5;
 
-    int X,Y; // Window height and width
+    int X, Y; // Window height and width
 
     /// Methods of recalculation decart coords to screen coords
     double x(double x0);
@@ -23,7 +28,7 @@ protected:
     void draw_axes();
 
 public:
-    SceneBase();
+    SceneBase(QObject *parent = nullptr);
 
     void updateXY(int newX, int newY);
     virtual void display() = 0;
