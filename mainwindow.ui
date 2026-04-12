@@ -20,7 +20,7 @@
       <item>
        <spacer name="horizontalSpacer_pageNameLeft">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -40,7 +40,7 @@
       <item>
        <spacer name="horizontalSpacer_pageNameRight">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -165,7 +165,7 @@
                <number>80</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -214,7 +214,7 @@
                <number>600</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -286,7 +286,7 @@
             <item>
              <spacer name="verticalSpacer_page1">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -351,7 +351,7 @@
                <number>86</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -400,7 +400,7 @@
                <number>600</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -440,7 +440,7 @@
             <item>
              <spacer name="verticalSpacer_page2">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -499,7 +499,7 @@
                <number>600</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -545,7 +545,7 @@
                <number>30</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -599,7 +599,7 @@
             <item>
              <spacer name="verticalSpacer_page3">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -682,7 +682,7 @@
                <number>60</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -696,7 +696,7 @@
             <item>
              <spacer name="verticalSpacer_page4">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -746,7 +746,7 @@
             <item>
              <spacer name="verticalSpacer_page5">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -862,8 +862,13 @@
        <layout class="QHBoxLayout" name="glWidgetLayout">
         <item>
          <widget class="QStackedWidget" name="presentationWidget">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
           <widget class="QWidget" name="slide1"/>
           <widget class="QWidget" name="slide2"/>
+          <widget class="QWidget" name="slide3"/>
+          <widget class="QWidget" name="slide4"/>
          </widget>
         </item>
        </layout>
