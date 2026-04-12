@@ -52,6 +52,20 @@ void SceneX::display()
 
 }
 
+void SceneX::drawAnimatedBeam(Beam beam, double t)
+{
+    // 0 <= t <= 1
+
+    glBegin(GL_LINES);
+
+   // double xt = x1 + (x2 - x1) * t;
+   // double yt = y1 + (y2 - y1) * t;
+
+   // glVertex2f(x1, y1);
+   // glVertex2f(xt, yt);
+    glEnd();
+}
+
 void SceneX::updateXY(int newX, int newY)
 {
     X = newX;

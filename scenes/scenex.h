@@ -4,10 +4,25 @@
 #include <QtOpenGL>
 #include <QtOpenGLWidgets/QOpenGLWidget>
 
+#include "beam.h"
+
 class SceneX
 {
+    double eyeHeight;
+    double sunHeight;
+
+    bool isPolychromatic;
+    bool showBeams;
+
+    int numberOfBeams;
+
+    Beams beams;
+
+    void drawAnimatedBeam(Beam beam, double t);
+
 protected:
     int X, Y; // Window height and width
+
 
 public:
     SceneX();
