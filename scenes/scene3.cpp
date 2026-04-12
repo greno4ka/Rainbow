@@ -20,9 +20,9 @@ void Scene3::resetScene()
 double Scene3::getCoordX()
 {
     if (displayMode == 1)
-    return x(coordX)+100;
+    return x(coordX)+25;
     else
-        return x(coordX)-400;
+        return x(coordX)-100;
 
 }
 
@@ -164,6 +164,12 @@ void Scene3::draw_beam(Beam beam)
         refracted.snell(beam, beam.refractOut());
         refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
+        if (showAngle && (originalBeam.getDistance() <= -0.94 && originalBeam.getDistance() >= -0.97) ) {
+            Beam horizontal(0,1,2*DropRadius,0,DropRadius);
+            cross_ll(refracted,horizontal,&coordX,&coordY);
+            currentAngle = refracted.getAngle();
+        }
+
         drawLine(x1,y1,x2,y2);
     }
 
@@ -171,9 +177,12 @@ void Scene3::draw_beam(Beam beam)
     glColor3ub(255,255,255);
     glBegin(GL_LINES);
     glVertex2f(x(coordX),y(coordY));
-    glVertex2f(x(coordX)+100,y(coordY));
+    if (displayMode == 1)
+        glVertex2f(x(coordX)+100,y(coordY));
+    else
+        glVertex2f(x(coordX)-100,y(coordY));
     glEnd();
-}
+    }
 }
 
 void Scene3::display()

@@ -45,7 +45,7 @@ void GLWidget::paintGL(){
     glClear(GL_COLOR_BUFFER_BIT);
     scene->display();
 
-    if (sceneNumber == 2 && scene3->getShowAngle()) {
+    if (sceneNumber == 3 && scene3->getShowAngle()) {
         QPainter painter(this);
         QColor fontColor = palette().color(QPalette::WindowText);
         QFont font = painter.font();
@@ -53,7 +53,7 @@ void GLWidget::paintGL(){
         painter.setFont(font);
         painter.setPen(fontColor);
         painter.drawText(scene3->getCoordX(), scene3->getCoordY(),
-                         QString::number(scene3->getCurrentAngle()));
+                         QString::number(scene3->getCurrentAngle(), 'f', 2));
     }
 }
 
