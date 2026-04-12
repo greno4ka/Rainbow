@@ -50,8 +50,8 @@ void GLWidget3D::keyPressEvent(QKeyEvent *event)
 
 void GLWidget3D::mouseMoveEvent(QMouseEvent *event)
 {
-    int dx = event->x() - mouse_x;
-    int dy = event->y() - mouse_y;
+    int dx = event->position().x() - mouse_x;
+    int dy = event->position().y() - mouse_y;
 
     if(mouse_button == 1) {
         phi += dx * M_PI / 180.0 / 4.0; // horizontal angle
@@ -71,8 +71,8 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *event)
         oz -= sin(psy)*dy/5;
     }
 
-    mouse_x = event->x();
-    mouse_y = event->y();
+    mouse_x = event->position().x();
+    mouse_y = event->position().y();
 }
 
 void GLWidget3D::mousePressEvent(QMouseEvent *event)
@@ -97,7 +97,7 @@ void GLWidget3D::mouseReleaseEvent(QMouseEvent *event)
 
 void GLWidget3D::wheelEvent(QWheelEvent *event)
 {
-    int numDegrees = event->delta() / 8;
+    int numDegrees = event->angleDelta().y() / 8;
     distance += numDegrees / 15;
     distance = std::max(distance, 0.005);
 
