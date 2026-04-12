@@ -53,4 +53,8 @@ TRANSLATIONS = rainbow_en.ts \
                rainbow_fr.ts
 
 RESOURCES += \
+    images/images.qrc \
     styles/styles.qrc
+
+DISTFILES += \
+    images/double-rainbow-1000.jpg
