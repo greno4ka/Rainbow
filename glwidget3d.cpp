@@ -13,9 +13,9 @@ GLWidget3D::GLWidget3D(QWidget *parent) :
 
     // note that angles in radians
     phi = -2.5;         // horizontal angle
-    psy = 1.0;         // vertical angle
+    psy = 0.5;         // vertical angle
     distance = 30;      // distance of camera from center
-    ox = -5; oy = -5; oz = -1; // translate point which we see from center
+    ox = 3; oy = -3; oz = 0; // translate point which we see from center
     cx = cos(psy) * sin(phi) * distance;    // camera coordinates
     cy = cos(psy) * cos(phi) * distance; // camera coordinates
     cz = sin(psy) * distance; // camera coordinates
