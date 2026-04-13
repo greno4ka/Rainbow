@@ -4,7 +4,7 @@ GLWidget::GLWidget(QWidget *parent) :
     QOpenGLWidget(parent)
 {
     timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+    connect(timer, &QTimer::timeout, this, [this]() { update(); });
 }
 
 void GLWidget::timerStart()
@@ -44,12 +44,9 @@ void GLWidget::setSceneNumber(int programMode)
         scene = scene1;
         break;
     }
-    connect(scene, &SceneBase::requestUpdate,
-            this, static_cast<void (QOpenGLWidget::*)()>(&QOpenGLWidget::update));
-    connect(scene4, &Scene4::timerStart,
-            this, &GLWidget::timerStart);
-    connect(scene4, &Scene4::timerStop,
-            this, &GLWidget::timerStop);
+    connect(scene, &SceneBase::requestUpdate, this, [this]() { update(); });
+    connect(scene4, &Scene4::timerStart, this, &GLWidget::timerStart);
+    connect(scene4, &Scene4::timerStop, this, &GLWidget::timerStop);
 
     this->update();
 }

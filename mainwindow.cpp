@@ -18,10 +18,14 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
 
     // Create settings window first
     settingsWindow = new SettingsWindow(this);
-    connect(settingsWindow, SIGNAL(language_change()), this, SLOT(retranslate()));
-    connect(settingsWindow, SIGNAL(theme_change(bool)), this, SLOT(onThemeChanged(bool)));
-    connect(settingsWindow, SIGNAL(multisampling_change(bool)), this, SLOT(onMultisamplingChanged(bool)));
-    connect(settingsWindow, SIGNAL(fullscreen_change(bool)), this, SLOT(onFullscreenChanged(bool)));
+    connect(settingsWindow, &SettingsWindow::language_change,
+            this, &MainWindow::retranslate);
+    connect(settingsWindow, &SettingsWindow::theme_change,
+            this, &MainWindow::onThemeChanged);
+    connect(settingsWindow, &SettingsWindow::multisampling_change,
+            this, &MainWindow::onMultisamplingChanged);
+    connect(settingsWindow, &SettingsWindow::fullscreen_change,
+            this, &MainWindow::onFullscreenChanged);
 
     // Load initial settings before creating GLWidget
     QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);

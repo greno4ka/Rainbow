@@ -6,7 +6,7 @@ GLWidget3D::GLWidget3D(QWidget *parent) :
 {
     this->setMouseTracking(true);
     QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+    connect(timer, &QTimer::timeout, this, [this]() { update(); });
     timer->start(1);
 
     mouse_button=0;
