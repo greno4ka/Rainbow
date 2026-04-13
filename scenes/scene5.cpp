@@ -30,7 +30,7 @@ void Scene5::reinitializeBeams()
 
     double h=1.0/numberOfBeams;
 
-    for (float r=0.01; r<0.99; r+=h)
+    for (double r=0.01; r<0.99; r+=h)
     {
         for (int wavelength=400; wavelength<=760; wavelength+=(760-400)/7)
         {

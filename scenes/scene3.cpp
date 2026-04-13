@@ -47,7 +47,7 @@ void Scene3::reinitializeBeams()
 
     double h=1.0/numberOfBeams;
 
-    for (float r=0.01; r<0.99; r+=h)
+    for (double r=0.01; r<0.99; r+=h)
     {
         Beam beam(0,1,-r*DropRadius,wavelength,DropRadius);
         if (displayMode == 2) beam.invertDistance();
