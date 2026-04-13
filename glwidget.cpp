@@ -51,11 +51,13 @@ void GLWidget::setSceneNumber(int programMode)
     this->update();
 }
 
-void GLWidget::initializeGL(){
+void GLWidget::initializeGL()
+{
 }
 
-void GLWidget::paintGL(){
-    setAttribute(Qt::WA_AlwaysStackOnTop);
+void GLWidget::paintGL()
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     scene->display();
 
