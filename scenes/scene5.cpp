@@ -42,7 +42,7 @@ void Scene5::setDisplayMode(int newDisplayMode)
     reinitializeBeams();
 }
 
-void Scene5::draw_beam(Beam beam)
+void Scene5::rayProcess(Beam beam)
 {
     double x0,y0,      // point0
            x1,y1,      // point1
@@ -116,7 +116,7 @@ void Scene5::draw_beam(Beam beam)
 void Scene5::display()
 {
     for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)
-        draw_beam(*beam);
+        rayProcess(*beam);
 
-    draw_drop();
+    drawDrop();
 }

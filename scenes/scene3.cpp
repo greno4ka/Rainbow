@@ -86,7 +86,7 @@ void Scene3::setShowAngle(int newShowAngle)
     emit requestUpdate();
 }
 
-void Scene3::draw_beam(Beam beam)
+void Scene3::rayProcess(Beam beam)
 {
     double x0,y0,      // point0
            x1,y1,      // point1
@@ -187,8 +187,8 @@ void Scene3::draw_beam(Beam beam)
 
 void Scene3::display()
 {
-    draw_drop();
-    draw_axes();
+    drawDrop();
+    drawAxes();
     for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)
-        draw_beam(*beam);
+        rayProcess(*beam);
 }

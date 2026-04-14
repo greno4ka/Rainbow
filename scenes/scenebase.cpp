@@ -21,7 +21,7 @@ void SceneBase::updateXY(int newX, int newY)
     Y = newY;
 }
 
-void SceneBase::draw_drop()
+void SceneBase::drawDrop()
 {
     glColor3ub(100,100,255);
     glBegin(GL_TRIANGLE_FAN);
@@ -35,7 +35,7 @@ void SceneBase::draw_drop()
     glEnd();
 }
 
-void SceneBase::draw_axes()
+void SceneBase::drawAxes()
 {
     glColor3ub(255,255,255);
     glEnable(GL_LINE_STIPPLE); // turn on - - - - - -

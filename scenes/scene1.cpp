@@ -59,7 +59,7 @@ void Scene1::decBeamStep()
     emit requestUpdate();
 }
 
-void Scene1::draw_beam(Beam beam)
+void Scene1::rayProcess(Beam beam)
 {
     double p=1;        // GAMMA CORRECTOR of color for darkening beams
     double x0,y0,      // point0
@@ -103,16 +103,16 @@ void Scene1::draw_beam(Beam beam)
 
         drawRay(x0,y0,x1,y1);
 
-        for (int stepNumber=1; stepNumber < beamStep; stepNumber++)
-        {
+        for (int stepNumber=1; stepNumber < beamStep; stepNumber++) {
+            p -= 0.1; // low color intensity every beam split
+            glColor3ub(r*p,g*p,b*p);
+
             /// REFRACTION OUTSIDE
             radius.calculateKoeffs(x1,y1,0,0);
             refracted = radius; // we're get reformed from radius again
             refracted.snell(beam, beam.refractOut());
             refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
-            p -= 0.1; // low color intensity every beam split
-            glColor3ub(r*p,g*p,b*p);
             if ( (displayMode == 0) ||
                  ( (displayMode == 1) && (stepNumber == 2) ) ||
                  ( (displayMode == 2) && (stepNumber == 3) )
@@ -138,8 +138,8 @@ void Scene1::draw_beam(Beam beam)
 
 void Scene1::display()
 {
-    draw_drop();
-    draw_axes();
+    drawDrop();
+    drawAxes();
     for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)
-        draw_beam(*beam);
+        rayProcess(*beam);
 }

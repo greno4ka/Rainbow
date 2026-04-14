@@ -20,7 +20,7 @@ class Scene3 : public SceneBase
     Beams beams;
 
     void reinitializeBeams();
-    void draw_beam(Beam beam);
+    void rayProcess(Beam beam);
 
 public:
     Scene3();

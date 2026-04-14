@@ -45,8 +45,8 @@ protected:
     void drawRay(double x0, double y0, double x1, double y1);
     void drawInitialRay(double x1, double y1);
 
-    void draw_drop();
-    void draw_axes();
+    void drawDrop();
+    void drawAxes();
 
 public:
     SceneBase(QObject *parent = nullptr);
