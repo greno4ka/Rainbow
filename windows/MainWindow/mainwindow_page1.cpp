@@ -40,13 +40,6 @@ void MainWindow::on_radioButton2_page1_clicked()
     scene1->setDisplayMode(2);
 }
 
-void MainWindow::on_pushButton_addBeam_page1_clicked()
-{
-    double d = ui->doubleSpinBox_dist_page1->value();
-    int wl = ui->spinBox_wave_page1->value();
-    scene1->addBeam(d, wl);
-}
-
 void MainWindow::on_pushButton_beamPrev_page1_clicked()
 {
     if (!scene1->ifNoBeams())
@@ -59,7 +52,14 @@ void MainWindow::on_pushButton_beamNext_page1_clicked()
         scene1->incBeamStep();
 }
 
-void MainWindow::on_pushButton_clearScr_page1_clicked()
+void MainWindow::on_pushButton_addBeam_page1_clicked()
+{
+    double d = ui->doubleSpinBox_dist_page1->value();
+    int wl = ui->spinBox_wave_page1->value();
+    scene1->addBeam(d, wl);
+}
+
+void MainWindow::on_pushButton_reset_settings_page1_clicked()
 {
     scene1->clearBeams();
 }

@@ -16,6 +16,9 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->spinBox_wave_page1->setValue(SCENE1_WAVELENGTH_600);
+    ui->horizontalSlider_wave_page1(SCENE1_WAVELENGTH_600);
+
     // Create settings window first
     settingsWindow = new SettingsWindow(this);
     connect(settingsWindow, &SettingsWindow::language_change,

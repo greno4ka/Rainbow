@@ -40,6 +40,7 @@ SOURCES += main.cpp \
 
 HEADERS  += \
     beam.h \
+    config.h \
     glwidget.h \
     \
     glwidget3d.h \

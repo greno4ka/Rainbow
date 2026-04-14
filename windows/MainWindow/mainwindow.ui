@@ -280,7 +280,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_clearScr_page1">
+             <widget class="QPushButton" name="pushButton_reset_settings_page1">
               <property name="text">
                <string>Clear screen</string>
               </property>
@@ -434,7 +434,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_clearScr_page2">
+             <widget class="QPushButton" name="pushButton_reset_settings_page2">
               <property name="text">
                <string>Reset settings</string>
               </property>

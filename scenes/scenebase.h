@@ -5,6 +5,7 @@
 #include <QObject>
 
 #include <cmath>
+#include "config.h"
 
 class SceneBase : public QObject
 {

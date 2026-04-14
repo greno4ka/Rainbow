@@ -35,7 +35,7 @@ void MainWindow::on_radioButton2_page2_clicked()
     scene2->setDisplayMode(2);
 }
 
-void MainWindow::on_pushButton_clearScr_page2_clicked()
+void MainWindow::on_pushButton_reset_settings_page2_clicked()
 {
     double d=0.86; // good inception with parallel beams
     int wl=600;
@@ -44,5 +44,7 @@ void MainWindow::on_pushButton_clearScr_page2_clicked()
     ui->spinBox_wave_page2->setValue(wl);
     ui->horizontalSlider_wave_page2->setValue(wl);
     ui->radioButton1_page2->setChecked(1);
+    scene2->setDistance(d);
+    scene2->setWavelength(wl);
     scene2->setDisplayMode(1);
 }
