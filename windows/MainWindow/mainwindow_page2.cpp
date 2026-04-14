@@ -37,8 +37,8 @@ void MainWindow::on_radioButton2_page2_clicked()
 
 void MainWindow::on_pushButton_reset_settings_page2_clicked()
 {
-    double d=0.86; // good inception with parallel beams
-    int wl=600;
+    double d=SCENE2_DISTANCE_086;
+    int wl=SCENE2_WAVELENGTH_600;
     ui->doubleSpinBox_dist_page2->setValue(d);
     ui->horizontalSlider_dist_page2->setValue(d*100);
     ui->spinBox_wave_page2->setValue(wl);

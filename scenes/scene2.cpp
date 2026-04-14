@@ -3,8 +3,8 @@
 Scene2::Scene2()
 {
     displayMode = 1;
-    distance = 0.86;
-    wavelength = 600;
+    distance = SCENE2_DISTANCE_086;
+    wavelength = SCENE2_WAVELENGTH_600;
     reinitializeBeams();
 }
 

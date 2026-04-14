@@ -7,11 +7,11 @@ Scene3::Scene3()
 
 void Scene3::resetScene()
 {
+    numberOfBeams = SCENE3_NUMBER_OF_BEAMS_30;
+    wavelength = SCENE3_WAVELENGTH_600;
     displayMode = 1;
     showAngle = 0;
     showRainbow = 0;
-    wavelength = 600;
-    numberOfBeams = 30;
     reinitializeBeams();
 }
 

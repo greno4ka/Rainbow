@@ -2,10 +2,9 @@
 
 Scene5::Scene5()
 {
+    numberOfBeams = SCENE5_NUMBER_OF_BEAMS;
+    beamQuality = SCENE5_BEAM_QUALITY_10;
     displayMode = 0;
-    numberOfBeams = 30;
-    beamQuality = 10;
-    reinitializeBeams();
 
     /// Scene5 is the only scene with special coordinates
     // redefine SceneBase properties
@@ -16,6 +15,8 @@ Scene5::Scene5()
 
     scaleXFactor = 16.0;
     scaleYFactor = 8.0;
+
+    reinitializeBeams();
 }
 
 void Scene5::reinitializeBeams()
