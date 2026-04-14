@@ -26,18 +26,15 @@ void GLWidget3D::connectWithSceneX(SceneX &originalSceneX)
     scenex = &originalSceneX;
 }
 
-void GLWidget3D::initializeGL(){
-    glColor3f(1,1,1);
-//    glClearColor(Qt::white);
-//    setFormat(GLFormat(GL::DoubleBuffer)); // Двойная буферизация
-    glDepthFunc(GL_LEQUAL); // Буфер глубины
+void GLWidget3D::initializeGL()
+{
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glDepthFunc(GL_LEQUAL);
 }
 
-void GLWidget3D::paintGL(){
-    glClearColor(0.0, 0.0, 0.0, 1.0);
+void GLWidget3D::paintGL()
+{
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
 
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST);

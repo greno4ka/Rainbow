@@ -53,12 +53,13 @@ void GLWidget::setSceneNumber(int programMode)
 
 void GLWidget::initializeGL()
 {
+    glClearColor(0.f, 0.f, 0.f, 1.f);
 }
 
 void GLWidget::paintGL()
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+
     scene->display();
 
     if (sceneNumber == 3 && scene3->getShowAngle()) {
@@ -73,7 +74,8 @@ void GLWidget::paintGL()
     }
 }
 
-void GLWidget::resizeGL(int w, int h){
+void GLWidget::resizeGL(int w, int h)
+{
     /// this resize function allows to work in accustomed coordinates
     scene1->updateXY(w, h);
     scene2->updateXY(w, h);
