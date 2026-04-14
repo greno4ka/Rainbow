@@ -96,12 +96,12 @@ double whatAngle(double wave, int rainbowMode)
     input = refracted;
 
     /// first reflection
-    input.calculateOutputPoint(&x1, &y1, x0, y0);
+    input.calculateOutputPoint(x0, y0, &x1, &y1);
     radius.calculateKoeffs(x1,y1,0,0);
     input.reflect(radius);
     x0=x1; y0=y1;
 
-    input.calculateOutputPoint(&x1, &y1, x0, y0);
+    input.calculateOutputPoint(x0, y0, &x1, &y1);
     radius.calculateKoeffs(x1,y1,0,0);
     if (rainbowMode == 1) {
         refracted = radius;
@@ -110,7 +110,7 @@ double whatAngle(double wave, int rainbowMode)
         input.reflect(radius);
         x0=x1; y0=y1;
 
-        input.calculateOutputPoint(&x1, &y1, x0, y0);
+        input.calculateOutputPoint(x0, y0, &x1, &y1);
         radius.calculateKoeffs(x1,y1,0,0);
         refracted = radius;
         refracted.snell(input,input.refractOut());

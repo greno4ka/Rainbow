@@ -73,7 +73,7 @@ void Scene5::draw_beam(Beam beam)
     refracted = radius;
     refracted.snell(beam, beam.refractIn());
     beam = refracted;
-    beam.calculateOutputPoint(&x1, &y1, x0, y0);
+    beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
     drawRay(x0,y0,x1,y1);
 
@@ -81,7 +81,7 @@ void Scene5::draw_beam(Beam beam)
     radius.calculateKoeffs(x1,y1,0,0);
     beam.reflect(radius);
     x0=x1; y0=y1;
-    beam.calculateOutputPoint(&x1, &y1, x0, y0);
+    beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
     drawRay(x0,y0,x1,y1);
 
@@ -90,7 +90,7 @@ void Scene5::draw_beam(Beam beam)
         radius.calculateKoeffs(x1,y1,0,0);
         refracted = radius;
         refracted.snell(beam, beam.refractOut());
-        refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
+        refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         drawRay(x1,y1,x2,y2);
     }
@@ -99,7 +99,7 @@ void Scene5::draw_beam(Beam beam)
         radius.calculateKoeffs(x1,y1,0,0);
         beam.reflect(radius);
         x0=x1; y0=y1;
-        beam.calculateOutputPoint(&x1, &y1, x0, y0);
+        beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
         drawRay(x0,y0,x1,y1);
 
@@ -107,7 +107,7 @@ void Scene5::draw_beam(Beam beam)
         radius.calculateKoeffs(x1,y1,0,0);
         refracted = radius;
         refracted.snell(beam, beam.refractOut());
-        refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
+        refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         drawRay(x1,y1,x2,y2);
     }

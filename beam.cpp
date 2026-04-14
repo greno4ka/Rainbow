@@ -143,7 +143,7 @@ void Beam::calculateInputPoint(double *x0, double *y0)
     *y0 = fx(*x0);
 }
 
-void Beam::calculateOutputPoint(double *x1, double *y1, double x0, double y0)
+void Beam::calculateOutputPoint(double x0, double y0, double *x1, double *y1)
 {
     double D = a*a*c*c - (1+a*a)*(c*c-r*r);
     double p1 = (-(a*c)+sqrt(D))/(1+a*a);
@@ -169,10 +169,10 @@ void Beam::calculateOutputPoint(double *x1, double *y1, double x0, double y0)
         *y1 = fx(*x1);
 }
 
-void Beam::calculateInfinityPoint(double *x2, double *y2, double x1, double y1)
+void Beam::calculateInfinityPoint(double x1, double y1, double *x2, double *y2)
 {
     double x0, y0; // temporary calculation of output for correct direction
-    calculateOutputPoint(&x0, &y0, x1, y1);
+    calculateOutputPoint(x1, y1, &x0, &y0);
 
     if (abs(x1-x0) < Beam::EPS) {
         *y2 = (y1-y0) * Beam::INF;

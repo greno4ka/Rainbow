@@ -122,7 +122,7 @@ void Scene3::draw_beam(Beam beam)
     refracted = radius;
     refracted.snell(beam, beam.refractIn());
     beam = refracted;
-    beam.calculateOutputPoint(&x1, &y1, x0, y0);
+    beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
     drawRay(x0,y0,x1,y1);
 
@@ -130,7 +130,7 @@ void Scene3::draw_beam(Beam beam)
     radius.calculateKoeffs(x1,y1,0,0);
     beam.reflect(radius);
     x0=x1; y0=y1;
-    beam.calculateOutputPoint(&x1, &y1, x0, y0);
+    beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
     drawRay(x0,y0,x1,y1);
 
@@ -139,7 +139,7 @@ void Scene3::draw_beam(Beam beam)
         radius.calculateKoeffs(x1,y1,0,0);
         refracted = radius;
         refracted.snell(beam, beam.refractOut());
-        refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
+        refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         if (showAngle && (originalBeam.getDistance() >= 0.84 && originalBeam.getDistance() <= 0.88) ) {
             Beam horizontal(0,1,2*DropRadius,0,DropRadius);
@@ -154,7 +154,7 @@ void Scene3::draw_beam(Beam beam)
         radius.calculateKoeffs(x1,y1,0,0);
         beam.reflect(radius);
         x0=x1; y0=y1;
-        beam.calculateOutputPoint(&x1, &y1, x0, y0);
+        beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
         drawRay(x0,y0,x1,y1);
 
@@ -162,7 +162,7 @@ void Scene3::draw_beam(Beam beam)
         radius.calculateKoeffs(x1,y1,0,0);
         refracted = radius;
         refracted.snell(beam, beam.refractOut());
-        refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
+        refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         if (showAngle && (originalBeam.getDistance() <= -0.94 && originalBeam.getDistance() >= -0.97) ) {
             Beam horizontal(0,1,2*DropRadius,0,DropRadius);

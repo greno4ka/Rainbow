@@ -71,13 +71,13 @@ void Scene1::draw_beam(Beam beam)
          reflected(DropRadius);
 
     int r,g,b;
-    wavelengthToRGB(beam.getWavelength(),&r,&g,&b);
 
     beam.calculateInputPoint(&x0, &y0);
     radius.calculateKoeffs(x0,y0,0,0);
 
     /// ORIGINAL BEAM
     // this part should be drawn anyway
+    wavelengthToRGB(beam.getWavelength(),&r,&g,&b);
     glColor3ub(r*p,g*p,b*p);
     drawInitialRay(x0,y0);
 
@@ -90,7 +90,7 @@ void Scene1::draw_beam(Beam beam)
         if (displayMode == 0) {
             reflected = beam;
             reflected.reflect(radius);
-            reflected.calculateInfinityPoint(&x2,&y2,x0,y0);
+            reflected.calculateInfinityPoint(x0,y0,&x2,&y2);
 
             drawRay(x0,y0,x2,y2);
         }
@@ -99,7 +99,7 @@ void Scene1::draw_beam(Beam beam)
         refracted = radius; // we're get reformed from radius
         refracted.snell(beam, beam.refractIn());
         beam = refracted;
-        beam.calculateOutputPoint(&x1, &y1, x0, y0);
+        beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
         drawRay(x0,y0,x1,y1);
 
@@ -109,7 +109,7 @@ void Scene1::draw_beam(Beam beam)
             radius.calculateKoeffs(x1,y1,0,0);
             refracted = radius; // we're get reformed from radius again
             refracted.snell(beam, beam.refractOut());
-            refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
+            refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
             p -= 0.1; // low color intensity every beam split
             glColor3ub(r*p,g*p,b*p);
@@ -124,7 +124,7 @@ void Scene1::draw_beam(Beam beam)
             /// REFLECTION INSIDE
             beam.reflect(radius);
             x0=x1; y0=y1;
-            beam.calculateOutputPoint(&x1, &y1, x0, y0);
+            beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
             if ( (displayMode == 0) ||
                  ( (displayMode == 1) && (stepNumber == 1) ) ||
