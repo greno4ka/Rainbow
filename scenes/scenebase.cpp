@@ -1,33 +1,24 @@
 #include "scenebase.h"
 
-#include <cmath>
-
 SceneBase::SceneBase(QObject *parent)
     : QObject(parent)
 {
     X = 800;
     Y = 600;
+
+    SceneScale = 10;
+
+    offsetXFactor = 4.0;
+    offsetYFactor = 2.0;
+
+    scaleXFactor = 4.0;
+    scaleYFactor = 4.0;
 }
 
 void SceneBase::updateXY(int newX, int newY)
 {
     X = newX;
     Y = newY;
-}
-
-double SceneBase::x(double x0)
-{
-    return X-(X/4)+x0*std::min(X/4,Y/2)/SceneScale;
-}
-
-double SceneBase::y(double y0)
-{
-    return (Y/2)+y0*std::min(X/4,Y/2)/SceneScale;
-}
-
-double SceneBase::r(double r0)
-{
-    return r0*std::min(X/4,Y/2)/SceneScale;
 }
 
 void SceneBase::draw_drop()

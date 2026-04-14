@@ -7,21 +7,14 @@ Scene5::Scene5()
     displayMode = 0;
     numberOfBeams = 30;
     reinitializeBeams();
-}
 
-inline double Scene5::x(double x0)
-{
-    return X-(X/18)+x0*std::min(X/16,Y/8)/SceneScale/2;
-}
+    SceneScale = 20;
 
-inline double Scene5::y(double y0)
-{
-    return (7*Y/8)+y0*std::min(X/16,Y/8)/SceneScale/2;
-}
+    offsetXFactor = 18.0;
+    offsetYFactor = 8.0;
 
-inline double Scene5::r(double r0)
-{
-    return r0*std::min(X/16,Y/8)/SceneScale/2;
+    scaleXFactor = 16.0;
+    scaleYFactor = 8.0;
 }
 
 void Scene5::reinitializeBeams()
@@ -47,28 +40,6 @@ void Scene5::setDisplayMode(int newDisplayMode)
 {
     displayMode = newDisplayMode;
     reinitializeBeams();
-}
-
-void Scene5::draw_drop()
-{
-    glColor3ub(100,100,255);
-    glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(x(0),y(0));
-
-    for (int i=0; i<=ImageQuality; i++) {
-        double currentAngle = (double)i/ImageQuality*2*M_PI;
-        glVertex2f(x(0)+r(DropRadius)*cos(currentAngle),
-                   y(0)+r(DropRadius)*sin(currentAngle));
-    }
-    glEnd();
-}
-
-void Scene5::drawLine(double x0, double y0, double x1, double y1)
-{
-    glBegin(GL_LINES);
-    glVertex2f(x(x0),y(y0));
-    glVertex2f(x(x1),y(y1));
-    glEnd();
 }
 
 void Scene5::draw_beam(Beam beam)
