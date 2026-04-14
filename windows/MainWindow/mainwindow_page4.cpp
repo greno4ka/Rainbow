@@ -1,17 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-void MainWindow::on_radioButton0_page4_clicked()
+void MainWindow::on_radioButton_all_beams_page4_clicked()
 {
     scene4->setDisplayMode(0);
 }
 
-void MainWindow::on_radioButton1_page4_clicked()
+void MainWindow::on_radioButton_observed_beams_page4_clicked()
 {
     scene4->setDisplayMode(1);
 }
 
-void MainWindow::on_radioButton2_page4_clicked()
+void MainWindow::on_radioButton_regions_beams_page4_clicked()
 {
     scene4->setDisplayMode(2);
 }

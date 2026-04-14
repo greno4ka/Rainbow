@@ -241,7 +241,7 @@ void MainWindow::switchScene()
         break;
     }
 
-    ui->stackedWidget->setCurrentIndex(currentStackWidgetPage);
+    ui->menuWidget->setCurrentIndex(currentStackWidgetPage);
     glWidget->setSceneNumber(currentStackWidgetPage);
     switchWidget();
 }

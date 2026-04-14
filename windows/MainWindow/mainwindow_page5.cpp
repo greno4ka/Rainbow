@@ -1,17 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-void MainWindow::on_radioButton0_page5_clicked()
+void MainWindow::on_radioButton_both_rainbows_page5_clicked()
 {
     scene5->setDisplayMode(0);
 }
 
-void MainWindow::on_radioButton1_page5_clicked()
+void MainWindow::on_radioButton_1rainbow_page5_clicked()
 {
     scene5->setDisplayMode(1);
 }
 
-void MainWindow::on_radioButton2_page5_clicked()
+void MainWindow::on_radioButton_2rainbow_page5_clicked()
 {
     scene5->setDisplayMode(2);
 }
@@ -49,5 +49,5 @@ void MainWindow::on_pushButton_reset_settings_page5_clicked()
     scene5->setNumberOfBeams(SCENE5_NUMBER_OF_BEAMS);
     scene5->setBeamQuality(SCENE5_BEAM_QUALITY_10);
     scene5->setDisplayMode(0);
-    ui->radioButton0_page5->setChecked(1);
+    ui->radioButton_both_rainbows_page5->setChecked(1);
 }

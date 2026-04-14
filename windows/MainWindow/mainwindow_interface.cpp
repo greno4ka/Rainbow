@@ -3,7 +3,7 @@
 
 void MainWindow::on_pushButton_next_clicked()
 {
-    if (++currentStackWidgetPage == ui->stackedWidget->count())
+    if (++currentStackWidgetPage == ui->menuWidget->count())
         currentStackWidgetPage = 0;
     switchScene();
 }
@@ -11,7 +11,7 @@ void MainWindow::on_pushButton_next_clicked()
 void MainWindow::on_pushButton_prev_clicked()
 {
     if (--currentStackWidgetPage < 0)
-        currentStackWidgetPage = ui->stackedWidget->count() - 1;
+        currentStackWidgetPage = ui->menuWidget->count() - 1;
     switchScene();
 }
 

@@ -81,38 +81,38 @@ private slots:
     void on_horizontalSlider_dist_page1_valueChanged(int value);
     void on_spinBox_wave_page1_valueChanged(int value);
     void on_horizontalSlider_wave_page1_valueChanged(int value);
-    void on_radioButton0_page1_clicked();
-    void on_radioButton1_page1_clicked();
-    void on_radioButton2_page1_clicked();
+    void on_radioButton_all_beams_page1_clicked();
+    void on_radioButton_1rainbow_page1_clicked();
+    void on_radioButton_2rainbow_page1_clicked();
     void on_pushButton_beamPrev_page1_clicked();
     void on_pushButton_beamNext_page1_clicked();
     void on_pushButton_addBeam_page1_clicked();
-    void on_pushButton_reset_settings_page1_clicked();
+    void on_pushButton_clear_screen_page1_clicked();
 
     /// page2
     void on_doubleSpinBox_dist_page2_valueChanged(double value);
     void on_horizontalSlider_dist_page2_valueChanged(int value);
     void on_spinBox_wave_page2_valueChanged(int value);
     void on_horizontalSlider_wave_page2_valueChanged(int value);
-    void on_radioButton1_page2_clicked();
-    void on_radioButton2_page2_clicked();
+    void on_radioButton_1rainbow_page2_clicked();
+    void on_radioButton_2rainbow_page2_clicked();
     void on_pushButton_reset_settings_page2_clicked();
 
     /// page3
     void on_spinBox_wave_page3_valueChanged(int value);
     void on_horizontalSlider_wave_page3_valueChanged(int value);
     void on_spinBox_number_of_beams_page3_valueChanged(int value);
-    void on_radioButton1_page3_clicked();
-    void on_radioButton2_page3_clicked();
+    void on_radioButton_1rainbow_page3_clicked();
+    void on_radioButton_2rainbow_page3_clicked();
     void on_checkBox_show_angle_page3_stateChanged(int value);
     void on_checkBox_show_rainbow_beams_page3_stateChanged(int value);
     void on_horizontalSlider_number_of_beams_page3_valueChanged(int value);
     void on_pushButton_reset_settings_page3_clicked();
 
     /// page4
-    void on_radioButton0_page4_clicked();
-    void on_radioButton1_page4_clicked();
-    void on_radioButton2_page4_clicked();
+    void on_radioButton_all_beams_page4_clicked();
+    void on_radioButton_observed_beams_page4_clicked();
+    void on_radioButton_regions_beams_page4_clicked();
     void on_pushButton_startpause_page4_clicked();
     void on_spinBox_FPS_page4_valueChanged(int value);
     void on_horizontalSlider_FPS_page4_valueChanged(int value);
@@ -122,9 +122,9 @@ private slots:
     void on_horizontalSlider_number_of_beams_page5_valueChanged(int value);
     void on_spinBox_dispersion_quality_page5_valueChanged(int value);
     void on_horizontalSlider_dispersion_quality_page5_valueChanged(int value);
-    void on_radioButton0_page5_clicked();
-    void on_radioButton1_page5_clicked();
-    void on_radioButton2_page5_clicked();
+    void on_radioButton_both_rainbows_page5_clicked();
+    void on_radioButton_1rainbow_page5_clicked();
+    void on_radioButton_2rainbow_page5_clicked();
     void on_pushButton_reset_settings_page5_clicked();
 };
 

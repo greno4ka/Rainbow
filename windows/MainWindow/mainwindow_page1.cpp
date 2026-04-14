@@ -25,17 +25,17 @@ void MainWindow::on_horizontalSlider_wave_page1_valueChanged(int value)
     ui->spinBox_wave_page1->setValue(value);
 }
 
-void MainWindow::on_radioButton0_page1_clicked()
+void MainWindow::on_radioButton_all_beams_page1_clicked()
 {
     scene1->setDisplayMode(0);
 }
 
-void MainWindow::on_radioButton1_page1_clicked()
+void MainWindow::on_radioButton_1rainbow_page1_clicked()
 {
     scene1->setDisplayMode(1);
 }
 
-void MainWindow::on_radioButton2_page1_clicked()
+void MainWindow::on_radioButton_2rainbow_page1_clicked()
 {
     scene1->setDisplayMode(2);
 }
@@ -59,7 +59,7 @@ void MainWindow::on_pushButton_addBeam_page1_clicked()
     scene1->addBeam(d, wl);
 }
 
-void MainWindow::on_pushButton_reset_settings_page1_clicked()
+void MainWindow::on_pushButton_clear_screen_page1_clicked()
 {
     scene1->clearBeams();
 }
