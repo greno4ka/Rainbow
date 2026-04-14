@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>double-rainbow-1000.jpg</file>
+        <file>slide2_black_en.png</file>
+        <file>slide2_black_ru.png</file>
+        <file>slide2_white_en.png</file>
+        <file>slide2_white_ru.png</file>
     </qresource>
 </RCC>

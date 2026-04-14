@@ -54,10 +54,10 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     }
     settingsWindow->setTranslator(translator);
 
-    rainbowPixmap = QPixmap(":/double-rainbow-1000.jpg");
+    //rainbowPixmap = QPixmap(":/double-rainbow-1000.jpg");
     ui->rainbow->setAlignment(Qt::AlignCenter);
     ui->rainbow->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    ui->rainbow->setPixmap(rainbowPixmap);
+    //ui->rainbow->setPixmap(rainbowPixmap);
     ui->rainbow->setMinimumSize(1, 1);
 
     glWidget = new GLWidget(this);
@@ -101,14 +101,35 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     if (fullscreenEnabled) {
         showFullScreen();
     }
-
     switchScene();
+    QTimer::singleShot(0, this, &MainWindow::updateSlide);
 }
 
-void MainWindow::updateRainbow()
+QString MainWindow::getSlidePath()
 {
+    QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+    QString settingsFilePath = configPath + "/settings.ini";
+    QSettings settings(settingsFilePath, QSettings::IniFormat);
+    bool isDarkTheme = settings.value("theme", 0).toInt() == 0;
+    int languageIndex = settings.value("language", 0).toInt();
+    QString langCode;
+    switch (languageIndex) {
+    case 1: langCode = "ru"; break;
+    case 2: langCode = "fr"; break;
+    default: langCode = "en"; break;
+    }
+    QString theme = isDarkTheme ? "white" : "black";
+    return QString(":/slide2_%1_%2.png")
+        .arg(theme)
+        .arg(langCode);
+}
+
+void MainWindow::updateSlide()
+{
+    slidePixmap = QPixmap(getSlidePath());
+
     ui->rainbow->setPixmap(
-        rainbowPixmap.scaled(
+        slidePixmap.scaled(
             ui->rainbow->size(),
             Qt::KeepAspectRatio,
             Qt::SmoothTransformation
@@ -118,12 +139,13 @@ void MainWindow::updateRainbow()
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-    updateRainbow();
+    updateSlide();
 }
 
 void MainWindow::retranslate()
 {
     ui->retranslateUi(this);
+    updateSlide();
 }
 
 MainWindow::~MainWindow()
@@ -168,7 +190,7 @@ void MainWindow::switchWidget()
         ui->presentationWidget->hide();
         break;
     }
-    updateRainbow();
+    updateSlide();
 }
 
 void MainWindow::switchScene()
@@ -476,6 +498,7 @@ void MainWindow::applyTheme(bool isDark)
         }
         glWidget->update();
     }
+    updateSlide();
 }
 
 void MainWindow::applyMultisampling(bool enabled)

@@ -54,9 +54,10 @@ private:
 
     int currentStackWidgetPage;
 
-    QPixmap rainbowPixmap;
+    QPixmap slidePixmap;
 
-    void updateRainbow();
+    QString getSlidePath();
+    void updateSlide();
     void switchScene();
     void switchWidget();
     void applyTheme(bool isDark);

@@ -20,7 +20,6 @@ class Scene5: public SceneBase
     Beams beams;
 
     void reinitializeBeams();
-
     void rayProcess(Beam beam);
 
 public:
