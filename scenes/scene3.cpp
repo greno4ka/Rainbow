@@ -1,7 +1,5 @@
 #include "scene3.h"
 
-#include "wavelength.h"
-
 Scene3::Scene3()
 {
     resetScene();
@@ -20,7 +18,7 @@ void Scene3::resetScene()
 double Scene3::getCoordX()
 {
     if (displayMode == 1)
-    return x(coordX)+25;
+        return x(coordX)+25;
     else
         return x(coordX)-100;
 
@@ -47,8 +45,7 @@ void Scene3::reinitializeBeams()
 
     double h=1.0/numberOfBeams;
 
-    for (double r=0.01; r<0.99; r+=h)
-    {
+    for (double r=0.01; r<0.99; r+=h) {
         Beam beam(0,1,-r*DropRadius,wavelength,DropRadius);
         if (displayMode == 2) beam.invertDistance();
         beams.push_back(beam);
@@ -174,14 +171,14 @@ void Scene3::rayProcess(Beam beam)
     }
 
     if (showAngle) {
-    glColor3ub(255,255,255);
-    glBegin(GL_LINES);
-    glVertex2f(x(coordX),y(coordY));
-    if (displayMode == 1)
-        glVertex2f(x(coordX)+100,y(coordY));
-    else
-        glVertex2f(x(coordX)-100,y(coordY));
-    glEnd();
+        glColor3ub(255,255,255);
+        glBegin(GL_LINES);
+        glVertex2f(x(coordX),y(coordY));
+        if (displayMode == 1)
+            glVertex2f(x(coordX)+100,y(coordY));
+        else
+            glVertex2f(x(coordX)-100,y(coordY));
+        glEnd();
     }
 }
 

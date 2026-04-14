@@ -1,8 +1,5 @@
 #include "scene4.h"
 
-#include <QThread>
-
-#include "wavelength.h"
 
 Scene4::Scene4()
 {

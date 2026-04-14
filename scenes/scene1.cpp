@@ -1,7 +1,5 @@
 #include "scene1.h"
 
-#include "wavelength.h"
-
 Scene1::Scene1()
 {
     displayMode = 0;
@@ -61,14 +59,14 @@ void Scene1::decBeamStep()
 
 void Scene1::rayProcess(Beam beam)
 {
+    Beam refracted(DropRadius),
+         radius(DropRadius),
+         reflected(DropRadius);
+
     double p=1;        // GAMMA CORRECTOR of color for darkening beams
     double x0,y0,      // point0
            x1,y1,      // point1
            x2,y2;      // point2 - external (for reformed outside)
-
-    Beam refracted(DropRadius),
-         radius(DropRadius),
-         reflected(DropRadius);
 
     int r,g,b;
 
@@ -87,7 +85,7 @@ void Scene1::rayProcess(Beam beam)
         p -= 0.1; // low color intensity every beam split
         glColor3ub(r*p,g*p,b*p);
 
-        if (displayMode == 0) {
+        if (displayMode == 0) { // only when displaying ALL
             reflected = beam;
             reflected.reflect(radius);
             reflected.calculateInfinityPoint(x0,y0,&x2,&y2);
@@ -113,9 +111,9 @@ void Scene1::rayProcess(Beam beam)
             refracted.snell(beam, beam.refractOut());
             refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
-            if ( (displayMode == 0) ||
-                 ( (displayMode == 1) && (stepNumber == 2) ) ||
-                 ( (displayMode == 2) && (stepNumber == 3) )
+            if ( (displayMode == 0) ||                          // ALL
+                 ( (displayMode == 1) && (stepNumber == 2) ) || // 1st rainbow
+                 ( (displayMode == 2) && (stepNumber == 3) )    // 2nd rainbow
                ) {
 
                 drawRay(x1,y1,x2,y2);
@@ -126,9 +124,9 @@ void Scene1::rayProcess(Beam beam)
             x0=x1; y0=y1;
             beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
-            if ( (displayMode == 0) ||
-                 ( (displayMode == 1) && (stepNumber == 1) ) ||
-                 ( (displayMode == 2) && (stepNumber <= 2) )
+            if ( (displayMode == 0) ||                          // ALL
+                 ( (displayMode == 1) && (stepNumber == 1) ) || // 1st rainbow
+                 ( (displayMode == 2) && (stepNumber <= 2) )    // 2nd rainbow
                ) {
                 drawRay(x0,y0,x1,y1);
             }

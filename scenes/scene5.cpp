@@ -1,7 +1,5 @@
 #include "scene5.h"
 
-#include "wavelength.h"
-
 Scene5::Scene5()
 {
     displayMode = 0;

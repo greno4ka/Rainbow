@@ -5,6 +5,7 @@
 
 #include "scenebase.h"
 #include "beam.h"
+#include "wavelength.h"
 
 class Scene1 : public SceneBase
 {

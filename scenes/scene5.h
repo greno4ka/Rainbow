@@ -5,9 +5,14 @@
 
 #include "scenebase.h"
 #include "beam.h"
+#include "wavelength.h"
 
 class Scene5: public SceneBase
 {
+    /// DisplayMode values
+    // 0 - show all beams
+    // 1 - only 1st rainbow beams
+    // 2 - only 2nd rainbow beams
     int displayMode;
     int numberOfBeams;
 

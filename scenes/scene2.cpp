@@ -1,7 +1,5 @@
 #include "scene2.h"
 
-#include "wavelength.h"
-
 Scene2::Scene2()
 {
     displayMode = 1;
@@ -40,21 +38,22 @@ void Scene2::setWavelength(int newWavelength)
 
 void Scene2::rayProcess(Beam beam)
 {
+    Beam refracted(DropRadius),
+         radius(DropRadius),
+         reflected(DropRadius);
+
     double x0,y0,      // point0
            x1,y1,      // point1
            x2,y2;      // point2 - external (for reformed outside)
 
     int r,g,b;
-    wavelengthToRGB(beam.getWavelength(),&r,&g,&b);
-    glColor3ub(r,g,b);
-
-    Beam refracted(DropRadius),
-         radius(DropRadius),
-         reflected(DropRadius);
 
     beam.calculateInputPoint(&x0, &y0);
     radius.calculateKoeffs(x0,y0,0,0);
 
+    /// Single color for all rays
+    wavelengthToRGB(beam.getWavelength(),&r,&g,&b);
+    glColor3ub(r,g,b);
     /// ORIGINAL BEAM
     // this part should be drawn anyway
     drawInitialRay(x0,y0);
@@ -75,7 +74,7 @@ void Scene2::rayProcess(Beam beam)
 
     drawRay(x0,y0,x1,y1);
 
-    if (displayMode == 1) {
+    if (displayMode == 1) { // 1st rainbow
         /// REFRACTION OUTSIDE
         radius.calculateKoeffs(x1,y1,0,0);
         refracted = radius;
@@ -83,7 +82,7 @@ void Scene2::rayProcess(Beam beam)
         refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         drawRay(x1,y1,x2,y2);
-    } else {
+    } else {                // 2nd rainbow
         /// NEXT REFLECTION INSIDE
         radius.calculateKoeffs(x1,y1,0,0);
         beam.reflect(radius);
