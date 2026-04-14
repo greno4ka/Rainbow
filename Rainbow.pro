@@ -20,7 +20,13 @@ SOURCES += main.cpp \
     glwidget.cpp \
     \
     glwidget3d.cpp \
-    mainwindow.cpp \
+    windows/MainWindow/mainwindow.cpp \
+    windows/MainWindow/mainwindow_interface.cpp \
+    windows/MainWindow/mainwindow_page1.cpp \
+    windows/MainWindow/mainwindow_page2.cpp \
+    windows/MainWindow/mainwindow_page3.cpp \
+    windows/MainWindow/mainwindow_page4.cpp \
+    windows/MainWindow/mainwindow_page5.cpp \
     scenes/scene1.cpp \
     scenes/scene2.cpp \
     scenes/scene3.cpp \
@@ -37,7 +43,7 @@ HEADERS  += \
     glwidget.h \
     \
     glwidget3d.h \
-    mainwindow.h \
+    windows/MainWindow/mainwindow.h \
     scenes/scene1.h \
     scenes/scene2.h \
     scenes/scene3.h \
@@ -50,7 +56,7 @@ HEADERS  += \
     scenes/scenebase.h
 
 FORMS    += \
-    mainwindow.ui \
+    windows/MainWindow/mainwindow.ui \
     settingswindow.ui
 
 TRANSLATIONS = rainbow_en.ts \
@@ -61,5 +67,5 @@ RESOURCES += \
     images/images.qrc \
     styles/styles.qrc
 
-DISTFILES += \
-    images/double-rainbow-1000.jpg
+INCLUDEPATH += \
+    $$PWD \
