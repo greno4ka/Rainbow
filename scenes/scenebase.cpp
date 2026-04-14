@@ -6,7 +6,7 @@ SceneBase::SceneBase(QObject *parent)
     X = 800;
     Y = 600;
 
-    SceneScale = 10;
+    sceneScale = 10.0;
 
     offsetXFactor = 4.0;
     offsetYFactor = 2.0;

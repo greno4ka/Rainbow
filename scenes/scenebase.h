@@ -9,36 +9,37 @@
 class SceneBase : public QObject
 {
     Q_OBJECT
+
 signals:
     void requestUpdate();
 
 protected:
-    static const int ImageQuality = 100;
+    static const int ImageQuality = 100; // quality of drawing circles (drops, clouds...)
     static const int DropRadius = 5;
 
     int X, Y; // Window height and width
 
-    int SceneScale;
-    int offsetXFactor,
-        offsetYFactor,
+    double offsetXFactor,
+           offsetYFactor;
 
-        scaleXFactor,
-        scaleYFactor;
+    double scaleXFactor,
+           scaleYFactor;
+    double sceneScale; // this is common zoom factor for X and Y scaling
 
     /// Methods of recalculation decart coords to screen coords
     inline double x(double x0)
     {
-        return X - (X/offsetXFactor) + x0 * std::min(X/scaleXFactor, Y/scaleYFactor) / SceneScale;
+        return X - (X/offsetXFactor) + x0 * std::min(X/scaleXFactor, Y/scaleYFactor) / sceneScale;
     }
 
     inline double y(double y0)
     {
-        return Y - (Y/offsetYFactor) + y0 * std::min(X/scaleXFactor, Y/scaleYFactor) / SceneScale;
+        return Y - (Y/offsetYFactor) + y0 * std::min(X/scaleXFactor, Y/scaleYFactor) / sceneScale;
     }
 
     inline double r(double r0)
     {
-        return r0 * std::min(X/scaleXFactor, Y/scaleYFactor) / SceneScale;
+        return r0 * std::min(X/scaleXFactor, Y/scaleYFactor) / sceneScale;
     }
 
     void drawLine(double x0, double y0, double x1, double y1);

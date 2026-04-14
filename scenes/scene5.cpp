@@ -8,7 +8,7 @@ Scene5::Scene5()
     numberOfBeams = 30;
     reinitializeBeams();
 
-    SceneScale = 20;
+    sceneScale = 20.0;
 
     offsetXFactor = 18.0;
     offsetYFactor = 8.0;
