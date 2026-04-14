@@ -112,6 +112,8 @@ private slots:
     void on_spinBox_FPS_page4_valueChanged(int value);
     void on_horizontalSlider_FPS_page4_valueChanged(int value);
     /// page5
+    void on_spinBox_number_of_beams_page5_valueChanged(int value);
+    void on_horizontalSlider_number_of_beams_page5_valueChanged(int value);
     void on_radioButton0_page5_clicked();
     void on_radioButton1_page5_clicked();
     void on_radioButton2_page5_clicked();

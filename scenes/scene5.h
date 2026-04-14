@@ -26,6 +26,7 @@ public:
     Scene5();
 
     void setDisplayMode(int newDisplayMode);
+    void setNumberOfBeams(int newNumberOfBeams);
 
     void display();
 };

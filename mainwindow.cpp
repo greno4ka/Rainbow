@@ -502,3 +502,17 @@ void MainWindow::onFullscreenChanged(bool enabled)
         showNormal();
     }
 }
+
+void MainWindow::on_spinBox_number_of_beams_page5_valueChanged(int value)
+{
+    scene5->setNumberOfBeams(value);
+    ui->horizontalSlider_number_of_beams_page5->setValue(value);
+}
+
+
+void MainWindow::on_horizontalSlider_number_of_beams_page5_valueChanged(int value)
+{
+    scene5->setNumberOfBeams(value);
+    ui->spinBox_number_of_beams_page5->setValue(value);
+}
+

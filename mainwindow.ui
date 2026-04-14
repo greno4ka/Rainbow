@@ -714,6 +714,55 @@
           <widget class="QWidget" name="page5">
            <layout class="QVBoxLayout" name="verticalLayout_12">
             <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_number_of_beams_page5">
+              <item>
+               <widget class="QLabel" name="label_number_of_beams_page5">
+                <property name="text">
+                 <string>Number of beams [x2]</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBox_number_of_beams_page5">
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+                <property name="singleStep">
+                 <number>10</number>
+                </property>
+                <property name="value">
+                 <number>30</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QSlider" name="horizontalSlider_number_of_beams_page5">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>999</number>
+              </property>
+              <property name="singleStep">
+               <number>10</number>
+              </property>
+              <property name="pageStep">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>30</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QGroupBox" name="groupBox_page5">
               <property name="title">
                <string/>

@@ -19,7 +19,7 @@ void Scene5::reinitializeBeams()
 {
     beams.clear();
 
-    double h=1.0/numberOfBeams;
+    double h=1.0/(numberOfBeams+1);
 
     for (double r=0.01; r<0.99; r+=h)
     {
@@ -37,6 +37,12 @@ void Scene5::reinitializeBeams()
 void Scene5::setDisplayMode(int newDisplayMode)
 {
     displayMode = newDisplayMode;
+    reinitializeBeams();
+}
+
+void Scene5::setNumberOfBeams(int newNumberOfBeams)
+{
+    numberOfBeams = newNumberOfBeams;
     reinitializeBeams();
 }
 
