@@ -4,203 +4,243 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="mainwindow.ui" line="14"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="14"/>
         <source>Rainbow demonstration</source>
         <translation>Démonstration d&apos;arc-en-ciel</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="36"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="36"/>
         <source>Page name</source>
         <translation>Titre de la page</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="81"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="75"/>
         <source>Slides</source>
-        <translation type="unfinished"></translation>
+        <translation>Diapositives</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="87"/>
-        <source>1</source>
-        <translation type="unfinished"></translation>
+        <location filename="windows/MainWindow/mainwindow.ui" line="81"/>
+        <source>Rainbow</source>
+        <translation>Arc-en-ciel</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="94"/>
-        <source>2</source>
-        <translation type="unfinished"></translation>
+        <location filename="windows/MainWindow/mainwindow.ui" line="91"/>
+        <source>Refraction</source>
+        <translation>Réfraction</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="101"/>
-        <source>3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="108"/>
-        <source>4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="128"/>
-        <location filename="mainwindow.ui" line="308"/>
-        <source>Impact parameter</source>
-        <translation>Paramètre de visée</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="177"/>
-        <location filename="mainwindow.ui" line="363"/>
-        <location filename="mainwindow.ui" line="462"/>
-        <source>Wavelength</source>
-        <translation>Longueur d&apos;onde</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="224"/>
-        <source>Add beam</source>
-        <translation>Ajouter un rayon</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="233"/>
-        <source>&lt; Beam tracking</source>
-        <translation>&lt; Trajet du rayon</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="240"/>
-        <source>Beam tracking &gt;</source>
-        <translation>Trajet du rayon &gt;</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="255"/>
-        <source>Show all beams</source>
-        <translation>Afficher tous les rayons</translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="265"/>
-        <location filename="mainwindow.ui" line="416"/>
-        <location filename="mainwindow.ui" line="561"/>
-        <location filename="mainwindow.ui" line="732"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="98"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="277"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="428"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="573"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="842"/>
         <source>Primary rainbow</source>
         <translation>Arc-en-ciel primaire</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="272"/>
-        <location filename="mainwindow.ui" line="426"/>
-        <location filename="mainwindow.ui" line="571"/>
-        <location filename="mainwindow.ui" line="739"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="105"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="284"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="438"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="583"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="849"/>
         <source>Secondary rainbow</source>
         <translation>Arc-en-ciel secondaire</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="282"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="140"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="320"/>
+        <source>Impact parameter</source>
+        <translation>Paramètre de visée</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="189"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="375"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="474"/>
+        <source>Wavelength</source>
+        <translation>Longueur d&apos;onde</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="236"/>
+        <source>Add beam</source>
+        <translation>Ajouter un rayon</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="245"/>
+        <source>&lt; Beam tracking</source>
+        <translation>&lt; Trajet du rayon</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="252"/>
+        <source>Beam tracking &gt;</source>
+        <translation>Trajet du rayon &gt;</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="267"/>
+        <source>Show all beams</source>
+        <translation>Afficher tous les rayons</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="294"/>
         <source>Clear screen</source>
         <translation>Clair écran</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="436"/>
-        <location filename="mainwindow.ui" line="595"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="448"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="607"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="859"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1035"/>
         <source>Reset settings</source>
         <translation>Réinitialiser les options</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="511"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="523"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1003"/>
         <source>Number of beams</source>
         <translation>Nombre de rayons</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="581"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="593"/>
         <source>Show angle</source>
         <translation>Afficher l&apos;angle</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="588"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="600"/>
         <source>Show rainbow beams</source>
         <translation>Afficher les rayons de l&apos;arc-en-ciel</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="625"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="637"/>
         <source>All beams</source>
         <translation>Tous les rayons</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="635"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="647"/>
         <source>Observed beams</source>
         <translation>Rayons observés</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="642"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="654"/>
         <source>Beams from regions of observation</source>
         <translation>Rayons des zones d&apos;observation</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="654"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="666"/>
         <source>Frames per second</source>
         <translation>Cadres par seconde</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="692"/>
-        <location filename="mainwindow.cpp" line="331"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="704"/>
+        <location filename="windows/MainWindow/mainwindow_page4.cpp" line="23"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="722"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="730"/>
+        <source>Number of beams [x2]</source>
+        <translation>Nombre de rayons [x2]</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="779"/>
+        <source>Dispersion quality</source>
+        <translation>Qualité de dispersion</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="832"/>
         <source>Both rainbows</source>
         <translation>Les deux arcs-en-ciel</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="774"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="883"/>
+        <source>Position of sun</source>
+        <translation>Position du soleil</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="927"/>
+        <source>Position of eye</source>
+        <translation>Position de l&apos;œil</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="971"/>
+        <source>Polychromatic</source>
+        <translation>Polychrome</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="981"/>
+        <source>Monochromatic</source>
+        <translation>Monochromatique</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="991"/>
+        <source>Visualize beams</source>
+        <translation>Visualiser des rayons</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1028"/>
+        <source>Add beams</source>
+        <translation>Ajouter des rayons</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1067"/>
         <source>⚙</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="796"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1089"/>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="815"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1108"/>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="834"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1127"/>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="853"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1146"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="89"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="220"/>
         <source>Analytical calculations</source>
-        <translation type="unfinished"></translation>
+        <translation>Calculs analytiques</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="92"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="223"/>
         <source>Beams in a droplet</source>
         <translation>Rayons dans une goutte</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="95"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="226"/>
         <source>Beam divergence</source>
         <translation>Divergence des rayons</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="98"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="229"/>
         <source>Descartes&apos; rainbow</source>
         <translation>Arc-en-ciel Descartes</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="101"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="232"/>
         <source>Ensemble of droplets</source>
         <translation>Ensemble de gouttes</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="104"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="235"/>
         <source>Alexander&apos;s dark band</source>
         <translation>Trait sombre d&apos;Alexandre</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="333"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="238"/>
+        <source>Formation of a rainbow</source>
+        <translation>Formation d&apos;un arc-en-ciel</translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow_page4.cpp" line="25"/>
         <source>Start</source>
         <translation>Commencer</translation>
     </message>
@@ -209,77 +249,82 @@
     <name>SettingsWindow</name>
     <message>
         <location filename="settingswindow.ui" line="14"/>
+        <location filename="settingswindow.cpp" line="122"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="settingswindow.ui" line="51"/>
         <source>Program language</source>
-        <translation>Langue du programme</translation>
+        <translation type="vanished">Langue du programme</translation>
     </message>
     <message>
-        <location filename="settingswindow.ui" line="64"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
+        <location filename="settingswindow.ui" line="22"/>
+        <source>Language</source>
+        <translation>Langue</translation>
     </message>
     <message>
-        <location filename="settingswindow.ui" line="77"/>
-        <source>Start fullscreen</source>
-        <translation type="unfinished"></translation>
+        <location filename="settingswindow.ui" line="30"/>
+        <source>English</source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="settingswindow.ui" line="91"/>
+        <location filename="settingswindow.ui" line="35"/>
+        <source>Russian</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="settingswindow.ui" line="40"/>
+        <source>French</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="settingswindow.ui" line="48"/>
+        <source>Theme</source>
+        <translation>Thème</translation>
+    </message>
+    <message>
+        <location filename="settingswindow.ui" line="56"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Sombre</translation>
     </message>
     <message>
-        <location filename="settingswindow.ui" line="96"/>
+        <location filename="settingswindow.ui" line="61"/>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumière</translation>
     </message>
     <message>
-        <location filename="settingswindow.ui" line="110"/>
-        <source>Program theme</source>
-        <translation type="unfinished"></translation>
+        <location filename="settingswindow.ui" line="69"/>
+        <source>Enable Multisampling (Anti-aliasing)</source>
+        <translation>Activer le multisampling (anticrénelage)</translation>
     </message>
     <message>
-        <location filename="settingswindow.ui" line="123"/>
-        <source>Multisampling</source>
-        <translation type="unfinished"></translation>
+        <location filename="settingswindow.ui" line="79"/>
+        <source>Start in Fullscreen Mode</source>
+        <translation>Démarrer en mode plein écran</translation>
     </message>
     <message>
-        <location filename="settingswindow.ui" line="137"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
+        <location filename="settingswindow.ui" line="116"/>
+        <source>Save Settings</source>
+        <translation>Enregistrer les paramètres</translation>
     </message>
     <message>
-        <location filename="settingswindow.ui" line="142"/>
-        <source>MSAA 2x</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="settingswindow.ui" line="147"/>
-        <source>MSAA 4x</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="settingswindow.ui" line="152"/>
-        <source>MSAA 8x</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="settingswindow.cpp" line="30"/>
-        <location filename="settingswindow.cpp" line="34"/>
-        <location filename="settingswindow.cpp" line="38"/>
+        <location filename="settingswindow.cpp" line="45"/>
+        <location filename="settingswindow.cpp" line="49"/>
+        <location filename="settingswindow.cpp" line="53"/>
         <source>Error: 0xDEADBEE</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="30"/>
-        <location filename="settingswindow.cpp" line="34"/>
-        <location filename="settingswindow.cpp" line="38"/>
+        <location filename="settingswindow.cpp" line="45"/>
+        <location filename="settingswindow.cpp" line="49"/>
+        <location filename="settingswindow.cpp" line="53"/>
         <source>Can&apos;t change language.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="settingswindow.cpp" line="122"/>
+        <source>Settings saved successfully.</source>
+        <translation>Paramètres enregistrés avec succès.</translation>
     </message>
 </context>
 </TS>
