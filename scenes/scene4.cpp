@@ -109,10 +109,8 @@ void Scene4::display()
         observed.calculateKoeffs(x(dropX), y(dropY), eyeX, eyeY);
         /// ORIGINAL BEAMS
         glColor3ub(255,255,255);
-        glBegin(GL_LINES);
-        glVertex2f(0,y(dropY));
-        glVertex2f(x(dropX),y(dropY));
-        glEnd();
+        drawInitialRay(dropX,dropY);
+
 
         if (displayMode == 0)
         {
@@ -125,12 +123,8 @@ void Scene4::display()
 
                 wavelengthToRGB(wavelength,&r,&g,&b);
                 glColor3ub(r,g,b);
-                glBegin(GL_LINES);
-                glVertex2f(x(dropX),y(dropY));
-                glVertex2f(x(x0),y(y1));
-                glVertex2f(x(dropX),y(dropY));
-                glVertex2f(x(x0),y(y2));
-                glEnd();
+                drawRay(dropX,dropY,x0,y1);
+                drawRay(dropX,dropY,x0,y2);
             }
         }
         if (displayMode == 1)
@@ -146,7 +140,6 @@ void Scene4::display()
                     wavelengthToRGB(whatWave(observed.getAngle(),1),&r,&g,&b);
                 else wavelengthToRGB(whatWave(observed.getAngle(),2),&r,&g,&b);
                 glBegin(GL_LINES);
-                glColor3ub(255,255,255);
                 glColor3ub(r,g,b);
                 glVertex2f(x(dropX),y(dropY));
                 glVertex2f(xcut,ycut);
@@ -166,12 +159,8 @@ void Scene4::display()
 
                     wavelengthToRGB(w,&r,&g,&b);
                     glColor3ub(r,g,b);
-                    glBegin(GL_LINES);
-                    glVertex2f(x(dropX),y(dropY));
-                    glVertex2f(x(x0),y(y1));
-                    glVertex2f(x(dropX),y(dropY));
-                    glVertex2f(x(x0),y(y2));
-                    glEnd();
+                    drawRay(dropX,dropY,x0,y1);
+                    drawRay(dropX,dropY,x0,y2);
                 }
                 drawMan();
             }

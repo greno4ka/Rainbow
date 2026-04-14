@@ -42,7 +42,8 @@ protected:
         return r0 * std::min(X/scaleXFactor, Y/scaleYFactor) / sceneScale;
     }
 
-    void drawLine(double x0, double y0, double x1, double y1);
+    void drawRay(double x0, double y0, double x1, double y1);
+    void drawInitialRay(double x1, double y1);
 
     void draw_drop();
     void draw_axes();

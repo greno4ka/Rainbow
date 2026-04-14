@@ -49,10 +49,18 @@ void SceneBase::draw_axes()
     glDisable(GL_LINE_STIPPLE); // turn it off
 }
 
-void SceneBase::drawLine(double x0, double y0, double x1, double y1)
+void SceneBase::drawRay(double x0, double y0, double x1, double y1)
 {
     glBegin(GL_LINES);
     glVertex2f(x(x0),y(y0));
+    glVertex2f(x(x1),y(y1));
+    glEnd();
+}
+
+void SceneBase::drawInitialRay(double x1, double y1)
+{
+    glBegin(GL_LINES);
+    glVertex2f(0,y(y1));
     glVertex2f(x(x1),y(y1));
     glEnd();
 }

@@ -57,10 +57,7 @@ void Scene2::draw_beam(Beam beam)
 
     /// ORIGINAL BEAM
     // this part should be drawn anyway
-    glBegin(GL_LINES);
-    glVertex2f(0,y(y0));
-    glVertex2f(x(x0),y(y0));
-    glEnd();
+    drawInitialRay(x0,y0);
 
     /// FIRST REFRACTION
     refracted = radius;
@@ -68,7 +65,7 @@ void Scene2::draw_beam(Beam beam)
     beam = refracted;
     beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
-    drawLine(x0,y0,x1,y1);
+    drawRay(x0,y0,x1,y1);
 
     /// REFLECTION INSIDE
     radius.calculateKoeffs(x1,y1,0,0);
@@ -76,7 +73,7 @@ void Scene2::draw_beam(Beam beam)
     x0=x1; y0=y1;
     beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
-    drawLine(x0,y0,x1,y1);
+    drawRay(x0,y0,x1,y1);
 
     if (displayMode == 1) {
         /// REFRACTION OUTSIDE
@@ -85,7 +82,7 @@ void Scene2::draw_beam(Beam beam)
         refracted.snell(beam, beam.refractOut());
         refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
-        drawLine(x1,y1,x2,y2);
+        drawRay(x1,y1,x2,y2);
     } else {
         /// NEXT REFLECTION INSIDE
         radius.calculateKoeffs(x1,y1,0,0);
@@ -93,7 +90,7 @@ void Scene2::draw_beam(Beam beam)
         x0=x1; y0=y1;
         beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
-        drawLine(x0,y0,x1,y1);
+        drawRay(x0,y0,x1,y1);
 
         /// REFRACTION OUTSIDE
         radius.calculateKoeffs(x1,y1,0,0);
@@ -101,7 +98,7 @@ void Scene2::draw_beam(Beam beam)
         refracted.snell(beam, beam.refractOut());
         refracted.calculateInfinityPoint(&x2,&y2,x1,y1);
 
-        drawLine(x1,y1,x2,y2);
+        drawRay(x1,y1,x2,y2);
     }
 }
 

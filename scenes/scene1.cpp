@@ -79,10 +79,7 @@ void Scene1::draw_beam(Beam beam)
     /// ORIGINAL BEAM
     // this part should be drawn anyway
     glColor3ub(r*p,g*p,b*p);
-    glBegin(GL_LINES);
-    glVertex2f(0,y(y0));
-    glVertex2f(x(x0),y(y0));
-    glEnd();
+    drawInitialRay(x0,y0);
 
     if (beamStep > 0) {
         /// FIRST REFLECTION
@@ -95,10 +92,7 @@ void Scene1::draw_beam(Beam beam)
             reflected.reflect(radius);
             reflected.calculateInfinityPoint(&x2,&y2,x0,y0);
 
-            glBegin(GL_LINES);
-            glVertex2f(x(x0),y(y0));
-            glVertex2f(x(x2),y(y2));
-            glEnd();
+            drawRay(x0,y0,x2,y2);
         }
 
         /// FIRST REFRACTION
@@ -107,10 +101,7 @@ void Scene1::draw_beam(Beam beam)
         beam = refracted;
         beam.calculateOutputPoint(&x1, &y1, x0, y0);
 
-        glBegin(GL_LINES);
-        glVertex2f(x(x0),y(y0));
-        glVertex2f(x(x1),y(y1));
-        glEnd();
+        drawRay(x0,y0,x1,y1);
 
         for (int stepNumber=1; stepNumber < beamStep; stepNumber++)
         {
@@ -126,10 +117,8 @@ void Scene1::draw_beam(Beam beam)
                  ( (displayMode == 1) && (stepNumber == 2) ) ||
                  ( (displayMode == 2) && (stepNumber == 3) )
                ) {
-                glBegin(GL_LINES);
-                glVertex2f(x(x1),y(y1));
-                glVertex2f(x(x2),y(y2));
-                glEnd();
+
+                drawRay(x1,y1,x2,y2);
             }
 
             /// REFLECTION INSIDE
@@ -141,10 +130,7 @@ void Scene1::draw_beam(Beam beam)
                  ( (displayMode == 1) && (stepNumber == 1) ) ||
                  ( (displayMode == 2) && (stepNumber <= 2) )
                ) {
-                glBegin(GL_LINES);
-                glVertex2f(x(x0),y(y0));
-                glVertex2f(x(x1),y(y1));
-                glEnd();
+                drawRay(x0,y0,x1,y1);
             }
         }
     }
