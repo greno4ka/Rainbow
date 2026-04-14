@@ -56,6 +56,7 @@ private:
 
     QPixmap rainbowPixmap;
 
+    void updateRainbow();
     void switchScene();
     void switchWidget();
     void applyTheme(bool isDark);

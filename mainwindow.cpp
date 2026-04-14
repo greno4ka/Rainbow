@@ -105,17 +105,20 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     switchScene();
 }
 
+void MainWindow::updateRainbow()
+{
+    ui->rainbow->setPixmap(
+        rainbowPixmap.scaled(
+            ui->rainbow->size(),
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation
+            )
+        );
+}
+
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-    QMainWindow::resizeEvent(event);
-
-        ui->rainbow->setPixmap(
-            rainbowPixmap.scaled(
-                ui->rainbow->size(),
-                Qt::KeepAspectRatio,
-                Qt::SmoothTransformation
-                )
-            );
+    updateRainbow();
 }
 
 void MainWindow::retranslate()
@@ -165,6 +168,7 @@ void MainWindow::switchWidget()
         ui->presentationWidget->hide();
         break;
     }
+    updateRainbow();
 }
 
 void MainWindow::switchScene()
