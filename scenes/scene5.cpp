@@ -4,8 +4,11 @@ Scene5::Scene5()
 {
     displayMode = 0;
     numberOfBeams = 30;
+    beamQuality = 10;
     reinitializeBeams();
 
+    /// Scene5 is the only scene with special coordinates
+    // redefine SceneBase properties
     sceneScale = 20.0;
 
     offsetXFactor = 18.0;
@@ -21,10 +24,8 @@ void Scene5::reinitializeBeams()
 
     double h=1.0/(numberOfBeams+1);
 
-    for (double r=0.01; r<0.99; r+=h)
-    {
-        for (int wavelength=400; wavelength<=760; wavelength+=(760-400)/7)
-        {
+    for (double r=0.01; r<0.99; r+=h) {
+        for (int wavelength=400; wavelength<=760; wavelength+=(760-400)/beamQuality) {
             Beam beam(0, 1, -r*DropRadius, wavelength, DropRadius);
             beams.push_back(beam);
             beam.invertDistance();
@@ -43,6 +44,12 @@ void Scene5::setDisplayMode(int newDisplayMode)
 void Scene5::setNumberOfBeams(int newNumberOfBeams)
 {
     numberOfBeams = newNumberOfBeams;
+    reinitializeBeams();
+}
+
+void Scene5::setBeamQuality(int newBeamQuality)
+{
+    beamQuality = newBeamQuality;
     reinitializeBeams();
 }
 

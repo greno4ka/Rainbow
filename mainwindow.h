@@ -114,9 +114,12 @@ private slots:
     /// page5
     void on_spinBox_number_of_beams_page5_valueChanged(int value);
     void on_horizontalSlider_number_of_beams_page5_valueChanged(int value);
+    void on_spinBox_dispersion_quality_page5_valueChanged(int value);
+    void on_horizontalSlider_dispersion_quality_page5_valueChanged(int value);
     void on_radioButton0_page5_clicked();
     void on_radioButton1_page5_clicked();
     void on_radioButton2_page5_clicked();
+    void on_pushButton_reset_settings_page5_clicked();
 };
 
 #endif // MAINWINDOW_H

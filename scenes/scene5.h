@@ -15,6 +15,7 @@ class Scene5: public SceneBase
     // 2 - only 2nd rainbow beams
     int displayMode;
     int numberOfBeams;
+    int beamQuality;
 
     Beams beams;
 
@@ -27,6 +28,7 @@ public:
 
     void setDisplayMode(int newDisplayMode);
     void setNumberOfBeams(int newNumberOfBeams);
+    void setBeamQuality(int newBeamQuality);
 
     void display();
 };
