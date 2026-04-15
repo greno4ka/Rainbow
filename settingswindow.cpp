@@ -1,33 +1,21 @@
 #include "settingswindow.h"
 #include "ui_settingswindow.h"
 
-#include <QMessageBox>
-#include <QSettings>
-#include <QStandardPaths>
-#include <QDir>
-
-SettingsWindow::SettingsWindow(QWidget *parent) :
+SettingsWindow::SettingsWindow(QTranslator *newTranslator, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsWindow)
 {
     ui->setupUi(this);
-    
-    // Set up settings file path
-    QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
-    QDir().mkpath(configPath);  // Ensure the directory exists
+
+    translator = newTranslator;
+
+    configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
     settingsFilePath = configPath + "/settings.ini";
 }
 
 SettingsWindow::~SettingsWindow()
 {
-    delete translator;
-
     delete ui;
-}
-
-void SettingsWindow::setTranslator(QTranslator *newTranslator)
-{
-    translator = newTranslator;
 }
 
 void SettingsWindow::showEvent(QShowEvent *event)
@@ -39,23 +27,20 @@ void SettingsWindow::showEvent(QShowEvent *event)
 
 void SettingsWindow::on_comboBox_activated(int value)
 {
-    switch (value) {
-    case 0:
-        if (! translator->load(QString("rainbow_") + QString("en")) )
-            QMessageBox::critical(0,tr("Error: 0xDEADBEE"), tr("Can't change language."));
-        break;
-    case 1:
-        if (! translator->load(QString("rainbow_") + QString("ru")) )
-            QMessageBox::critical(0,tr("Error: 0xDEADBEE"), tr("Can't change language."));
-        break;
-    case 2:
-        if (! translator->load(QString("rainbow_") + QString("fr")) )
-            QMessageBox::critical(0,tr("Error: 0xDEADBEE"), tr("Can't change language."));
-        break;
-    default:
-        break;
+    // Load language setting
+    if (!translator->load("rainbow_" + languageFromIndex(value))) {
+        QMessageBox::critical(this, tr("Error: 0xDEADBEE"), tr("Can't change language."));
+        return;
     }
+
+    // Install language setting
+    qApp->removeTranslator(translator);
+    qApp->installTranslator(translator);
+
+    // Finally use language setting to rewrite all text
     ui->retranslateUi(this);
+
+    // Tell others to do it too!
     emit language_change();
 }
 
@@ -70,19 +55,15 @@ void SettingsWindow::loadSettings()
 {
     QSettings settings(settingsFilePath, QSettings::IniFormat);
     
-    // Load language setting
-    int languageIndex = settings.value("language", 0).toInt();
-    ui->comboBox->setCurrentIndex(languageIndex);
+    QString lang = settings.value("language", "en").toString();
+    ui->comboBox->setCurrentIndex(indexFromLanguage(lang));
     
-    // Load theme setting
     int themeIndex = settings.value("theme", 0).toInt();
     ui->comboBox_2->setCurrentIndex(themeIndex);
     
-    // Load multisampling setting
     bool multisamplingEnabled = settings.value("multisampling", true).toBool();
     ui->checkBox_multisampling->setChecked(multisamplingEnabled);
-    
-    // Load fullscreen setting
+
     bool fullscreenEnabled = settings.value("fullscreen", false).toBool();
     ui->checkBox_fullscreen->setChecked(fullscreenEnabled);
 }
@@ -90,17 +71,10 @@ void SettingsWindow::loadSettings()
 void SettingsWindow::saveSettings()
 {
     QSettings settings(settingsFilePath, QSettings::IniFormat);
-    
-    // Save language setting
-    settings.setValue("language", ui->comboBox->currentIndex());
-    
-    // Save theme setting
+
+    settings.setValue("language", languageFromIndex(ui->comboBox->currentIndex()));
     settings.setValue("theme", ui->comboBox_2->currentIndex());
-    
-    // Save multisampling setting
     settings.setValue("multisampling", ui->checkBox_multisampling->isChecked());
-    
-    // Save fullscreen setting
     settings.setValue("fullscreen", ui->checkBox_fullscreen->isChecked());
     
     settings.sync();
@@ -122,3 +96,19 @@ void SettingsWindow::on_pushButton_save_clicked()
     QMessageBox::information(this, tr("Settings"), tr("Settings saved successfully."));
 }
 
+QString SettingsWindow::languageFromIndex(int index)
+{
+    switch (index) {
+    case 0: return "en";
+    case 1: return "ru";
+    case 2: return "fr";
+    default: return "en";
+    }
+}
+
+int SettingsWindow::indexFromLanguage(QString &lang)
+{
+    if (lang == "ru") return 1;
+    if (lang == "fr") return 2;
+    return 0; // en default
+}

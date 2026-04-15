@@ -3,6 +3,10 @@
 
 #include <QDialog>
 #include <QTranslator>
+#include <QMessageBox>
+#include <QSettings>
+#include <QStandardPaths>
+#include <QDir>
 
 namespace Ui {
 class SettingsWindow;
@@ -12,7 +16,7 @@ class SettingsWindow : public QDialog
 {
     Q_OBJECT
 
-    QTranslator *translator;
+    QTranslator *translator = nullptr;
 
 signals:
     void language_change();
@@ -21,10 +25,9 @@ signals:
     void fullscreen_change(bool enabled);
 
 public:
-    explicit SettingsWindow(QWidget *parent = nullptr);
+    explicit SettingsWindow(QTranslator *newTranslator, QWidget *parent = nullptr);
     ~SettingsWindow();
 
-    void setTranslator(QTranslator *newTranslator);
     void loadSettings();
     void saveSettings();
 
@@ -40,7 +43,12 @@ private slots:
 
 private:
     Ui::SettingsWindow *ui;
+
+    QString configPath;
     QString settingsFilePath;
+
+    QString languageFromIndex(int index);
+    int indexFromLanguage(QString &lang);
 };
 
 #endif // SETTINGSWINDOW_H

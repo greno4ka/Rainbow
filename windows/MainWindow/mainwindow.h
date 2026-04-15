@@ -6,6 +6,7 @@
 #include <QStandardPaths>
 #include <QSettings>
 #include <QResizeEvent>
+#include <QMessageBox>
 
 #include "settingswindow.h"
 #include "glwidget.h"
@@ -27,7 +28,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(int programMode, QWidget *parent = nullptr);
+    explicit MainWindow(int programMode, QTranslator *newTranslator, QWidget *parent = nullptr);
     ~MainWindow();
 
     void setTranslator(QTranslator *newTranslator);
@@ -56,6 +57,10 @@ private:
 
     QPixmap slidePixmap;
 
+    QString configPath;
+    QString settingsFilePath;
+    QSettings *settings;
+
     QString getSlidePath();
     void updateSlide();
     void switchScene();
@@ -64,10 +69,10 @@ private:
     void applyMultisampling(bool enabled);
 
 private slots:
-    void retranslate();
-    void onThemeChanged(bool isDark);
-    void onMultisamplingChanged(bool enabled);
-    void onFullscreenChanged(bool enabled);
+    void changeLanguage();
+    void changeTheme(bool isDark);
+    void changeMultisampling(bool enabled);
+    void changeFullscreen(bool enabled);
 
     /// interface
     void on_pushButton_next_clicked();

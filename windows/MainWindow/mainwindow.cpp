@@ -10,7 +10,7 @@ static QString loadStyle(const QString &path)
     return QString::fromUtf8(file.readAll());
 }
 
-MainWindow::MainWindow(int programMode, QWidget *parent) :
+MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -36,43 +36,43 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     ui->spinBox_dispersion_quality_page5->setValue(SCENE5_BEAM_QUALITY_10);
     ui->horizontalSlider_dispersion_quality_page5->setValue(SCENE5_BEAM_QUALITY_10);
 
-    // Create settings window first
-    settingsWindow = new SettingsWindow(this);
-    connect(settingsWindow, &SettingsWindow::language_change,
-            this, &MainWindow::retranslate);
-    connect(settingsWindow, &SettingsWindow::theme_change,
-            this, &MainWindow::onThemeChanged);
-    connect(settingsWindow, &SettingsWindow::multisampling_change,
-            this, &MainWindow::onMultisamplingChanged);
-    connect(settingsWindow, &SettingsWindow::fullscreen_change,
-            this, &MainWindow::onFullscreenChanged);
-
     // Load initial settings before creating GLWidget
-    QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
-    QString settingsFilePath = configPath + "/settings.ini";
-    QSettings settings(settingsFilePath, QSettings::IniFormat);
+    configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+    settingsFilePath = configPath + "/settings.ini";
+    settings = new QSettings(settingsFilePath, QSettings::IniFormat);
 
-    // Apply initial settings
-    bool multisamplingEnabled = settings.value("multisampling", true).toBool();
-    bool fullscreenEnabled = settings.value("fullscreen", false).toBool();
-    bool isDarkTheme = settings.value("theme", 0).toInt() == 0;
+    // Read initial settings
+    bool multisamplingEnabled = settings->value("multisampling", false).toBool();
+    bool fullscreenEnabled = settings->value("fullscreen", false).toBool();
+    bool darkThemeEnabled = settings->value("theme", 0).toInt() == 0;
+
+    translator = newTranslator;
 
     // Load language setting
-    translator = new QTranslator(this);
-    int languageIndex = settings.value("language", 0).toInt();
-    QString langCode;
-    switch (languageIndex) {
-        case 1: langCode = "ru"; break;
-        case 2: langCode = "fr"; break;
-        default: langCode = "en"; break;
+    QString appLanguage = settings->value("language", "en").toString();
+
+    if (!translator->load("rainbow_" + appLanguage)) {
+        QMessageBox::critical(this, tr("Error: 0xDEADBEE"), tr("Can't change language."));
     }
-    if (languageIndex > 0) {  // Only load if not English (default)
-        if (translator->load(QString("rainbow_") + langCode)) {
-            qApp->installTranslator(translator);
-            ui->retranslateUi(this);
-        }
-    }
-    settingsWindow->setTranslator(translator);
+
+    // Install language setting
+    qApp->removeTranslator(translator);
+    qApp->installTranslator(translator);
+
+    // Finally use language setting to rewrite all text
+    ui->retranslateUi(this);
+
+    // Create all windows after installing translator
+    // It should use installed language
+    settingsWindow = new SettingsWindow(translator,this);
+    connect(settingsWindow, &SettingsWindow::language_change,
+            this, &MainWindow::changeLanguage);
+    connect(settingsWindow, &SettingsWindow::theme_change,
+            this, &MainWindow::changeTheme);
+    connect(settingsWindow, &SettingsWindow::multisampling_change,
+            this, &MainWindow::changeMultisampling);
+    connect(settingsWindow, &SettingsWindow::fullscreen_change,
+            this, &MainWindow::changeFullscreen);
 
     //rainbowPixmap = QPixmap(":/double-rainbow-1000.jpg");
     ui->rainbow->setAlignment(Qt::AlignCenter);
@@ -115,7 +115,7 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
     glWidget3d->connectWithSceneX(*scenex);
 
     // Apply theme
-    applyTheme(isDarkTheme);
+    applyTheme(darkThemeEnabled);
 
     // Apply fullscreen if needed
     if (fullscreenEnabled) {
@@ -127,18 +127,15 @@ MainWindow::MainWindow(int programMode, QWidget *parent) :
 
 QString MainWindow::getSlidePath()
 {
-    QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
-    QString settingsFilePath = configPath + "/settings.ini";
-    QSettings settings(settingsFilePath, QSettings::IniFormat);
-    bool isDarkTheme = settings.value("theme", 0).toInt() == 0;
-    int languageIndex = settings.value("language", 0).toInt();
+    bool darkThemeEnabled = settings->value("theme", 0).toInt() == 0;
+    int languageIndex = settings->value("language", 0).toInt();
     QString langCode;
     switch (languageIndex) {
     case 1: langCode = "ru"; break;
     case 2: langCode = "fr"; break;
     default: langCode = "en"; break;
     }
-    QString theme = isDarkTheme ? "white" : "black";
+    QString theme = darkThemeEnabled ? "white" : "black";
     return QString(":/slide2_%1_%2.png")
         .arg(theme)
         .arg(langCode);
@@ -162,7 +159,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     updateSlide();
 }
 
-void MainWindow::retranslate()
+void MainWindow::changeLanguage()
 {
     ui->retranslateUi(this);
     updateSlide();
@@ -176,15 +173,10 @@ MainWindow::~MainWindow()
     delete scene4;
     delete scene5;
 
-    delete translator;
     delete settingsWindow;
 
+    delete settings;
     delete ui;
-}
-
-void MainWindow::setTranslator(QTranslator *newTranslator)
-{
-    translator = newTranslator;
 }
 
 void MainWindow::switchWidget()
@@ -246,7 +238,7 @@ void MainWindow::switchScene()
     switchWidget();
 }
 
-void MainWindow::onThemeChanged(bool isDark)
+void MainWindow::changeTheme(bool isDark)
 {
     applyTheme(isDark);
 }
@@ -284,12 +276,12 @@ void MainWindow::applyMultisampling(bool enabled)
     }
 }
 
-void MainWindow::onMultisamplingChanged(bool enabled)
+void MainWindow::changeMultisampling(bool enabled)
 {
     applyMultisampling(enabled);
 }
 
-void MainWindow::onFullscreenChanged(bool enabled)
+void MainWindow::changeFullscreen(bool enabled)
 {
     if (enabled) {
         showFullScreen();

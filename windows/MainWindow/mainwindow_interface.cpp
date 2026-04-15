@@ -27,6 +27,5 @@ void MainWindow::on_pushButton_close_clicked()
 
 void MainWindow::on_pushButton_settings_clicked()
 {
-    settingsWindow->setTranslator(translator);
     settingsWindow->show();
 }
