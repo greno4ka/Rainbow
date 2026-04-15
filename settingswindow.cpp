@@ -41,7 +41,7 @@ void SettingsWindow::on_comboBox_activated(int value)
     ui->retranslateUi(this);
 
     // Tell others to do it too!
-    emit language_change();
+    emit language_change(languageFromIndex(value));
 }
 
 void SettingsWindow::on_comboBox_2_activated(int index)

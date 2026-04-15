@@ -42,14 +42,14 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     settings = new QSettings(settingsFilePath, QSettings::IniFormat);
 
     // Read initial settings
-    bool multisamplingEnabled = settings->value("multisampling", false).toBool();
-    bool fullscreenEnabled = settings->value("fullscreen", false).toBool();
-    bool darkThemeEnabled = settings->value("theme", 0).toInt() == 0;
+    multisamplingEnabled = settings->value("multisampling", false).toBool();
+    fullscreenEnabled = settings->value("fullscreen", false).toBool();
+    darkThemeEnabled = settings->value("theme", 0).toInt() == 0;
 
     translator = newTranslator;
 
     // Load language setting
-    QString appLanguage = settings->value("language", "en").toString();
+    appLanguage = settings->value("language", "en").toString();
 
     if (!translator->load("rainbow_" + appLanguage)) {
         QMessageBox::critical(this, tr("Error: 0xDEADBEE"), tr("Can't change language."));
@@ -115,7 +115,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     glWidget3d->connectWithSceneX(*scenex);
 
     // Apply theme
-    applyTheme(darkThemeEnabled);
+    changeTheme(darkThemeEnabled);
 
     // Apply fullscreen if needed
     if (fullscreenEnabled) {
@@ -125,25 +125,18 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     QTimer::singleShot(0, this, &MainWindow::updateSlide);
 }
 
-QString MainWindow::getSlidePath()
+QString MainWindow::getSlidePath(QString slideName)
 {
-    bool darkThemeEnabled = settings->value("theme", 0).toInt() == 0;
-    int languageIndex = settings->value("language", 0).toInt();
-    QString langCode;
-    switch (languageIndex) {
-    case 1: langCode = "ru"; break;
-    case 2: langCode = "fr"; break;
-    default: langCode = "en"; break;
-    }
     QString theme = darkThemeEnabled ? "white" : "black";
-    return QString(":/slide2_%1_%2.png")
+    return QString(":/%1_%2_%3.png")
+        .arg(slideName)
         .arg(theme)
-        .arg(langCode);
+        .arg(appLanguage);
 }
 
 void MainWindow::updateSlide()
 {
-    slidePixmap = QPixmap(getSlidePath());
+    slidePixmap = QPixmap(getSlidePath("slide2"));
 
     ui->rainbow->setPixmap(
         slidePixmap.scaled(
@@ -159,8 +152,9 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     updateSlide();
 }
 
-void MainWindow::changeLanguage()
+void MainWindow::changeLanguage(const QString &language)
 {
+    appLanguage = language;
     ui->retranslateUi(this);
     updateSlide();
 }
@@ -240,11 +234,8 @@ void MainWindow::switchScene()
 
 void MainWindow::changeTheme(bool isDark)
 {
-    applyTheme(isDark);
-}
+    darkThemeEnabled = isDark;
 
-void MainWindow::applyTheme(bool isDark)
-{
     QString style = loadStyle(isDark ? ":/dark.qss"
                                      : ":/light.qss");
 
@@ -265,7 +256,7 @@ void MainWindow::applyTheme(bool isDark)
     updateSlide();
 }
 
-void MainWindow::applyMultisampling(bool enabled)
+void MainWindow::changeMultisampling(bool enabled)
 {
     if (glWidget) {
         QSurfaceFormat format = glWidget->format();
@@ -274,11 +265,6 @@ void MainWindow::applyMultisampling(bool enabled)
         glWidget->hide();  // Force a context recreation
         glWidget->show();
     }
-}
-
-void MainWindow::changeMultisampling(bool enabled)
-{
-    applyMultisampling(enabled);
 }
 
 void MainWindow::changeFullscreen(bool enabled)

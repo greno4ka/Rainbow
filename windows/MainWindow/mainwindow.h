@@ -61,15 +61,18 @@ private:
     QString settingsFilePath;
     QSettings *settings;
 
-    QString getSlidePath();
+    QString appLanguage;
+    bool multisamplingEnabled;
+    bool fullscreenEnabled;
+    bool darkThemeEnabled;
+
+    QString getSlidePath(QString slideName);
     void updateSlide();
     void switchScene();
     void switchWidget();
-    void applyTheme(bool isDark);
-    void applyMultisampling(bool enabled);
 
 private slots:
-    void changeLanguage();
+    void changeLanguage(const QString &language);
     void changeTheme(bool isDark);
     void changeMultisampling(bool enabled);
     void changeFullscreen(bool enabled);

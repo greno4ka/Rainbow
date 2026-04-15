@@ -19,7 +19,7 @@ class SettingsWindow : public QDialog
     QTranslator *translator = nullptr;
 
 signals:
-    void language_change();
+    void language_change(const QString &language);
     void theme_change(bool isDark);
     void multisampling_change(bool enabled);
     void fullscreen_change(bool enabled);
