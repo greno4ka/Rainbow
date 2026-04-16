@@ -5,5 +5,7 @@
         <file>slide2_black_ru.png</file>
         <file>slide2_white_en.png</file>
         <file>slide2_white_ru.png</file>
+        <file>slide2_black_fr.png</file>
+        <file>slide2_white_fr.png</file>
     </qresource>
 </RCC>
