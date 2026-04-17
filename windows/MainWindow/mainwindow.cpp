@@ -74,11 +74,9 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     connect(settingsWindow, &SettingsWindow::fullscreen_change,
             this, &MainWindow::changeFullscreen);
 
-    //rainbowPixmap = QPixmap(":/double-rainbow-1000.jpg");
-    ui->rainbow->setAlignment(Qt::AlignCenter);
-    ui->rainbow->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    //ui->rainbow->setPixmap(rainbowPixmap);
-    ui->rainbow->setMinimumSize(1, 1);
+    ui->label_for_image->setAlignment(Qt::AlignCenter);
+    ui->label_for_image->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->label_for_image->setMinimumSize(1, 1);
 
     glWidget = new GLWidget(this);
     glWidget3d = new GLWidget3D(this);
@@ -122,6 +120,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
         showFullScreen();
     }
     switchScene();
+    currentSlide = "rainbow";
     QTimer::singleShot(0, this, &MainWindow::updateSlide);
 }
 
@@ -136,11 +135,14 @@ QString MainWindow::getSlidePath(QString slideName)
 
 void MainWindow::updateSlide()
 {
-    slidePixmap = QPixmap(getSlidePath("slide2"));
-
-    ui->rainbow->setPixmap(
+    if (currentSlide == "rainbow")
+        slidePixmap = QPixmap(":/double-rainbow-1000.jpg");
+    else {
+        slidePixmap = QPixmap(getSlidePath(currentSlide));
+    }
+    ui->label_for_image->setPixmap(
         slidePixmap.scaled(
-            ui->rainbow->size(),
+            ui->label_for_image->size(),
             Qt::KeepAspectRatio,
             Qt::SmoothTransformation
             )

@@ -1154,24 +1154,16 @@
       <item>
        <layout class="QHBoxLayout" name="glWidgetLayout">
         <item>
-         <widget class="QStackedWidget" name="presentationWidget">
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <widget class="QWidget" name="slide1">
-           <layout class="QVBoxLayout" name="verticalLayout_15">
-            <item>
-             <widget class="QLabel" name="rainbow">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="slide2"/>
-          <widget class="QWidget" name="slide3"/>
-          <widget class="QWidget" name="slide4"/>
+         <widget class="QWidget" name="presentationWidget" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_15">
+           <item>
+            <widget class="QLabel" name="label_for_image">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>

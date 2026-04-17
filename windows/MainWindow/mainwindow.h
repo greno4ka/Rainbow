@@ -54,6 +54,7 @@ private:
     QTranslator *translator = nullptr;
 
     int currentStackWidgetPage;
+    QString currentSlide;
 
     QPixmap slidePixmap;
 
@@ -83,6 +84,12 @@ private slots:
     void on_pushButton_fullscreen_clicked();
     void on_pushButton_close_clicked();
     void on_pushButton_settings_clicked();
+
+    /// page0
+    void on_radioButton_rainbow_page0_clicked();
+    void on_radioButton_refraction_page0_clicked();
+    void on_radioButton_1rainbow_page0_clicked();
+    void on_radioButton_2rainbow_page0_clicked();
 
     /// page1
     void on_doubleSpinBox_dist_page1_valueChanged(double value);

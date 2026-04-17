@@ -22,6 +22,7 @@ SOURCES += main.cpp \
     glwidget3d.cpp \
     windows/MainWindow/mainwindow.cpp \
     windows/MainWindow/mainwindow_interface.cpp \
+    windows/MainWindow/mainwindow_page0.cpp \
     windows/MainWindow/mainwindow_page1.cpp \
     windows/MainWindow/mainwindow_page2.cpp \
     windows/MainWindow/mainwindow_page3.cpp \
