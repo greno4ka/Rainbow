@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <qwt_plot.h>
+#include <qwt_plot_curve.h>
+#include <qwt_plot_grid.h>
+
 static QString loadStyle(const QString &path)
 {
     QFile file(path);
@@ -74,9 +78,9 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     connect(settingsWindow, &SettingsWindow::fullscreen_change,
             this, &MainWindow::changeFullscreen);
 
-    ui->label_for_image->setAlignment(Qt::AlignCenter);
-    ui->label_for_image->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    ui->label_for_image->setMinimumSize(1, 1);
+    // ui->label_for_image->setAlignment(Qt::AlignCenter);
+    // ui->label_for_image->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    // ui->label_for_image->setMinimumSize(1, 1);
 
     glWidget = new GLWidget(this);
     glWidget3d = new GLWidget3D(this);
@@ -121,6 +125,51 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     }
     switchScene();
     currentSlide = "rainbow";
+
+    QwtPlot *plot = new QwtPlot(ui->widget);
+    plot->setTitle("Refractive index curve");
+    plot->setAxisTitle(QwtPlot::xBottom, "Wavelength (nm)");
+    plot->setAxisTitle(QwtPlot::yLeft, "Refractive index n");
+
+    QVector<double> wl, n;
+
+    Beam beam(1.0);
+
+    int points = 600;
+    double start = 400;
+    double end = 650;
+
+    for (int i = 0; i < points; i++)
+    {
+        double x = start + (end - start) * i / (points - 1);
+
+        beam = Beam(0,0,0, x, 1.0);
+
+        wl.append(x);
+        n.append(beam.refractIn());
+    }
+
+    QwtPlotCurve *curve = new QwtPlotCurve("Polynomial model");
+    curve->setSamples(wl, n);
+    curve->setPen(Qt::white, 2, Qt::SolidLine);
+    curve->setStyle(QwtPlotCurve::Lines);
+    curve->setRenderHint (QwtPlotItem::RenderAntialiased, true);
+    curve->attach(plot);
+
+    QwtPlotGrid *grid = new QwtPlotGrid();
+    grid->setPen(QPen(Qt::white, 0.5, Qt::DotLine));
+    grid->attach(plot);
+
+    plot->setAxisScale(QwtPlot::xBottom, 400, 650);
+    plot->resize(700, 400);
+    plot->show();
+
+    plot->replot();
+
+    ui->widget->setLayout(new QVBoxLayout());
+    ui->widget->layout()->addWidget(plot);
+
+
     QTimer::singleShot(0, this, &MainWindow::updateSlide);
 }
 
@@ -140,13 +189,13 @@ void MainWindow::updateSlide()
     else {
         slidePixmap = QPixmap(getSlidePath(currentSlide));
     }
-    ui->label_for_image->setPixmap(
-        slidePixmap.scaled(
-            ui->label_for_image->size(),
-            Qt::KeepAspectRatio,
-            Qt::SmoothTransformation
-            )
-        );
+    // ui->label_for_image->setPixmap(
+    //     slidePixmap.scaled(
+    //         ui->label_for_image->size(),
+    //         Qt::KeepAspectRatio,
+    //         Qt::SmoothTransformation
+    //         )
+    //     );
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)

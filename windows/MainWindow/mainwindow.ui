@@ -1154,16 +1154,137 @@
       <item>
        <layout class="QHBoxLayout" name="glWidgetLayout">
         <item>
-         <widget class="QWidget" name="presentationWidget" native="true">
-          <layout class="QVBoxLayout" name="verticalLayout_15">
-           <item>
-            <widget class="QLabel" name="label_for_image">
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-          </layout>
+         <widget class="QStackedWidget" name="presentationWidget">
+          <widget class="QWidget" name="slide1"/>
+          <widget class="QWidget" name="slide2">
+           <layout class="QVBoxLayout" name="verticalLayout_17">
+            <item>
+             <spacer name="verticalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>132</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_for_image">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>133</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_16">
+                <item>
+                 <widget class="QLabel" name="label_3">
+                  <property name="text">
+                   <string>TextLabel</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="widget_2" native="true"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_15">
+                <item>
+                 <widget class="QLabel" name="label_2">
+                  <property name="text">
+                   <string>TextLabel</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="widget" native="true"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>132</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="slide3"/>
+          <widget class="QWidget" name="slide4"/>
          </widget>
         </item>
        </layout>
