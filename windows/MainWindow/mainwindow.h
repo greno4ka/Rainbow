@@ -61,8 +61,6 @@ private:
     int currentMenuWidgetPage;
     int currentSlideWidgetPage;
 
-    QString currentSlideName;
-
     QPixmap slidePixmap;
 
     QString configPath;
@@ -74,8 +72,7 @@ private:
     bool fullscreenEnabled;
     bool darkThemeEnabled;
 
-    QString getSlidePath(QString slideName);
-    void updateSlide();
+    void updateRainbowImage();
     void switchScene();
     void switchWidget();
 

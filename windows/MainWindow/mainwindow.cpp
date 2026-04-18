@@ -58,9 +58,9 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     connect(settingsWindow, &SettingsWindow::fullscreen_change,
             this, &MainWindow::changeFullscreen);
 
-    // ui->label_for_image->setAlignment(Qt::AlignCenter);
-    // ui->label_for_image->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    // ui->label_for_image->setMinimumSize(1, 1);
+    ui->label_for_image->setAlignment(Qt::AlignCenter);
+    ui->label_for_image->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->label_for_image->setMinimumSize(1, 1);
 
     glWidget = new GLWidget(this);
     glWidget3d = new GLWidget3D(this);
@@ -123,7 +123,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     ui->qwtWidget_slide3->setLayout(new QVBoxLayout());
     ui->qwtWidget_slide3->layout()->addWidget(createSecondaryRainbowPlot());
 
-    QTimer::singleShot(0, this, &MainWindow::updateSlide);
+    QTimer::singleShot(0, this, &MainWindow::updateRainbowImage);
 }
 
 void MainWindow::initUIDefaults()
@@ -149,41 +149,27 @@ void MainWindow::initUIDefaults()
     ui->horizontalSlider_dispersion_quality_page5->setValue(SCENE5_BEAM_QUALITY_10);
 }
 
-QString MainWindow::getSlidePath(QString slideName)
+void MainWindow::updateRainbowImage()
 {
-    QString theme = darkThemeEnabled ? "white" : "black";
-    return QString(":/%1_%2_%3.png")
-        .arg(slideName)
-        .arg(theme)
-        .arg(appLanguage);
-}
-
-void MainWindow::updateSlide()
-{
-    if (currentSlideName == "rainbow")
-        slidePixmap = QPixmap(":/double-rainbow-1000.jpg");
-    else {
-        slidePixmap = QPixmap(getSlidePath(currentSlideName));
-    }
-    // ui->label_for_image->setPixmap(
-    //     slidePixmap.scaled(
-    //         ui->label_for_image->size(),
-    //         Qt::KeepAspectRatio,
-    //         Qt::SmoothTransformation
-    //         )
-    //     );
+    slidePixmap = QPixmap(":/double-rainbow-1000.jpg");
+    ui->label_for_image->setPixmap(
+        slidePixmap.scaled(
+            ui->label_for_image->size(),
+            Qt::KeepAspectRatio,
+            Qt::SmoothTransformation
+            )
+        );
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-    updateSlide();
+    updateRainbowImage();
 }
 
 void MainWindow::changeLanguage(const QString &language)
 {
     appLanguage = language;
     ui->retranslateUi(this);
-    updateSlide();
 }
 
 MainWindow::~MainWindow()
@@ -207,21 +193,10 @@ void MainWindow::switchWidget()
 {
     switch (currentMenuWidgetPage) {
     case 0:
-        switch(currentSlideWidgetPage) {
-        case 1:
-            ui->glWidgetLayout_slide1->addWidget(glWidget);
-        glWidget->setSceneNumber(6);
-        case 2:
-            ui->glWidgetLayout_slide2->addWidget(glWidget);
-            glWidget->setSceneNumber(7);
-        case 3:
-            ui->glWidgetLayout_slide3->addWidget(glWidget);
-            glWidget->setSceneNumber(7);
-        }
-
         glWidget->show();
         glWidget3d->hide();
         ui->slideWidget->show();
+        updateRainbowImage();
         break;
     case 1:
     case 2:
@@ -239,7 +214,6 @@ void MainWindow::switchWidget()
         ui->slideWidget->hide();
         break;
     }
-    updateSlide();
 }
 
 void MainWindow::switchScene()
@@ -296,7 +270,6 @@ void MainWindow::changeTheme(bool isDark)
         }
         glWidget->update();
     }
-    updateSlide();
 }
 
 void MainWindow::changeMultisampling(bool enabled)

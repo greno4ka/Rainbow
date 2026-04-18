@@ -72,7 +72,8 @@ TRANSLATIONS = rainbow_en.ts \
                rainbow_fr.ts
 
 RESOURCES += \
-    styles/styles.qrc
+    styles/styles.qrc \
+    images/images.qrc
 
 INCLUDEPATH += \
     $$PWD \
