@@ -166,12 +166,11 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     grid->attach(plot);
 
     plot->setAxisScale(QwtPlot::xBottom, 380, 780);
-    plot->setAxisScale(QwtPlot::yLeft, 1.325, 1.345);
+    plot->setAxisScale(QwtPlot::yLeft, 1.325, 1.346);
     /*
     plot->setAxisAutoScale(QwtPlot::yLeft, false);
     plot->setAxisMaxMajor(QwtPlot::yLeft, 10);
     plot->setAxisMaxMinor(QwtPlot::yLeft, 5);*/
-    plot->resize(700, 400);
     plot->show();
 
     plot->replot();

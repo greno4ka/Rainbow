@@ -11,7 +11,9 @@ class Scene6 : public SceneBase
 {
     Beam beam;
 
-    void rayProcess(Beam beam);
+    void drawWater();
+    void drawAxes();
+    void rayProcess();
 
 public:
     Scene6();
