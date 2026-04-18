@@ -15,6 +15,7 @@ class Scene7 : public SceneBase
     Beam normal;
 
     void rayProcess();
+    void drawRadiusDash(double x0, double y0);
     void drawAngleArc(Beam &beam, double radius, bool arcOnTop);
 
 public:
