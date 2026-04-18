@@ -23,25 +23,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
 {
     ui->setupUi(this);
 
-    ui->doubleSpinBox_dist_page1->setValue(SCENE1_DISTANCE_08);
-    ui->horizontalSlider_dist_page1->setValue(SCENE1_DISTANCE_08*100);
-    ui->spinBox_wave_page1->setValue(SCENE1_WAVELENGTH_600);
-    ui->horizontalSlider_wave_page1->setValue(SCENE1_WAVELENGTH_600);
-
-    ui->doubleSpinBox_dist_page2->setValue(SCENE2_DISTANCE_086);
-    ui->horizontalSlider_dist_page2->setValue(SCENE2_DISTANCE_086*100);
-    ui->spinBox_wave_page2->setValue(SCENE2_WAVELENGTH_600);
-    ui->horizontalSlider_wave_page2->setValue(SCENE2_WAVELENGTH_600);
-
-    ui->spinBox_number_of_beams_page3->setValue(SCENE3_NUMBER_OF_BEAMS_30);
-    ui->horizontalSlider_number_of_beams_page3->setValue(SCENE3_NUMBER_OF_BEAMS_30);
-    ui->spinBox_wave_page3->setValue(SCENE3_WAVELENGTH_600);
-    ui->horizontalSlider_wave_page3->setValue(SCENE3_WAVELENGTH_600);
-
-    ui->spinBox_number_of_beams_page5->setValue(SCENE5_NUMBER_OF_BEAMS);
-    ui->horizontalSlider_number_of_beams_page5->setValue(SCENE5_NUMBER_OF_BEAMS);
-    ui->spinBox_dispersion_quality_page5->setValue(SCENE5_BEAM_QUALITY_10);
-    ui->horizontalSlider_dispersion_quality_page5->setValue(SCENE5_BEAM_QUALITY_10);
+    initUIDefaults();
 
     // Load initial settings before creating GLWidget
     configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
@@ -343,6 +325,29 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     ui->widget_3->layout()->addWidget(plot2);
 
     QTimer::singleShot(0, this, &MainWindow::updateSlide);
+}
+
+void MainWindow::initUIDefaults()
+{
+    ui->doubleSpinBox_dist_page1->setValue(SCENE1_DISTANCE_08);
+    ui->horizontalSlider_dist_page1->setValue(SCENE1_DISTANCE_08*100);
+    ui->spinBox_wave_page1->setValue(SCENE1_WAVELENGTH_600);
+    ui->horizontalSlider_wave_page1->setValue(SCENE1_WAVELENGTH_600);
+
+    ui->doubleSpinBox_dist_page2->setValue(SCENE2_DISTANCE_086);
+    ui->horizontalSlider_dist_page2->setValue(SCENE2_DISTANCE_086*100);
+    ui->spinBox_wave_page2->setValue(SCENE2_WAVELENGTH_600);
+    ui->horizontalSlider_wave_page2->setValue(SCENE2_WAVELENGTH_600);
+
+    ui->spinBox_number_of_beams_page3->setValue(SCENE3_NUMBER_OF_BEAMS_30);
+    ui->horizontalSlider_number_of_beams_page3->setValue(SCENE3_NUMBER_OF_BEAMS_30);
+    ui->spinBox_wave_page3->setValue(SCENE3_WAVELENGTH_600);
+    ui->horizontalSlider_wave_page3->setValue(SCENE3_WAVELENGTH_600);
+
+    ui->spinBox_number_of_beams_page5->setValue(SCENE5_NUMBER_OF_BEAMS);
+    ui->horizontalSlider_number_of_beams_page5->setValue(SCENE5_NUMBER_OF_BEAMS);
+    ui->spinBox_dispersion_quality_page5->setValue(SCENE5_BEAM_QUALITY_10);
+    ui->horizontalSlider_dispersion_quality_page5->setValue(SCENE5_BEAM_QUALITY_10);
 }
 
 QString MainWindow::getSlidePath(QString slideName)
