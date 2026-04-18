@@ -1175,11 +1175,52 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="label_for_image">
-              <property name="text">
-               <string>TextLabel</string>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <spacer name="horizontalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_for_image">
+                <property name="font">
+                 <font>
+                  <pointsize>20</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Refraction is the phenomenon of a change in the path of
+a light ray (or other waves), occurring at the interface between
+two media permeable to these waves, or within a medium
+with continuously varying properties.</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_5">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
             </item>
             <item>
              <spacer name="verticalSpacer_2">
@@ -1219,8 +1260,14 @@
                <layout class="QVBoxLayout" name="verticalLayout_16">
                 <item>
                  <widget class="QLabel" name="label_3">
+                  <property name="font">
+                   <font>
+                    <pointsize>20</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
-                   <string>TextLabel</string>
+                   <string>Snell law:
+n₁·sin(θ₁) = n₂·sin(θ₂)</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -1229,6 +1276,21 @@
                 </item>
                 <item>
                  <layout class="QHBoxLayout" name="glWidgetLayout2"/>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label">
+                  <property name="font">
+                   <font>
+                    <pointsize>20</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>n₁ &lt; n₂</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -1252,8 +1314,14 @@
                <layout class="QVBoxLayout" name="verticalLayout_15">
                 <item>
                  <widget class="QLabel" name="label_2">
+                  <property name="font">
+                   <font>
+                    <pointsize>20</pointsize>
+                   </font>
+                  </property>
                   <property name="text">
-                   <string>TextLabel</string>
+                   <string>Plot of refractive index vs. wavelength
+of incedent radiation:</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>

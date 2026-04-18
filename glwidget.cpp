@@ -58,7 +58,7 @@ void GLWidget::setSceneNumber(int programMode)
 
 void GLWidget::initializeGL()
 {
-    glClearColor(0.f, 0.f, 0.f, 1.f);
+        glClearColor(0.17f, 0.17f, 0.17f, 1.0f);
 }
 
 void GLWidget::paintGL()
@@ -67,15 +67,25 @@ void GLWidget::paintGL()
 
     scene->display();
 
+    QPainter painter(this);
+    QColor fontColor = palette().color(QPalette::WindowText);
+    QFont font = painter.font();
+    font.setPointSize(font.pointSize() * 2);
+    painter.setFont(font);
+    painter.setPen(fontColor);
     if (sceneNumber == 3 && scene3->getShowAngle()) {
-        QPainter painter(this);
-        QColor fontColor = palette().color(QPalette::WindowText);
-        QFont font = painter.font();
-        font.setPointSize(font.pointSize() * 2);
-        painter.setFont(font);
-        painter.setPen(fontColor);
         painter.drawText(scene3->getCoordX(), scene3->getCoordY(),
                          QString::number(scene3->getCurrentAngle(), 'f', 2));
+    }
+    if (sceneNumber == 6) {
+        painter.drawText(scene6->getCoordX(-4.5), scene6->getCoordY(10),
+                         QString("θ₁"));
+        painter.drawText(scene6->getCoordX(3), scene6->getCoordY(-4.5),
+                         QString("θ₂"));
+        painter.drawText(scene6->getCoordX(-15), scene6->getCoordY(7),
+                         QString("n₁"));
+        painter.drawText(scene6->getCoordX(-15), scene6->getCoordY(-7),
+                         QString("n₂"));
     }
 }
 
