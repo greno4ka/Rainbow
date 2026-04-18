@@ -111,7 +111,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     if (fullscreenEnabled) {
         showFullScreen();
     }
-    switchScene();
+    switchPage();
     ui->slideWidget->setCurrentIndex(currentSlideWidgetPage);
 
     ui->qwtWidget_slide1->setLayout(new QVBoxLayout());
@@ -151,9 +151,9 @@ void MainWindow::initUIDefaults()
 
 void MainWindow::updateRainbowImage()
 {
-    slidePixmap = QPixmap(":/double-rainbow-1000.jpg");
+    rainbowPixmap = QPixmap(":/double-rainbow-1000.jpg");
     ui->label_for_image->setPixmap(
-        slidePixmap.scaled(
+        rainbowPixmap.scaled(
             ui->label_for_image->size(),
             Qt::KeepAspectRatio,
             Qt::SmoothTransformation
@@ -189,35 +189,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::switchWidget()
+void MainWindow::switchPage()
 {
-    switch (currentMenuWidgetPage) {
-    case 0:
-        glWidget->show();
-        glWidget3d->hide();
-        ui->slideWidget->show();
-        updateRainbowImage();
-        break;
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-    case 5:
-        ui->glWidgetLayout->addWidget(glWidget);
-        glWidget->show();
-        glWidget3d->hide();
-        ui->slideWidget->hide();
-        break;
-    case 6:
-        glWidget->hide();
-        glWidget3d->show();
-        ui->slideWidget->hide();
-        break;
-    }
-}
-
-void MainWindow::switchScene()
-{
+    /// Change page name
     switch (currentMenuWidgetPage) {
     case 0:
         ui->label_pageName->setText(tr("Analytical calculations"));
@@ -244,9 +218,58 @@ void MainWindow::switchScene()
         break;
     }
 
+    /// decide what to with widgets
+    switch (currentMenuWidgetPage) {
+    case 0:
+        glWidget->show();
+        glWidget3d->hide();
+        ui->slideWidget->show();
+        updateRainbowImage();
+        switchSlide();
+        break;
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+        glWidget->setSceneNumber(currentMenuWidgetPage);
+        ui->glWidgetLayout->addWidget(glWidget);
+        glWidget->show();
+        glWidget3d->hide();
+        ui->slideWidget->hide();
+        break;
+    case 6:
+        glWidget->hide();
+        glWidget3d->show();
+        ui->slideWidget->hide();
+        break;
+    }
+
     ui->menuWidget->setCurrentIndex(currentMenuWidgetPage);
-    glWidget->setSceneNumber(currentMenuWidgetPage);
-    switchWidget();
+}
+
+void MainWindow::switchSlide()
+{
+    switch (currentSlideWidgetPage) {
+    case 0:
+        break;
+    case 1:
+        ui->glWidgetLayout_slide1->addWidget(glWidget);
+        glWidget->setSceneNumber(6);
+        break;
+    case 2:
+        ui->glWidgetLayout_slide2->addWidget(glWidget);
+        glWidget->setSceneNumber(7);
+        scene7->setDisplayMode(0);
+        break;
+    case 3:
+        ui->glWidgetLayout_slide3->addWidget(glWidget);
+        glWidget->setSceneNumber(7);
+        scene7->setDisplayMode(1);
+        break;
+    }
+
+    ui->slideWidget->setCurrentIndex(currentSlideWidgetPage);
 }
 
 void MainWindow::changeTheme(bool isDark)

@@ -39,46 +39,47 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
 
 private:
-    Ui::MainWindow *ui;
-    SettingsWindow *settingsWindow;
+    Ui::MainWindow *ui = nullptr;
+    SettingsWindow *settingsWindow = nullptr;
 
-    GLWidget *glWidget;
-    GLWidget3D *glWidget3d;
+    GLWidget *glWidget = nullptr;
+    GLWidget3D *glWidget3d = nullptr;
 
-    SceneBase *scene;
-    Scene1 *scene1;
-    Scene2 *scene2;
-    Scene3 *scene3;
-    Scene4 *scene4;
-    Scene5 *scene5;
-    SceneX *scenex;
+    SceneBase *scene = nullptr;
+    Scene1 *scene1 = nullptr;
+    Scene2 *scene2 = nullptr;
+    Scene3 *scene3 = nullptr;
+    Scene4 *scene4 = nullptr;
+    Scene5 *scene5 = nullptr;
+    SceneX *scenex = nullptr;
 
-    Scene6 *scene6;
-    Scene7 *scene7;
+    Scene6 *scene6 = nullptr;
+    Scene7 *scene7 = nullptr;
 
     QTranslator *translator = nullptr;
 
     int currentMenuWidgetPage;
     int currentSlideWidgetPage;
 
-    QPixmap slidePixmap;
-
     QString configPath;
     QString settingsFilePath;
-    QSettings *settings;
+    QSettings *settings = nullptr;
 
     QString appLanguage;
     bool multisamplingEnabled;
     bool fullscreenEnabled;
     bool darkThemeEnabled;
 
+    QPixmap rainbowPixmap;
+
     void updateRainbowImage();
-    void switchScene();
-    void switchWidget();
+    void switchPage();
+    void switchSlide();
 
     void initUIDefaults();
 
 private slots:
+    /// changers
     void changeLanguage(const QString &language);
     void changeTheme(bool isDark);
     void changeMultisampling(bool enabled);

@@ -18,10 +18,8 @@ TEMPLATE = app
 SOURCES += main.cpp \
     beam.cpp \
     glwidget.cpp \
-    \
     glwidget3d.cpp \
     plotFactory.cpp \
-    scenes/scene7.cpp \
     windows/MainWindow/mainwindow.cpp \
     windows/MainWindow/mainwindow_interface.cpp \
     windows/MainWindow/mainwindow_page0.cpp \
@@ -36,20 +34,18 @@ SOURCES += main.cpp \
     scenes/scene4.cpp \
     scenes/scene5.cpp \
     scenes/scene6.cpp \
+    scenes/scene7.cpp \
     scenes/scenex.cpp \
+    scenes/scenebase.cpp \
     settingswindow.cpp \
-    wavelength.cpp \
-    \
-    scenes/scenebase.cpp
+    wavelength.cpp
 
 HEADERS  += \
     beam.h \
     config.h \
     glwidget.h \
-    \
     glwidget3d.h \
     plotFactory.h \
-    scenes/scene7.h \
     windows/MainWindow/mainwindow.h \
     scenes/scene1.h \
     scenes/scene2.h \
@@ -57,11 +53,11 @@ HEADERS  += \
     scenes/scene4.h \
     scenes/scene5.h \
     scenes/scene6.h \
+    scenes/scene7.h \
     scenes/scenex.h \
+    scenes/scenebase.h \
     settingswindow.h \
-    wavelength.h \
-    \
-    scenes/scenebase.h
+    wavelength.h
 
 FORMS    += \
     windows/MainWindow/mainwindow.ui \

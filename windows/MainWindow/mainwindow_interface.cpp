@@ -5,14 +5,14 @@ void MainWindow::on_pushButton_next_clicked()
 {
     if (++currentMenuWidgetPage == ui->menuWidget->count())
         currentMenuWidgetPage = 0;
-    switchScene();
+    switchPage();
 }
 
 void MainWindow::on_pushButton_prev_clicked()
 {
     if (--currentMenuWidgetPage < 0)
         currentMenuWidgetPage = ui->menuWidget->count() - 1;
-    switchScene();
+    switchPage();
 }
 
 void MainWindow::on_pushButton_fullscreen_clicked()
