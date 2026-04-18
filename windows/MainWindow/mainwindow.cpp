@@ -1,12 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <qwt_plot.h>
-#include <qwt_plot_curve.h>
-#include <qwt_plot_grid.h>
-#include <qwt_plot_marker.h>
-#include <qwt_legend.h>
-
+#include "plotFactory.h"
 
 static QString loadStyle(const QString &path)
 {
@@ -119,211 +114,14 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     switchScene();
     ui->slideWidget->setCurrentIndex(currentSlideWidgetPage);
 
-    QwtPlot *plot = new QwtPlot(ui->qwtWidget_slide1);
-    plot->setTitle("Refractive index curve");
-    plot->setAxisTitle(QwtPlot::xBottom, "Wavelength (nm)");
-    plot->setAxisTitle(QwtPlot::yLeft, "Refractive index n");
-
-    QVector<double> wl, n;
-
-    Beam beam(1.0);
-
-    int points = 600;
-    double start = 380;
-    double end = 780;
-
-    for (int i = 0; i < points; i++)
-    {
-        double x = start + (end - start) * i / (points - 1);
-
-        beam = Beam(0,0,0, x, 1.0);
-
-        wl.append(x);
-        n.append(beam.refractIn());
-    }
-
-    QwtPlotCurve *curve = new QwtPlotCurve("Polynomial model");
-    curve->setSamples(wl, n);
-    curve->setPen(Qt::white, 2, Qt::SolidLine);
-    curve->setStyle(QwtPlotCurve::Lines);
-    curve->setRenderHint (QwtPlotItem::RenderAntialiased, true);
-    curve->attach(plot);
-
-    QwtPlotGrid *grid = new QwtPlotGrid();
-    grid->setPen(QPen(Qt::white, 0.5, Qt::DotLine));
-    grid->attach(plot);
-
-    plot->setAxisScale(QwtPlot::xBottom, 380, 780);
-    plot->setAxisScale(QwtPlot::yLeft, 1.325, 1.346);
-    /*
-    plot->setAxisAutoScale(QwtPlot::yLeft, false);
-    plot->setAxisMaxMajor(QwtPlot::yLeft, 10);
-    plot->setAxisMaxMinor(QwtPlot::yLeft, 5);*/
-    plot->show();
-
-    plot->replot();
-
-
-    QwtPlot *plot1 = new QwtPlot();
-
-    plot1->setCanvasBackground(QColor(43, 43, 43));
-
-    QwtPlotGrid *grid1 = new QwtPlotGrid();
-    grid1->setPen(QPen(QColor(255, 255, 255, 60), 0.5, Qt::DotLine));
-    grid1->attach(plot1);
-
-    plot1->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
-
-    double wavelengths[] = {410, 450, 480, 520, 570, 600, 650};
-
-    const int nCount = 7;
-
-    for (int i = 0; i < nCount; i++)
-    {
-        Beam tmp = Beam();
-        tmp.setWavelength(wavelengths[i]);
-        double n = tmp.refractIn();
-
-        QVector<double> xData;
-        QVector<double> yData;
-
-        double maxPhi = -1e9;
-
-        for (int j = 0; j < points; j++)
-        {
-            double y = 0.7 + (0.99 - 0.7) * j / (points - 1);
-
-            double val = y / n;
-
-            if (val >= 1.0 || val <= -1.0)
-                continue;
-
-            double phi = 4.0 * std::asin(val) - 2.0 * std::asin(y);
-            double phiDeg = phi * 180.0 / M_PI;
-
-            xData.push_back(y);
-            yData.push_back(phiDeg);
-
-            if (phiDeg > maxPhi)
-                maxPhi = phiDeg;
-        }
-
-        QwtPlotCurve *curve1 = new QwtPlotCurve();
-        curve1->setTitle(QString("λ = %1").arg(wavelengths[i]));
-        int r,g,b;
-        wavelengthToRGB(wavelengths[i],&r,&g,&b);
-        curve1->setPen(QPen(QColor(r, g, b), 2.5));
-        curve1->setSamples(xData, yData);
-        curve1->setZ(0.0);
-        curve1->attach(plot1);
-
-        QVector<double> xSeg;
-        QVector<double> ySeg;
-
-        double xEnd = 0.86;   // фиксированная граница
-
-        xSeg << 0.7 << xEnd;   // или твой xmin (как в графике)
-        ySeg << maxPhi << maxPhi;
-
-        QwtPlotCurve *line = new QwtPlotCurve();
-        line->setPen(QPen(QColor(r, g, b), 1.5));
-        line->setSamples(xSeg, ySeg);
-        line->setZ(1.0);
-        line->attach(plot1);
-    }
-
-    plot1->setAxisTitle(QwtPlot::xBottom, "y = h/r");
-    plot1->setAxisTitle(QwtPlot::yLeft, "φ (degrees)");
-
-    plot1->setAxisScale(QwtPlot::xBottom, 0.7, 0.99);
-    plot1->setAxisScale(QwtPlot::yLeft, 39, 42.5);
-
-
-
-    QwtPlot *plot2 = new QwtPlot();
-
-    plot2->setCanvasBackground(QColor(43, 43, 43));
-
-    QwtPlotGrid *grid2 = new QwtPlotGrid();
-    grid2->setPen(QPen(QColor(255, 255, 255, 60), 0.5, Qt::DotLine));
-    grid2->attach(plot2);
-
-    plot2->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
-
-    for (int i = 0; i < nCount; i++)
-    {
-        Beam tmp = Beam();
-        tmp.setWavelength(wavelengths[i]);
-        double n = tmp.refractIn();
-
-        QVector<double> xData;
-        QVector<double> yData;
-
-        double minPhi = 1e9;
-
-        for (int j = 0; j < points; j++)
-        {
-            double y = 0.8 + (0.99 - 0.8) * j / (points - 1);
-
-            double val = y / n;
-
-            // if (val >= 1.0 || val <= -1.0)
-            //     continue;
-
-            double phi = M_PI + 6.0 * std::asin(val) - 2.0 * std::asin(y);
-            double phiDeg = 360 - phi * 180.0 / M_PI;
-
-            xData.push_back(y);
-            yData.push_back(phiDeg);
-
-            if (phiDeg < minPhi)
-                minPhi = phiDeg;
-        }
-
-        QwtPlotCurve *curve2 = new QwtPlotCurve();
-        curve2->setTitle(QString("λ = %1").arg(wavelengths[i]));
-        int r,g,b;
-        wavelengthToRGB(wavelengths[i],&r,&g,&b);
-        curve2->setPen(QPen(QColor(r, g, b), 2.5));
-        curve2->setSamples(xData, yData);
-        curve2->setZ(0.0);
-        curve2->attach(plot2);
-
-        QVector<double> xSeg;
-        QVector<double> ySeg;
-
-        double xEnd = 0.95;   // фиксированная граница
-
-        xSeg << 0.8 << xEnd;   // или твой xmin (как в графике)
-        ySeg << minPhi << minPhi;
-
-        QwtPlotCurve *line = new QwtPlotCurve();
-        line->setPen(QPen(QColor(r, g, b), 1.5));
-        line->setSamples(xSeg, ySeg);
-        line->setZ(1.0);
-        line->attach(plot2);
-    }
-
-    plot2->setAxisTitle(QwtPlot::xBottom, "y = h/r");
-    plot2->setAxisTitle(QwtPlot::yLeft, "φ (degrees)");
-
-    plot2->setAxisScale(QwtPlot::xBottom, 0.8, 1);
-    plot2->setAxisScale(QwtPlot::yLeft, 50, 60);
-
-
-    plot->replot();
-    plot1->replot();
-    plot2->replot();
-
-
     ui->qwtWidget_slide1->setLayout(new QVBoxLayout());
-    ui->qwtWidget_slide1->layout()->addWidget(plot);
+    ui->qwtWidget_slide1->layout()->addWidget(createRefractiveIndexPlot());
 
     ui->qwtWidget_slide2->setLayout(new QVBoxLayout());
-    ui->qwtWidget_slide2->layout()->addWidget(plot1);
+    ui->qwtWidget_slide2->layout()->addWidget(createPrimaryRainbowPlot());
 
     ui->qwtWidget_slide3->setLayout(new QVBoxLayout());
-    ui->qwtWidget_slide3->layout()->addWidget(plot2);
+    ui->qwtWidget_slide3->layout()->addWidget(createSecondaryRainbowPlot());
 
     QTimer::singleShot(0, this, &MainWindow::updateSlide);
 }
