@@ -34,10 +34,10 @@ double Scene7::getCoordY(double y0)
     return Y-y(DropRadius+y0);
 }
 
-void Scene7::drawAngleArc(Beam &beam, double radius, bool arcOnTop)
+void Scene7::drawAngleArc(Beam &beam, double x0, double y0, double radius, bool arcOnTop)
 {
-
-
+    Beam normal;
+    normal.calculateKoeffs(x0,y0,0,0);
 
     double a1 = beam.getAngle();
     double a2 = normal.getAngle();
@@ -52,28 +52,34 @@ void Scene7::drawAngleArc(Beam &beam, double radius, bool arcOnTop)
 
     double d = ang2 - ang1;
 
+    // force small arc
+    if (fabs(d) > M_PI/2) {
+        if (d > 0) d -= M_PI;
+        else       d += M_PI;
+    }
+
     glBegin(GL_LINE_STRIP);
     for (int i = 0; i <= ImageQuality; i++) {
         double step = (double)i / ImageQuality;
         double ang = ang1 + d * step;
 
-        double x0 = 0 + cos(ang) * radius;
-        double y0 = DropRadius + sin(ang) * radius;
+        double x1 = x0 + cos(ang) * radius;
+        double y1 = y0 + sin(ang) * radius;
 
-        glVertex2f(x(x0), y(y0));
+        glVertex2f(x(x1), y(y1));
     }
     glEnd();
 }
 
 void Scene7::drawRadiusDash(double x0, double y0)
 {
-    glEnable(GL_LINE_STIPPLE); // turn on - - - - - -
-    glLineStipple(2, 0xFF00);  // 1 , 1111 means tiny dashes
+    glEnable(GL_LINE_STIPPLE);
+    glLineStipple(2, 0xFF00);
     glBegin(GL_LINES);
     glVertex2f(x(0),y(0));
     glVertex2f(x(x0),y(y0));
     glEnd();
-    glDisable(GL_LINE_STIPPLE); // turn it off
+    glDisable(GL_LINE_STIPPLE);
 }
 
 void Scene7::rayProcess()
@@ -92,6 +98,7 @@ void Scene7::rayProcess()
            x1,y1,      // point1
            x2,y2;      // point2 - external (for reformed outside)
 
+
     /// ORIGINAL BEAM
     beam.calculateInputPoint(&x0, &y0);
     radius.calculateKoeffs(x0,y0,0,0);
@@ -102,6 +109,8 @@ void Scene7::rayProcess()
 
     drawRadiusDash(x2,y2);
 
+    drawAngleArc(beam,x0,y0,1,0);
+
     /// FIRST REFRACTION
     refracted = radius; // we're get reformed from radius
     refracted.snell(beam, beam.refractIn());
@@ -110,10 +119,16 @@ void Scene7::rayProcess()
 
     drawRay(x0,y0,x1,y1);
 
+    drawAngleArc(beam,x0,y0,0.9,displayMode);
+    drawAngleArc(beam,x0,y0,1.1,displayMode);
+
     radius.calculateKoeffs(x1,y1,0,0);
     radius.calculateInfinityPoint(x1,y1,&x2,&y2,3);
 
     drawRadiusDash(x2,y2);
+
+    drawAngleArc(beam,x1,y1,0.9,!displayMode);
+    drawAngleArc(beam,x1,y1,1.1,!displayMode);
 
     /// REFLECTION INSIDE
     radius.calculateKoeffs(x1,y1,0,0);
@@ -124,10 +139,31 @@ void Scene7::rayProcess()
 
     drawRay(x0,y0,x1,y1);
 
+    drawAngleArc(beam,x0,y0,1.6,displayMode);
+    drawAngleArc(beam,x0,y0,1.4,displayMode);
+
     radius.calculateKoeffs(x1,y1,0,0);
     radius.calculateInfinityPoint(x1,y1,&x2,&y2,3);
 
     drawRadiusDash(x2,y2);
+
+    drawAngleArc(beam,x1,y1,1.6,!displayMode);
+    drawAngleArc(beam,x1,y1,1.4,!displayMode);
+
+    glEnable(GL_LINE_STIPPLE);
+    glLineStipple(4, 0xFF00);
+    glBegin(GL_LINES);
+    glVertex2f(0,y(y1));
+    glVertex2f(x(x1),y(y1));
+    glEnd();
+    glDisable(GL_LINE_STIPPLE);
+
+    // Beam tmp;
+    // tmp.calculateKoeffs(0,y1,x1,y1);
+    // drawAngleArc(tmp,x1,y1,1.7,displayMode);
+    // drawAngleArc(tmp,x1,y1,1.5,displayMode);
+    // drawAngleArc(tmp,x1,y1,1.3,displayMode);
+
 
     if (displayMode == 1) { // second rainbow mode
         /// REFLECTION INSIDE
@@ -139,10 +175,16 @@ void Scene7::rayProcess()
 
         drawRay(x0,y0,x1,y1);
 
+        drawAngleArc(beam,x0,y0,0.9,!displayMode);
+        drawAngleArc(beam,x0,y0,1.1,!displayMode);
+
         radius.calculateKoeffs(x1,y1,0,0);
         radius.calculateInfinityPoint(x1,y1,&x2,&y2,3);
 
         drawRadiusDash(x2,y2);
+
+        drawAngleArc(beam,x1,y1,0.9,displayMode);
+        drawAngleArc(beam,x1,y1,1.1,displayMode);
     }
 
     /// REFRACTION OUTSIDE
