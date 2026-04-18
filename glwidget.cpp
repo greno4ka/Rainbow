@@ -59,7 +59,7 @@ void GLWidget::setSceneNumber(int programMode)
 
 void GLWidget::initializeGL()
 {
-        glClearColor(0.17f, 0.17f, 0.17f, 1.0f);
+        glClearColor(0.125f, 0.125f, 0.125f, 1.0f);
 }
 
 void GLWidget::paintGL()
