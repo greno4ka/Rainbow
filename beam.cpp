@@ -174,18 +174,21 @@ void Beam::calculateOutputPoint(double x0, double y0, double *x1, double *y1)
         *y1 = fx(*x1);
 }
 
-void Beam::calculateInfinityPoint(double x1, double y1, double *x2, double *y2)
+void Beam::calculateInfinityPoint(double x1, double y1, double *x2, double *y2, double distance)
 {
     double x0, y0; // temporary calculation of output for correct direction
     calculateOutputPoint(x1, y1, &x0, &y0);
 
-    if (abs(x1-x0) < Beam::EPS) {
-        *y2 = (y1-y0) * Beam::INF;
-        *x2 = fy(*y2);
-    } else { // General case
-        *x2 = (x1-x0) * Beam::INF;
-        *y2 = fx(*x2);
-    }
+    double dx = x1 - x0;
+    double dy = y1 - y0;
+
+    double len = sqrt(dx*dx + dy*dy);
+
+    double ux = dx / len;
+    double uy = dy / len;
+
+    *x2 = x1 + ux * distance;
+    *y2 = y1 + uy * distance;
 }
 
 double Beam::refractIn()

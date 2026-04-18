@@ -37,7 +37,8 @@ public:
     void calculateKoeffs(double x1, double y1, double x2, double y2);
     void calculateInputPoint(double *x0, double *y0);
     void calculateOutputPoint(double x0, double y0, double *x1, double *y1);
-    void calculateInfinityPoint(double x1, double y1, double *x2, double *y2);
+    void calculateInfinityPoint(double x1, double y1, double *x2, double *y2,
+                                double distance = Beam::INF);
 
     inline double fx(double x); // y=f(x) from ax+by+c=0
     inline double fy(double y); // x=g(y) from ax+by+c=0
