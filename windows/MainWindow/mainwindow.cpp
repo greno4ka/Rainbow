@@ -4,6 +4,9 @@
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
 #include <qwt_plot_grid.h>
+#include <qwt_plot_marker.h>
+#include <qwt_legend.h>
+
 
 static QString loadStyle(const QString &path)
 {
@@ -175,8 +178,90 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
 
     plot->replot();
 
+
+    QwtPlot *plot1 = new QwtPlot();
+
+    plot1->setCanvasBackground(QColor(43, 43, 43));
+
+    QwtPlotGrid *grid1 = new QwtPlotGrid();
+    grid1->setPen(QPen(QColor(255, 255, 255, 60), 0.5, Qt::DotLine));
+    grid1->attach(plot);
+
+    plot1->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
+
+    double wavelengths[] = {410, 450, 480, 520, 570, 600, 650};
+
+    const int nCount = 7;
+
+    for (int i = 0; i < nCount; i++)
+    {
+        Beam tmp = Beam();
+        tmp.setWavelength(wavelengths[i]);
+        double n = tmp.refractIn();
+
+        QVector<double> xData;
+        QVector<double> yData;
+
+        double maxPhi = -1e9;
+
+        for (int j = 0; j < points; j++)
+        {
+            double y = 0.7 + (0.99 - 0.7) * j / (points - 1);
+
+            double val = y / n;
+
+            if (val >= 1.0 || val <= -1.0)
+                continue;
+
+            double phi = 4.0 * std::asin(val) - 2.0 * std::asin(y);
+            double phiDeg = phi * 180.0 / M_PI;
+
+            xData.push_back(y);
+            yData.push_back(phiDeg);
+
+            if (phiDeg > maxPhi)
+                maxPhi = phiDeg;
+        }
+
+        QwtPlotCurve *curve1 = new QwtPlotCurve();
+        curve1->setTitle(QString("λ = %1").arg(wavelengths[i]));
+        int r,g,b;
+        wavelengthToRGB(wavelengths[i],&r,&g,&b);
+        curve1->setPen(QPen(QColor(r, g, b), 2.5));
+        curve1->setSamples(xData, yData);
+        curve1->setZ(0.0);
+        curve1->attach(plot1);
+
+        QVector<double> xSeg;
+        QVector<double> ySeg;
+
+        double xEnd = 0.86;   // фиксированная граница
+
+        xSeg << 0.7 << xEnd;   // или твой xmin (как в графике)
+        ySeg << maxPhi << maxPhi;
+
+        QwtPlotCurve *line = new QwtPlotCurve();
+        line->setPen(QPen(QColor(r, g, b), 1.5));
+        line->setSamples(xSeg, ySeg);
+        line->setZ(1.0);
+        line->attach(plot1);
+    }
+
+    plot1->setAxisTitle(QwtPlot::xBottom, "y = h/r");
+    plot1->setAxisTitle(QwtPlot::yLeft, "φ (degrees)");
+
+    plot1->setAxisScale(QwtPlot::xBottom, 0.7, 0.99);
+    plot1->setAxisScale(QwtPlot::yLeft, 39, 42.5);
+
+    plot->replot();
+    plot1->replot();
+
+
     ui->widget->setLayout(new QVBoxLayout());
     ui->widget->layout()->addWidget(plot);
+
+    ui->widget_2->setLayout(new QVBoxLayout());
+    ui->widget_2->layout()->addWidget(plot1);
 
     glWidget->setSceneNumber(6);
 

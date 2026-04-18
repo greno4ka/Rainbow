@@ -28,6 +28,7 @@ public:
     double getWavelength();
 
     void setDistance(double d);
+    void setWavelength(int newWavelength);
     void invertDistance();
     double getDistance();
 

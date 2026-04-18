@@ -39,6 +39,11 @@ void Beam::setDistance(double d)
     c = -d*r;
 }
 
+void Beam::setWavelength(int newWavelength)
+{
+    wavelength = newWavelength;
+}
+
 void Beam::invertDistance()
 {
     c = -c;
