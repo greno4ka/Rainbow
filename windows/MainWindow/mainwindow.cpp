@@ -117,7 +117,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
         showFullScreen();
     }
     switchScene();
-    currentSlideName = "rainbow";
+    ui->slideWidget->setCurrentIndex(currentSlideWidgetPage);
 
     QwtPlot *plot = new QwtPlot(ui->qwtWidget_slide1);
     plot->setTitle("Refractive index curve");
