@@ -19,6 +19,8 @@
 #include "scenes/scene5.h"
 #include "scenes/scenex.h"
 
+#include "scenes/scene6.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -50,6 +52,8 @@ private:
     Scene4 *scene4;
     Scene5 *scene5;
     SceneX *scenex;
+
+    Scene6 *scene6;
 
     QTranslator *translator = nullptr;
 

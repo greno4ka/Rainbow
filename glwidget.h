@@ -11,6 +11,8 @@
 #include "scenes/scene4.h"
 #include "scenes/scene5.h"
 
+#include "scenes/scene6.h"
+
 #include <QTimer>
 
 class GLWidget : public QOpenGLWidget
@@ -26,6 +28,8 @@ private:
     Scene3 *scene3;
     Scene4 *scene4;
     Scene5 *scene5;
+
+    Scene6 *scene6;
 
     int sceneNumber;
 
@@ -44,6 +48,8 @@ public:
     void connectWithScene3(Scene3 &originalScene3);
     void connectWithScene4(Scene4 &originalScene4);
     void connectWithScene5(Scene5 &originalScene5);
+
+    void connectWithScene6(Scene6 &originalScene6);
 
     void setSceneNumber(int programMode);
 };

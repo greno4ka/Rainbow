@@ -95,9 +95,10 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     glWidget->setFormat(format);
     glWidget3d->setFormat(format);
 
-    ui->glWidgetLayout->addWidget(glWidget);
     ui->glWidgetLayout->addWidget(glWidget3d);
     currentStackWidgetPage = programMode;
+
+    ui->glWidgetLayout2->addWidget(glWidget);
 
     // Create scenes
     scene1 = new Scene1();
@@ -108,11 +109,15 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
 
     scenex = new SceneX();
 
+    scene6 = new Scene6();
+
     glWidget->connectWithScene1(*scene1);
     glWidget->connectWithScene2(*scene2);
     glWidget->connectWithScene3(*scene3);
     glWidget->connectWithScene4(*scene4);
     glWidget->connectWithScene5(*scene5);
+
+    glWidget->connectWithScene6(*scene6);
 
     glWidget3d->connectWithSceneX(*scenex);
 
@@ -136,8 +141,8 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     Beam beam(1.0);
 
     int points = 600;
-    double start = 400;
-    double end = 650;
+    double start = 380;
+    double end = 780;
 
     for (int i = 0; i < points; i++)
     {
@@ -160,7 +165,12 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     grid->setPen(QPen(Qt::white, 0.5, Qt::DotLine));
     grid->attach(plot);
 
-    plot->setAxisScale(QwtPlot::xBottom, 400, 650);
+    plot->setAxisScale(QwtPlot::xBottom, 380, 780);
+    plot->setAxisScale(QwtPlot::yLeft, 1.325, 1.345);
+    /*
+    plot->setAxisAutoScale(QwtPlot::yLeft, false);
+    plot->setAxisMaxMajor(QwtPlot::yLeft, 10);
+    plot->setAxisMaxMinor(QwtPlot::yLeft, 5);*/
     plot->resize(700, 400);
     plot->show();
 
@@ -169,6 +179,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     ui->widget->setLayout(new QVBoxLayout());
     ui->widget->layout()->addWidget(plot);
 
+    glWidget->setSceneNumber(6);
 
     QTimer::singleShot(0, this, &MainWindow::updateSlide);
 }
@@ -218,6 +229,8 @@ MainWindow::~MainWindow()
     delete scene4;
     delete scene5;
 
+    delete scene6;
+
     delete settingsWindow;
 
     delete settings;
@@ -228,7 +241,8 @@ void MainWindow::switchWidget()
 {
     switch (currentStackWidgetPage) {
     case 0:
-        glWidget->hide();
+        ui->glWidgetLayout2->addWidget(glWidget);
+        glWidget->show();
         glWidget3d->hide();
         ui->presentationWidget->show();
         break;
@@ -237,6 +251,7 @@ void MainWindow::switchWidget()
     case 3:
     case 4:
     case 5:
+        ui->glWidgetLayout->addWidget(glWidget);
         glWidget->show();
         glWidget3d->hide();
         ui->presentationWidget->hide();

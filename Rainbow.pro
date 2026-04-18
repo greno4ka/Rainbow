@@ -33,6 +33,7 @@ SOURCES += main.cpp \
     scenes/scene3.cpp \
     scenes/scene4.cpp \
     scenes/scene5.cpp \
+    scenes/scene6.cpp \
     scenes/scenex.cpp \
     settingswindow.cpp \
     wavelength.cpp \
@@ -51,6 +52,7 @@ HEADERS  += \
     scenes/scene3.h \
     scenes/scene4.h \
     scenes/scene5.h \
+    scenes/scene6.h \
     scenes/scenex.h \
     settingswindow.h \
     wavelength.h \
