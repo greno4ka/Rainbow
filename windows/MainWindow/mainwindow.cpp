@@ -113,6 +113,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     scenex = new SceneX();
 
     scene6 = new Scene6();
+    scene7 = new Scene7();
 
     glWidget->connectWithScene1(*scene1);
     glWidget->connectWithScene2(*scene2);
@@ -121,6 +122,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     glWidget->connectWithScene5(*scene5);
 
     glWidget->connectWithScene6(*scene6);
+    glWidget->connectWithScene7(*scene7);
 
     glWidget3d->connectWithSceneX(*scenex);
 
@@ -132,7 +134,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
         showFullScreen();
     }
     switchScene();
-    currentSlide = "rainbow";
+    currentSlideName = "rainbow";
 
     QwtPlot *plot = new QwtPlot(ui->widget);
     plot->setTitle("Refractive index curve");
@@ -340,8 +342,6 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     ui->widget_3->setLayout(new QVBoxLayout());
     ui->widget_3->layout()->addWidget(plot2);
 
-    glWidget->setSceneNumber(6);
-
     QTimer::singleShot(0, this, &MainWindow::updateSlide);
 }
 
@@ -356,10 +356,10 @@ QString MainWindow::getSlidePath(QString slideName)
 
 void MainWindow::updateSlide()
 {
-    if (currentSlide == "rainbow")
+    if (currentSlideName == "rainbow")
         slidePixmap = QPixmap(":/double-rainbow-1000.jpg");
     else {
-        slidePixmap = QPixmap(getSlidePath(currentSlide));
+        slidePixmap = QPixmap(getSlidePath(currentSlideName));
     }
     // ui->label_for_image->setPixmap(
     //     slidePixmap.scaled(
@@ -391,6 +391,7 @@ MainWindow::~MainWindow()
     delete scene5;
 
     delete scene6;
+    delete scene7;
 
     delete settingsWindow;
 
@@ -402,7 +403,18 @@ void MainWindow::switchWidget()
 {
     switch (currentStackWidgetPage) {
     case 0:
-        ui->glWidgetLayout2->addWidget(glWidget);
+        switch(currentSlide) {
+        case 1:
+            ui->glWidgetLayout2->addWidget(glWidget);
+        glWidget->setSceneNumber(6);
+        case 2:
+            ui->glWidgetLayout2_2->addWidget(glWidget);
+            glWidget->setSceneNumber(7);
+        case 3:
+            ui->glWidgetLayout2_3->addWidget(glWidget);
+            glWidget->setSceneNumber(7);
+        }
+
         glWidget->show();
         glWidget3d->hide();
         ui->presentationWidget->show();

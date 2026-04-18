@@ -12,6 +12,7 @@
 #include "scenes/scene5.h"
 
 #include "scenes/scene6.h"
+#include "scenes/scene7.h"
 
 #include <QTimer>
 
@@ -30,6 +31,7 @@ private:
     Scene5 *scene5;
 
     Scene6 *scene6;
+    Scene7 *scene7;
 
     int sceneNumber;
 
@@ -50,6 +52,7 @@ public:
     void connectWithScene5(Scene5 &originalScene5);
 
     void connectWithScene6(Scene6 &originalScene6);
+    void connectWithScene7(Scene7 &originalScene7);
 
     void setSceneNumber(int programMode);
 };

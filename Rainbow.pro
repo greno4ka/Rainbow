@@ -20,6 +20,7 @@ SOURCES += main.cpp \
     glwidget.cpp \
     \
     glwidget3d.cpp \
+    scenes/scene7.cpp \
     windows/MainWindow/mainwindow.cpp \
     windows/MainWindow/mainwindow_interface.cpp \
     windows/MainWindow/mainwindow_page0.cpp \
@@ -46,6 +47,7 @@ HEADERS  += \
     glwidget.h \
     \
     glwidget3d.h \
+    scenes/scene7.h \
     windows/MainWindow/mainwindow.h \
     scenes/scene1.h \
     scenes/scene2.h \

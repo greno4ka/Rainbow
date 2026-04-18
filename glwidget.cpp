@@ -5,8 +5,6 @@ GLWidget::GLWidget(QWidget *parent) :
 {
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, [this]() { update(); });
-
-    sceneNumber = 6;
 }
 
 void GLWidget::timerStart()
@@ -44,6 +42,9 @@ void GLWidget::setSceneNumber(int programMode)
         break;
     case 6:
         scene = scene6;
+        break;
+    case 7:
+        scene = scene7;
         break;
     default:
         scene = scene6;
@@ -98,6 +99,7 @@ void GLWidget::resizeGL(int w, int h)
     scene4->updateXY(w, h);
     scene5->updateXY(w, h);
     scene6->updateXY(w, h);
+    scene7->updateXY(w, h);
 
     if (sceneNumber == 4)
         scene4->regenerateRain();
@@ -139,4 +141,9 @@ void GLWidget::connectWithScene5(Scene5 &originalScene5)
 void GLWidget::connectWithScene6(Scene6 &originalScene6)
 {
     scene6 = &originalScene6;
+}
+
+void GLWidget::connectWithScene7(Scene7 &originalScene7)
+{
+    scene7 = &originalScene7;
 }

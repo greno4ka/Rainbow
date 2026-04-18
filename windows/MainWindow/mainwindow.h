@@ -54,11 +54,14 @@ private:
     SceneX *scenex;
 
     Scene6 *scene6;
+    Scene7 *scene7;
 
     QTranslator *translator = nullptr;
 
     int currentStackWidgetPage;
-    QString currentSlide;
+    int currentSlide;
+
+    QString currentSlideName;
 
     QPixmap slidePixmap;
 
