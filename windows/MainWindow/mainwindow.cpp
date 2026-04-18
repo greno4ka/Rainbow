@@ -185,7 +185,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
 
     QwtPlotGrid *grid1 = new QwtPlotGrid();
     grid1->setPen(QPen(QColor(255, 255, 255, 60), 0.5, Qt::DotLine));
-    grid1->attach(plot);
+    grid1->attach(plot1);
 
     plot1->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
 
@@ -253,8 +253,82 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     plot1->setAxisScale(QwtPlot::xBottom, 0.7, 0.99);
     plot1->setAxisScale(QwtPlot::yLeft, 39, 42.5);
 
+
+
+    QwtPlot *plot2 = new QwtPlot();
+
+    plot2->setCanvasBackground(QColor(43, 43, 43));
+
+    QwtPlotGrid *grid2 = new QwtPlotGrid();
+    grid2->setPen(QPen(QColor(255, 255, 255, 60), 0.5, Qt::DotLine));
+    grid2->attach(plot2);
+
+    plot2->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
+
+    for (int i = 0; i < nCount; i++)
+    {
+        Beam tmp = Beam();
+        tmp.setWavelength(wavelengths[i]);
+        double n = tmp.refractIn();
+
+        QVector<double> xData;
+        QVector<double> yData;
+
+        double minPhi = 1e9;
+
+        for (int j = 0; j < points; j++)
+        {
+            double y = 0.8 + (0.99 - 0.8) * j / (points - 1);
+
+            double val = y / n;
+
+            // if (val >= 1.0 || val <= -1.0)
+            //     continue;
+
+            double phi = M_PI + 6.0 * std::asin(val) - 2.0 * std::asin(y);
+            double phiDeg = 360 - phi * 180.0 / M_PI;
+
+            xData.push_back(y);
+            yData.push_back(phiDeg);
+
+            if (phiDeg < minPhi)
+                minPhi = phiDeg;
+        }
+
+        QwtPlotCurve *curve2 = new QwtPlotCurve();
+        curve2->setTitle(QString("λ = %1").arg(wavelengths[i]));
+        int r,g,b;
+        wavelengthToRGB(wavelengths[i],&r,&g,&b);
+        curve2->setPen(QPen(QColor(r, g, b), 2.5));
+        curve2->setSamples(xData, yData);
+        curve2->setZ(0.0);
+        curve2->attach(plot2);
+
+        QVector<double> xSeg;
+        QVector<double> ySeg;
+
+        double xEnd = 0.95;   // фиксированная граница
+
+        xSeg << 0.8 << xEnd;   // или твой xmin (как в графике)
+        ySeg << minPhi << minPhi;
+
+        QwtPlotCurve *line = new QwtPlotCurve();
+        line->setPen(QPen(QColor(r, g, b), 1.5));
+        line->setSamples(xSeg, ySeg);
+        line->setZ(1.0);
+        line->attach(plot2);
+    }
+
+    plot2->setAxisTitle(QwtPlot::xBottom, "y = h/r");
+    plot2->setAxisTitle(QwtPlot::yLeft, "φ (degrees)");
+
+    plot2->setAxisScale(QwtPlot::xBottom, 0.8, 1);
+    plot2->setAxisScale(QwtPlot::yLeft, 50, 60);
+
+
     plot->replot();
     plot1->replot();
+    plot2->replot();
 
 
     ui->widget->setLayout(new QVBoxLayout());
@@ -262,6 +336,9 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
 
     ui->widget_2->setLayout(new QVBoxLayout());
     ui->widget_2->layout()->addWidget(plot1);
+
+    ui->widget_3->setLayout(new QVBoxLayout());
+    ui->widget_3->layout()->addWidget(plot2);
 
     glWidget->setSceneNumber(6);
 
