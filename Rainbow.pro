@@ -70,7 +70,6 @@ TRANSLATIONS = rainbow_en.ts \
                rainbow_fr.ts
 
 RESOURCES += \
-    images/images.qrc \
     styles/styles.qrc
 
 INCLUDEPATH += \

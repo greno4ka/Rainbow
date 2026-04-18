@@ -58,8 +58,8 @@ private:
 
     QTranslator *translator = nullptr;
 
-    int currentStackWidgetPage;
-    int currentSlide;
+    int currentMenuWidgetPage;
+    int currentSlideWidgetPage;
 
     QString currentSlideName;
 
@@ -78,6 +78,8 @@ private:
     void updateSlide();
     void switchScene();
     void switchWidget();
+
+    void initUIDefaults();
 
 private slots:
     void changeLanguage(const QString &language);

@@ -81,9 +81,10 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     glWidget3d->setFormat(format);
 
     ui->glWidgetLayout->addWidget(glWidget3d);
-    currentStackWidgetPage = programMode;
+    currentMenuWidgetPage = programMode;
+    currentSlideWidgetPage = 0;
 
-    ui->glWidgetLayout2->addWidget(glWidget);
+    ui->glWidgetLayout_slide1->addWidget(glWidget);
 
     // Create scenes
     scene1 = new Scene1();
@@ -118,7 +119,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     switchScene();
     currentSlideName = "rainbow";
 
-    QwtPlot *plot = new QwtPlot(ui->widget);
+    QwtPlot *plot = new QwtPlot(ui->qwtWidget_slide1);
     plot->setTitle("Refractive index curve");
     plot->setAxisTitle(QwtPlot::xBottom, "Wavelength (nm)");
     plot->setAxisTitle(QwtPlot::yLeft, "Refractive index n");
@@ -315,14 +316,14 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     plot2->replot();
 
 
-    ui->widget->setLayout(new QVBoxLayout());
-    ui->widget->layout()->addWidget(plot);
+    ui->qwtWidget_slide1->setLayout(new QVBoxLayout());
+    ui->qwtWidget_slide1->layout()->addWidget(plot);
 
-    ui->widget_2->setLayout(new QVBoxLayout());
-    ui->widget_2->layout()->addWidget(plot1);
+    ui->qwtWidget_slide2->setLayout(new QVBoxLayout());
+    ui->qwtWidget_slide2->layout()->addWidget(plot1);
 
-    ui->widget_3->setLayout(new QVBoxLayout());
-    ui->widget_3->layout()->addWidget(plot2);
+    ui->qwtWidget_slide3->setLayout(new QVBoxLayout());
+    ui->qwtWidget_slide3->layout()->addWidget(plot2);
 
     QTimer::singleShot(0, this, &MainWindow::updateSlide);
 }
@@ -406,23 +407,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::switchWidget()
 {
-    switch (currentStackWidgetPage) {
+    switch (currentMenuWidgetPage) {
     case 0:
-        switch(currentSlide) {
+        switch(currentSlideWidgetPage) {
         case 1:
-            ui->glWidgetLayout2->addWidget(glWidget);
+            ui->glWidgetLayout_slide1->addWidget(glWidget);
         glWidget->setSceneNumber(6);
         case 2:
-            ui->glWidgetLayout2_2->addWidget(glWidget);
+            ui->glWidgetLayout_slide2->addWidget(glWidget);
             glWidget->setSceneNumber(7);
         case 3:
-            ui->glWidgetLayout2_3->addWidget(glWidget);
+            ui->glWidgetLayout_slide3->addWidget(glWidget);
             glWidget->setSceneNumber(7);
         }
 
         glWidget->show();
         glWidget3d->hide();
-        ui->presentationWidget->show();
+        ui->slideWidget->show();
         break;
     case 1:
     case 2:
@@ -432,12 +433,12 @@ void MainWindow::switchWidget()
         ui->glWidgetLayout->addWidget(glWidget);
         glWidget->show();
         glWidget3d->hide();
-        ui->presentationWidget->hide();
+        ui->slideWidget->hide();
         break;
     case 6:
         glWidget->hide();
         glWidget3d->show();
-        ui->presentationWidget->hide();
+        ui->slideWidget->hide();
         break;
     }
     updateSlide();
@@ -445,7 +446,7 @@ void MainWindow::switchWidget()
 
 void MainWindow::switchScene()
 {
-    switch (currentStackWidgetPage) {
+    switch (currentMenuWidgetPage) {
     case 0:
         ui->label_pageName->setText(tr("Analytical calculations"));
         break;
@@ -471,8 +472,8 @@ void MainWindow::switchScene()
         break;
     }
 
-    ui->menuWidget->setCurrentIndex(currentStackWidgetPage);
-    glWidget->setSceneNumber(currentStackWidgetPage);
+    ui->menuWidget->setCurrentIndex(currentMenuWidgetPage);
+    glWidget->setSceneNumber(currentMenuWidgetPage);
     switchWidget();
 }
 

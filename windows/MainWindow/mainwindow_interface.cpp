@@ -3,15 +3,15 @@
 
 void MainWindow::on_pushButton_next_clicked()
 {
-    if (++currentStackWidgetPage == ui->menuWidget->count())
-        currentStackWidgetPage = 0;
+    if (++currentMenuWidgetPage == ui->menuWidget->count())
+        currentMenuWidgetPage = 0;
     switchScene();
 }
 
 void MainWindow::on_pushButton_prev_clicked()
 {
-    if (--currentStackWidgetPage < 0)
-        currentStackWidgetPage = ui->menuWidget->count() - 1;
+    if (--currentMenuWidgetPage < 0)
+        currentMenuWidgetPage = ui->menuWidget->count() - 1;
     switchScene();
 }
 
