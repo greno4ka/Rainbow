@@ -34,17 +34,16 @@ double Scene7::getCoordY(double y0)
     return Y-y(DropRadius+y0);
 }
 
-void Scene7::drawAngleArc(Beam &beam, double x0, double y0, double radius, bool arcOnTop)
+void Scene7::drawAngleArc(Beam &beam1, Beam &beam2, double x0, double y0, double radius, bool arcOnTop)
 {
-    Beam normal;
-    normal.calculateKoeffs(x0,y0,0,0);
+    /// beam2 is usually a normal
 
-    double a1 = beam.getAngle();
-    double a2 = normal.getAngle();
+    double a1 = beam1.getAngle();
+    double a2 = beam2.getAngle();
 
-    if(!arcOnTop) {
-        a1 -= 180.0;
-        a2 -= 180.0;
+        if(!arcOnTop) {
+                a1 -= 180.0;
+                a2 -= 180.0;
     }
 
     double ang1 = a1 * M_PI / 180.0;
@@ -109,7 +108,7 @@ void Scene7::rayProcess()
 
     drawRadiusDash(x2,y2);
 
-    drawAngleArc(beam,x0,y0,1,0);
+    drawAngleArc(beam,radius,x0,y0,1,0);
 
     /// FIRST REFRACTION
     refracted = radius; // we're get reformed from radius
@@ -119,16 +118,16 @@ void Scene7::rayProcess()
 
     drawRay(x0,y0,x1,y1);
 
-    drawAngleArc(beam,x0,y0,0.9,displayMode);
-    drawAngleArc(beam,x0,y0,1.1,displayMode);
+    drawAngleArc(beam,radius,x0,y0,0.9,displayMode);
+    drawAngleArc(beam,radius,x0,y0,1.1,displayMode);
 
     radius.calculateKoeffs(x1,y1,0,0);
     radius.calculateInfinityPoint(x1,y1,&x2,&y2,3);
 
     drawRadiusDash(x2,y2);
 
-    drawAngleArc(beam,x1,y1,0.9,!displayMode);
-    drawAngleArc(beam,x1,y1,1.1,!displayMode);
+    drawAngleArc(beam,radius,x1,y1,0.9,!displayMode);
+    drawAngleArc(beam,radius,x1,y1,1.1,!displayMode);
 
     /// REFLECTION INSIDE
     radius.calculateKoeffs(x1,y1,0,0);
@@ -139,16 +138,16 @@ void Scene7::rayProcess()
 
     drawRay(x0,y0,x1,y1);
 
-    drawAngleArc(beam,x0,y0,1.6,displayMode);
-    drawAngleArc(beam,x0,y0,1.4,displayMode);
+    drawAngleArc(beam,radius,x0,y0,1.6,displayMode);
+    drawAngleArc(beam,radius,x0,y0,1.4,displayMode);
 
     radius.calculateKoeffs(x1,y1,0,0);
     radius.calculateInfinityPoint(x1,y1,&x2,&y2,3);
 
     drawRadiusDash(x2,y2);
 
-    drawAngleArc(beam,x1,y1,1.6,!displayMode);
-    drawAngleArc(beam,x1,y1,1.4,!displayMode);
+    drawAngleArc(beam,radius,x1,y1,1.6,!displayMode);
+    drawAngleArc(beam,radius,x1,y1,1.4,!displayMode);
 
     glEnable(GL_LINE_STIPPLE);
     glLineStipple(4, 0xFF00);
@@ -157,12 +156,6 @@ void Scene7::rayProcess()
     glVertex2f(x(x1),y(y1));
     glEnd();
     glDisable(GL_LINE_STIPPLE);
-
-    // Beam tmp;
-    // tmp.calculateKoeffs(0,y1,x1,y1);
-    // drawAngleArc(tmp,x1,y1,1.7,displayMode);
-    // drawAngleArc(tmp,x1,y1,1.5,displayMode);
-    // drawAngleArc(tmp,x1,y1,1.3,displayMode);
 
 
     if (displayMode == 1) { // second rainbow mode
@@ -175,16 +168,16 @@ void Scene7::rayProcess()
 
         drawRay(x0,y0,x1,y1);
 
-        drawAngleArc(beam,x0,y0,0.9,!displayMode);
-        drawAngleArc(beam,x0,y0,1.1,!displayMode);
+        drawAngleArc(beam,radius,x0,y0,0.9,!displayMode);
+        drawAngleArc(beam,radius,x0,y0,1.1,!displayMode);
 
         radius.calculateKoeffs(x1,y1,0,0);
         radius.calculateInfinityPoint(x1,y1,&x2,&y2,3);
 
         drawRadiusDash(x2,y2);
 
-        drawAngleArc(beam,x1,y1,0.9,displayMode);
-        drawAngleArc(beam,x1,y1,1.1,displayMode);
+        drawAngleArc(beam,radius,x1,y1,0.9,displayMode);
+        drawAngleArc(beam,radius,x1,y1,1.1,displayMode);
     }
 
     /// REFRACTION OUTSIDE
@@ -194,6 +187,25 @@ void Scene7::rayProcess()
     refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
     drawRay(x1,y1,x2,y2);
+
+    Beam tmp;
+    Beam original(0, 1, 0.8 * DropRadius, 500, DropRadius);
+
+    if (displayMode == 0)
+    {
+    tmp.calculateKoeffs(0,y1,x1,y1);
+        drawAngleArc(tmp,refracted,x1,y1,1.7,displayMode);
+        drawAngleArc(tmp,refracted,x1,y1,1.5,displayMode);
+        drawAngleArc(tmp,refracted,x1,y1,1.3,displayMode);
+    }
+    else
+    {
+        cross_ll(original,refracted,&x2,&y2);
+        drawAngleArc(original,refracted,x2,y2,0.8,!displayMode);
+        drawAngleArc(original,refracted,x2,y2,1,!displayMode);
+        drawAngleArc(original,refracted,x2,y2,1.2,!displayMode);
+
+    }
 
 }
 
