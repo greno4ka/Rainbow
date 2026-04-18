@@ -85,9 +85,9 @@ void Scene6::drawAngleArc(Beam &beam, double radius, bool arcOnTop)
 
 void Scene6::rayProcess()
 {
-    double x0,y0,      // point0
-        x1,y1,      // point1
-        x2,y2;
+    double x0,y0,
+           x1,y1,
+           x2,y2;
 
     glColor3ub(255,255,255);
 
@@ -113,4 +113,5 @@ void Scene6::display()
     drawAngleArc(beam, DropRadius, 1);
     drawAngleArc(refracted, DropRadius-0.5, 0);
     drawAngleArc(refracted, DropRadius+0.5, 0);
+    glLineWidth(1.0f);
 }

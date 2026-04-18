@@ -9,17 +9,18 @@
 
 class Scene7 : public SceneBase
 {
-    Beam beam;
-    Beam normal; // x=0
-    Beam refracted;
+    int displayMode;
 
-    void drawWater();
-    void drawAxes();
+    Beam beam;
+    Beam normal;
+
     void rayProcess();
     void drawAngleArc(Beam &beam, double radius, bool arcOnTop);
 
 public:
     Scene7();
+
+    void setDisplayMode(int newDisplayMode);
 
     double getCoordX(double x0);
     double getCoordY(double y0);

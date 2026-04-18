@@ -4,18 +4,24 @@
 
 Scene7::Scene7()
 {
-    beam = Beam(-0.8660, -0.5, 0.5 *DropRadius, 550, DropRadius); // 120 degrees beam (30 to normal)
     normal = Beam(1,0,0,550,DropRadius); // x=0
-    refracted = normal;
 
-    sceneScale = 10.0;
+    displayMode = 0;
+
+    sceneScale = 5.0;
 
     offsetXFactor = 2;
-    offsetYFactor = 1.7;
+    offsetYFactor = 1.9;
 
     scaleXFactor = 4.0;
     scaleYFactor = 4.0;
 
+}
+
+
+void Scene7::setDisplayMode(int newDisplayMode)
+{
+    displayMode = newDisplayMode;
 }
 
 double Scene7::getCoordX(double x0)
@@ -30,6 +36,9 @@ double Scene7::getCoordY(double y0)
 
 void Scene7::drawAngleArc(Beam &beam, double radius, bool arcOnTop)
 {
+
+
+
     double a1 = beam.getAngle();
     double a2 = normal.getAngle();
 
@@ -59,30 +68,70 @@ void Scene7::drawAngleArc(Beam &beam, double radius, bool arcOnTop)
 
 void Scene7::rayProcess()
 {
+    Beam refracted(DropRadius),
+        radius(DropRadius),
+        reflected(DropRadius);
+
+    if (displayMode == 0)
+    beam = Beam(0, 1, -0.8 * DropRadius, 500, DropRadius);
+    else
+        beam = Beam(0, 1, 0.8 * DropRadius, 500, DropRadius);
+
+
     double x0,y0,      // point0
         x1,y1,      // point1
-        x2,y2;
-
-    glColor3ub(255,255,255);
+        x2,y2;      // point2 - external (for reformed outside)
 
     beam.calculateInputPoint(&x0, &y0);
-    beam.calculateInfinityPoint(x0, y0, &x1, &y1);
+    radius.calculateKoeffs(x0,y0,0,0);
 
-    drawRay(x0,y0,x1,y1);
+    /// ORIGINAL BEAM
+    // this part should be drawn anyway
+    drawInitialRay(x0,y0);
 
-    refracted = normal;
-    refracted.snell(beam, beam.refractIn());
-    refracted.calculateOutputPoint(x0, y0, &x1, &y1);
-    refracted.calculateInfinityPoint(x1, y1, &x2, &y2);
+        /// FIRST REFRACTION
+        refracted = radius; // we're get reformed from radius
+        refracted.snell(beam, beam.refractIn());
+        beam = refracted;
+        beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
-    drawRay(x0,y0,x2,y2);
+        drawRay(x0,y0,x1,y1);
+
+        /// REFLECTION INSIDE
+        radius.calculateKoeffs(x1,y1,0,0);
+        beam.reflect(radius);
+        x0=x1; y0=y1;
+        beam.calculateOutputPoint(x0, y0, &x1, &y1);
+
+            drawRay(x0,y0,x1,y1);
+
+        if (displayMode == 1) { //
+            /// REFLECTION INSIDE
+            radius.calculateKoeffs(x1,y1,0,0);
+            beam.reflect(radius);
+            x0=x1; y0=y1;
+            beam.calculateOutputPoint(x0, y0, &x1, &y1);
+
+            drawRay(x0,y0,x1,y1);
+        }
+
+        /// REFRACTION OUTSIDE
+        radius.calculateKoeffs(x1,y1,0,0);
+        refracted = radius; // we're get reformed from radius again
+        refracted.snell(beam, beam.refractOut());
+        refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
+
+            drawRay(x1,y1,x2,y2);
+
 }
 
 void Scene7::display()
 {
     glLineWidth(5.0f);
+    drawDrop();
+    drawAxes();
     rayProcess();
-    drawAngleArc(beam, DropRadius, 1);
-    drawAngleArc(refracted, DropRadius-0.5, 0);
-    drawAngleArc(refracted, DropRadius+0.5, 0);
+ //   drawAngleArc(beam, DropRadius, 1);
+//    drawAngleArc(refracted, DropRadius-0.5, 0);
+//    drawAngleArc(refracted, DropRadius+0.5, 0);
 }

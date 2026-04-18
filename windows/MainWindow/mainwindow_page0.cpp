@@ -13,6 +13,7 @@ void MainWindow::on_radioButton_refraction_page0_clicked()
     ui->slideWidget->setCurrentIndex(currentSlideWidgetPage);
     ui->glWidgetLayout_slide1->addWidget(glWidget);
     glWidget->setSceneNumber(6);
+
 }
 
 void MainWindow::on_radioButton_1rainbow_page0_clicked()
@@ -21,6 +22,7 @@ void MainWindow::on_radioButton_1rainbow_page0_clicked()
     ui->slideWidget->setCurrentIndex(currentSlideWidgetPage);
     ui->glWidgetLayout_slide2->addWidget(glWidget);
     glWidget->setSceneNumber(7);
+    scene7->setDisplayMode(0);
 }
 
 void MainWindow::on_radioButton_2rainbow_page0_clicked()
@@ -29,4 +31,5 @@ void MainWindow::on_radioButton_2rainbow_page0_clicked()
     ui->slideWidget->setCurrentIndex(currentSlideWidgetPage);
     ui->glWidgetLayout_slide3->addWidget(glWidget);
     glWidget->setSceneNumber(7);
+    scene7->setDisplayMode(1);
 }
