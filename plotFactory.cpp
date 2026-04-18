@@ -18,6 +18,8 @@ QwtPlot* createBasePlot(const QString &title,
 
     plot->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
 
+    plot->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     return plot;
 }
 
