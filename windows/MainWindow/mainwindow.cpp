@@ -128,6 +128,9 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     mathToLabel(ui->label_formula1_slide2, "$\\varphi = 4\\alpha_2 - 2\\alpha_1\\ \\ ;\\ \\ \\varphi = 4\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$");
     mathToLabel(ui->label_formula2_slide2, "$y = \\frac{h}{r}$", 100,100);
 
+    mathToLabel(ui->label_formula1_slide3, "$\\varphi = \\pi - 6\\alpha_2 + 2\\alpha_1\\ \\ ;\\ \\ \\varphi = \\pi + 6\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$");
+    mathToLabel(ui->label_formula2_slide3, "$y = \\frac{h}{r}$", 100,100);
+
     QTimer::singleShot(0, this, &MainWindow::updateRainbowImage);
 }
 

@@ -80,7 +80,7 @@ private:
 
     void mathToLabel(QLabel* label,
                      const QString& formula,
-                     int width = 600,
+                     int width = 650,
                      int height = 100,
                      int fontSize = 20,
                      const QColor& color = Qt::white);
