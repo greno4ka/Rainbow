@@ -221,10 +221,8 @@ void MainWindow::switchPage()
     /// decide what to with widgets
     switch (currentMenuWidgetPage) {
     case 0:
-        glWidget->show();
         glWidget3d->hide();
         ui->slideWidget->show();
-        updateRainbowImage();
         switchSlide();
         break;
     case 1:
@@ -246,30 +244,36 @@ void MainWindow::switchPage()
     }
 
     ui->menuWidget->setCurrentIndex(currentMenuWidgetPage);
+    if (currentSlideWidgetPage == 0) updateRainbowImage(); /// Should be called after changing window
 }
 
 void MainWindow::switchSlide()
 {
     switch (currentSlideWidgetPage) {
     case 0:
+        glWidget->hide();
         break;
     case 1:
         ui->glWidgetLayout_slide1->addWidget(glWidget);
         glWidget->setSceneNumber(6);
+        glWidget->show();
         break;
     case 2:
         ui->glWidgetLayout_slide2->addWidget(glWidget);
         glWidget->setSceneNumber(7);
         scene7->setDisplayMode(0);
+        glWidget->show();
         break;
     case 3:
         ui->glWidgetLayout_slide3->addWidget(glWidget);
         glWidget->setSceneNumber(7);
         scene7->setDisplayMode(1);
+        glWidget->show();
         break;
     }
 
     ui->slideWidget->setCurrentIndex(currentSlideWidgetPage);
+    if (currentSlideWidgetPage == 0) updateRainbowImage(); /// Should be called after changing window
 }
 
 void MainWindow::changeTheme(bool isDark)
