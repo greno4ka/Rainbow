@@ -78,6 +78,13 @@ private:
 
     void initUIDefaults();
 
+    void mathToLabel(QLabel* label,
+                     const QString& formula,
+                     int width = 600,
+                     int height = 100,
+                     int fontSize = 20,
+                     const QColor& color = Qt::white);
+
 private slots:
     /// changers
     void changeLanguage(const QString &language);

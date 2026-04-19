@@ -125,32 +125,35 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     ui->qwtWidget_slide3->setLayout(new QVBoxLayout());
     ui->qwtWidget_slide3->layout()->addWidget(createSecondaryRainbowPlot());
 
-
-    JKQTMathText math;
-
-    math.useXITS();
-    math.setFontSize(20);
-    math.setFontColor(Qt::white);
-    math.parse("$\\varphi = 4\\alpha_2 - 2\\alpha_1\\ \\ ;\\ \\ \\varphi = 4\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$");
-double dpr = this->devicePixelRatioF();
-    QImage img(600 * dpr, 100 * dpr, QImage::Format_ARGB32);
-    img.setDevicePixelRatio(dpr);
-    img.fill(Qt::transparent);
-
-    QPainter painter(&img);
-    painter.begin(&img);
-    math.draw(painter, Qt::AlignVCenter|Qt::AlignHCenter, QRectF(0,0,img.width()/dpr, img.height()/dpr), false);
-    painter.end();
-
-    ui->label_for_formula->setPixmap(QPixmap::fromImage(img));
-
-
-
-
-
-
+    mathToLabel(ui->label_formula1_slide2, "$\\varphi = 4\\alpha_2 - 2\\alpha_1\\ \\ ;\\ \\ \\varphi = 4\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$");
+    mathToLabel(ui->label_formula2_slide2, "$y = \\frac{h}{r}$", 100,100);
 
     QTimer::singleShot(0, this, &MainWindow::updateRainbowImage);
+}
+
+void MainWindow::mathToLabel(QLabel* label, const QString& formula,
+                                   int width, int height, int fontSize,
+                                   const QColor& color)
+{
+    JKQTMathText math;
+    math.useXITS();
+    math.setFontSize(fontSize);
+    math.setFontColor(color);
+    math.parse(formula);
+
+    double dpr = this->devicePixelRatioF();
+
+    QImage image(width * dpr, height * dpr, QImage::Format_ARGB32);
+    image.setDevicePixelRatio(dpr);
+    image.fill(Qt::transparent);
+
+    QPainter painter(&image);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::TextAntialiasing);
+
+    math.draw(painter, Qt::AlignCenter, QRectF(0, 0, width, height), false);
+
+    label->setPixmap(QPixmap::fromImage(image));
 }
 
 void MainWindow::initUIDefaults()

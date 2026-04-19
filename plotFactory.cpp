@@ -16,8 +16,6 @@ QwtPlot* createBasePlot(const QString &title,
     grid->setPen(QPen(QColor(255,255,255,60), 0.5, Qt::DotLine));
     grid->attach(plot);
 
-    plot->insertLegend(new QwtLegend(), QwtPlot::RightLegend);
-
     plot->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     return plot;
@@ -96,7 +94,7 @@ QwtPlot* createPrimaryRainbowPlot()
         int r,g,b;
         wavelengthToRGB(wavelengths[i],&r,&g,&b);
 
-        QwtPlotCurve *curve = new QwtPlotCurve(QString("λ=%1").arg(wavelengths[i]));
+        QwtPlotCurve *curve = new QwtPlotCurve();
         curve->setPen(QPen(QColor(r,g,b),2.5));
         curve->setSamples(xData,yData);
         curve->setZ(0);
