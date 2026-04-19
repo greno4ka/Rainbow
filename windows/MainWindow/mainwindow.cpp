@@ -3,6 +3,8 @@
 
 #include "plotFactory.h"
 
+#include <jkqtmathtext.h>
+
 static QString loadStyle(const QString &path)
 {
     QFile file(path);
@@ -122,6 +124,31 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
 
     ui->qwtWidget_slide3->setLayout(new QVBoxLayout());
     ui->qwtWidget_slide3->layout()->addWidget(createSecondaryRainbowPlot());
+
+
+    JKQTMathText math;
+
+    math.useXITS();
+    math.setFontSize(20);
+    math.setFontColor(Qt::white);
+    math.parse("$\\varphi = 4\\alpha_2 - 2\\alpha_1\\ \\ ;\\ \\ \\varphi = 4\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$");
+double dpr = this->devicePixelRatioF();
+    QImage img(600 * dpr, 100 * dpr, QImage::Format_ARGB32);
+    img.setDevicePixelRatio(dpr);
+    img.fill(Qt::transparent);
+
+    QPainter painter(&img);
+    painter.begin(&img);
+    math.draw(painter, Qt::AlignVCenter|Qt::AlignHCenter, QRectF(0,0,img.width()/dpr, img.height()/dpr), false);
+    painter.end();
+
+    ui->label_for_formula->setPixmap(QPixmap::fromImage(img));
+
+
+
+
+
+
 
     QTimer::singleShot(0, this, &MainWindow::updateRainbowImage);
 }

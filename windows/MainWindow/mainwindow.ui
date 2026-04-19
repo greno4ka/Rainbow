@@ -1383,7 +1383,7 @@ of incedent radiation:</string>
            </layout>
           </widget>
           <widget class="QWidget" name="slide2">
-           <layout class="QVBoxLayout" name="verticalLayout_20">
+           <layout class="QVBoxLayout" name="verticalLayout_16">
             <item>
              <widget class="QLabel" name="label_4">
               <property name="font">
@@ -1395,6 +1395,29 @@ of incedent radiation:</string>
                <string>Dependence of the refraction angle on the impact parameter</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="font">
+                 <font>
+                  <pointsize>20</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Primary rainbow:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_for_formula">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_3">

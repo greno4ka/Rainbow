@@ -7,7 +7,7 @@
 QT       += core gui widgets opengl openglwidgets
 win32: QT += openglwidgets
 
-LIBS +=  -lGLU -lqwt-qt6
+LIBS +=  -lGLU -lqwt-qt6 -lJKQTMathText6
 win32: LIBS += -lopengl32
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
@@ -74,3 +74,4 @@ RESOURCES += \
 INCLUDEPATH += \
     $$PWD \
     /usr/include/qt6/qwt \
+    /usr/include/jkqtmathtext \
