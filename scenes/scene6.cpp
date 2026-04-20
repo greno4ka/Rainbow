@@ -16,7 +16,6 @@ Scene6::Scene6()
 
     scaleXFactor = 4.0;
     scaleYFactor = 4.0;
-
 }
 
 double Scene6::getCoordX(double x0)
