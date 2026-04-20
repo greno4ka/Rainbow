@@ -55,35 +55,6 @@ void Scene6::drawAxes()
     glDisable(GL_LINE_STIPPLE); // turn it off
 }
 
-void Scene6::drawAngleArc(Beam &beam, double radius, bool arcOnTop)
-{
-    double a1 = beam.getAngle();
-    double a2 = normal.getAngle();
-
-    if(!arcOnTop) {
-        a1 -= 180.0;
-        a2 -= 180.0;
-    }
-
-    double ang1 = a1 * M_PI / 180.0;
-    double ang2 = a2 * M_PI / 180.0;
-
-    double d = ang2 - ang1;
-
-    glBegin(GL_LINE_STRIP);
-    for (int i = 0; i <= ImageQuality; i++)
-    {
-        double step = (double)i / ImageQuality;
-        double ang = ang1 + d * step;
-
-        double x0 = 0 + cos(ang) * radius;
-        double y0 = DropRadius + sin(ang) * radius;
-
-        glVertex2f(x(x0), y(y0));
-    }
-    glEnd();
-}
-
 void Scene6::rayProcess()
 {
     double x0,y0,
@@ -111,8 +82,8 @@ void Scene6::display()
     drawWater();
     drawAxes();
     rayProcess();
-    drawAngleArc(beam, DropRadius, 1);
-    drawAngleArc(refracted, DropRadius-0.5, 0);
-    drawAngleArc(refracted, DropRadius+0.5, 0);
+    drawAngleArc(beam, normal, 0, DropRadius, DropRadius, 1);
+    drawAngleArc(refracted, normal, 0, DropRadius, DropRadius-0.5, 0);
+    drawAngleArc(refracted, normal, 0, DropRadius, DropRadius+0.5, 0);
     glLineWidth(1.0f);
 }

@@ -14,7 +14,6 @@ class Scene6 : public SceneBase
     void drawWater();
     void drawAxes();
     void rayProcess();
-    void drawAngleArc(Beam &beam, double radius, bool arcOnTop);
 
 public:
     Scene6();

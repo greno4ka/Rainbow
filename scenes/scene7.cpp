@@ -39,42 +39,6 @@ double Scene7::getCoordY(double y0)
     return Y-y(y0);
 }
 
-void Scene7::drawAngleArc(Beam &beam1, Beam &beam2, double x0, double y0, double radius, bool arcOnTop)
-{
-    /// beam2 is usually a normal
-
-    double a1 = beam1.getAngle();
-    double a2 = beam2.getAngle();
-
-        if(!arcOnTop) {
-                a1 -= 180.0;
-                a2 -= 180.0;
-    }
-
-    double ang1 = a1 * M_PI / 180.0;
-    double ang2 = a2 * M_PI / 180.0;
-
-    double d = ang2 - ang1;
-
-    // force small arc
-    if (fabs(d) > M_PI/2) {
-        if (d > 0) d -= M_PI;
-        else       d += M_PI;
-    }
-
-    glBegin(GL_LINE_STRIP);
-    for (int i = 0; i <= ImageQuality; i++) {
-        double step = (double)i / ImageQuality;
-        double ang = ang1 + d * step;
-
-        double x1 = x0 + cos(ang) * radius;
-        double y1 = y0 + sin(ang) * radius;
-
-        glVertex2f(x(x1), y(y1));
-    }
-    glEnd();
-}
-
 void Scene7::drawRadiusDash(double x0, double y0)
 {
     glEnable(GL_LINE_STIPPLE);

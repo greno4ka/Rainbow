@@ -6,6 +6,7 @@
 
 #include <cmath>
 #include "config.h"
+#include "beam.h"
 
 class SceneBase : public QObject
 {
@@ -45,6 +46,7 @@ protected:
 
     void drawRay(double x0, double y0, double x1, double y1);
     void drawInitialRay(double x1, double y1);
+    void drawAngleArc(Beam &beam1, Beam &beam2, double x0, double y0, double radius, bool arcOnTop);
 
     void drawDrop();
     void drawAxes();
