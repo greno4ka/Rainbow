@@ -88,9 +88,9 @@ void Scene7::drawRadiusDash(double x0, double y0)
 
 void Scene7::rayProcess()
 {
-    Beam refracted(DropRadius),
-         radius(DropRadius),
-         reflected(DropRadius);
+    Beam refracted,
+         normal,
+         reflected;
 
     if (displayMode == 0)
         beam = Beam(0, 1, -0.8 * DropRadius, 500, DropRadius);
@@ -105,7 +105,8 @@ void Scene7::rayProcess()
 
     /// ORIGINAL BEAM
     beam.calculateInputPoint(&x0, &y0);
-    radius.calculateCoeffs(x0,y0,0,0);
+    normal = beam;
+    normal.calculateCoeffs(x0,y0,0,0);
 
     drawInitialRay(x0,y0);
 
@@ -117,50 +118,50 @@ void Scene7::rayProcess()
     glEnd();
     glDisable(GL_LINE_STIPPLE);
 
-    radius.calculateInfinityPoint(x0,y0,&x2,&y2,3);
+    normal.calculateInfinityPoint(x0,y0,&x2,&y2,3);
 
     drawRadiusDash(x2,y2);
 
-    drawAngleArc(beam,radius,x0,y0,1,0);
+    drawAngleArc(beam,normal,x0,y0,1,0);
 
     /// FIRST REFRACTION
-    refracted = radius; // we're get reformed from radius
-    refracted.snellIn(beam);
+    refracted = beam;
+    refracted.snellIn(normal);
     beam = refracted;
     beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
     drawRay(x0,y0,x1,y1);
 
-    drawAngleArc(beam,radius,x0,y0,0.9,displayMode);
-    drawAngleArc(beam,radius,x0,y0,1.1,displayMode);
+    drawAngleArc(beam,normal,x0,y0,0.9,displayMode);
+    drawAngleArc(beam,normal,x0,y0,1.1,displayMode);
 
-    radius.calculateCoeffs(x1,y1,0,0);
-    radius.calculateInfinityPoint(x1,y1,&x2,&y2,3);
+    normal.calculateCoeffs(x1,y1,0,0);
+    normal.calculateInfinityPoint(x1,y1,&x2,&y2,3);
 
     drawRadiusDash(x2,y2);
 
-    drawAngleArc(beam,radius,x1,y1,0.9,!displayMode);
-    drawAngleArc(beam,radius,x1,y1,1.1,!displayMode);
+    drawAngleArc(beam,normal,x1,y1,0.9,!displayMode);
+    drawAngleArc(beam,normal,x1,y1,1.1,!displayMode);
 
     /// REFLECTION INSIDE
-    radius.calculateCoeffs(x1,y1,0,0);
-    beam.reflect(radius);
+    normal.calculateCoeffs(x1,y1,0,0);
+    beam.reflect(normal);
     x0=x1;
     y0=y1;
     beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
     drawRay(x0,y0,x1,y1);
 
-    drawAngleArc(beam,radius,x0,y0,1.6,displayMode);
-    drawAngleArc(beam,radius,x0,y0,1.4,displayMode);
+    drawAngleArc(beam,normal,x0,y0,1.6,displayMode);
+    drawAngleArc(beam,normal,x0,y0,1.4,displayMode);
 
-    radius.calculateCoeffs(x1,y1,0,0);
-    radius.calculateInfinityPoint(x1,y1,&x2,&y2,3);
+    normal.calculateCoeffs(x1,y1,0,0);
+    normal.calculateInfinityPoint(x1,y1,&x2,&y2,3);
 
     drawRadiusDash(x2,y2);
 
-    drawAngleArc(beam,radius,x1,y1,1.6,!displayMode);
-    drawAngleArc(beam,radius,x1,y1,1.4,!displayMode);
+    drawAngleArc(beam,normal,x1,y1,1.6,!displayMode);
+    drawAngleArc(beam,normal,x1,y1,1.4,!displayMode);
 
     glEnable(GL_LINE_STIPPLE);
     glLineStipple(4, 0xFF00);
@@ -173,30 +174,30 @@ void Scene7::rayProcess()
 
     if (displayMode == 1) { // second rainbow mode
         /// REFLECTION INSIDE
-        radius.calculateCoeffs(x1,y1,0,0);
-        beam.reflect(radius);
+        normal.calculateCoeffs(x1,y1,0,0);
+        beam.reflect(normal);
         x0=x1;
         y0=y1;
         beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
         drawRay(x0,y0,x1,y1);
 
-        drawAngleArc(beam,radius,x0,y0,0.9,!displayMode);
-        drawAngleArc(beam,radius,x0,y0,1.1,!displayMode);
+        drawAngleArc(beam,normal,x0,y0,0.9,!displayMode);
+        drawAngleArc(beam,normal,x0,y0,1.1,!displayMode);
 
-        radius.calculateCoeffs(x1,y1,0,0);
-        radius.calculateInfinityPoint(x1,y1,&x2,&y2,3);
+        normal.calculateCoeffs(x1,y1,0,0);
+        normal.calculateInfinityPoint(x1,y1,&x2,&y2,3);
 
         drawRadiusDash(x2,y2);
 
-        drawAngleArc(beam,radius,x1,y1,0.9,displayMode);
-        drawAngleArc(beam,radius,x1,y1,1.1,displayMode);
+        drawAngleArc(beam,normal,x1,y1,0.9,displayMode);
+        drawAngleArc(beam,normal,x1,y1,1.1,displayMode);
     }
 
     /// REFRACTION OUTSIDE
-    radius.calculateCoeffs(x1,y1,0,0);
-    refracted = radius; // we're get reformed from radius again
-    refracted.snellOut(beam);
+    normal.calculateCoeffs(x1,y1,0,0);
+    refracted = beam;
+    refracted.snellOut(normal);
     refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
     drawRay(x1,y1,x2,y2);
@@ -228,7 +229,4 @@ void Scene7::display()
     drawDrop();
     drawAxes();
     rayProcess();
-//   drawAngleArc(beam, DropRadius, 1);
-//    drawAngleArc(refracted, DropRadius-0.5, 0);
-//    drawAngleArc(refracted, DropRadius+0.5, 0);
 }

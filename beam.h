@@ -26,7 +26,6 @@ class Beam
 public:
     Beam();
     Beam(double A, double B, double C, double lambda, double radius);
-    Beam(double radius);
 
     double getAngle();
     double getWavelength();

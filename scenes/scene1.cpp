@@ -47,10 +47,8 @@ void Scene1::decBeamStep()
 
 void Scene1::rayProcess(Beam beam)
 {
-    // Here we define normal with setted radius
-    // so further we can calculate coeffs just with 4 points
-    // refracted and reflect will be initialized by copying
-    Beam normal(DropRadius),
+    // All beams will be initialized by copying
+    Beam normal,
          refracted,
          reflected;
 
@@ -75,6 +73,7 @@ void Scene1::rayProcess(Beam beam)
         p -= 0.1; // low color intensity every beam split
         glColor3ub(r*p,g*p,b*p);
 
+        normal = beam; // copy radius and !wavelength! attributes
         normal.calculateCoeffs(x0,y0,0,0); // need both for refraction and reflection
 
         if (displayMode == 0) { // only when displaying ALL
@@ -86,8 +85,8 @@ void Scene1::rayProcess(Beam beam)
         }
 
         /// FIRST REFRACTION
-        refracted = normal;
-        refracted.snellIn(beam);
+        refracted = beam;
+        refracted.snellIn(normal);
         refracted.calculateOutputPoint(x0, y0, &x1, &y1);
 
         drawRay(x0,y0,x1,y1);
@@ -107,8 +106,8 @@ void Scene1::rayProcess(Beam beam)
                  ( (displayMode == 2) && (stepNumber == 3) )    // 2nd rainbow
                ) {
                 /// REFRACTION OUTSIDE
-                refracted = normal;
-                refracted.snellOut(beam);
+                refracted = beam;
+                refracted.snellOut(normal);
                 refracted.calculateInfinityPoint(x0,y0,&x2,&y2);
 
                 drawRay(x0,y0,x2,y2);

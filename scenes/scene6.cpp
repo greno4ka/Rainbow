@@ -7,7 +7,7 @@ Scene6::Scene6()
 //    beam = Beam(-0.8660, -0.5, 0.5 *DropRadius, 550, DropRadius); // 120 degrees beam (30 to normal)
     beam = Beam(-1.19175, -1, DropRadius, 550, DropRadius); // 130 degrees beam (40 to normal)
     normal = Beam(1,0,0,550,DropRadius); // x=0
-    refracted = normal;
+    refracted = beam;
 
     sceneScale = 10.0;
 
@@ -97,8 +97,8 @@ void Scene6::rayProcess()
 
     drawRay(x0,y0,x1,y1);
 
-    refracted = normal;
-    refracted.snellIn(beam);
+    refracted = beam;
+    refracted.snellIn(normal);
     refracted.calculateOutputPoint(x0, y0, &x1, &y1);
     refracted.calculateInfinityPoint(x1, y1, &x2, &y2);
 

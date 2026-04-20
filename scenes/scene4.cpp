@@ -79,9 +79,9 @@ void Scene4::display()
     int r,g,b;
     double eyeX,eyeY;
 
-    Beam rainEdge(1),
-         sunLight(1),
-         observed(1);
+    Beam rainEdge,
+         sunLight,
+         observed;
 
     if (dynamicMode)
         for (int i=0; i<NumberOfBeams; i++)

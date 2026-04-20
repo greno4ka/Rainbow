@@ -62,12 +62,13 @@ void Scene5::rayProcess(Beam beam)
 
     int r,g,b;
 
-    Beam refracted(DropRadius),
-         radius(DropRadius),
-         reflected(DropRadius);
+    Beam refracted,
+         normal,
+         reflected;
 
     beam.calculateInputPoint(&x0, &y0);
-    radius.calculateCoeffs(x0,y0,0,0);
+    normal = beam;
+    normal.calculateCoeffs(x0,y0,0,0);
 
     glColor3ub(255,255,255);
 
@@ -82,16 +83,16 @@ void Scene5::rayProcess(Beam beam)
         glColor3ub(r*0.7,g*0.7,b*0.7);
 
     /// FIRST REFRACTION
-    refracted = radius;
-    refracted.snellIn(beam);
+    refracted = beam;
+    refracted.snellIn(normal);
     beam = refracted;
     beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
     drawRay(x0,y0,x1,y1);
 
     /// REFLECTION INSIDE
-    radius.calculateCoeffs(x1,y1,0,0);
-    beam.reflect(radius);
+    normal.calculateCoeffs(x1,y1,0,0);
+    beam.reflect(normal);
     x0=x1; y0=y1;
     beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
@@ -99,26 +100,26 @@ void Scene5::rayProcess(Beam beam)
 
     if ( displayMode == 0 || displayMode == 1) {
         /// REFRACTION OUTSIDE
-        radius.calculateCoeffs(x1,y1,0,0);
-        refracted = radius;
-        refracted.snellOut(beam);
+        normal.calculateCoeffs(x1,y1,0,0);
+        refracted = beam;
+        refracted.snellOut(normal);
         refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         drawRay(x1,y1,x2,y2);
     }
     if ( displayMode == 0 || displayMode == 2) {
         /// NEXT REFLECTION INSIDE
-        radius.calculateCoeffs(x1,y1,0,0);
-        beam.reflect(radius);
+        normal.calculateCoeffs(x1,y1,0,0);
+        beam.reflect(normal);
         x0=x1; y0=y1;
         beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
         drawRay(x0,y0,x1,y1);
 
         /// REFRACTION OUTSIDE
-        radius.calculateCoeffs(x1,y1,0,0);
-        refracted = radius;
-        refracted.snellOut(beam);
+        normal.calculateCoeffs(x1,y1,0,0);
+        refracted = beam;
+        refracted.snellOut(normal);
         refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         drawRay(x1,y1,x2,y2);

@@ -19,11 +19,6 @@ Beam::Beam(double A, double B, double C, double lambda, double radius)
     calculateAngle();
 }
 
-Beam::Beam(double radius)
-{
-    r = radius;
-}
-
 double Beam::getAngle()
 {
     return phi;
@@ -127,10 +122,13 @@ void Beam::reflect (Beam A)
 void Beam::snell(Beam Input, double k)
 {
     double psi = phi-Input.phi;
+
     if (psi > 90) psi -= 180;
     if (psi < -90) psi += 180;
+
     double betta = (asin(sin((psi*M_PI)/180)/k)*180)/M_PI;
-    this->rotate(Input, -betta);
+
+    this->rotate(Input, -psi + betta);
     this->wavelength = Input.wavelength;
 }
 

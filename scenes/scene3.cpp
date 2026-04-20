@@ -104,28 +104,29 @@ void Scene3::rayProcess(Beam beam)
 
     Beam originalBeam = beam;
 
-    Beam refracted(DropRadius),
-         radius(DropRadius),
-         reflected(DropRadius);
+    Beam refracted,
+         normal,
+         reflected;
 
     beam.calculateInputPoint(&x0, &y0);
-    radius.calculateCoeffs(x0,y0,0,0);
+    normal = beam;
+    normal.calculateCoeffs(x0,y0,0,0);
 
     /// ORIGINAL BEAM
     // this part should be drawn anyway
     drawInitialRay(x0,y0);
 
     /// FIRST REFRACTION
-    refracted = radius;
-    refracted.snellIn(beam);
+    refracted = beam;
+    refracted.snellIn(normal);
     beam = refracted;
     beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
     drawRay(x0,y0,x1,y1);
 
     /// REFLECTION INSIDE
-    radius.calculateCoeffs(x1,y1,0,0);
-    beam.reflect(radius);
+    normal.calculateCoeffs(x1,y1,0,0);
+    beam.reflect(normal);
     x0=x1; y0=y1;
     beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
@@ -133,9 +134,9 @@ void Scene3::rayProcess(Beam beam)
 
     if (displayMode == 1) {
         /// REFRACTION OUTSIDE
-        radius.calculateCoeffs(x1,y1,0,0);
-        refracted = radius;
-        refracted.snellOut(beam);
+        normal.calculateCoeffs(x1,y1,0,0);
+        refracted = beam;
+        refracted.snellOut(normal);
         refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         if (showAngle && (originalBeam.getDistance() >= 0.84 && originalBeam.getDistance() <= 0.88) ) {
@@ -148,17 +149,17 @@ void Scene3::rayProcess(Beam beam)
         drawRay(x1,y1,x2,y2);
     } else {
         /// NEXT REFLECTION INSIDE
-        radius.calculateCoeffs(x1,y1,0,0);
-        beam.reflect(radius);
+        normal.calculateCoeffs(x1,y1,0,0);
+        beam.reflect(normal);
         x0=x1; y0=y1;
         beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
         drawRay(x0,y0,x1,y1);
 
         /// REFRACTION OUTSIDE
-        radius.calculateCoeffs(x1,y1,0,0);
-        refracted = radius;
-        refracted.snellOut(beam);
+        normal.calculateCoeffs(x1,y1,0,0);
+        refracted = beam;
+        refracted.snellOut(normal);
         refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         if (showAngle && (originalBeam.getDistance() <= -0.94 && originalBeam.getDistance() >= -0.97) ) {

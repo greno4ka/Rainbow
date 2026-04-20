@@ -30,7 +30,7 @@ QwtPlot* createRefractiveIndexPlot()
         );
 
     QVector<double> wl, n;
-    Beam beam(1.0);
+    Beam beam;
 
     int points = 600;
 
