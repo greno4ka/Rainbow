@@ -47,9 +47,12 @@ void Scene1::decBeamStep()
 
 void Scene1::rayProcess(Beam beam)
 {
-    Beam refracted(DropRadius),
-         radius(DropRadius),
-         reflected(DropRadius);
+    // Here we define normal with setted radius
+    // so further we can calculate coeffs just with 4 points
+    // refracted and reflect will be initialized by copying
+    Beam normal(DropRadius),
+         refracted,
+         reflected;
 
     double p=1;        // GAMMA CORRECTOR of color for darkening beams
     double x0,y0,      // point0
@@ -59,7 +62,7 @@ void Scene1::rayProcess(Beam beam)
     int r,g,b;
 
     beam.calculateInputPoint(&x0, &y0);
-    radius.calculateKoeffs(x0,y0,0,0);
+    normal.calculateKoeffs(x0,y0,0,0);
 
     /// ORIGINAL BEAM
     // this part should be drawn anyway
@@ -75,14 +78,14 @@ void Scene1::rayProcess(Beam beam)
 
         if (displayMode == 0) { // only when displaying ALL
             reflected = beam;
-            reflected.reflect(radius);
+            reflected.reflect(normal);
             reflected.calculateInfinityPoint(x0,y0,&x2,&y2);
 
             drawRay(x0,y0,x2,y2);
         }
 
         /// FIRST REFRACTION
-        refracted = radius; // we're get reformed from radius
+        refracted = normal; // we're get reformed from radius
         refracted.snell(beam, beam.refractIn());
         beam = refracted;
         beam.calculateOutputPoint(x0, y0, &x1, &y1);
@@ -94,8 +97,8 @@ void Scene1::rayProcess(Beam beam)
             glColor3ub(r*p,g*p,b*p);
 
             /// REFRACTION OUTSIDE
-            radius.calculateKoeffs(x1,y1,0,0);
-            refracted = radius; // we're get reformed from radius again
+            normal.calculateKoeffs(x1,y1,0,0);
+            refracted = normal; // we're get reformed from radius again
             refracted.snell(beam, beam.refractOut());
             refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
@@ -108,7 +111,7 @@ void Scene1::rayProcess(Beam beam)
             }
 
             /// REFLECTION INSIDE
-            beam.reflect(radius);
+            beam.reflect(normal);
             x0=x1; y0=y1;
             beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
