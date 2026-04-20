@@ -5,6 +5,7 @@
 #include <QtOpenGLWidgets/QOpenGLWidget>
 
 #include "beam.h"
+#include "wavelength.h"
 
 #include <QElapsedTimer>
 
@@ -14,6 +15,9 @@ typedef QList<QVector3D> QVector3Ds;
 
 class SceneX
 {
+    inline static const QVector3D SunColor = QVector3D(255, 255, 230);
+    static const int ImageQuality = 100; // quality of drawing circles (drops, clouds...)
+
     QVector3D eyeCenter;
     QVector3D sunCenter;
     QVector3D wallCenter;
@@ -21,6 +25,8 @@ class SceneX
 
     QVector3Ds sunPoints;
     QVector3Ds wallPoints;
+
+    Beams beams;
 
 
     double sunRadius;
@@ -34,14 +40,12 @@ class SceneX
     bool showBeams;
 
     int numberOfBeams;
-
-    Beams beams;
-
-    void drawSun(double cx, double cy, double cz);
+    void drawSun();
     void drawWall();
     void drawSingleRay(const QVector3D& sunPoint,
-                               const QVector3D& wallPoint,
-                               double timeSec);
+                       const QVector3D& wallPoint,
+                       const QVector3D color,
+                       double timeSec);
     void drawAnimatedBeam(Beam beam, double t);
 
 protected:
@@ -54,6 +58,7 @@ public:
     QVector3D generateSunPoint();
     void addSunPoints(int numberOfPoints);
     void calculateWallPoints();
+    double calculateAngle(QVector3D& sunPoint, QVector3D& wallPoint, QVector3D& eyePoint);
 
     void updateXY(int newX, int newY);
     void display();
