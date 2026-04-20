@@ -1,8 +1,6 @@
 #ifndef SCENE3_H
 #define SCENE3_H
 
-#include <QOpenGLFunctions>
-
 #include "scenebase.h"
 #include "beam.h"
 #include "wavelength.h"
@@ -20,7 +18,7 @@ class Scene3 : public SceneBase
     int showAngle;
 
     double coordX, coordY, // point of crossing refracted beam with horizontal
-           bestAngle;
+           bestAngle;      // if 0, dont show it
 
     Beams beams;
 

@@ -84,36 +84,47 @@ double whatAngle(double wave, int rainbowMode)
     }
 
     /// use drop with radius 1 for example
-    Beam input(0,1,-direction*distance,wave,1),
+    Beam beam(0,1,-direction*distance,wave,1),
+         normal,
          refracted,
-         normal;
+         reflected;
+
 
     /// penetration of beam into drop
-    input.calculateInputPoint(&x0, &y0);
-    normal = input;
-    normal.calculateCoeffs(x0,y0,0,0);
-    refracted = input;
-    refracted.snellIn(normal);
-    input = refracted;
+    beam.calculateInputPoint(&x0, &y0);
 
-    /// first reflection
-    input.calculateOutputPoint(x0, y0, &x1, &y1);
-    normal.calculateCoeffs(x1,y1,0,0);
-    input.reflect(normal);
+    /// first refraction
+    normal = beam;
+    normal.calculateCoeffs(x0,y0,0,0);
+    refracted = beam;
+    refracted.snellIn(normal);
+    refracted.calculateOutputPoint(x0, y0, &x1, &y1);
+
+    beam = refracted;
     x0=x1; y0=y1;
 
-    input.calculateOutputPoint(x0, y0, &x1, &y1);
-    normal.calculateCoeffs(x1,y1,0,0);
+    /// first reflection
+    normal.calculateCoeffs(x0,y0,0,0);
+    reflected = beam;
+    reflected.reflect(normal);
+    reflected.calculateOutputPoint(x0, y0, &x1, &y1);
+
+    beam = reflected;
+    x0=x1; y0=y1;
+
+    normal.calculateCoeffs(x0,y0,0,0);
     if (rainbowMode == 1) {
-        refracted = input;
+        refracted = beam;
         refracted.snellOut(normal);
     } else {
-        input.reflect(normal);
+        reflected.reflect(normal);
+        reflected.calculateOutputPoint(x0, y0, &x1, &y1);
+
+        beam = reflected;
         x0=x1; y0=y1;
 
-        input.calculateOutputPoint(x0, y0, &x1, &y1);
-        normal.calculateCoeffs(x1,y1,0,0);
-        refracted = input;
+        normal.calculateCoeffs(x0,y0,0,0);
+        refracted = beam;
         refracted.snellOut(normal);
     }
     return refracted.getAngle();

@@ -165,8 +165,6 @@ void Scene4::display()
 
     drawFloor();
     drawCloud();
-
-    //QThread::sleep(888/desiredFPS);
 }
 
 void Scene4::drawRain()

@@ -1,8 +1,6 @@
 #ifndef SCENE6_H
 #define SCENE6_H
 
-#include <QOpenGLFunctions>
-
 #include "scenebase.h"
 #include "beam.h"
 #include "wavelength.h"
