@@ -20,6 +20,8 @@ class SceneX
     QVector3D raysDirection;
 
     QVector3Ds sunPoints;
+    QVector3Ds wallPoints;
+
 
     double sunRadius;
 
@@ -37,7 +39,9 @@ class SceneX
 
     void drawSun(double cx, double cy, double cz);
     void drawWall();
-    void drawSingleRay(QVector3D sunPoint, double timeSec);
+    void drawSingleRay(const QVector3D& sunPoint,
+                               const QVector3D& wallPoint,
+                               double timeSec);
     void drawAnimatedBeam(Beam beam, double t);
 
 protected:
@@ -48,7 +52,8 @@ public:
     SceneX();
 
     QVector3D generateSunPoint();
-    void addBeams(int numberOfAddedBeams);
+    void addSunPoints(int numberOfPoints);
+    void calculateWallPoints();
 
     void updateXY(int newX, int newY);
     void display();
