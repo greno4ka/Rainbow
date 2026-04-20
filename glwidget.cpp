@@ -3,6 +3,7 @@
 GLWidget::GLWidget(QWidget *parent) :
     QOpenGLWidget(parent)
 {
+    width = 800; height = 600;
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, [this]() { update(); });
 }
@@ -71,47 +72,50 @@ void GLWidget::paintGL()
     QPainter painter(this);
     QColor fontColor = palette().color(QPalette::WindowText);
     QFont font = painter.font();
-    font.setPointSize(font.pointSize() * 2);
+    int minWidgetSize = std::min(width,height);
+    font.setPointSize(minWidgetSize/20);
     painter.setFont(font);
     painter.setPen(fontColor);
     if (sceneNumber == 3 && scene3->getShowAngle() && scene3->getBestAngle()) {
         painter.drawText(scene3->getCoordX(), scene3->getCoordY(),
                          QString::number(scene3->getBestAngle(), 'f', 2));
     }
-    if (sceneNumber == 6) {
-        painter.drawText(scene6->getCoordX(-4)-5, scene6->getCoordY(7)-5,
+    if (sceneNumber == 6) {painter.drawEllipse(QPointF(scene6->getCoordX(0), scene6->getCoordY(0)), 3, 3);
+        painter.drawText(scene6->getCoordX(-3.9), scene6->getCoordY(7),
                          QString("α₁"));
-        painter.drawText(scene6->getCoordX(3), scene6->getCoordY(-4.5),
+        painter.drawText(scene6->getCoordX(0.8), scene6->getCoordY(-9),
                          QString("α₂"));
-        painter.drawText(scene6->getCoordX(-15), scene6->getCoordY(7),
+        painter.drawText(scene6->getCoordX(-15), scene6->getCoordY(5),
                          QString("n₁"));
-        painter.drawText(scene6->getCoordX(-15), scene6->getCoordY(-7),
+        painter.drawText(scene6->getCoordX(-15), scene6->getCoordY(-5),
                          QString("n₂"));
     }
     if (sceneNumber == 7 && !scene7->getDisplaymode()) {
-        painter.drawText(scene7->getCoordX(-6), scene6->getCoordY(10),
+        painter.drawText(scene7->getCoordX(-5.3), scene7->getCoordY(4.5),
                          QString("α₁"));
-        painter.drawText(scene7->getCoordX(-1.5), scene6->getCoordY(5),
+        painter.drawText(scene7->getCoordX(-1.5), scene7->getCoordY(2.4),
                          QString("α₂"));
-        painter.drawText(scene7->getCoordX(-3), scene6->getCoordY(-20),
+        painter.drawText(scene7->getCoordX(-2.2), scene7->getCoordY(-6),
                          QString("φ"));
-        painter.drawText(scene7->getCoordX(1), scene6->getCoordY(7),
+        painter.drawText(scene7->getCoordX(0.5), scene7->getCoordY(3.5),
                          QString("h"));
     }
     if (sceneNumber == 7 && scene7->getDisplaymode()) {
-        painter.drawText(scene7->getCoordX(-6), scene6->getCoordY(-18),
+        painter.drawText(scene7->getCoordX(-5.2), scene7->getCoordY(-5),
                          QString("α₁"));
-        painter.drawText(scene7->getCoordX(-1.5), scene6->getCoordY(-11),
+        painter.drawText(scene7->getCoordX(-1.5), scene7->getCoordY(-3),
                          QString("α₂"));
-        painter.drawText(scene7->getCoordX(-9), scene6->getCoordY(-20),
+        painter.drawText(scene7->getCoordX(-8.3), scene7->getCoordY(-5.3),
                          QString("φ"));
-        painter.drawText(scene7->getCoordX(0), scene6->getCoordY(-16),
+        painter.drawText(scene7->getCoordX(0.5), scene7->getCoordY(-4.5),
                          QString("h"));
     }
 }
 
 void GLWidget::resizeGL(int w, int h)
 {
+    width = w; height = h;
+
     /// this resize function allows to work in accustomed coordinates
     scene1->updateXY(w, h);
     scene2->updateXY(w, h);

@@ -11,7 +11,7 @@ Scene7::Scene7()
     sceneScale = 3.5;
 
     offsetXFactor = 2.5;
-    offsetYFactor = 1.9;
+    offsetYFactor = 2.2;
 
     scaleXFactor = 4.0;
     scaleYFactor = 4.0;
@@ -36,7 +36,7 @@ double Scene7::getCoordX(double x0)
 
 double Scene7::getCoordY(double y0)
 {
-    return Y-y(DropRadius+y0);
+    return Y-y(y0);
 }
 
 void Scene7::drawAngleArc(Beam &beam1, Beam &beam2, double x0, double y0, double radius, bool arcOnTop)
@@ -88,8 +88,8 @@ void Scene7::drawRadiusDash(double x0, double y0)
 
 void Scene7::rayProcess()
 {
-    Beam refracted,
-         normal,
+    Beam normal,
+         refracted,
          reflected;
 
     if (displayMode == 0)
@@ -163,14 +163,15 @@ void Scene7::rayProcess()
     drawAngleArc(beam,normal,x1,y1,1.6,!displayMode);
     drawAngleArc(beam,normal,x1,y1,1.4,!displayMode);
 
-    glEnable(GL_LINE_STIPPLE);
-    glLineStipple(4, 0xFF00);
-    glBegin(GL_LINES);
-    glVertex2f(0,y(y1));
-    glVertex2f(x(x1),y(y1));
-    glEnd();
-    glDisable(GL_LINE_STIPPLE);
-
+    if (displayMode == 0) {
+        glEnable(GL_LINE_STIPPLE);
+        glLineStipple(4, 0xFF00);
+        glBegin(GL_LINES);
+        glVertex2f(0,y(y1));
+        glVertex2f(x(x1),y(y1));
+        glEnd();
+        glDisable(GL_LINE_STIPPLE);
+    }
 
     if (displayMode == 1) { // second rainbow mode
         /// REFLECTION INSIDE
@@ -207,7 +208,7 @@ void Scene7::rayProcess()
 
     if (displayMode == 0)
     {
-    tmp.calculateCoeffs(0,y1,x1,y1);
+        tmp.calculateCoeffs(0,y1,x1,y1);
         drawAngleArc(tmp,refracted,x1,y1,1.7,displayMode);
         drawAngleArc(tmp,refracted,x1,y1,1.5,displayMode);
         drawAngleArc(tmp,refracted,x1,y1,1.3,displayMode);
@@ -218,9 +219,7 @@ void Scene7::rayProcess()
         drawAngleArc(original,refracted,x2,y2,0.8,!displayMode);
         drawAngleArc(original,refracted,x2,y2,1,!displayMode);
         drawAngleArc(original,refracted,x2,y2,1.2,!displayMode);
-
     }
-
 }
 
 void Scene7::display()

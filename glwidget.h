@@ -33,6 +33,8 @@ private:
     Scene6 *scene6;
     Scene7 *scene7;
 
+    int width, height;
+
     int sceneNumber;
 
     void timerStart();
