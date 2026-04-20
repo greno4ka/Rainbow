@@ -74,9 +74,9 @@ void GLWidget::paintGL()
     font.setPointSize(font.pointSize() * 2);
     painter.setFont(font);
     painter.setPen(fontColor);
-    if (sceneNumber == 3 && scene3->getShowAngle()) {
+    if (sceneNumber == 3 && scene3->getShowAngle() && scene3->getBestAngle()) {
         painter.drawText(scene3->getCoordX(), scene3->getCoordY(),
-                         QString::number(scene3->getCurrentAngle(), 'f', 2));
+                         QString::number(scene3->getBestAngle(), 'f', 2));
     }
     if (sceneNumber == 6) {
         painter.drawText(scene6->getCoordX(-4)-5, scene6->getCoordY(7)-5,

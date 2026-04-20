@@ -29,9 +29,9 @@ double Scene3::getCoordY()
     return Y-y(coordY)-5;
 }
 
-double Scene3::getCurrentAngle() const
+double Scene3::getBestAngle() const
 {
-    return currentAngle;
+    return bestAngle;
 }
 
 int Scene3::getShowAngle() const
@@ -99,11 +99,12 @@ void Scene3::rayProcess(Beam beam)
             if (!(beam.getDistance() >= 0.84 && beam.getDistance() <= 0.88))
                 glColor3ub(r*0.5,g*0.5,b*0.5);
         } else {
-            if (!(beam.getDistance() >= -0.97 && beam.getDistance() <= -0.93))
+            if (!(beam.getDistance() >= -0.97 && beam.getDistance() <= -0.94))
                 glColor3ub(r*0.5,g*0.5,b*0.5);
         }
 
     Beam originalBeam = beam;
+    Beam bestRainbowBeam;
     Beam normal,
          refracted,
          reflected;
@@ -147,17 +148,23 @@ void Scene3::rayProcess(Beam beam)
         refracted.snellOut(normal);
         refracted.calculateInfinityPoint(x0,y0,&x2,&y2);
 
-        if (showAngle && (originalBeam.getDistance() >= 0.84 && originalBeam.getDistance() <= 0.88) ) {
-            Beam horizontal(0,1,2*DropRadius,0,DropRadius);
-            cross_ll(refracted,horizontal,&coordX,&coordY);
-            currentAngle = refracted.getAngle();
+        double bestDiff = 1e9;
+        double bestDistance = 0.86;
+        if (showAngle && (originalBeam.getDistance() >= bestDistance-0.02 && originalBeam.getDistance() <= bestDistance+0.02) ) {
+            double diff = fabs(originalBeam.getDistance() - bestDistance);
+            if (diff < bestDiff) {
+                bestDiff = diff;
+                Beam horizontal(0,1,2*DropRadius,0,DropRadius);
+                cross_ll(refracted,horizontal,&coordX,&coordY);
+                bestAngle = refracted.getAngle();
+            }
         }
 
         drawRay(x0,y0,x2,y2);
     } else {
         /// NEXT REFLECTION INSIDE
-        beam.reflect(normal);
-        beam.calculateOutputPoint(x0, y0, &x1, &y1);
+        reflected.reflect(normal);
+        reflected.calculateOutputPoint(x0, y0, &x1, &y1);
 
         drawRay(x0,y0,x1,y1);
 
@@ -171,16 +178,32 @@ void Scene3::rayProcess(Beam beam)
         refracted.snellOut(normal);
         refracted.calculateInfinityPoint(x0,y0,&x2,&y2);
 
-        if (showAngle && (originalBeam.getDistance() >= -0.97 && originalBeam.getDistance() <= -0.94) ) {
-            Beam horizontal(0,1,2*DropRadius,0,DropRadius);
-            cross_ll(refracted,horizontal,&coordX,&coordY);
-            currentAngle = refracted.getAngle();
+        double bestDiff = 1e9;
+        double bestDistance = -0.96;
+        if (showAngle && (originalBeam.getDistance() >= bestDistance-0.01 && originalBeam.getDistance() <= bestDistance+0.02) ) {
+            double diff = fabs(originalBeam.getDistance() - bestDistance);
+            if (diff < bestDiff) {
+                bestDiff = diff;
+                Beam horizontal(0,1,2*DropRadius,0,DropRadius);
+                cross_ll(refracted,horizontal,&coordX,&coordY);
+                bestAngle = refracted.getAngle();
+            }
         }
 
         drawRay(x0,y0,x2,y2);
     }
+}
 
-    if (showAngle) {
+void Scene3::display()
+{
+    drawDrop();
+    drawAxes();
+
+    bestAngle = 0;
+    for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)
+        rayProcess(*beam);
+
+    if (showAngle && getBestAngle()) {
         glColor3ub(255,255,255);
         glBegin(GL_LINES);
         glVertex2f(x(coordX),y(coordY));
@@ -190,12 +213,4 @@ void Scene3::rayProcess(Beam beam)
             glVertex2f(x(coordX)-100,y(coordY));
         glEnd();
     }
-}
-
-void Scene3::display()
-{
-    drawDrop();
-    drawAxes();
-    for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)
-        rayProcess(*beam);
 }

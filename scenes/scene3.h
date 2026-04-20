@@ -20,7 +20,7 @@ class Scene3 : public SceneBase
     int showAngle;
 
     double coordX, coordY, // point of crossing refracted beam with horizontal
-           currentAngle;
+           bestAngle;
 
     Beams beams;
 
@@ -41,7 +41,7 @@ public:
     void display();
     double getCoordX();
     double getCoordY();
-    double getCurrentAngle() const;
+    double getBestAngle() const;
     int getShowAngle() const;
 };
 
