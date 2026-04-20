@@ -62,7 +62,6 @@ void Scene1::rayProcess(Beam beam)
     int r,g,b;
 
     beam.calculateInputPoint(&x0, &y0);
-    normal.calculateCoeffs(x0,y0,0,0);
 
     /// ORIGINAL BEAM
     // this part should be drawn anyway
@@ -76,6 +75,8 @@ void Scene1::rayProcess(Beam beam)
         p -= 0.1; // low color intensity every beam split
         glColor3ub(r*p,g*p,b*p);
 
+        normal.calculateCoeffs(x0,y0,0,0); // need both for refraction and reflection
+
         if (displayMode == 0) { // only when displaying ALL
             reflected = beam;
             reflected.reflect(normal);
@@ -85,42 +86,49 @@ void Scene1::rayProcess(Beam beam)
         }
 
         /// FIRST REFRACTION
-        refracted = normal; // we're get reformed from radius
+        refracted = normal;
         refracted.snellIn(beam);
-        beam = refracted;
-        beam.calculateOutputPoint(x0, y0, &x1, &y1);
+        refracted.calculateOutputPoint(x0, y0, &x1, &y1);
 
         drawRay(x0,y0,x1,y1);
+
+        // refracted is our new base beam
+        beam = refracted;
+        x0=x1; y0=y1;
 
         for (int stepNumber=1; stepNumber < beamStep; stepNumber++) {
             p -= 0.1; // low color intensity every beam split
             glColor3ub(r*p,g*p,b*p);
 
-            /// REFRACTION OUTSIDE
-            normal.calculateCoeffs(x1,y1,0,0);
-            refracted = normal; // we're get reformed from radius again
-            refracted.snellOut(beam);
-            refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
+            normal.calculateCoeffs(x0,y0,0,0); // need both for refraction and reflection
 
             if ( (displayMode == 0) ||                          // ALL
                  ( (displayMode == 1) && (stepNumber == 2) ) || // 1st rainbow
                  ( (displayMode == 2) && (stepNumber == 3) )    // 2nd rainbow
                ) {
+                /// REFRACTION OUTSIDE
+                refracted = normal;
+                refracted.snellOut(beam);
+                refracted.calculateInfinityPoint(x0,y0,&x2,&y2);
 
-                drawRay(x1,y1,x2,y2);
+                drawRay(x0,y0,x2,y2);
             }
-
-            /// REFLECTION INSIDE
-            beam.reflect(normal);
-            x0=x1; y0=y1;
-            beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
             if ( (displayMode == 0) ||                          // ALL
                  ( (displayMode == 1) && (stepNumber == 1) ) || // 1st rainbow
                  ( (displayMode == 2) && (stepNumber <= 2) )    // 2nd rainbow
                ) {
+                /// REFLECTION INSIDE
+                reflected = beam;
+                reflected.reflect(normal);
+                reflected.calculateOutputPoint(x0, y0, &x1, &y1);
+
                 drawRay(x0,y0,x1,y1);
             }
+
+            // reflected is our new base beam
+            beam = reflected;
+            x0=x1; y0=y1;
         }
     }
 }
