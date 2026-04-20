@@ -229,4 +229,5 @@ void Scene7::display()
     drawDrop();
     drawAxes();
     rayProcess();
+    glLineWidth(1.0f);
 }

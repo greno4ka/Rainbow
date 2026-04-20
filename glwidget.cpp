@@ -98,7 +98,16 @@ void GLWidget::paintGL()
         painter.drawText(scene7->getCoordX(1), scene6->getCoordY(7),
                          QString("h"));
     }
-
+    if (sceneNumber == 7 && scene7->getDisplaymode()) {
+        painter.drawText(scene7->getCoordX(-6), scene6->getCoordY(-18),
+                         QString("α₁"));
+        painter.drawText(scene7->getCoordX(-1.5), scene6->getCoordY(-11),
+                         QString("α₂"));
+        painter.drawText(scene7->getCoordX(-9), scene6->getCoordY(-20),
+                         QString("φ"));
+        painter.drawText(scene7->getCoordX(0), scene6->getCoordY(-16),
+                         QString("h"));
+    }
 }
 
 void GLWidget::resizeGL(int w, int h)
