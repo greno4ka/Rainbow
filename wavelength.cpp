@@ -90,30 +90,30 @@ double whatAngle(double wave, int rainbowMode)
 
     /// penetration of beam into drop
     input.calculateInputPoint(&x0, &y0);
-    radius.calculateKoeffs(x0,y0,0,0);
+    radius.calculateCoeffs(x0,y0,0,0);
     refracted = radius;
-    refracted.snell(input,input.refractIn());
+    refracted.snellIn(input);
     input = refracted;
 
     /// first reflection
     input.calculateOutputPoint(x0, y0, &x1, &y1);
-    radius.calculateKoeffs(x1,y1,0,0);
+    radius.calculateCoeffs(x1,y1,0,0);
     input.reflect(radius);
     x0=x1; y0=y1;
 
     input.calculateOutputPoint(x0, y0, &x1, &y1);
-    radius.calculateKoeffs(x1,y1,0,0);
+    radius.calculateCoeffs(x1,y1,0,0);
     if (rainbowMode == 1) {
         refracted = radius;
-        refracted.snell(input,input.refractOut());
+        refracted.snellOut(input);
     } else {
         input.reflect(radius);
         x0=x1; y0=y1;
 
         input.calculateOutputPoint(x0, y0, &x1, &y1);
-        radius.calculateKoeffs(x1,y1,0,0);
+        radius.calculateCoeffs(x1,y1,0,0);
         refracted = radius;
-        refracted.snell(input,input.refractOut());
+        refracted.snellOut(input);
     }
     return refracted.getAngle();
 }

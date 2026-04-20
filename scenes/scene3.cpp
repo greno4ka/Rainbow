@@ -109,7 +109,7 @@ void Scene3::rayProcess(Beam beam)
          reflected(DropRadius);
 
     beam.calculateInputPoint(&x0, &y0);
-    radius.calculateKoeffs(x0,y0,0,0);
+    radius.calculateCoeffs(x0,y0,0,0);
 
     /// ORIGINAL BEAM
     // this part should be drawn anyway
@@ -117,14 +117,14 @@ void Scene3::rayProcess(Beam beam)
 
     /// FIRST REFRACTION
     refracted = radius;
-    refracted.snell(beam, beam.refractIn());
+    refracted.snellIn(beam);
     beam = refracted;
     beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
     drawRay(x0,y0,x1,y1);
 
     /// REFLECTION INSIDE
-    radius.calculateKoeffs(x1,y1,0,0);
+    radius.calculateCoeffs(x1,y1,0,0);
     beam.reflect(radius);
     x0=x1; y0=y1;
     beam.calculateOutputPoint(x0, y0, &x1, &y1);
@@ -133,9 +133,9 @@ void Scene3::rayProcess(Beam beam)
 
     if (displayMode == 1) {
         /// REFRACTION OUTSIDE
-        radius.calculateKoeffs(x1,y1,0,0);
+        radius.calculateCoeffs(x1,y1,0,0);
         refracted = radius;
-        refracted.snell(beam, beam.refractOut());
+        refracted.snellOut(beam);
         refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         if (showAngle && (originalBeam.getDistance() >= 0.84 && originalBeam.getDistance() <= 0.88) ) {
@@ -148,7 +148,7 @@ void Scene3::rayProcess(Beam beam)
         drawRay(x1,y1,x2,y2);
     } else {
         /// NEXT REFLECTION INSIDE
-        radius.calculateKoeffs(x1,y1,0,0);
+        radius.calculateCoeffs(x1,y1,0,0);
         beam.reflect(radius);
         x0=x1; y0=y1;
         beam.calculateOutputPoint(x0, y0, &x1, &y1);
@@ -156,9 +156,9 @@ void Scene3::rayProcess(Beam beam)
         drawRay(x0,y0,x1,y1);
 
         /// REFRACTION OUTSIDE
-        radius.calculateKoeffs(x1,y1,0,0);
+        radius.calculateCoeffs(x1,y1,0,0);
         refracted = radius;
-        refracted.snell(beam, beam.refractOut());
+        refracted.snellOut(beam);
         refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         if (showAngle && (originalBeam.getDistance() <= -0.94 && originalBeam.getDistance() >= -0.97) ) {

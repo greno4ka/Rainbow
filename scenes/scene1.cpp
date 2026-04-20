@@ -62,7 +62,7 @@ void Scene1::rayProcess(Beam beam)
     int r,g,b;
 
     beam.calculateInputPoint(&x0, &y0);
-    normal.calculateKoeffs(x0,y0,0,0);
+    normal.calculateCoeffs(x0,y0,0,0);
 
     /// ORIGINAL BEAM
     // this part should be drawn anyway
@@ -86,7 +86,7 @@ void Scene1::rayProcess(Beam beam)
 
         /// FIRST REFRACTION
         refracted = normal; // we're get reformed from radius
-        refracted.snell(beam, beam.refractIn());
+        refracted.snellIn(beam);
         beam = refracted;
         beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
@@ -97,9 +97,9 @@ void Scene1::rayProcess(Beam beam)
             glColor3ub(r*p,g*p,b*p);
 
             /// REFRACTION OUTSIDE
-            normal.calculateKoeffs(x1,y1,0,0);
+            normal.calculateCoeffs(x1,y1,0,0);
             refracted = normal; // we're get reformed from radius again
-            refracted.snell(beam, beam.refractOut());
+            refracted.snellOut(beam);
             refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
             if ( (displayMode == 0) ||                          // ALL

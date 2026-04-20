@@ -15,7 +15,7 @@ Beam::Beam(double A, double B, double C, double lambda, double radius)
     c = C;
     wavelength = lambda;
     r = radius;
-    normalizeKoeffs();
+    normalizeCoeffs();
     calculateAngle();
 }
 
@@ -54,7 +54,7 @@ double Beam::getDistance()
     return -c/r;
 }
 
-void Beam::normalizeKoeffs()
+void Beam::normalizeCoeffs()
 {
     if (b != 0) {
         a = a/b;
@@ -77,13 +77,13 @@ void Beam::calculateAngle()
         phi += 180.0;
 }
 
-void Beam::calculateKoeffs (double x1, double y1, double x2, double y2)
+void Beam::calculateCoeffs (double x1, double y1, double x2, double y2)
 {
     a = y1-y2;
     b = x2-x1;
     c = y2*x1-y1*x2;
 
-    normalizeKoeffs();
+    normalizeCoeffs();
     calculateAngle();
 }
 
@@ -124,7 +124,7 @@ void Beam::reflect (Beam A)
     this->rotate(A, 2*psi);
 }
 
-void Beam::snell (Beam Input, double k)
+void Beam::snell(Beam Input, double k)
 {
     double psi = phi-Input.phi;
     if (psi > 90) psi -= 180;
@@ -132,6 +132,16 @@ void Beam::snell (Beam Input, double k)
     double betta = (asin(sin((psi*M_PI)/180)/k)*180)/M_PI;
     this->rotate(Input, -betta);
     this->wavelength = Input.wavelength;
+}
+
+void Beam::snellIn(Beam Input)
+{
+    this->snell(Input, Input.refractIn());
+}
+
+void Beam::snellOut(Beam Input)
+{
+    this->snell(Input, Input.refractOut());
 }
 
 void Beam::calculateInputPoint(double *x0, double *y0)

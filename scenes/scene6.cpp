@@ -98,7 +98,7 @@ void Scene6::rayProcess()
     drawRay(x0,y0,x1,y1);
 
     refracted = normal;
-    refracted.snell(beam, beam.refractIn());
+    refracted.snellIn(beam);
     refracted.calculateOutputPoint(x0, y0, &x1, &y1);
     refracted.calculateInfinityPoint(x1, y1, &x2, &y2);
 

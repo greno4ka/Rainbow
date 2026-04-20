@@ -92,18 +92,18 @@ void Scene4::display()
     eyeX=x(ManPositionX)+6;
     eyeY=y(ManPositionY+ManHeight)+4;
 
-    rainEdge.calculateKoeffs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
+    rainEdge.calculateCoeffs(-1,0,-0.4,10); // - edge of rain \\\ DON'T TOUCH Y - vars!!!
 
     int beamNumber = 0;
     for (double i=0; i<=10; i+=10.0/(NumberOfBeams-1))
     {
-        sunLight.calculateKoeffs(0,i,1,i);
+        sunLight.calculateCoeffs(0,i,1,i);
 
         double dropX, dropY;
         cross_ll(rainEdge, sunLight, &dropX, &dropY);
         dropX+=sunlightPenetration[beamNumber++];
 
-        observed.calculateKoeffs(x(dropX), y(dropY), eyeX, eyeY);
+        observed.calculateCoeffs(x(dropX), y(dropY), eyeX, eyeY);
         /// ORIGINAL BEAMS
         glColor3ub(255,255,255);
         drawInitialRay(dropX,dropY);

@@ -19,6 +19,10 @@ class Beam
     constexpr static const double EPS = 0.000001;
     constexpr static const double INF = 100000;
 
+    void normalizeCoeffs(); // Make more familiar form: y=-a*x-c || x=-c
+    void snell(Beam Input, double k);
+    double refractOut();
+
 public:
     Beam();
     Beam(double A, double B, double C, double lambda, double radius);
@@ -32,9 +36,8 @@ public:
     void invertDistance();
     double getDistance();
 
-    void normalizeKoeffs(); // Make more familiar form: y=-a*x-c || x=-c
     void calculateAngle();
-    void calculateKoeffs(double x1, double y1, double x2, double y2);
+    void calculateCoeffs(double x1, double y1, double x2, double y2);
     void calculateInputPoint(double *x0, double *y0);
     void calculateOutputPoint(double x0, double y0, double *x1, double *y1);
     void calculateInfinityPoint(double x1, double y1, double *x2, double *y2,
@@ -49,12 +52,11 @@ public:
         *y = (A.c*B.a-B.c*A.a)/(A.a*B.b-B.a*A.b);
     }
 
+    void snellIn(Beam Input);
+    void snellOut(Beam Input);
     void rotate(Beam A, double psi);
     void reflect(Beam A);
-    void snell(Beam Input, double k);
-
     double refractIn();
-    double refractOut();
 };
 
 typedef QList<Beam> Beams;

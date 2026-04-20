@@ -105,7 +105,7 @@ void Scene7::rayProcess()
 
     /// ORIGINAL BEAM
     beam.calculateInputPoint(&x0, &y0);
-    radius.calculateKoeffs(x0,y0,0,0);
+    radius.calculateCoeffs(x0,y0,0,0);
 
     drawInitialRay(x0,y0);
 
@@ -125,7 +125,7 @@ void Scene7::rayProcess()
 
     /// FIRST REFRACTION
     refracted = radius; // we're get reformed from radius
-    refracted.snell(beam, beam.refractIn());
+    refracted.snellIn(beam);
     beam = refracted;
     beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
@@ -134,7 +134,7 @@ void Scene7::rayProcess()
     drawAngleArc(beam,radius,x0,y0,0.9,displayMode);
     drawAngleArc(beam,radius,x0,y0,1.1,displayMode);
 
-    radius.calculateKoeffs(x1,y1,0,0);
+    radius.calculateCoeffs(x1,y1,0,0);
     radius.calculateInfinityPoint(x1,y1,&x2,&y2,3);
 
     drawRadiusDash(x2,y2);
@@ -143,7 +143,7 @@ void Scene7::rayProcess()
     drawAngleArc(beam,radius,x1,y1,1.1,!displayMode);
 
     /// REFLECTION INSIDE
-    radius.calculateKoeffs(x1,y1,0,0);
+    radius.calculateCoeffs(x1,y1,0,0);
     beam.reflect(radius);
     x0=x1;
     y0=y1;
@@ -154,7 +154,7 @@ void Scene7::rayProcess()
     drawAngleArc(beam,radius,x0,y0,1.6,displayMode);
     drawAngleArc(beam,radius,x0,y0,1.4,displayMode);
 
-    radius.calculateKoeffs(x1,y1,0,0);
+    radius.calculateCoeffs(x1,y1,0,0);
     radius.calculateInfinityPoint(x1,y1,&x2,&y2,3);
 
     drawRadiusDash(x2,y2);
@@ -173,7 +173,7 @@ void Scene7::rayProcess()
 
     if (displayMode == 1) { // second rainbow mode
         /// REFLECTION INSIDE
-        radius.calculateKoeffs(x1,y1,0,0);
+        radius.calculateCoeffs(x1,y1,0,0);
         beam.reflect(radius);
         x0=x1;
         y0=y1;
@@ -184,7 +184,7 @@ void Scene7::rayProcess()
         drawAngleArc(beam,radius,x0,y0,0.9,!displayMode);
         drawAngleArc(beam,radius,x0,y0,1.1,!displayMode);
 
-        radius.calculateKoeffs(x1,y1,0,0);
+        radius.calculateCoeffs(x1,y1,0,0);
         radius.calculateInfinityPoint(x1,y1,&x2,&y2,3);
 
         drawRadiusDash(x2,y2);
@@ -194,9 +194,9 @@ void Scene7::rayProcess()
     }
 
     /// REFRACTION OUTSIDE
-    radius.calculateKoeffs(x1,y1,0,0);
+    radius.calculateCoeffs(x1,y1,0,0);
     refracted = radius; // we're get reformed from radius again
-    refracted.snell(beam, beam.refractOut());
+    refracted.snellOut(beam);
     refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
     drawRay(x1,y1,x2,y2);
@@ -206,7 +206,7 @@ void Scene7::rayProcess()
 
     if (displayMode == 0)
     {
-    tmp.calculateKoeffs(0,y1,x1,y1);
+    tmp.calculateCoeffs(0,y1,x1,y1);
         drawAngleArc(tmp,refracted,x1,y1,1.7,displayMode);
         drawAngleArc(tmp,refracted,x1,y1,1.5,displayMode);
         drawAngleArc(tmp,refracted,x1,y1,1.3,displayMode);

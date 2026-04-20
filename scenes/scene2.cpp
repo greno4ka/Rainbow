@@ -49,7 +49,7 @@ void Scene2::rayProcess(Beam beam)
     int r,g,b;
 
     beam.calculateInputPoint(&x0, &y0);
-    radius.calculateKoeffs(x0,y0,0,0);
+    radius.calculateCoeffs(x0,y0,0,0);
 
     /// Single color for all rays
     wavelengthToRGB(beam.getWavelength(),&r,&g,&b);
@@ -60,14 +60,14 @@ void Scene2::rayProcess(Beam beam)
 
     /// FIRST REFRACTION
     refracted = radius;
-    refracted.snell(beam, beam.refractIn());
+    refracted.snellIn(beam);
     beam = refracted;
     beam.calculateOutputPoint(x0, y0, &x1, &y1);
 
     drawRay(x0,y0,x1,y1);
 
     /// REFLECTION INSIDE
-    radius.calculateKoeffs(x1,y1,0,0);
+    radius.calculateCoeffs(x1,y1,0,0);
     beam.reflect(radius);
     x0=x1; y0=y1;
     beam.calculateOutputPoint(x0, y0, &x1, &y1);
@@ -76,15 +76,15 @@ void Scene2::rayProcess(Beam beam)
 
     if (displayMode == 1) { // 1st rainbow
         /// REFRACTION OUTSIDE
-        radius.calculateKoeffs(x1,y1,0,0);
+        radius.calculateCoeffs(x1,y1,0,0);
         refracted = radius;
-        refracted.snell(beam, beam.refractOut());
+        refracted.snellOut(beam);
         refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         drawRay(x1,y1,x2,y2);
     } else {                // 2nd rainbow
         /// NEXT REFLECTION INSIDE
-        radius.calculateKoeffs(x1,y1,0,0);
+        radius.calculateCoeffs(x1,y1,0,0);
         beam.reflect(radius);
         x0=x1; y0=y1;
         beam.calculateOutputPoint(x0, y0, &x1, &y1);
@@ -92,9 +92,9 @@ void Scene2::rayProcess(Beam beam)
         drawRay(x0,y0,x1,y1);
 
         /// REFRACTION OUTSIDE
-        radius.calculateKoeffs(x1,y1,0,0);
+        radius.calculateCoeffs(x1,y1,0,0);
         refracted = radius;
-        refracted.snell(beam, beam.refractOut());
+        refracted.snellOut(beam);
         refracted.calculateInfinityPoint(x1,y1,&x2,&y2);
 
         drawRay(x1,y1,x2,y2);
