@@ -65,7 +65,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>6</number>
           </property>
           <widget class="QWidget" name="page0">
            <layout class="QVBoxLayout" name="verticalLayout">
@@ -1054,7 +1054,7 @@
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="hLayout">
+         <layout class="QHBoxLayout" name="hLayout_menu">
           <item>
            <widget class="QPushButton" name="pushButton_settings">
             <property name="maximumSize">
@@ -1156,7 +1156,7 @@
         <item>
          <widget class="QStackedWidget" name="slideWidget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="slide0">
            <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1446,9 +1446,9 @@ of incedent radiation:</string>
           <widget class="QWidget" name="slide2">
            <layout class="QVBoxLayout" name="verticalLayout_19">
             <item>
-             <layout class="QHBoxLayout" name="hLayout_description_slide2">
+             <layout class="QHBoxLayout" name="hLayout_definition_slide2">
               <item>
-               <spacer name="hlSpacer_description_slide2">
+               <spacer name="hlSpacer_definition_slide2">
                 <property name="orientation">
                  <enum>Qt::Orientation::Horizontal</enum>
                 </property>
@@ -1463,7 +1463,7 @@ of incedent radiation:</string>
               <item>
                <layout class="QVBoxLayout" name="vLayout_description_slide2">
                 <item>
-                 <widget class="QLabel" name="label_description_slide2">
+                 <widget class="QLabel" name="label_definition_slide2">
                   <property name="font">
                    <font>
                     <pointsize>20</pointsize>
@@ -1500,7 +1500,7 @@ of incedent radiation:</string>
                </layout>
               </item>
               <item>
-               <spacer name="hrSpacer_description_slide2">
+               <spacer name="hrSpacer_definition_slide2">
                 <property name="orientation">
                  <enum>Qt::Orientation::Horizontal</enum>
                 </property>
@@ -1538,7 +1538,7 @@ of incedent radiation:</string>
                  <layout class="QHBoxLayout" name="glWidgetLayout_slide2"/>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_6">
+                 <widget class="QLabel" name="label_description_slide2">
                   <property name="font">
                    <font>
                     <pointsize>20</pointsize>
@@ -1552,7 +1552,7 @@ h – impact parameter
 r – radius of droplet</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -1577,12 +1577,12 @@ r – radius of droplet</string>
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_18">
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <layout class="QHBoxLayout" name="hLayout_qwt_slide2">
                   <item>
                    <widget class="QWidget" name="qwtWidget_slide2" native="true"/>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label">
+                   <widget class="QLabel" name="label_lambdas_slide2">
                     <property name="text">
                      <string>λ=410
 
@@ -1697,9 +1697,9 @@ parameter</string>
           <widget class="QWidget" name="slide3">
            <layout class="QVBoxLayout" name="verticalLayout_119">
             <item>
-             <layout class="QHBoxLayout" name="hLayout_description_slide3">
+             <layout class="QHBoxLayout" name="hLayout_definition_slide3">
               <item>
-               <spacer name="hlSpacer_description_slide3">
+               <spacer name="hlSpacer_definition_slide3">
                 <property name="orientation">
                  <enum>Qt::Orientation::Horizontal</enum>
                 </property>
@@ -1712,9 +1712,9 @@ parameter</string>
                </spacer>
               </item>
               <item>
-               <layout class="QVBoxLayout" name="vLayout_description_slide3">
+               <layout class="QVBoxLayout" name="vLayout_definition_slide3">
                 <item>
-                 <widget class="QLabel" name="label_description_slide3">
+                 <widget class="QLabel" name="label_definition_slide3">
                   <property name="font">
                    <font>
                     <pointsize>20</pointsize>
@@ -1726,9 +1726,9 @@ parameter</string>
                  </widget>
                 </item>
                 <item>
-                 <layout class="QHBoxLayout" name="hLayout_primary_slide3">
+                 <layout class="QHBoxLayout" name="hLayout_secondary_slide3">
                   <item>
-                   <widget class="QLabel" name="label_primary_slide3">
+                   <widget class="QLabel" name="label_secondary_slide3">
                     <property name="font">
                      <font>
                       <pointsize>20</pointsize>
@@ -1751,7 +1751,7 @@ parameter</string>
                </layout>
               </item>
               <item>
-               <spacer name="hrSpacer_description_slide3">
+               <spacer name="hrSpacer_definition_slide3">
                 <property name="orientation">
                  <enum>Qt::Orientation::Horizontal</enum>
                 </property>
@@ -1789,7 +1789,7 @@ parameter</string>
                  <layout class="QHBoxLayout" name="glWidgetLayout_slide3"/>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_116">
+                 <widget class="QLabel" name="label_description_slide3">
                   <property name="font">
                    <font>
                     <pointsize>20</pointsize>
@@ -1803,7 +1803,7 @@ h – impact parameter
 r – radius of droplet</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -1828,12 +1828,12 @@ r – radius of droplet</string>
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_118">
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_112">
+                 <layout class="QHBoxLayout" name="hLayout_qwt_slide3">
                   <item>
                    <widget class="QWidget" name="qwtWidget_slide3" native="true"/>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label111">
+                   <widget class="QLabel" name="label_lambdas_slide3">
                     <property name="text">
                      <string>λ=410
 
