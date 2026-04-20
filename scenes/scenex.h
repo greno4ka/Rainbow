@@ -37,7 +37,7 @@ class SceneX
     Beams beams;
 
     void drawWall();
-
+    void drawSingleRay(double a, double r, double timeSec);
     void drawAnimatedBeam(Beam beam, double t);
 
 protected:

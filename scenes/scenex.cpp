@@ -33,6 +33,7 @@ SceneX::SceneX()
     timer.start();
 }
 
+
 void drawSun(double cx, double cy, double cz, double radius)
 {
     const int segments = 50;
@@ -82,10 +83,54 @@ void SceneX::drawWall()
     glEnd();
 }
 
+void SceneX::drawSingleRay(double a, double r, double timeSec)
+{
+    // старт луча (точка на "солнце")
+    Vec3 p = {
+        sunCenter.x,
+        std::cos(a) * r,
+        sunCenter.z + std::sin(a) * r
+    };
+
+    double kSpeed=50;
+    double t = kSpeed * std::fmod(timeSec, 10.0);
+
+    // точка без ограничений (если бы стены не было)
+    Vec3 q_free = {
+        p.x + raysDirection.x * t,
+        p.y + raysDirection.y * t,
+        p.z + raysDirection.z * t
+    };
+
+    Vec3 q = q_free;
+
+    // пересечение со стеной (по X)
+    if (std::abs(raysDirection.x) > 1e-9)
+    {
+        double t_hit = (wallCenter.x - p.x) / raysDirection.x;
+
+        if (t_hit >= 0.0 && t_hit < t)
+        {
+            q = {
+                p.x + raysDirection.x * t_hit,
+                p.y + raysDirection.y * t_hit,
+                p.z + raysDirection.z * t_hit
+            };
+        }
+    }
+
+    glColor3f(1.0f, 1.0f, 0.2f);
+    glBegin(GL_LINES);
+    glVertex3d(p.x, p.y, p.z);
+    glVertex3d(q.x, q.y, q.z);
+        glEnd();
+}
 
 void SceneX::display()
 {
     double t = fmod(timer.elapsed() / 1000.0, 5.0);
+
+    double timeSec = timer.elapsed() / 1000.0;
 
     double speed = 50.0;
 
@@ -130,66 +175,8 @@ void SceneX::display()
 
     drawSun(-100.0, 0.0, 50.0, 10.0);
 
-    glColor3f(1.0f, 1.0f, 0.2f);
-    glBegin(GL_LINES);
-
-
     for (int i = 0; i < 100; i++)
-    {
-        double a = raysAngle[i];
-        double r = raysRadius[i];
-
-        Vec3 dir = normalize(raysDirection);
-
-        Vec3 p = {
-            sunCenter.x,
-            cos(a) * r,
-            sunCenter.z + sin(a) * r
-        };
-
-        double t = speed * fmod(timer.elapsed() / 1000.0, 10.0);
-
-        Vec3 q = {
-            p.x + dir.x * t,
-            p.y + dir.y * t,
-            p.z + dir.z * t
-        };
-
-
-        if (dir.x != 0.0)
-        {
-            double t_hit = (wallCenter.x - p.x) / dir.x;
-
-
-            if (t < t_hit)
-            {
-                q = {
-                    p.x + dir.x * t,
-                    p.y + dir.y * t,
-                    p.z + dir.z * t
-                };
-            }
-            else
-            {
-
-                q = {
-                    p.x + dir.x * t_hit,
-                    p.y + dir.y * t_hit,
-                    p.z + dir.z * t_hit
-                };
-            }
-        }
-
-        glVertex3d(p.x, p.y, p.z);
-        glVertex3d(q.x, q.y, q.z);
-    }
-    glEnd();
-
-}
-
-void SceneX::drawAnimatedBeam(Beam beam, double t)
-{
-
+        drawSingleRay(raysAngle[i], raysRadius[i], timeSec);
 }
 
 void SceneX::updateXY(int newX, int newY)
