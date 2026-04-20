@@ -22,6 +22,7 @@ public:
     Scene7();
 
     void setDisplayMode(int newDisplayMode);
+    int getDisplaymode();
 
     double getCoordX(double x0);
     double getCoordY(double y0);

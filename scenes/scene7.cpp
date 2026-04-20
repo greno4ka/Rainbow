@@ -24,6 +24,11 @@ void Scene7::setDisplayMode(int newDisplayMode)
     displayMode = newDisplayMode;
 }
 
+int Scene7::getDisplaymode()
+{
+    return displayMode;
+}
+
 double Scene7::getCoordX(double x0)
 {
     return x(x0);
@@ -103,6 +108,14 @@ void Scene7::rayProcess()
     radius.calculateKoeffs(x0,y0,0,0);
 
     drawInitialRay(x0,y0);
+
+    glEnable(GL_LINE_STIPPLE);
+    glLineStipple(4, 0xFF00);
+    glBegin(GL_LINES);
+    glVertex2f(x(0),y(y0));
+    glVertex2f(x(x0),y(y0));
+    glEnd();
+    glDisable(GL_LINE_STIPPLE);
 
     radius.calculateInfinityPoint(x0,y0,&x2,&y2,3);
 

@@ -125,6 +125,9 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     ui->qwtWidget_slide3->setLayout(new QVBoxLayout());
     ui->qwtWidget_slide3->layout()->addWidget(createSecondaryRainbowPlot());
 
+    mathToLabel(ui->label_snell2_slide1, "$n_1 \\cdot \\sin(\\alpha_1) = n_2 \\cdot \\sin(\\alpha_2)$",300,30);
+    mathToLabel(ui->label_snell3_slide1, "$n_1 < n_2$",100,30);
+
     mathToLabel(ui->label_formula1_slide2, "$\\varphi = 4\\alpha_2 - 2\\alpha_1\\ \\ ;\\ \\ \\varphi = 4\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$");
     mathToLabel(ui->label_formula2_slide2, "$y = \\frac{h}{r}$", 100,100);
 

@@ -79,15 +79,26 @@ void GLWidget::paintGL()
                          QString::number(scene3->getCurrentAngle(), 'f', 2));
     }
     if (sceneNumber == 6) {
-        painter.drawText(scene6->getCoordX(-4.5), scene6->getCoordY(10),
-                         QString("θ₁"));
+        painter.drawText(scene6->getCoordX(-4)-5, scene6->getCoordY(7)-5,
+                         QString("α₁"));
         painter.drawText(scene6->getCoordX(3), scene6->getCoordY(-4.5),
-                         QString("θ₂"));
+                         QString("α₂"));
         painter.drawText(scene6->getCoordX(-15), scene6->getCoordY(7),
                          QString("n₁"));
         painter.drawText(scene6->getCoordX(-15), scene6->getCoordY(-7),
                          QString("n₂"));
     }
+    if (sceneNumber == 7 && !scene7->getDisplaymode()) {
+        painter.drawText(scene7->getCoordX(-6), scene6->getCoordY(10),
+                         QString("α₁"));
+        painter.drawText(scene7->getCoordX(-1.5), scene6->getCoordY(5),
+                         QString("α₂"));
+        painter.drawText(scene7->getCoordX(-3), scene6->getCoordY(-20),
+                         QString("φ"));
+        painter.drawText(scene7->getCoordX(1), scene6->getCoordY(7),
+                         QString("h"));
+    }
+
 }
 
 void GLWidget::resizeGL(int w, int h)

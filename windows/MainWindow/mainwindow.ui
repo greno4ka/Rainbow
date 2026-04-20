@@ -1156,7 +1156,7 @@
         <item>
          <widget class="QStackedWidget" name="slideWidget">
           <property name="currentIndex">
-           <number>3</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="slide0">
            <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1170,7 +1170,7 @@
            </layout>
           </widget>
           <widget class="QWidget" name="slide1">
-           <layout class="QVBoxLayout" name="verticalLayout_17">
+           <layout class="QVBoxLayout" name="verticalLayout_20">
             <item>
              <spacer name="vtSpacer_slide1">
               <property name="orientation">
@@ -1252,7 +1252,7 @@ with continuously varying properties.</string>
              </spacer>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="hLayout_media_slide1">
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
                <spacer name="hlSpacer_media_slide1">
                 <property name="orientation">
@@ -1270,7 +1270,7 @@ with continuously varying properties.</string>
                </spacer>
               </item>
               <item>
-               <layout class="QVBoxLayout" name="vLayout_snell_slide1">
+               <layout class="QVBoxLayout" name="verticalLayout_17">
                 <item>
                  <widget class="QLabel" name="label_snell1_slide1">
                   <property name="font">
@@ -1279,31 +1279,92 @@ with continuously varying properties.</string>
                    </font>
                   </property>
                   <property name="text">
-                   <string>Snell law:
-n₁·sin(θ₁) = n₂·sin(θ₂)</string>
+                   <string>Snell law:</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
                   </property>
                  </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_5">
+                  <item>
+                   <spacer name="horizontalSpacer_3">
+                    <property name="orientation">
+                     <enum>Qt::Orientation::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_snell2_slide1">
+                    <property name="text">
+                     <string>Here should be a math forfula</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_5">
+                    <property name="orientation">
+                     <enum>Qt::Orientation::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
                 </item>
                 <item>
                  <layout class="QHBoxLayout" name="glWidgetLayout_slide1"/>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_snell2_slide1">
-                  <property name="font">
-                   <font>
-                    <pointsize>20</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>n₁ &lt; n₂</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignCenter</set>
-                  </property>
-                 </widget>
+                 <layout class="QHBoxLayout" name="horizontalLayout_4">
+                  <item>
+                   <spacer name="horizontalSpacer_4">
+                    <property name="orientation">
+                     <enum>Qt::Orientation::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_snell3_slide1">
+                    <property name="text">
+                     <string>Here should be a math forfula</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_9">
+                    <property name="orientation">
+                     <enum>Qt::Orientation::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </item>
