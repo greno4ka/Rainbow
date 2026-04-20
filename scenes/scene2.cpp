@@ -49,7 +49,7 @@ void Scene2::rayProcess(Beam beam)
     int r,g,b;
 
     beam.calculateInputPoint(&x0, &y0);
-    normal = beam;
+    normal = beam; // copy radius and !wavelength! attributes
     normal.calculateCoeffs(x0,y0,0,0);
 
     /// Single color for all rays

@@ -105,7 +105,7 @@ void Scene7::rayProcess()
 
     /// ORIGINAL BEAM
     beam.calculateInputPoint(&x0, &y0);
-    normal = beam;
+    normal = beam; // copy radius and !wavelength! attributes
     normal.calculateCoeffs(x0,y0,0,0);
 
     drawInitialRay(x0,y0);

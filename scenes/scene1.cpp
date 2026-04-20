@@ -59,12 +59,13 @@ void Scene1::rayProcess(Beam beam)
 
     int r,g,b;
 
-    beam.calculateInputPoint(&x0, &y0);
-
     /// ORIGINAL BEAM
     // this part should be drawn anyway
     wavelengthToRGB(beam.getWavelength(),&r,&g,&b);
     glColor3ub(r*p,g*p,b*p);
+
+    beam.calculateInputPoint(&x0, &y0);
+
     drawInitialRay(x0,y0);
 
     if (beamStep > 0) {

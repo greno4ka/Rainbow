@@ -67,7 +67,7 @@ void Scene5::rayProcess(Beam beam)
          reflected;
 
     beam.calculateInputPoint(&x0, &y0);
-    normal = beam;
+    normal = beam; // copy radius and !wavelength! attributes
     normal.calculateCoeffs(x0,y0,0,0);
 
     glColor3ub(255,255,255);
