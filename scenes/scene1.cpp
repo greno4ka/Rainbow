@@ -4,25 +4,12 @@ Scene1::Scene1()
 {
     displayMode = 0;
     beamStep = 0;
-
-    wavelength = SCENE1_WAVELENGTH_600;
-    distance = SCENE1_DISTANCE_08;
 }
 
 void Scene1::setDisplayMode(int newDisplayMode)
 {
     displayMode = newDisplayMode;
     emit requestUpdate();
-}
-
-void Scene1::setWavelength(int newWavelength)
-{
-    wavelength = newWavelength;
-}
-
-void Scene1::setDistance(double newDistance)
-{
-    distance = newDistance;
 }
 
 void Scene1::addBeam(double newDistance, int newWavelength)

@@ -3,25 +3,21 @@
 
 void MainWindow::on_doubleSpinBox_dist_page1_valueChanged(double value)
 {
-    scene1->setDistance(value);
     ui->horizontalSlider_dist_page1->setValue(value*100);
 }
 
 void MainWindow::on_horizontalSlider_dist_page1_valueChanged(int value)
 {
-    scene1->setDistance((double)value/100);
     ui->doubleSpinBox_dist_page1->setValue((double)value/100);
 }
 
 void MainWindow::on_spinBox_wave_page1_valueChanged(int value)
 {
-    scene1->setWavelength(value);
     ui->horizontalSlider_wave_page1->setValue(value);
 }
 
 void MainWindow::on_horizontalSlider_wave_page1_valueChanged(int value)
 {
-    scene1->setWavelength(value);
     ui->spinBox_wave_page1->setValue(value);
 }
 
