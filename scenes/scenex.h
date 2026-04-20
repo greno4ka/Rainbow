@@ -8,21 +8,20 @@
 
 #include <QElapsedTimer>
 
-struct Vec3 {
-    double x, y, z;
-};
+#include <QVector3D>
+
+typedef QList<QVector3D> QVector3Ds;
 
 class SceneX
 {
-    Vec3 eyeCenter;
-    Vec3 sunCenter;
-    Vec3 wallCenter;
-    Vec3 raysDirection;
+    QVector3D eyeCenter;
+    QVector3D sunCenter;
+    QVector3D wallCenter;
+    QVector3D raysDirection;
 
+    QVector3Ds sunPoints;
 
-    std::vector<Vec3> raysStart;
-    std::vector<double> raysAngle;
-    std::vector<double> raysRadius;
+    double sunRadius;
 
     QElapsedTimer timer;
 
@@ -36,8 +35,9 @@ class SceneX
 
     Beams beams;
 
+    void drawSun(double cx, double cy, double cz);
     void drawWall();
-    void drawSingleRay(double a, double r, double timeSec);
+    void drawSingleRay(QVector3D sunPoint, double timeSec);
     void drawAnimatedBeam(Beam beam, double t);
 
 protected:
@@ -46,6 +46,9 @@ protected:
 
 public:
     SceneX();
+
+    QVector3D generateSunPoint();
+    void addBeams(int numberOfAddedBeams);
 
     void updateXY(int newX, int newY);
     void display();

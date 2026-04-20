@@ -1,10 +1,18 @@
 #include "scenex.h"
 
-
-Vec3 normalize(Vec3 v)
+QVector3D SceneX::generateSunPoint()
 {
-    double len = sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
-    return { v.x/len, v.y/len, v.z/len };
+    double randAngle = (double)rand() / RAND_MAX * 2.0 * M_PI;
+    double randRadius = sqrt((double)rand() / RAND_MAX) * sunRadius;
+
+    return QVector3D(sunCenter.x(), sunCenter.y() + std::cos(randAngle)*randRadius, sunCenter.z() + std::sin(randAngle)*randRadius);
+}
+
+void SceneX::addBeams(int numberOfAddedBeams)
+{
+    for (int i=0; i < numberOfAddedBeams; i++)
+        sunPoints.push_back(generateSunPoint());
+    numberOfBeams+=numberOfAddedBeams;
 }
 
 
@@ -13,28 +21,21 @@ SceneX::SceneX()
     X = 800;
     Y = 600;
 
+    sunRadius = 10;
+
     sunCenter = { -100.0, 0.0, 50.0 };
     wallCenter = { 0.0, 0.0, 6.0 };
 
-    raysDirection = {
-        wallCenter.x - sunCenter.x,
-        wallCenter.y - sunCenter.y,
-        wallCenter.z - sunCenter.z
-    };
+    raysDirection = wallCenter - sunCenter;
+    raysDirection.normalize();
 
-    raysDirection = normalize(raysDirection);
-
-    for (int i = 0; i < 100; i++)
-    {
-        raysAngle.push_back((double)rand() / RAND_MAX * 2.0 * M_PI);
-        raysRadius.push_back(sqrt((double)rand() / RAND_MAX) * 10.0);
-    }
+    addBeams(100);
 
     timer.start();
 }
 
 
-void drawSun(double cx, double cy, double cz, double radius)
+void SceneX::drawSun(double cx, double cy, double cz)
 {
     const int segments = 50;
 
@@ -48,8 +49,8 @@ void drawSun(double cx, double cy, double cz, double radius)
     for (int i = 0; i <= segments; i++)
     {
         double angle = 2.0 * M_PI * i / segments;
-        double y = cy + cos(angle) * radius;
-        double z = cz + sin(angle) * radius;
+        double y = cy + cos(angle) * sunRadius;
+        double z = cz + sin(angle) * sunRadius;
 
         glVertex3d(cx, y, z);
     }
@@ -64,15 +65,15 @@ void SceneX::drawWall()
 
     glColor3f(0.7f, 0.7f, 1.0f);
 
-    double x = wallCenter.x;
-    double y0 = wallCenter.y - wallH;
-    double y1 = wallCenter.y + wallH;
-    double z0 = wallCenter.z - wallW;
-    double z1 = wallCenter.z + wallW;
+    double x = wallCenter.x();
+    double y0 = wallCenter.y() - wallH;
+    double y1 = wallCenter.y() + wallH;
+    double z0 = wallCenter.z() - wallW;
+    double z1 = wallCenter.z() + wallW;
 
     glBegin(GL_TRIANGLE_FAN);
 
-    glVertex3d(x, wallCenter.y, wallCenter.z);
+    glVertex3d(x, wallCenter.y(), wallCenter.z());
 
     glVertex3d(x, y0, z0);
     glVertex3d(x, y0, z1);
@@ -83,46 +84,40 @@ void SceneX::drawWall()
     glEnd();
 }
 
-void SceneX::drawSingleRay(double a, double r, double timeSec)
+void SceneX::drawSingleRay(QVector3D sunPoint, double timeSec)
 {
-    // старт луча (точка на "солнце")
-    Vec3 p = {
-        sunCenter.x,
-        std::cos(a) * r,
-        sunCenter.z + std::sin(a) * r
-    };
 
     double kSpeed=50;
     double t = kSpeed * std::fmod(timeSec, 10.0);
 
     // точка без ограничений (если бы стены не было)
-    Vec3 q_free = {
-        p.x + raysDirection.x * t,
-        p.y + raysDirection.y * t,
-        p.z + raysDirection.z * t
+    QVector3D q_free = {
+        sunPoint.x() + raysDirection.x() * t,
+        sunPoint.y() + raysDirection.y() * t,
+        sunPoint.z() + raysDirection.z() * t
     };
 
-    Vec3 q = q_free;
+    QVector3D q = q_free;
 
     // пересечение со стеной (по X)
-    if (std::abs(raysDirection.x) > 1e-9)
+    if (std::abs(raysDirection.x()) > 1e-9)
     {
-        double t_hit = (wallCenter.x - p.x) / raysDirection.x;
+        double t_hit = (wallCenter.x() - sunPoint.x()) / raysDirection.x();
 
         if (t_hit >= 0.0 && t_hit < t)
         {
             q = {
-                p.x + raysDirection.x * t_hit,
-                p.y + raysDirection.y * t_hit,
-                p.z + raysDirection.z * t_hit
+                sunPoint.x() + raysDirection.x() * t_hit,
+                sunPoint.y() + raysDirection.y() * t_hit,
+                sunPoint.z() + raysDirection.z() * t_hit
             };
         }
     }
 
     glColor3f(1.0f, 1.0f, 0.2f);
     glBegin(GL_LINES);
-    glVertex3d(p.x, p.y, p.z);
-    glVertex3d(q.x, q.y, q.z);
+    glVertex3d(sunPoint.x(), sunPoint.y(), sunPoint.z());
+    glVertex3d(q.x(), q.y(), q.z());
         glEnd();
 }
 
@@ -173,10 +168,10 @@ void SceneX::display()
     glVertex3d( 0, 10, 0);
     glEnd();
 
-    drawSun(-100.0, 0.0, 50.0, 10.0);
+    drawSun(-100.0, 0.0, 50.0);
 
-    for (int i = 0; i < 100; i++)
-        drawSingleRay(raysAngle[i], raysRadius[i], timeSec);
+    for (QVector3Ds::iterator sunPoint=sunPoints.begin(); sunPoint!=sunPoints.end(); sunPoint++)
+        drawSingleRay(*sunPoint, timeSec);
 }
 
 void SceneX::updateXY(int newX, int newY)
