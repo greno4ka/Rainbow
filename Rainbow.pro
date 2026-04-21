@@ -28,6 +28,7 @@ SOURCES += main.cpp \
     windows/MainWindow/mainwindow_page3.cpp \
     windows/MainWindow/mainwindow_page4.cpp \
     windows/MainWindow/mainwindow_page5.cpp \
+    windows/MainWindow/mainwindow_page6.cpp \
     scenes/scene1.cpp \
     scenes/scene2.cpp \
     scenes/scene3.cpp \
