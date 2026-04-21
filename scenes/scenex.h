@@ -17,9 +17,9 @@ class SceneX
 {
     inline static const QVector3D SunColor = QVector3D(255, 255, 230);
     static const int ImageQuality = 100; // quality of drawing circles (drops, clouds...)
-    static const int SunRadius = 15;
-    static const int SunDistance = 100;
-    static const int EyeDistance = 10;
+    static const int SunRadius = 200;
+    static const int SunDistance = 10000;
+    static const int EyeDistance = 100;
 
     static constexpr double AnimationDurability = 2.0; // 2 seconds
 
@@ -28,7 +28,7 @@ class SceneX
 
     QVector3D eyeCenter;
     QVector3D sunCenter;
-    QVector3D wallCenter;
+    QVector3D raysDestination;
     QVector3D raysDirection;
 
     QVector3Ds sunPoints;
@@ -46,12 +46,18 @@ class SceneX
     void drawSurface();
     void drawSun();
     void drawWall();
+    void drawRay(QVector3D& startPoint, QVector3D& endPoint, QVector3D color);
     void drawSingleRay(const QVector3D& sunPoint,
                        const QVector3D& wallPoint,
                        const QVector3D color,
                        double timeSec);
 
-    void drawColoredDrop(const QVector3D& center, float radius, const QVector3D& color);
+    void drawWaterSpherePatch();
+    void calculateSpherePoints();
+    void drawSunGlow();
+    void drawLensFlare();
+
+    void drawSphere(const QVector3D& center, float radius, const QVector3D& color, int stacks, int slices);
 
 protected:
     int X, Y; // Window height and width
