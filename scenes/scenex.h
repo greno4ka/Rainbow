@@ -17,9 +17,14 @@ class SceneX
 {
     inline static const QVector3D SunColor = QVector3D(255, 255, 230);
     static const int ImageQuality = 100; // quality of drawing circles (drops, clouds...)
-    static const int SunRadius = 10;
+    static const int SunRadius = 15;
     static const int SunDistance = 100;
     static const int EyeDistance = 10;
+
+    static constexpr double AnimationDurability = 2.0; // 2 seconds
+
+    QElapsedTimer timer;
+    double rayAnimationStartTime = 0.0;
 
     QVector3D eyeCenter;
     QVector3D sunCenter;
@@ -32,18 +37,21 @@ class SceneX
     bool isPolychromatic;
     bool showBeams;
 
-    QElapsedTimer timer;
 
     double time = 0.0;
 
 
     int totalNumberOfBeams;
+    void drawGrid();
+    void drawSurface();
     void drawSun();
     void drawWall();
     void drawSingleRay(const QVector3D& sunPoint,
                        const QVector3D& wallPoint,
                        const QVector3D color,
                        double timeSec);
+
+    void drawColoredDrop(const QVector3D& center, float radius, const QVector3D& color);
 
 protected:
     int X, Y; // Window height and width
@@ -63,9 +71,6 @@ public:
     void setSunHeight(int newSunHeight);
     void setEyeHeight(int newEyeHeight);
 
-    void drawSphere(const QVector3D& c,
-                            float r,
-                            const QVector3D& color);
 
     void addBeams();
     void reInitializeScene();

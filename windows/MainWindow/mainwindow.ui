@@ -901,6 +901,9 @@
               </item>
               <item>
                <widget class="QSlider" name="verticalSlider_sun_position_page6">
+                <property name="value">
+                 <number>50</number>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Orientation::Vertical</enum>
                 </property>
@@ -945,6 +948,18 @@
               </item>
               <item>
                <widget class="QSlider" name="verticalSlider_eye_position_page6">
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>20</number>
+                </property>
+                <property name="pageStep">
+                 <number>1</number>
+                </property>
+                <property name="value">
+                 <number>1</number>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Orientation::Vertical</enum>
                 </property>

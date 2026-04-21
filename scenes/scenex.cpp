@@ -13,6 +13,8 @@ void SceneX::setPolychromatic(bool newPolychromatic)
 void SceneX::setSunHeight(int newSunHeight)
 {
     sunCenter = { -SunDistance, 0.0, newSunHeight };
+    raysDirection = wallCenter - sunCenter;
+    raysDirection.normalize();
     reInitializeScene();
 }
 
@@ -85,9 +87,9 @@ SceneX::SceneX()
     X = 800;
     Y = 600;
 
-    sunCenter = { -SunDistance, 0.0, 20.0 };
-    eyeCenter = { -EyeDistance, 0.0, 0.0 };
-    wallCenter = { 0.0001, 0.0, 6.0 };
+    sunCenter = { -SunDistance, 0.0, 50.0 };
+    eyeCenter = { -EyeDistance, 0.0, 1.0 };
+    wallCenter = { 0.0, 0.0, 5.0 };
 
     raysDirection = wallCenter - sunCenter;
     raysDirection.normalize();
@@ -146,9 +148,6 @@ void SceneX::drawSingleRay(const QVector3D& sunPoint,
                            const QVector3D color,
                            double timeSec)
 {
-    double kSpeed = 100.0;
-    double t = kSpeed * std::fmod(timeSec, 10.0);
-
     QVector3D beamPath = (wallPoint - sunPoint);
     double len = beamPath.length();
 
@@ -157,7 +156,10 @@ void SceneX::drawSingleRay(const QVector3D& sunPoint,
 
     beamPath /= len;
 
-    double dist = std::min(t, len);
+    double travelTime = 2.0; // секунды на полный путь
+
+    double progress = std::min(timeSec / travelTime, 1.0);
+    double dist = len * progress;
 
     QVector3D movingPoint = sunPoint + beamPath * dist;
 
@@ -168,17 +170,57 @@ void SceneX::drawSingleRay(const QVector3D& sunPoint,
     glEnd();
 }
 
-void SceneX::drawSphere(const QVector3D& c,
-                        float r,
-                        const QVector3D& color)
+
+void SceneX::display()
+{
+    double timeSec = timer.elapsed() / 1000.0;
+
+    drawGrid();
+    drawWall();
+    drawSurface();
+
+    drawSun();
+
+    glLineWidth(2.0f);
+    for (int i = 0; i < sunPoints.size(); i++) {
+        if (showBeams)
+            drawSingleRay(sunPoints[i], wallPoints[i], SunColor, timeSec);
+        double phi = calculateAngle(sunPoints[i], wallPoints[i],eyeCenter);
+        phi = std::abs(phi);
+        if ((phi >= whatAngle(380,1) && phi <= whatAngle(780,1)) || (phi >= whatAngle(780,2) && phi <= whatAngle(380,2)))
+        {
+            int r, g, b;
+            if (phi<=whatAngle(780,1))
+                wavelengthToRGB(whatWave(phi,1),&r,&g,&b);
+            else wavelengthToRGB(whatWave(phi,2),&r,&g,&b);
+            glColor3ub(r,g,b);
+            //glPointSize(10.0f);
+            //glBegin(GL_POINTS);
+            //glVertex3f(wallPoints[i].x(), wallPoints[i].y(), wallPoints[i].z());
+            //glEnd();
+            drawColoredDrop(wallPoints[i], 0.05f, QVector3D(r, g, b));
+            if (showBeams)
+            drawSingleRay(wallPoints[i], eyeCenter, QVector3D(r,g,b), timeSec);
+        }
+    }
+
+    glLineWidth(1.0f);
+}
+
+void SceneX::updateXY(int newX, int newY)
+{
+    X = newX;
+    Y = newY;
+}
+
+void SceneX::drawColoredDrop(const QVector3D& center, float radius, const QVector3D& color)
 {
     glColor3ub(color.x(), color.y(), color.z());
 
     const int stacks = 6;
     const int slices = 8;
 
-    for (int i = 0; i < stacks; i++)
-    {
+    for (int i = 0; i < stacks; i++) {
         float lat0 = M_PI * (-0.5f + (float)i / stacks);
         float lat1 = M_PI * (-0.5f + (float)(i + 1) / stacks);
 
@@ -189,34 +231,29 @@ void SceneX::drawSphere(const QVector3D& c,
         float zr1 = cos(lat1);
 
         glBegin(GL_QUAD_STRIP);
-        for (int j = 0; j <= slices; j++)
-        {
+        for (int j = 0; j <= slices; j++) {
             float lng = 2 * M_PI * j / slices;
             float x = cos(lng);
             float y = sin(lng);
 
             glVertex3f(
-                c.x() + r * x * zr0,
-                c.y() + r * y * zr0,
-                c.z() + r * z0
+                center.x() + radius * x * zr0,
+                center.y() + radius * y * zr0,
+                center.z() + radius * z0
                 );
 
             glVertex3f(
-                c.x() + r * x * zr1,
-                c.y() + r * y * zr1,
-                c.z() + r * z1
+                center.x() + radius * x * zr1,
+                center.y() + radius * y * zr1,
+                center.z() + radius * z1
                 );
         }
         glEnd();
     }
 }
 
-
-void SceneX::display()
+void SceneX::drawGrid()
 {
-    double timeSec = timer.elapsed() / 1000.0;
-
-    // draw grid
     double MAX = 1000; // Length of half of field
     glColor3f(0.5f, 1.0f, 0.5f);
     glBegin(GL_LINES);
@@ -233,12 +270,11 @@ void SceneX::display()
     glVertex3d( 0, 0, MAX);
     glVertex3d( -MAX, 0, 0.0);
     glVertex3d( MAX, 0, 0.0);
-
     glEnd();
+}
 
-    drawWall();
-
-    // surface
+void SceneX::drawSurface()
+{
     glColor3f(0.3f, 0.3f, 0.3f);
     glBegin(GL_TRIANGLE_FAN);
     glVertex3d( 0, 0, 0);
@@ -247,36 +283,4 @@ void SceneX::display()
     glVertex3d( -20, 10, 0);
     glVertex3d( 0, 10, 0);
     glEnd();
-
-    drawSun();
-
-    glLineWidth(2.0f);
-    for (int i = 0; i < sunPoints.size(); i++) {
-        if (showBeams)
-            drawSingleRay(sunPoints[i], wallPoints[i], SunColor, timeSec);
-        double phi = calculateAngle(sunPoints[i], wallPoints[i],eyeCenter);
-        if ((phi >= whatAngle(380,1) && phi <= whatAngle(780,1)) || (phi >= whatAngle(780,2) && phi <= whatAngle(380,2)))
-        {
-            int r, g, b;
-            if (phi<=whatAngle(780,1))
-                wavelengthToRGB(whatWave(phi,1),&r,&g,&b);
-            else wavelengthToRGB(whatWave(phi,2),&r,&g,&b);
-            glColor3ub(r,g,b);
-            //glPointSize(10.0f);
-            //glBegin(GL_POINTS);
-            //glVertex3f(wallPoints[i].x(), wallPoints[i].y(), wallPoints[i].z());
-            //glEnd();
-            drawSphere(wallPoints[i], 0.05f, QVector3D(r, g, b));
-            if (showBeams)
-            drawSingleRay(wallPoints[i], eyeCenter, QVector3D(r,g,b), timeSec);
-        }
-    }
-
-    glLineWidth(1.0f);
-}
-
-void SceneX::updateXY(int newX, int newY)
-{
-    X = newX;
-    Y = newY;
 }

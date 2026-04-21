@@ -40,4 +40,5 @@ void MainWindow::on_pushButton_add_beams_page6_clicked()
 void MainWindow::on_pushButton_reset_settings_page6_clicked()
 {
     scenex->resetScene();
+
 }
