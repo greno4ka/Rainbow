@@ -165,6 +165,9 @@ private slots:
     void on_spinBox_number_of_beams_page6_valueChanged(int value);
     void on_pushButton_add_beams_page6_clicked();
     void on_pushButton_reset_settings_page6_clicked();
+    void on_radioButton_fly_to_eye_page6_clicked();
+    void on_radioButton_back_to_god_page6_clicked();
+    void on_pushButton_reset_camera_page6_clicked();
 };
 
 #endif // MAINWINDOW_H

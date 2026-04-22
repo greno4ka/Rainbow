@@ -306,7 +306,15 @@ void SceneX::display()
             else
                 wavelengthToRGB(whatWave(phi,2), &r, &g, &b);
 
-            drawSphere(wallPoints[i], 0.5f, QVector3D(r,g,b), 6, 8);
+            //drawSphere(wallPoints[i], 0.5f, QVector3D(r,g,b), 6, 8);
+            glPointSize(5.0f);
+            glEnable(GL_POINT_SMOOTH);
+            glColor3ub(r,g,b);
+            glBegin(GL_POINTS);
+            glVertex3d(wallPoints[i].x(),
+                       wallPoints[i].y(),
+                       wallPoints[i].z());
+            glEnd();
 
             if (showBeams)
                 drawRay(wallPoints[i], eyeCenter, QVector3D(r,g,b));

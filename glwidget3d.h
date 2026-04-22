@@ -22,6 +22,17 @@ private:
 
     QVector3D camera;
     QVector3D target;
+    QVector3D worldUp;
+
+    bool flying = false;
+
+    QVector3D startCam, endCam;
+    QVector3D startTarget, endTarget;
+    double startPhi, startPsy, startDistance;
+    double endPhi, endPsy, endDistance;
+
+    double flyTime = 0.0;
+    double flySpeed = 0.01;
 
     double
         phi,        // horizontal angle
@@ -54,6 +65,8 @@ protected:
 
 public:
     explicit GLWidget3D(QWidget *parent = 0);
+
+    void flyTo(QVector3D destCamera, QVector3D destTarget);
 
     void connectWithSceneX(SceneX &originalSceneX);
 };

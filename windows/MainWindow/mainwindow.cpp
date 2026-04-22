@@ -354,3 +354,20 @@ void MainWindow::changeFullscreen(bool enabled)
         showNormal();
     }
 }
+void MainWindow::on_radioButton_fly_to_eye_page6_clicked()
+{
+    glWidget3d->flyTo(QVector3D(-100,0,1),QVector3D(0,0,50));
+}
+
+
+void MainWindow::on_radioButton_back_to_god_page6_clicked()
+{
+
+}
+
+
+void MainWindow::on_pushButton_reset_camera_page6_clicked()
+{
+
+}
+

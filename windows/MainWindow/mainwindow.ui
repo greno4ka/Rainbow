@@ -1054,6 +1054,34 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Camera settings</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_fly_to_eye_page6">
+              <property name="text">
+               <string>From observer's eye</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_back_to_god_page6">
+              <property name="text">
+               <string>From third person</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_reset_camera_page6">
+              <property name="text">
+               <string>Reset camera</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="pushButton_reset_settings_page6">
               <property name="text">
                <string>Reset settings</string>

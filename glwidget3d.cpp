@@ -32,6 +32,27 @@ void GLWidget3D::updateCamera()
         target.z() + sin(psy) * distance
     );
 }
+void GLWidget3D::flyTo(QVector3D destCamera, QVector3D destTarget)
+{
+    startCam = camera;
+    startTarget = target;
+
+    endCam = destCamera;
+    endTarget = destTarget;
+
+    QVector3D dir = destCamera - target;
+
+    endDistance = dir.length();
+    endPsy = asin(dir.z() / dir.length());
+    endPhi = atan2(dir.x(), dir.y());
+
+    startPhi = phi;
+    startPsy = psy;
+    startDistance = distance;
+
+    flyTime = 0.0;
+    flying = true;
+}
 
 void GLWidget3D::connectWithSceneX(SceneX &originalSceneX)
 {
@@ -53,8 +74,27 @@ void GLWidget3D::paintGL()
     gluLookAt(
         camera.x(), camera.y(), camera.z(),
         target.x(), target.y(), target.z(),
-        worldUp.x(), worldUp.y(), worldUp.z(),
+        worldUp.x(), worldUp.y(), worldUp.z()
     );
+
+    if (flying) {
+        flyTime += flySpeed;
+        double t = std::min(flyTime, 1.0);
+
+        // smoothstep
+        double s = t * t * (3 - 2 * t);
+
+        target = startTarget * (1 - s) + endTarget * s;
+
+        phi = startPhi + (endPhi - startPhi) * s;
+        psy = startPsy + (endPsy - startPsy) * s;
+        distance = startDistance + (endDistance - startDistance) * s;
+
+        updateCamera();
+
+        if (t == 1.0)
+            flying = false;
+    }
 
     scenex->display();
 }
@@ -67,7 +107,7 @@ void GLWidget3D::resizeGL(int w, int h)
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.0, static_cast<double>(width)/height, 0.01, 100000);
+    gluPerspective(60.0, static_cast<double>(width)/height, 0.01, 11000);
     glMatrixMode(GL_MODELVIEW);
 }
 
