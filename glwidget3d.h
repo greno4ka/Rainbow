@@ -20,19 +20,27 @@ private:
     static constexpr double ZoomFactor = 1.0;
     static constexpr double PanFactor = 1000.0;
 
+    static constexpr double FlyDuration = 1.0; // 1 second
+    static constexpr double FlyFrame = 0.01 ;
+
+    static constexpr double DefaultPhi = -M_PI*5.0/8.0; // horizontal angle
+    static constexpr double DefaultPsy = M_PI/8.0;      // vertical angle
+    static constexpr double DefaultDistance = 400;      // distance of camera from center
+
     QVector3D camera;
     QVector3D target;
     QVector3D worldUp;
 
     bool flying = false;
+    bool resetting = false; // special type of flight
 
-    QVector3D startCam, endCam;
+    QVector3D startCamera, endCamera;
     QVector3D startTarget, endTarget;
     double startPhi, startPsy, startDistance;
     double endPhi, endPsy, endDistance;
 
     double flyTime = 0.0;
-    double flySpeed = 0.01;
+    bool flyDirection = 1;
 
     double
         phi,        // horizontal angle
@@ -64,11 +72,18 @@ protected:
     void wheelEvent(QWheelEvent *event);
     void keyPressEvent(QKeyEvent *event);
 
-public:
+public:    
+    static constexpr QVector3D DefaultTarget = { 0.0, 0.0, 50.0 };
+
     explicit GLWidget3D(QWidget *parent = 0);
 
     void flyTo(QVector3D destCamera, QVector3D destTarget);
     void switchCameraMode();
+    bool getCameraMode();
+    QVector3D getLastCamera();
+    QVector3D getLastTarget();
+
+    void resetCamera();
 
     void connectWithSceneX(SceneX &originalSceneX);
 };

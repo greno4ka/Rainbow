@@ -13,15 +13,31 @@ GLWidget3D::GLWidget3D(QWidget *parent) :
     mouse_button=0;
 
     // note that angles in radians
-    phi = -M_PI*5.0/8.0; // horizontal angle
-    psy = M_PI/8.0;      // vertical angle
-    distance = 400;      // distance of camera from center
+    phi = DefaultPhi;
+    psy = DefaultPsy;
+    distance = DefaultDistance;
 
     camera = { 0.0, 0.0, 0.0 };
-    target = { 0.0, 0.0, 50.0 };
+    target = DefaultTarget;
     worldUp = {0.0, 0.0, 1.0 };
 
+    startCamera = camera;
+    startTarget = target;
+
     updateCamera();
+}
+
+void GLWidget3D::resetCamera()
+{
+    QVector3D defaultCamera = QVector3D(
+        DefaultTarget.x() + cos(DefaultPsy) * sin(DefaultPhi) * DefaultDistance,
+        DefaultTarget.y() + cos(DefaultPsy) * cos(DefaultPhi) * DefaultDistance,
+        DefaultTarget.z() + sin(DefaultPsy) * DefaultDistance
+    );
+
+    resetting = true;
+
+    flyTo(defaultCamera,DefaultTarget);
 }
 
 void GLWidget3D::updateCamera()
@@ -31,14 +47,14 @@ void GLWidget3D::updateCamera()
             target.x() + cos(psy) * sin(phi) * distance,
             target.y() + cos(psy) * cos(phi) * distance,
             target.z() + sin(psy) * distance
-            );
+        );
     }
     else {
         QVector3D forward(
             -cos(psy) * sin(phi),
             cos(psy) * cos(phi),
             sin(psy)
-            );
+        );
         camera = scenex->getEye();
         target = camera + forward * distance;
     }
@@ -46,10 +62,17 @@ void GLWidget3D::updateCamera()
 
 void GLWidget3D::flyTo(QVector3D destCamera, QVector3D destTarget)
 {
-    startCam = camera;
+    if (cameraMode == 1) {
+        switchCameraMode();
+        // In person based camera we use vertical angle in other way
+        psy = -psy;
+        flyDirection = 0;
+    }
+
+    startCamera = camera;
     startTarget = target;
 
-    endCam = destCamera;
+    endCamera = destCamera;
     endTarget = destTarget;
 
     QVector3D destDistance = destCamera - destTarget;
@@ -76,6 +99,21 @@ void GLWidget3D::switchCameraMode()
     cameraMode = !cameraMode;
 }
 
+bool GLWidget3D::getCameraMode()
+{
+    return cameraMode;
+}
+
+QVector3D GLWidget3D::getLastCamera()
+{
+    return startCamera;
+}
+
+QVector3D GLWidget3D::getLastTarget()
+{
+    return startTarget;
+}
+
 void GLWidget3D::initializeGL()
 {
     glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -95,8 +133,8 @@ void GLWidget3D::paintGL()
     );
 
     if (flying) {
-        flyTime += flySpeed;
-        double t = std::min(flyTime, 1.0);
+        flyTime += FlyFrame;
+        double t = std::min(flyTime, FlyDuration);
 
         // smoothstep
         double s = t * t * (3 - 2 * t);
@@ -107,10 +145,17 @@ void GLWidget3D::paintGL()
         psy = startPsy + (endPsy - startPsy) * s;
         distance = startDistance + (endDistance - startDistance) * s;
 
-        if (t == 1.0) {
+        if (t == FlyDuration) {
             flying = false;
-            switchCameraMode();
-            psy = -psy;
+
+            if (flyDirection == 1 && !resetting) {
+                switchCameraMode();
+                psy = -psy;
+                flyDirection = 0;
+            } else
+                flyDirection = 1;
+            if (resetting)
+                resetting = false;
         }
     }
 
@@ -152,6 +197,8 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *event)
     if(mouse_button == 1) {
         phi += dx * M_PI / 180.0 / 4.0; // horizontal angle
         psy += dy * M_PI / 180.0 / 4.0; // vertical angle
+
+        phi = std::fmod(phi, 2.0*M_PI);
 
         psy = std::min(psy, M_PI/2.0);
         psy = std::max(psy, -M_PI/2.0);

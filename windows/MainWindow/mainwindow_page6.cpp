@@ -37,6 +37,24 @@ void MainWindow::on_pushButton_add_beams_page6_clicked()
     scenex->addNumberOfBeams(ui->spinBox_number_of_beams_page6->value());
 }
 
+void MainWindow::on_radioButton_fly_to_eye_page6_clicked()
+{
+    if (!glWidget3d->getCameraMode())
+        glWidget3d->flyTo(scenex->getEye(), GLWidget3D::DefaultTarget);
+}
+
+void MainWindow::on_radioButton_back_to_god_page6_clicked()
+{
+    if (glWidget3d->getCameraMode())
+        glWidget3d->flyTo(glWidget3d->getLastCamera(), glWidget3d->getLastTarget());
+}
+
+void MainWindow::on_pushButton_reset_camera_page6_clicked()
+{
+    ui->radioButton_back_to_god_page6->setChecked(1);
+    glWidget3d->resetCamera();
+}
+
 void MainWindow::on_pushButton_reset_settings_page6_clicked()
 {
     scenex->resetScene();

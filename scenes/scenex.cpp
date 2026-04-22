@@ -24,7 +24,6 @@ void SceneX::setEyeHeight(int newEyeHeight)
     reInitializeScene();
 }
 
-
 QVector3D SceneX::getEye()
 {
     return eyeCenter;

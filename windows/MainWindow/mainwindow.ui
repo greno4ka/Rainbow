@@ -1072,6 +1072,9 @@
               <property name="text">
                <string>From third person</string>
               </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item>
