@@ -905,10 +905,10 @@
                  <number>9999</number>
                 </property>
                 <property name="singleStep">
-                 <number>10</number>
+                 <number>100</number>
                 </property>
                 <property name="pageStep">
-                 <number>100</number>
+                 <number>1000</number>
                 </property>
                 <property name="value">
                  <number>50</number>

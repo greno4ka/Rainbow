@@ -1,5 +1,7 @@
 #include "scenex.h"
 
+#include <QtConcurrent/QtConcurrent>
+
 void SceneX::buildLUT(LUT *lut, int rainbowMode)
 {
     lut->clear();
@@ -207,50 +209,59 @@ void SceneX::drawRay(QVector3D& startPoint, QVector3D& endPoint, QVector3D color
 
 void SceneX::calculateSpherePoints()
 {
-    // just good names for convenience
     const double sphereRadius = -eyeCenter.x();
     const QVector3D sphereCenter = {eyeCenter.x(), eyeCenter.y(), eyeCenter.z()};
-
-    rainbowPoints.clear();
 
     const double ca380 = std::cos(whatAngle(380,1)*M_PI/180.0);
     const double ca780 = std::cos(whatAngle(780,1)*M_PI/180.0);
     const double cb780 = std::cos(whatAngle(780,2)*M_PI/180.0);
     const double cb380 = std::cos(whatAngle(380,2)*M_PI/180.0);
 
-    const double a = 1; // QVector3D::dotProduct(raysDirection, raysDirection); // it's constant in cycle
-    // raysDirection should be normalized, so dotProduct is always 1
-    for (int i = 0; i < sunPoints.size(); ++i) {
-        QVector3D oc = sunPoints[i] - sphereCenter;
-        double b = 2.0f * QVector3D::dotProduct(oc, raysDirection);
-        double c = QVector3D::dotProduct(oc, oc) - sphereRadius * sphereRadius;
+    const double a = 1.0;
 
-        double discriminant = b*b - 4.0f*a*c;
+    auto results = QtConcurrent::blockingMapped(sunPoints, [&](const QVector3D& sp) -> std::optional<Vertex>
+                                                {
+                                                    QVector3D oc = sp - sphereCenter;
+                                                    double b = 2.0 * QVector3D::dotProduct(oc, raysDirection);
+                                                    double c = QVector3D::dotProduct(oc, oc) - sphereRadius * sphereRadius;
 
-        if (discriminant < 0.0f)
-            continue;
+                                                    double discriminant = b*b - 4.0*a*c;
+                                                    if (discriminant < 0.0)
+                                                        return std::nullopt;
 
-        double sqrtD = std::sqrt(discriminant);
+                                                    double sqrtD = std::sqrt(discriminant);
 
-        double t1 = (-b - sqrtD) / (2.0f * a);
-        double t2 = (-b + sqrtD) / (2.0f * a);
+                                                    double t1 = (-b - sqrtD) / 2.0;
+                                                    double t2 = (-b + sqrtD) / 2.0;
+                                                    double t = std::max(t1, t2);
 
-        double t = std::max(t1, t2); // choose further point
-        QVector3D hitPoint = sunPoints[i] + raysDirection * t;
+                                                    QVector3D hitPoint = sp + raysDirection * t;
 
-        QVector3D v1 = (sunPoints[i] - hitPoint).normalized();
-        QVector3D v2 = (eyeCenter - hitPoint).normalized();
+                                                    QVector3D v1 = (sp - hitPoint).normalized();
+                                                    QVector3D v2 = (eyeCenter - hitPoint).normalized();
 
-        double cosTheta = QVector3D::dotProduct(v1, v2);
+                                                    double cosTheta = QVector3D::dotProduct(v1, v2);
 
-        QVector3D color;
-        if (cosTheta <= ca380 && cosTheta >= ca780)
-            color = getColorFromCosAngle(lut1,cosTheta);
-        if (cosTheta <= cb780 && cosTheta >= cb380)
-            color = getColorFromCosAngle(lut2,cosTheta);
+                                                    QVector3D color;
 
-        if ((cosTheta <= ca380 && cosTheta >= ca780) || (cosTheta <= cb780 && cosTheta >= cb380))
-              rainbowPoints.emplace_back(Vertex(hitPoint,color)); // emplace faster then push
+                                                    if (cosTheta >= ca780 && cosTheta <= ca380)
+                                                        color = getColorFromCosAngle(lut1, cosTheta);
+                                                    else if (cosTheta >= cb380 && cosTheta <= cb780)
+                                                        color = getColorFromCosAngle(lut2, cosTheta);
+                                                    else
+                                                        return std::nullopt;
+
+                                                    return Vertex(hitPoint, color);
+                                                });
+
+    // собрать только валидные
+    rainbowPoints.clear();
+    rainbowPoints.reserve(results.size());
+
+    for (const auto& r : results)
+    {
+        if (r.has_value())
+            rainbowPoints.push_back(*r);
     }
 }
 

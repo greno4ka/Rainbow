@@ -5,9 +5,9 @@
 #-------------------------------------------------
 
 QT       += core gui widgets opengl openglwidgets
-win32: QT += openglwidgets
+win32: QT += openglwidgets concurrent
 
-LIBS +=  -lGLU -lqwt-qt6 -lJKQTMathText6
+LIBS +=  -lGLU -lqwt-qt6 -lJKQTMathText6 -lQt6Concurrent
 win32: LIBS += -lopengl32
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
