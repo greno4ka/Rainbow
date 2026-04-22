@@ -25,6 +25,13 @@ struct Vertex {
 
 typedef QList<Vertex> Vertices;
 
+struct LUTEntry {
+    double cosA;
+    QVector3D color;
+};
+
+typedef QVector<LUTEntry> LUT;
+
 class SceneX
 {
     inline static const QVector3D SunColor = QVector3D(255, 255, 230);
@@ -51,6 +58,10 @@ class SceneX
     bool isPolychromatic;
     bool showBeams;
 
+    LUT lut1, lut2;
+
+    void buildLUT(LUT *lut, int rainbowMode);
+    QVector3D getColorFromCosAngle(const LUT &lut, double cosA);
 
     double time = 0.0;
 

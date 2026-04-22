@@ -1,6 +1,46 @@
 #include "scenex.h"
 
-#include <iostream>
+void SceneX::buildLUT(LUT *lut, int rainbowMode)
+{
+    lut->clear();
+
+    for (double wavelength = 380; wavelength <= 780; wavelength += 0.5)
+    {
+        int r, g, b;
+        wavelengthToRGB(wavelength, &r, &g, &b);
+
+        double cosA = std::cos(whatAngle(wavelength, rainbowMode)*M_PI/180.0);
+
+        std::sort(lut->begin(), lut->end(),
+                  [](const LUTEntry &a, const LUTEntry &b) {
+                      return a.cosA < b.cosA;   // убывание
+                  });
+
+        lut->append({cosA, QVector3D(r, g, b)});
+    }
+}
+QVector3D SceneX::getColorFromCosAngle(const LUT &lut, double cosA)
+{
+    for (int i = 0; i < lut.size() - 1; i++)
+    {
+        if (cosA >= lut[i].cosA && cosA <= lut[i+1].cosA)
+        {
+            double t = (cosA - lut[i+1].cosA) /
+                       (lut[i].cosA - lut[i+1].cosA);
+
+            auto c1 = lut[i].color;
+            auto c2 = lut[i+1].color;
+
+            int r = int(c1.x() * t + c2.x() * (1 - t));
+            int g = int(c1.y() * t + c2.y() * (1 - t));
+            int b = int(c1.z() * t + c2.z() * (1 - t));
+
+            return QVector3D(r, g, b);
+        }
+    }
+
+    return QVector3D(0,0,0);
+}
 
 SceneX::SceneX()
 {
@@ -16,10 +56,15 @@ SceneX::SceneX()
 
     showBeams = true;
 
-    addSunPoints(1000);
-    totalNumberOfBeams = 1000;
 
     timer.start();
+
+    buildLUT(&lut1,1);
+    buildLUT(&lut2,2);
+
+
+    addSunPoints(1000);
+    totalNumberOfBeams = 1000;
 }
 
 
@@ -162,14 +207,21 @@ void SceneX::drawRay(QVector3D& startPoint, QVector3D& endPoint, QVector3D color
 
 void SceneX::calculateSpherePoints()
 {
-    double sphereRadius = -eyeCenter.x();
-    QVector3D sphereCenter = {eyeCenter.x(), eyeCenter.y(), eyeCenter.z()};
+    // just good names for convenience
+    const double sphereRadius = -eyeCenter.x();
+    const QVector3D sphereCenter = {eyeCenter.x(), eyeCenter.y(), eyeCenter.z()};
 
     rainbowPoints.clear();
 
+    const double ca380 = std::cos(whatAngle(380,1)*M_PI/180.0);
+    const double ca780 = std::cos(whatAngle(780,1)*M_PI/180.0);
+    const double cb780 = std::cos(whatAngle(780,2)*M_PI/180.0);
+    const double cb380 = std::cos(whatAngle(380,2)*M_PI/180.0);
+
+    const double a = 1; // QVector3D::dotProduct(raysDirection, raysDirection); // it's constant in cycle
+    // raysDirection should be normalized, so dotProduct is always 1
     for (int i = 0; i < sunPoints.size(); ++i) {
         QVector3D oc = sunPoints[i] - sphereCenter;
-        double a = QVector3D::dotProduct(raysDirection, raysDirection);
         double b = 2.0f * QVector3D::dotProduct(oc, raysDirection);
         double c = QVector3D::dotProduct(oc, oc) - sphereRadius * sphereRadius;
 
@@ -186,19 +238,19 @@ void SceneX::calculateSpherePoints()
         double t = std::max(t1, t2); // choose further point
         QVector3D hitPoint = sunPoints[i] + raysDirection * t;
 
-        double phi = calculateAngle(sunPoints[i], hitPoint, eyeCenter);
+        QVector3D v1 = (sunPoints[i] - hitPoint).normalized();
+        QVector3D v2 = (eyeCenter - hitPoint).normalized();
 
-        double wavelength = 0;
-        if (phi >= whatAngle(380,1) && phi <= whatAngle(780,1))
-            wavelength = whatWave(phi,1);
-        if (phi >= whatAngle(780,2) && phi <= whatAngle(380,2))
-            wavelength = whatWave(phi,2);
+        double cosTheta = QVector3D::dotProduct(v1, v2);
 
-        if (wavelength > 0) {
-            int r,g,b;
-            wavelengthToRGB(wavelength, &r, &g, &b);
-            rainbowPoints.push_back(Vertex(hitPoint,QVector3D(r,g,b)));
-        }
+        QVector3D color;
+        if (cosTheta <= ca380 && cosTheta >= ca780)
+            color = getColorFromCosAngle(lut1,cosTheta);
+        if (cosTheta <= cb780 && cosTheta >= cb380)
+            color = getColorFromCosAngle(lut2,cosTheta);
+
+        if ((cosTheta <= ca380 && cosTheta >= ca780) || (cosTheta <= cb780 && cosTheta >= cb380))
+              rainbowPoints.emplace_back(Vertex(hitPoint,color)); // emplace faster then push
     }
 }
 
