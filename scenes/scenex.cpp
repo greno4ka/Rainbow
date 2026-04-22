@@ -185,8 +185,8 @@ void SceneX::calculateSpherePoints()
 {
     wallPoints.clear();
 
-    QVector3D center(-200.0f, 0.0f, 0.0f);
-    float R = 200.0f;
+    QVector3D center(-100.0f, 0.0f, 0.0f);
+    float R = 100.0f;
 
     QVector3D dir = raysDirection.normalized();
 
@@ -225,20 +225,34 @@ void SceneX::calculateSpherePoints()
         QVector3D hitPoint = sunPoint + dir * t;
 
         wallPoints.push_back(hitPoint);
+
+        double phi = calculateAngle(sunCenter, hitPoint, eyeCenter);
+
+        if (1){
+            int r=255, g=255, b=255;
+
+        if (phi >= whatAngle(380,1) && phi <= whatAngle(780,1))
+            wavelengthToRGB(whatWave(phi,1), &r, &g, &b);
+
+        if (phi >= whatAngle(780,2) && phi <= whatAngle(380,2))
+        wavelengthToRGB(whatWave(phi,2), &r, &g, &b);
+
+        rainbowPoints.push_back(Vertex(hitPoint,QVector3D(r,g,b)));
+        }
     }
 }
 
 void SceneX::drawWaterSpherePatch()
 {
-    float R = 300.0f;
-    QVector3D center(-300,0,0);
+    float R = 100.0f;
+    QVector3D center(-100,0,0);
 
     int stacks = 30;
     int slices = 60;
 
     // ограничиваем кусок сферы (не вся!)
     float phiMin = -0.0f;  // вниз
-    float phiMax =  0.5f;  // вверх
+    float phiMax =  1.0f;  // вверх
 
     float thetaMin = -1.0f; // влево
     float thetaMax =  1.0f; // вправо
@@ -294,37 +308,29 @@ void SceneX::display()
     drawSphere(sunCenter, SunRadius, SunColor, 50, 50);
 
     int count = std::min(sunPoints.size(), wallPoints.size());
-
+    glPointSize(5.0f);
+    glEnable(GL_POINT_SMOOTH);
+    glBegin(GL_POINTS);
     for (int i = 0; i < count; i++) {
-        if (showBeams)
-            drawRay(sunPoints[i], wallPoints[i], SunColor);
-
-        double phi = calculateAngle(sunCenter, wallPoints[i], eyeCenter);
-
-        if ((phi >= whatAngle(380,1) && phi <= whatAngle(780,1)) ||
-            (phi >= whatAngle(780,2) && phi <= whatAngle(380,2)))
-        {
-            int r, g, b;
-
-            if (phi <= whatAngle(780,1))
-                wavelengthToRGB(whatWave(phi,1), &r, &g, &b);
-            else
-                wavelengthToRGB(whatWave(phi,2), &r, &g, &b);
+        //if (showBeams)
+            //drawRay(sunPoints[i], wallPoints[i], SunColor);
 
             //drawSphere(wallPoints[i], 0.5f, QVector3D(r,g,b), 6, 8);
-            glPointSize(5.0f);
-            glEnable(GL_POINT_SMOOTH);
-            glColor3ub(r,g,b);
-            glBegin(GL_POINTS);
-            glVertex3d(wallPoints[i].x(),
-                       wallPoints[i].y(),
-                       wallPoints[i].z());
-            glEnd();
+        if (rainbowPoints[i].color.x()!=255) {
 
-            if (showBeams)
-                drawRay(wallPoints[i], eyeCenter, QVector3D(r,g,b));
-        }
+        glColor3ub(rainbowPoints[i].color.x(),rainbowPoints[i].color.y(),rainbowPoints[i].color.z());
+            glVertex3d(rainbowPoints[i].position.x(),
+                       rainbowPoints[i].position.y(),
+                       rainbowPoints[i].position.z());
+                }
+
+
+            //if (showBeams)
+                //drawRay(wallPoints[i], eyeCenter, QVector3D(r,g,b));
+
     }
+
+    glEnd();
 
 }
 

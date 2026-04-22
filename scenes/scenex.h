@@ -13,6 +13,18 @@
 
 typedef QList<QVector3D> QVector3Ds;
 
+struct Vertex {
+    QVector3D position;
+    QVector3D color;
+
+    Vertex() = default;
+
+    Vertex(const QVector3D& pos, const QVector3D& col)
+        : position(pos), color(col) {}
+};
+
+typedef QList<Vertex> Vertices;
+
 class SceneX
 {
     inline static const QVector3D SunColor = QVector3D(255, 255, 230);
@@ -33,6 +45,8 @@ class SceneX
 
     QVector3Ds sunPoints;
     QVector3Ds wallPoints;
+
+    Vertices rainbowPoints;
 
     bool isPolychromatic;
     bool showBeams;
