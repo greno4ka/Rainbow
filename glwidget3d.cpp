@@ -5,6 +5,7 @@ GLWidget3D::GLWidget3D(QWidget *parent) :
     QOpenGLWidget(parent)
 {
     this->setMouseTracking(true);
+
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, [this]() { update(); });
     timer->start(1);
@@ -12,13 +13,24 @@ GLWidget3D::GLWidget3D(QWidget *parent) :
     mouse_button=0;
 
     // note that angles in radians
-    phi = -2.5;         // horizontal angle
-    psy = 0.5;         // vertical angle
-    distance = 300;      // distance of camera from center
-    ox = 3; oy = -3; oz = 0; // translate point which we see from center
-    cx = cos(psy) * sin(phi) * distance;    // camera coordinates
-    cy = cos(psy) * cos(phi) * distance; // camera coordinates
-    cz = sin(psy) * distance; // camera coordinates
+    phi = -M_PI*5.0/8.0; // horizontal angle
+    psy = M_PI/8.0;      // vertical angle
+    distance = 400;      // distance of camera from center
+
+    camera = { 0.0, 0.0, 0.0 };
+    target = { 0.0, 0.0, 50.0 };
+    worldUp = {0.0, 0.0, 1.0 };
+
+    updateCamera();
+}
+
+void GLWidget3D::updateCamera()
+{
+    camera = QVector3D(
+        target.x() + cos(psy) * sin(phi) * distance,
+        target.y() + cos(psy) * cos(phi) * distance,
+        target.z() + sin(psy) * distance
+    );
 }
 
 void GLWidget3D::connectWithSceneX(SceneX &originalSceneX)
@@ -30,6 +42,7 @@ void GLWidget3D::initializeGL()
 {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glDepthFunc(GL_LEQUAL);
+    glEnable(GL_DEPTH_TEST);
 }
 
 void GLWidget3D::paintGL()
@@ -37,15 +50,17 @@ void GLWidget3D::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glLoadIdentity();
-    glEnable(GL_DEPTH_TEST);
-    gluLookAt(cx, cy, cz, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslated(ox,oy,oz);
-
+    gluLookAt(
+        camera.x(), camera.y(), camera.z(),
+        target.x(), target.y(), target.z(),
+        worldUp.x(), worldUp.y(), worldUp.z(),
+    );
 
     scenex->display();
 }
 
-void GLWidget3D::resizeGL(int w, int h){
+void GLWidget3D::resizeGL(int w, int h)
+{
     scenex->updateXY(w, h);
     width = w; height = h;
 
@@ -58,8 +73,7 @@ void GLWidget3D::resizeGL(int w, int h){
 
 void GLWidget3D::keyPressEvent(QKeyEvent *event)
 {
-    switch(event->key())
-    {
+    switch(event->key()) {
     case Qt::Key_Escape:
         //key_pressed = 1;
         break;
@@ -81,15 +95,22 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *event)
         psy = std::min(psy, M_PI/2.0);
         psy = std::max(psy, -M_PI/2.0);
 
-        cx = cos(psy) * sin(phi) * distance;
-        cy = cos(psy) * cos(phi) * distance;
-        cz = sin(psy) * distance;
+        updateCamera();
     }
 
     if(mouse_button == 2) {
-        ox -= cos(phi)*dx/20;
-        oy += sin(phi)*dx/20;
-        oz -= sin(psy)*dy/5;
+        double panSpeed = distance / PanFactor;
+
+        // Construct camera basis (forward/right/up vectors) from view direction
+        QVector3D forward = (target - camera).normalized();
+        QVector3D right = QVector3D::crossProduct(forward, worldUp).normalized();
+        QVector3D up    = QVector3D::crossProduct(right, forward).normalized();
+
+        QVector3D delta = (-right*dx + up*dy) * panSpeed;
+
+        target += QVector3D(delta.x(), delta.y(), delta.z());
+
+        updateCamera();
     }
 
     mouse_x = event->position().x();
@@ -118,13 +139,14 @@ void GLWidget3D::mouseReleaseEvent(QMouseEvent *event)
 
 void GLWidget3D::wheelEvent(QWheelEvent *event)
 {
+    // Qt reports wheel delta in units of 1/8 of a degree
+    // A typical mouse wheel step is 15 degrees → 15 * 8 = 120 units
     int numDegrees = event->angleDelta().y() / 8;
-    distance += numDegrees / 15;
+
+    distance += numDegrees / ZoomFactor;
     distance = std::max(distance, 0.005);
 
-    cx = cos(psy) * sin(phi) * distance;
-    cy = cos(psy) * cos(phi) * distance;
-    cz = sin(psy) * distance;
+    updateCamera();
 
     event->accept();
     update();
