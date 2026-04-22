@@ -49,8 +49,9 @@ private:
 
     bool cameraMode = 0;
 
-protected:
+    void updateCamera();
 
+protected:
     /// GLMainWindow parameters
     int width, height; // GLMainWindow sizes
 
@@ -62,8 +63,6 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
     void wheelEvent(QWheelEvent *event);
     void keyPressEvent(QKeyEvent *event);
-
-    void updateCamera();
 
 public:
     explicit GLWidget3D(QWidget *parent = 0);

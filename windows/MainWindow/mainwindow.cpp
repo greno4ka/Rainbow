@@ -356,7 +356,7 @@ void MainWindow::changeFullscreen(bool enabled)
 }
 void MainWindow::on_radioButton_fly_to_eye_page6_clicked()
 {
-    glWidget3d->flyTo(QVector3D(-100,0,1),QVector3D(0,0,50));
+    glWidget3d->flyTo(scenex->getEye(),QVector3D(0,0,50));
 }
 
 

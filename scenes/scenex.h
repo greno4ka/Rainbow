@@ -77,6 +77,8 @@ public:
     void setSunHeight(int newSunHeight);
     void setEyeHeight(int newEyeHeight);
 
+    QVector3D getEye();
+
 
     void addBeams();
     void reInitializeScene();

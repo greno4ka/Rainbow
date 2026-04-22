@@ -39,7 +39,7 @@ void GLWidget3D::updateCamera()
             cos(psy) * cos(phi),
             sin(psy)
             );
-
+        camera = scenex->getEye();
         target = camera + forward * distance;
     }
 }
@@ -107,8 +107,6 @@ void GLWidget3D::paintGL()
         psy = startPsy + (endPsy - startPsy) * s;
         distance = startDistance + (endDistance - startDistance) * s;
 
-        updateCamera();
-
         if (t == 1.0) {
             flying = false;
             switchCameraMode();
@@ -116,7 +114,10 @@ void GLWidget3D::paintGL()
         }
     }
 
+    updateCamera();
+
     scenex->display();
+
 }
 
 void GLWidget3D::resizeGL(int w, int h)

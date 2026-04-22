@@ -24,6 +24,12 @@ void SceneX::setEyeHeight(int newEyeHeight)
     reInitializeScene();
 }
 
+
+QVector3D SceneX::getEye()
+{
+    return eyeCenter;
+}
+
 QVector3D SceneX::generateSunPoint()
 {
     double randAngle = (double)rand() / RAND_MAX * 2.0 * M_PI;
