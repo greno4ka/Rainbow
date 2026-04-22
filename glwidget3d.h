@@ -27,10 +27,19 @@ private:
     static constexpr double DefaultPsy = M_PI/8.0;      // vertical angle
     static constexpr double DefaultDistance = 400;      // distance of camera from center
 
+    bool cameraMode = 0;
+
+    /// Static camera stuff
     QVector3D camera;
     QVector3D target;
     QVector3D worldUp;
 
+    double
+        phi,        // horizontal angle
+        psy,        // vertical angle
+        distance;   // distance of camera from center
+
+    /// Flying camera stuff
     bool flying = false;
     bool resetting = false; // special type of flight
 
@@ -42,10 +51,6 @@ private:
     double flyTime = 0.0;
     bool flyDirection = 1;
 
-    double
-        phi,        // horizontal angle
-        psy,        // vertical angle
-        distance;   // distance of camera from center
 
     QTimer *timer = nullptr;
 
@@ -54,8 +59,6 @@ private:
     int mouse_x, mouse_y; // for mouse tracking
     int mouse_button; // mouse pressed flag: 0 - mouse up, 1 - mouse down
     int key_button;
-
-    bool cameraMode = 0;
 
     void updateCamera();
 

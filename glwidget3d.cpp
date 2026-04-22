@@ -162,7 +162,6 @@ void GLWidget3D::paintGL()
     updateCamera();
 
     scenex->display();
-
 }
 
 void GLWidget3D::resizeGL(int w, int h)

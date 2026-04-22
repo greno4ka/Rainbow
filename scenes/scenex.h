@@ -59,7 +59,6 @@ class SceneX
     void drawGrid();
     void drawSurface();
     void drawSun();
-    void drawWall();
     void drawRay(QVector3D& startPoint, QVector3D& endPoint, QVector3D color);
     void drawSingleRay(const QVector3D& sunPoint,
                        const QVector3D& wallPoint,
