@@ -26,12 +26,24 @@ GLWidget3D::GLWidget3D(QWidget *parent) :
 
 void GLWidget3D::updateCamera()
 {
-    camera = QVector3D(
-        target.x() + cos(psy) * sin(phi) * distance,
-        target.y() + cos(psy) * cos(phi) * distance,
-        target.z() + sin(psy) * distance
-    );
+    if (cameraMode == 0) {
+        camera = QVector3D(
+            target.x() + cos(psy) * sin(phi) * distance,
+            target.y() + cos(psy) * cos(phi) * distance,
+            target.z() + sin(psy) * distance
+            );
+    }
+    else {
+        QVector3D forward(
+            -cos(psy) * sin(phi),
+            cos(psy) * cos(phi),
+            sin(psy)
+            );
+
+        target = camera + forward * distance;
+    }
 }
+
 void GLWidget3D::flyTo(QVector3D destCamera, QVector3D destTarget)
 {
     startCam = camera;
@@ -40,11 +52,11 @@ void GLWidget3D::flyTo(QVector3D destCamera, QVector3D destTarget)
     endCam = destCamera;
     endTarget = destTarget;
 
-    QVector3D dir = destCamera - target;
+    QVector3D destDistance = destCamera - destTarget;
 
-    endDistance = dir.length();
-    endPsy = asin(dir.z() / dir.length());
-    endPhi = atan2(dir.x(), dir.y());
+    endDistance = destDistance.length();
+    endPsy = asin(destDistance.z() / destDistance.length());
+    endPhi = atan2(destDistance.x(), destDistance.y());
 
     startPhi = phi;
     startPsy = psy;
@@ -57,6 +69,11 @@ void GLWidget3D::flyTo(QVector3D destCamera, QVector3D destTarget)
 void GLWidget3D::connectWithSceneX(SceneX &originalSceneX)
 {
     scenex = &originalSceneX;
+}
+
+void GLWidget3D::switchCameraMode()
+{
+    cameraMode = !cameraMode;
 }
 
 void GLWidget3D::initializeGL()
@@ -92,8 +109,11 @@ void GLWidget3D::paintGL()
 
         updateCamera();
 
-        if (t == 1.0)
+        if (t == 1.0) {
             flying = false;
+            switchCameraMode();
+            psy = -psy;
+        }
     }
 
     scenex->display();

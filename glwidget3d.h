@@ -47,6 +47,8 @@ private:
     int mouse_button; // mouse pressed flag: 0 - mouse up, 1 - mouse down
     int key_button;
 
+    bool cameraMode = 0;
+
 protected:
 
     /// GLMainWindow parameters
@@ -67,6 +69,7 @@ public:
     explicit GLWidget3D(QWidget *parent = 0);
 
     void flyTo(QVector3D destCamera, QVector3D destTarget);
+    void switchCameraMode();
 
     void connectWithSceneX(SceneX &originalSceneX);
 };
