@@ -42,6 +42,11 @@ class SceneX
 
     static constexpr double AnimationDurability = 2.0; // 2 seconds
 
+    double ca380;
+    double ca780;
+    double cb780;
+    double cb380;
+
     QElapsedTimer timer;
     double rayAnimationStartTime = 0.0;
 
@@ -61,7 +66,7 @@ class SceneX
     LUT lut1, lut2;
 
     void buildLUT(LUT *lut, int rainbowMode);
-    QVector3D getColorFromCosAngle(const LUT &lut, double cosA);
+    QVector3D getColorFromCosAngle(const LUT &lut, double cosA, int rainbowMode);
 
     double time = 0.0;
 
