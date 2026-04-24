@@ -422,5 +422,10 @@ parameter</source>
         <source>Can&apos;t change language.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="settingswindow.cpp" line="97"/>
+        <source>Done!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

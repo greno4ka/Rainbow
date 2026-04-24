@@ -182,22 +182,22 @@
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1059"/>
         <source>Camera settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки камеры</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1066"/>
         <source>From observer&apos;s eye</source>
-        <translation type="unfinished"></translation>
+        <translation>От первого лица</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1073"/>
         <source>From third person</source>
-        <translation type="unfinished"></translation>
+        <translation>От третьего лица</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1083"/>
         <source>Reset camera</source>
-        <translation type="unfinished"></translation>
+        <translation>Исходный вид</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1122"/>
@@ -230,12 +230,15 @@
 a light ray (or other waves), occurring at the interface between
 two media permeable to these waves, or within a medium
 with continuously varying properties.</source>
-        <translation type="unfinished"></translation>
+        <translation>Рефракция – это явление изменения пути следования светового луча
+(или других волн), возникающее на границе раздела двух проницаемых
+для этих волн сред или в толще среды с непрерывно изменяющимися
+свойствами.</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1337"/>
         <source>Snell law:</source>
-        <translation type="unfinished"></translation>
+        <translation>Закон Снеллиуса:</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1362"/>
@@ -245,24 +248,26 @@ with continuously varying properties.</source>
         <location filename="windows/MainWindow/mainwindow.ui" line="1830"/>
         <location filename="windows/MainWindow/mainwindow.ui" line="1991"/>
         <source>Here should be a math formula</source>
-        <translation type="unfinished"></translation>
+        <translation>Здесь должна была быть формула</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1452"/>
         <source>Plot of refractive index vs. wavelength
 of incedent radiation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Зависимость показателя преломления
+воды от длины волны падающего света
+называется дисперсией света:</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1528"/>
         <location filename="windows/MainWindow/mainwindow.ui" line="1809"/>
         <source>Dependence of the refraction angle on the impact parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Зависимость угла рефракции от прицельного параметра</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1542"/>
         <source>Primary rainbow:</source>
-        <translation type="unfinished"></translation>
+        <translation>Первичная радуга:</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1618"/>
@@ -272,7 +277,11 @@ of incedent radiation:</source>
 φ – output angle
 h – impact parameter
 r – radius of droplet</source>
-        <translation type="unfinished"></translation>
+        <translation>α₁ – угол падения
+α₂ – угол преломления
+φ – угол рефракции
+h – прицельный параметр
+r – радиус капли</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1672"/>
@@ -290,29 +299,30 @@ r – radius of droplet</source>
 λ=600
 
 λ=650</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1740"/>
         <location filename="windows/MainWindow/mainwindow.ui" line="2021"/>
         <source>– normalized impact
 parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>– Нормализованный
+прицельный параметр</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="1823"/>
         <source>Secondary rainbow:</source>
-        <translation type="unfinished"></translation>
+        <translation>Вторичная радуга:</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.cpp" line="35"/>
         <source>Error: 0xDEADBEE</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.cpp" line="35"/>
         <source>Can&apos;t change language.</source>
-        <translation type="unfinished">Не получается изменить язык.</translation>
+        <translation>Не получается изменить язык.</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.cpp" line="241"/>
@@ -417,12 +427,12 @@ parameter</source>
     <message>
         <location filename="settingswindow.ui" line="79"/>
         <source>Start in Fullscreen Mode</source>
-        <translation>Старт в полноэкранном режиме</translation>
+        <translation>Полноэкранный режим</translation>
     </message>
     <message>
         <location filename="settingswindow.ui" line="116"/>
         <source>Save to file</source>
-        <translation type="unfinished">Сохранить настройки</translation>
+        <translation>Сохранить в файл</translation>
     </message>
     <message>
         <source>Program theme</source>
@@ -441,6 +451,11 @@ parameter</source>
         <location filename="settingswindow.cpp" line="32"/>
         <source>Can&apos;t change language.</source>
         <translation>Не получается изменить язык.</translation>
+    </message>
+    <message>
+        <location filename="settingswindow.cpp" line="97"/>
+        <source>Done!</source>
+        <translation>Готово!</translation>
     </message>
     <message>
         <source>Settings saved successfully.</source>

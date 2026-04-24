@@ -94,7 +94,7 @@ void SettingsWindow::on_pushButton_save_clicked()
 {
     saveSettings();
 
-    ui->label_done->setText("Done!");
+    ui->label_done->setText(tr("Done!"));
     ui->label_done->setStyleSheet("color: green; font-weight: bold;");
 
     QTimer::singleShot(3000, this, [this]() {

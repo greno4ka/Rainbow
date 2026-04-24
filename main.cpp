@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QGuiApplication>
 #include <QLayout>
 
 #include "windows/MainWindow/mainwindow.h"
@@ -10,6 +11,8 @@ int main(int argc, char **argv)
 
     if (argc > 1)
         programMode=atoi(argv[1]);
+
+    a.setWindowIcon(QIcon(":/rainbow.ico"));
 
     QTranslator translator;
     a.installTranslator(&translator);

@@ -427,6 +427,11 @@ parameter</source>
         <translation></translation>
     </message>
     <message>
+        <location filename="settingswindow.cpp" line="97"/>
+        <source>Done!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Settings saved successfully.</source>
         <translation type="vanished">Paramètres enregistrés avec succès.</translation>
     </message>
