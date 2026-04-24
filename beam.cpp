@@ -87,7 +87,7 @@ inline double Beam::fy(double y)
     return (b*y+c)/(-a);
 }
 
-void Beam::rotate (Beam A, double psi)
+void Beam::rotate(const Beam& A, double psi)
 {
     /// ROTATE LINE ROUND LINE A
     double x, y;
@@ -108,13 +108,13 @@ void Beam::rotate (Beam A, double psi)
     if (phi > 180) phi -= 180;
 }
 
-void Beam::reflect (Beam A)
+void Beam::reflect(const Beam& A)
 {
     double psi = A.phi - phi;
     this->rotate(A, 2*psi);
 }
 
-void Beam::snell(Beam Input, double k)
+void Beam::snell(const Beam& Input, double k)
 {
     double psi = phi-Input.phi;
 
@@ -127,12 +127,12 @@ void Beam::snell(Beam Input, double k)
     this->wavelength = Input.wavelength;
 }
 
-void Beam::snellIn(Beam Input)
+void Beam::snellIn(const Beam& Input)
 {
     this->snell(Input, Input.refractIn());
 }
 
-void Beam::snellOut(Beam Input)
+void Beam::snellOut(const Beam& Input)
 {
     this->snell(Input, Input.refractOut());
 }
@@ -194,7 +194,7 @@ void Beam::calculateInfinityPoint(double x1, double y1, double *x2, double *y2, 
     *y2 = y1 + uy * distance;
 }
 
-double Beam::refractIn()
+double Beam::refractIn() const
 {
     return -2.43712 * pow(10,-20) * pow(wavelength,7) +
            1.12669 * pow(10,-16) * pow(wavelength,6) -
@@ -205,7 +205,7 @@ double Beam::refractIn()
            0.010683 * wavelength + 2.30172;
 }
 
-double Beam::refractOut()
+double Beam::refractOut() const
 {
     return 1 / refractIn();
 }

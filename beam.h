@@ -20,8 +20,8 @@ class Beam
     constexpr static const double INF = 100000;
 
     void normalizeCoeffs(); // Make more familiar form: y=-a*x-c || x=-c
-    void snell(Beam Input, double k);
-    double refractOut();
+    void snell(const Beam& Input, double k);
+    double refractOut() const;
 
 public:
     Beam();
@@ -44,17 +44,17 @@ public:
     inline double fx(double x); // y=f(x) from ax+by+c=0
     inline double fy(double y); // x=g(y) from ax+by+c=0
 
-    friend void cross_ll(Beam A, Beam B, double *x, double *y)
+    friend void cross_ll(const Beam& A, const Beam& B, double *x, double *y)
     {
         *x = (A.b*B.c-B.b*A.c)/(A.a*B.b-B.a*A.b);
         *y = (A.c*B.a-B.c*A.a)/(A.a*B.b-B.a*A.b);
     }
 
-    void snellIn(Beam Input);
-    void snellOut(Beam Input);
-    void rotate(Beam A, double psi);
-    void reflect(Beam A);
-    double refractIn();
+    void snellIn(const Beam& Input);
+    void snellOut(const Beam& Input);
+    void rotate(const Beam& A, double psi);
+    void reflect(const Beam& A);
+    double refractIn() const;
 };
 
 typedef QList<Beam> Beams;
