@@ -21,6 +21,7 @@
 #include "scenes/scenex.h"
 
 #include "plotFactory.h"
+#include "formulaFactory.h"
 
 namespace Ui {
 class MainWindow;
@@ -83,13 +84,7 @@ private:
 
     void initUIDefaults();
     void reInitializePlots();
-
-    void mathToLabel(QLabel* label,
-                     const QString& formula,
-                     int width = 650,
-                     int height = 100,
-                     int fontSize = 20,
-                     const QColor& color = Qt::white);
+    void reInitializeFormulas();
 
 private slots:
     /// changers

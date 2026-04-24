@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <jkqtmathtext.h>
-
 static QString loadStyle(const QString &path)
 {
     QFile file(path);
@@ -115,42 +113,21 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     ui->slideWidget->setCurrentIndex(currentSlideWidgetPage);
 
     reInitializePlots();
-
-    mathToLabel(ui->label_snell2_slide1, "$n_1 \\cdot \\sin(\\alpha_1) = n_2 \\cdot \\sin(\\alpha_2)$",300,30);
-    mathToLabel(ui->label_snell3_slide1, "$n_1 < n_2$",100,30);
-
-    mathToLabel(ui->label_formula1_slide2, "$\\varphi = 4\\alpha_2 - 2\\alpha_1\\ \\ ;\\ \\ \\varphi = 4\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$");
-    mathToLabel(ui->label_formula2_slide2, "$y = \\frac{h}{r}$", 100,100);
-
-    mathToLabel(ui->label_formula1_slide3, "$\\varphi = \\pi - 6\\alpha_2 + 2\\alpha_1\\ \\ ;\\ \\ \\varphi = \\pi + 6\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$");
-    mathToLabel(ui->label_formula2_slide3, "$y = \\frac{h}{r}$", 100,100);
+    reInitializeFormulas();
 
     QTimer::singleShot(0, this, &MainWindow::updateRainbowImage);
 }
 
-void MainWindow::mathToLabel(QLabel* label, const QString& formula,
-                                   int width, int height, int fontSize,
-                                   const QColor& color)
+void MainWindow::reInitializeFormulas()
 {
-    JKQTMathText math;
-    math.useXITS();
-    math.setFontSize(fontSize);
-    math.setFontColor(color);
-    math.parse(formula);
+    mathToLabel(this, ui->label_snell2_slide1, "$n_1 \\cdot \\sin(\\alpha_1) = n_2 \\cdot \\sin(\\alpha_2)$", darkThemeEnabled, 300, 30);
+    mathToLabel(this, ui->label_snell3_slide1, "$n_1 < n_2$", darkThemeEnabled, 100, 30);
 
-    double dpr = this->devicePixelRatioF();
+    mathToLabel(this, ui->label_formula1_slide2, "$\\varphi = 4\\alpha_2 - 2\\alpha_1\\ \\ ;\\ \\ \\varphi = 4\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$", darkThemeEnabled);
+    mathToLabel(this, ui->label_formula2_slide2, "$y = \\frac{h}{r}$", darkThemeEnabled, 100, 100);
 
-    QImage image(width * dpr, height * dpr, QImage::Format_ARGB32);
-    image.setDevicePixelRatio(dpr);
-    image.fill(Qt::transparent);
-
-    QPainter painter(&image);
-    painter.setRenderHint(QPainter::Antialiasing);
-    painter.setRenderHint(QPainter::TextAntialiasing);
-
-    math.draw(painter, Qt::AlignCenter, QRectF(0, 0, width, height), false);
-
-    label->setPixmap(QPixmap::fromImage(image));
+    mathToLabel(this, ui->label_formula1_slide3, "$\\varphi = \\pi - 6\\alpha_2 + 2\\alpha_1\\ \\ ;\\ \\ \\varphi = \\pi + 6\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$", darkThemeEnabled);
+    mathToLabel(this, ui->label_formula2_slide3, "$y = \\frac{h}{r}$", darkThemeEnabled, 100, 100);
 }
 
 void MainWindow::initUIDefaults()
@@ -357,6 +334,9 @@ void MainWindow::changeTheme(bool isDark)
 
     // update colors in plots
     reInitializePlots();
+
+    // update colors in formulas
+    reInitializeFormulas();
 
     // Update GL widget background color
     if (glWidget) {
