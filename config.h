@@ -1,6 +1,9 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+constexpr int WAVE_MIN = 380;
+constexpr int WAVE_MAX = 680;
+
 constexpr double SCENE1_DISTANCE_08 = 0.8;
 constexpr int SCENE1_WAVELENGTH_600 = 600;
 

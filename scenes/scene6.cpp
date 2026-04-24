@@ -1,10 +1,8 @@
 #include "scene6.h"
 
-#include <iostream>
-
 Scene6::Scene6()
 {
-//    beam = Beam(-0.8660, -0.5, 0.5 *DropRadius, 550, DropRadius); // 120 degrees beam (30 to normal)
+//  beam = Beam(-0.8660, -0.5, 0.5 *DropRadius, 550, DropRadius); // 120 degrees beam (30 to normal)
     beam = Beam(-1.19175, -1, DropRadius, 550, DropRadius); // 130 degrees beam (40 to normal)
     normal = Beam(1,0,0,550,DropRadius); // x=0
     refracted = beam;

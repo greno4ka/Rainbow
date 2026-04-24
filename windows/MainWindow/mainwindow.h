@@ -17,9 +17,10 @@
 #include "scenes/scene3.h"
 #include "scenes/scene4.h"
 #include "scenes/scene5.h"
+#include "scenes/scene6.h"
 #include "scenes/scenex.h"
 
-#include "scenes/scene6.h"
+#include "plotFactory.h"
 
 namespace Ui {
 class MainWindow;
@@ -44,6 +45,10 @@ private:
 
     GLWidget *glWidget = nullptr;
     GLWidget3D *glWidget3d = nullptr;
+
+    QwtPlot *refractiveIndexPlot = nullptr;
+    QwtPlot *primaryRainbowPlot = nullptr;
+    QwtPlot *secondaryRainbowPlot = nullptr;
 
     SceneBase *scene = nullptr;
     Scene1 *scene1 = nullptr;
@@ -77,6 +82,7 @@ private:
     void switchSlide();
 
     void initUIDefaults();
+    void reInitializePlots();
 
     void mathToLabel(QLabel* label,
                      const QString& formula,

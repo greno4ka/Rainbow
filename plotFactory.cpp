@@ -1,179 +1,154 @@
 #include "plotFactory.h"
 
+static void attachCursor(QwtPlot *plot, bool darkThemeEnabled)
+{
+    QColor color = darkThemeEnabled ? Qt::white : Qt::black;
+
+    QwtPlotPicker *picker = new QwtPlotPicker(
+        QwtPlot::xBottom,
+        QwtPlot::yLeft,
+        plot->canvas()
+    );
+
+    picker->setStateMachine(new QwtPickerTrackerMachine());
+
+    picker->setRubberBand(QwtPicker::CrossRubberBand);
+    picker->setTrackerMode(QwtPicker::AlwaysOn);
+    picker->setRubberBandPen(QPen(color, 1, Qt::DashLine));
+    /// Font color
+    picker->setTrackerPen(QPen(color));
+
+    QFont font = picker->trackerFont();
+    font.setBold(true);
+    picker->setTrackerFont(font);
+}
+
 QwtPlot* createBasePlot(const QString &title,
                         const QString &xTitle,
-                        const QString &yTitle)
+                        const QString &yTitle,
+                        bool darkThemeEnabled)
 {
+    QColor color = darkThemeEnabled
+                       ? QColor(255, 255, 255, 70) // 70 because 100 is too bright
+                       : QColor(0, 0, 0);
+
     QwtPlot *plot = new QwtPlot();
 
     plot->setTitle(title);
-    plot->setCanvasBackground(QColor(43, 43, 43));
-
     plot->setAxisTitle(QwtPlot::xBottom, xTitle);
     plot->setAxisTitle(QwtPlot::yLeft, yTitle);
+    plot->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     QwtPlotGrid *grid = new QwtPlotGrid();
-    grid->setPen(QPen(QColor(255,255,255,60), 0.5, Qt::DotLine));
+    grid->setPen(QPen(color, 1, Qt::DotLine));
     grid->attach(plot);
-
-    plot->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     return plot;
 }
 
-QwtPlot* createRefractiveIndexPlot()
+QwtPlot* createRefractiveIndexPlot(bool darkThemeEnabled)
 {
+    QColor color = darkThemeEnabled ? Qt::white : Qt::black;
+
     QwtPlot *plot = createBasePlot(
-        "Refractive index curve",
-        "Wavelength (nm)",
-        "Refractive index n"
-        );
+                        "Refractive index curve",
+                        "Wavelength (nm)",
+                        "Refractive index n",
+                        darkThemeEnabled
+                    );
 
-    QVector<double> wl, n;
-    Beam beam;
-
-    int points = 600;
-
-    for (int i = 0; i < points; i++)
-    {
-        double x = 380 + (780 - 380) * i / (points - 1);
-
-        beam = Beam(0,0,0,x,1.0);
-
-        wl.append(x);
-        n.append(beam.refractIn());
+    QVector<double> wavelength, index;
+    for (int lambda = WAVE_MIN; lambda <= WAVE_MAX; lambda++) {
+        wavelength.append(lambda);
+        index.append(Beam(0, 0, 0, lambda, 0).refractIn());
     }
 
     QwtPlotCurve *curve = new QwtPlotCurve();
-    curve->setSamples(wl, n);
-    curve->setPen(Qt::white, 2);
+    curve->setRenderHint(QwtPlotItem::RenderAntialiased, true);
+    curve->setSamples(wavelength, index);
+    curve->setPen(color, 2);
     curve->attach(plot);
 
-    plot->setAxisScale(QwtPlot::xBottom, 380, 780);
-    plot->setAxisScale(QwtPlot::yLeft, 1.325, 1.346);
+    plot->setAxisAutoScale(QwtPlot::xBottom, true);
+    plot->setAxisAutoScale(QwtPlot::yLeft, true);
+
+    attachCursor(plot, darkThemeEnabled);
 
     return plot;
 }
 
-QwtPlot* createPrimaryRainbowPlot()
+QwtPlot* createRainbowPlot(
+    int rainbowMode,
+    const QString& title,
+    const QVector<double>& wavelengths,
+    const std::function<double(double, double)>& phiFunc,
+    bool darkThemeEnabled
+    )
 {
     QwtPlot *plot = createBasePlot(
-        "Primary rainbow",
+        title,
         "y = h/r",
-        "φ (degrees)"
+        "φ (degrees)",
+        darkThemeEnabled
         );
 
-    double wavelengths[] = {410,450,480,520,570,600,650};
-    int points = 600;
+    double yMin = (rainbowMode - 1) ? 0.8 : 0.7;
+    double yMax = (rainbowMode - 1) ? 0.99 : 0.99;
 
-    for (int i = 0; i < 7; i++)
-    {
-        Beam tmp;
-        tmp.setWavelength(wavelengths[i]);
-        double n = tmp.refractIn();
-
+    for (int i = 0; i < wavelengths.size(); i++) {
         QVector<double> xData, yData;
-        double maxPhi = -1e9;
+        double phiExt = (rainbowMode - 1) ? 1e9 : -1e9;
+        double yExt = 0;
+        double n = Beam(0, 0, 0, wavelengths[i], 0).refractIn();
 
-        for (int j = 0; j < points; j++)
-        {
-            double y = 0.7 + (0.99 - 0.7) * j / (points - 1);
-            double val = y / n;
+        for (int lambda = WAVE_MIN; lambda <= WAVE_MAX; lambda++) {
+            // y = h / r - normalized parameter
+            double y = yMin + (yMax - yMin) * (lambda - WAVE_MIN) / (WAVE_MAX - WAVE_MIN);
 
-            if (fabs(val) >= 1.0) continue;
+            double phi = phiFunc(y, n) * 180.0 / M_PI;
+            if (rainbowMode == 2) phi = 360 - phi;
 
-            double phi = 4*asin(val) - 2*asin(y);
-            double deg = phi * 180.0 / M_PI;
+            xData.push_back(y);
+            yData.push_back(phi);
 
-            xData << y;
-            yData << deg;
-
-            if (deg > maxPhi) maxPhi = deg;
+            if (rainbowMode == 1) {
+                if (phi > phiExt) {
+                    phiExt = phi;
+                    yExt = y;
+                }
+            } else {
+                if (phi < phiExt) {
+                    phiExt = phi;
+                    yExt = y;
+                }
+            }
         }
 
-        int r,g,b;
-        wavelengthToRGB(wavelengths[i],&r,&g,&b);
+        int r, g, b;
+        wavelengthToRGB(wavelengths[i], &r, &g, &b);
 
         QwtPlotCurve *curve = new QwtPlotCurve();
-        curve->setPen(QPen(QColor(r,g,b),2.5));
-        curve->setSamples(xData,yData);
-        curve->setZ(0);
+        curve->setRenderHint(QwtPlotItem::RenderAntialiased, true);
+        curve->setPen(QPen(QColor(r,g,b), 3));
+        curve->setSamples(xData, yData);
         curve->attach(plot);
 
-        // горизонталь
-        QVector<double> xs{0.7, 0.86};
-        QVector<double> ys{maxPhi, maxPhi};
+        QVector<double> xLine{yMin, yExt};
+        QVector<double> yLine{phiExt, phiExt};
 
         QwtPlotCurve *line = new QwtPlotCurve();
-        line->setPen(QPen(QColor(r,g,b),1.5));
-        line->setSamples(xs,ys);
-        line->setZ(1);
+        line->setPen(QPen(QColor(r,g,b), 2));
+        line->setSamples(xLine, yLine);
         line->attach(plot);
     }
 
-    plot->setAxisScale(QwtPlot::xBottom,0.7,0.99);
-    plot->setAxisScale(QwtPlot::yLeft,39,42.5);
+    double phiMin = (rainbowMode - 1) ? 50 : 39;
+    double phiMax = (rainbowMode - 1) ? 60 : 42.5;
+    plot->setAxisScale(QwtPlot::yLeft, phiMin, phiMax);
+    /// x Axis is autoscaled!!! because I want yMax = 1 without extra pain
+    plot->setAxisAutoScale(QwtPlot::xBottom, true);
 
-    return plot;
-}
-
-QwtPlot* createSecondaryRainbowPlot()
-{
-    QwtPlot *plot = createBasePlot(
-        "Secondary rainbow",
-        "y = h/r",
-        "φ (degrees)"
-        );
-
-    double wavelengths[] = {410,450,480,520,570,600,650};
-    int points = 600;
-
-    for (int i = 0; i < 7; i++)
-    {
-        Beam tmp;
-        tmp.setWavelength(wavelengths[i]);
-        double n = tmp.refractIn();
-
-        QVector<double> xData, yData;
-        double minPhi = 1e9;
-
-        for (int j = 0; j < points; j++)
-        {
-            double y = 0.8 + (0.99 - 0.8) * j / (points - 1);
-            double val = y / n;
-
-            if (fabs(val) >= 1.0) continue;
-
-            double phi = M_PI + 6*asin(val) - 2*asin(y);
-            double deg = 360.0 - phi * 180.0 / M_PI;
-
-            xData << y;
-            yData << deg;
-
-            if (deg < minPhi) minPhi = deg;
-        }
-
-        int r,g,b;
-        wavelengthToRGB(wavelengths[i],&r,&g,&b);
-
-        QwtPlotCurve *curve = new QwtPlotCurve(QString("λ=%1").arg(wavelengths[i]));
-        curve->setPen(QPen(QColor(r,g,b),2.5));
-        curve->setSamples(xData,yData);
-        curve->setZ(0);
-        curve->attach(plot);
-
-        QVector<double> xs{0.8, 0.95};
-        QVector<double> ys{minPhi, minPhi};
-
-        QwtPlotCurve *line = new QwtPlotCurve();
-        line->setPen(QPen(QColor(r,g,b),1.5));
-        line->setSamples(xs,ys);
-        line->setZ(1);
-        line->attach(plot);
-    }
-
-    plot->setAxisScale(QwtPlot::xBottom,0.8,1.0);
-    plot->setAxisScale(QwtPlot::yLeft,50,60);
+    attachCursor(plot, darkThemeEnabled);
 
     return plot;
 }

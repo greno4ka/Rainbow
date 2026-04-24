@@ -80,7 +80,7 @@ void GLWidget::paintGL()
         painter.drawText(scene3->getCoordX(), scene3->getCoordY(),
                          QString::number(scene3->getBestAngle(), 'f', 2));
     }
-    if (sceneNumber == 6) {painter.drawEllipse(QPointF(scene6->getCoordX(0), scene6->getCoordY(0)), 3, 3);
+    if (sceneNumber == 6) {
         painter.drawText(scene6->getCoordX(-3.9), scene6->getCoordY(7),
                          QString("α₁"));
         painter.drawText(scene6->getCoordX(0.8), scene6->getCoordY(-9),

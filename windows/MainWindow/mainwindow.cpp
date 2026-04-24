@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "plotFactory.h"
-
 #include <jkqtmathtext.h>
 
 static QString loadStyle(const QString &path)
@@ -116,14 +114,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     switchPage();
     ui->slideWidget->setCurrentIndex(currentSlideWidgetPage);
 
-    ui->qwtWidget_slide1->setLayout(new QVBoxLayout());
-    ui->qwtWidget_slide1->layout()->addWidget(createRefractiveIndexPlot());
-
-    ui->qwtWidget_slide2->setLayout(new QVBoxLayout());
-    ui->qwtWidget_slide2->layout()->addWidget(createPrimaryRainbowPlot());
-
-    ui->qwtWidget_slide3->setLayout(new QVBoxLayout());
-    ui->qwtWidget_slide3->layout()->addWidget(createSecondaryRainbowPlot());
+    reInitializePlots();
 
     mathToLabel(ui->label_snell2_slide1, "$n_1 \\cdot \\sin(\\alpha_1) = n_2 \\cdot \\sin(\\alpha_2)$",300,30);
     mathToLabel(ui->label_snell3_slide1, "$n_1 < n_2$",100,30);
@@ -183,6 +174,47 @@ void MainWindow::initUIDefaults()
     ui->horizontalSlider_number_of_beams_page5->setValue(SCENE5_NUMBER_OF_BEAMS);
     ui->spinBox_dispersion_quality_page5->setValue(SCENE5_BEAM_QUALITY_10);
     ui->horizontalSlider_dispersion_quality_page5->setValue(SCENE5_BEAM_QUALITY_10);
+}
+void MainWindow::reInitializePlots()
+{
+    // create only at start
+    if (!ui->qwtWidget_slide1->layout())
+        ui->qwtWidget_slide1->setLayout(new QVBoxLayout());
+
+    if (!ui->qwtWidget_slide2->layout())
+        ui->qwtWidget_slide2->setLayout(new QVBoxLayout());
+
+    if (!ui->qwtWidget_slide3->layout())
+        ui->qwtWidget_slide3->setLayout(new QVBoxLayout());
+
+    if (refractiveIndexPlot) {
+        ui->qwtWidget_slide1->layout()->removeWidget(refractiveIndexPlot);
+        delete refractiveIndexPlot;
+    }
+    refractiveIndexPlot = createRefractiveIndexPlot(darkThemeEnabled);
+    ui->qwtWidget_slide1->layout()->addWidget(refractiveIndexPlot);
+
+    QVector<double> wavelengths = {410, 450, 480, 520, 570, 600, 650};
+
+    if (primaryRainbowPlot) {
+        ui->qwtWidget_slide2->layout()->removeWidget(primaryRainbowPlot);
+        delete primaryRainbowPlot;
+    }
+
+    primaryRainbowPlot = createRainbowPlot(1, "Primary rainbow", wavelengths,
+    [](double y, double n) { return 4 * asin(y/n) - 2 * asin(y); }, darkThemeEnabled
+                                          );
+    ui->qwtWidget_slide2->layout()->addWidget(primaryRainbowPlot);
+
+    if (secondaryRainbowPlot) {
+        ui->qwtWidget_slide3->layout()->removeWidget(secondaryRainbowPlot);
+        delete secondaryRainbowPlot;
+    }
+
+    secondaryRainbowPlot = createRainbowPlot(2, "Secondary rainbow", wavelengths,
+    [](double y, double n) { return M_PI + 6*asin(y/n) - 2*asin(y); }, darkThemeEnabled
+                                            );
+    ui->qwtWidget_slide3->layout()->addWidget(secondaryRainbowPlot);
 }
 
 void MainWindow::updateRainbowImage()
@@ -322,6 +354,9 @@ void MainWindow::changeTheme(bool isDark)
     // Apply the stylesheet to both windows
     this->setStyleSheet(style);
     settingsWindow->setStyleSheet(style);
+
+    // update colors in plots
+    reInitializePlots();
 
     // Update GL widget background color
     if (glWidget) {
