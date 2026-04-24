@@ -131,6 +131,7 @@ QwtPlot* createRainbowPlot(
         curve->setRenderHint(QwtPlotItem::RenderAntialiased, true);
         curve->setPen(QPen(QColor(r,g,b), 3));
         curve->setSamples(xData, yData);
+        curve->setZ(0);
         curve->attach(plot);
 
         QVector<double> xLine{yMin, yExt};
@@ -139,6 +140,7 @@ QwtPlot* createRainbowPlot(
         QwtPlotCurve *line = new QwtPlotCurve();
         line->setPen(QPen(QColor(r,g,b), 2));
         line->setSamples(xLine, yLine);
+        curve->setZ(1);
         line->attach(plot);
     }
 
