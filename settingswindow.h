@@ -7,6 +7,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QDir>
+#include <QTimer>
 
 namespace Ui {
 class SettingsWindow;

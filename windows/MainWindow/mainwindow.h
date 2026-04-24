@@ -85,6 +85,7 @@ private:
     void initUIDefaults();
     void reInitializePlots();
     void reInitializeFormulas();
+    void changePageName();
 
 private slots:
     /// changers

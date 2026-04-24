@@ -214,6 +214,7 @@ void MainWindow::changeLanguage(const QString &language)
 {
     appLanguage = language;
     ui->retranslateUi(this);
+    changePageName();
 }
 
 MainWindow::~MainWindow()
@@ -233,9 +234,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::switchPage()
+void MainWindow::changePageName()
 {
-    /// Change page name
     switch (currentMenuWidgetPage) {
     case 0:
         ui->label_pageName->setText(tr("Analytical calculations"));
@@ -261,6 +261,11 @@ void MainWindow::switchPage()
     default:
         break;
     }
+}
+
+void MainWindow::switchPage()
+{
+    changePageName();
 
     /// decide what to with widgets
     switch (currentMenuWidgetPage) {

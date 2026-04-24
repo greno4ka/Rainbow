@@ -93,7 +93,13 @@ void SettingsWindow::on_checkBox_fullscreen_stateChanged(int state)
 void SettingsWindow::on_pushButton_save_clicked()
 {
     saveSettings();
-    QMessageBox::information(this, tr("Settings"), tr("Settings saved successfully."));
+
+    ui->label_done->setText("Done!");
+    ui->label_done->setStyleSheet("color: green; font-weight: bold;");
+
+    QTimer::singleShot(3000, this, [this]() {
+        ui->label_done->clear();
+    });
 }
 
 QString SettingsWindow::languageFromIndex(int index)
