@@ -88,13 +88,13 @@
         <location filename="windows/MainWindow/mainwindow.ui" line="448"/>
         <location filename="windows/MainWindow/mainwindow.ui" line="607"/>
         <location filename="windows/MainWindow/mainwindow.ui" line="859"/>
-        <location filename="windows/MainWindow/mainwindow.ui" line="1035"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1090"/>
         <source>Reset settings</source>
         <translation>Réinitialiser les options</translation>
     </message>
     <message>
         <location filename="windows/MainWindow/mainwindow.ui" line="523"/>
-        <location filename="windows/MainWindow/mainwindow.ui" line="1003"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1027"/>
         <source>Number of beams</source>
         <translation>Nombre de rayons</translation>
     </message>
@@ -155,87 +155,197 @@
         <translation>Position du soleil</translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.ui" line="927"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="939"/>
         <source>Position of eye</source>
         <translation>Position de l&apos;œil</translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.ui" line="971"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="995"/>
         <source>Polychromatic</source>
         <translation>Polychrome</translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.ui" line="981"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1005"/>
         <source>Monochromatic</source>
         <translation>Monochromatique</translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.ui" line="991"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1015"/>
         <source>Visualize beams</source>
         <translation>Visualiser des rayons</translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.ui" line="1028"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1052"/>
         <source>Add beams</source>
         <translation>Ajouter des rayons</translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.ui" line="1067"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1059"/>
+        <source>Camera settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1066"/>
+        <source>From observer&apos;s eye</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1073"/>
+        <source>From third person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1083"/>
+        <source>Reset camera</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1122"/>
         <source>⚙</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.ui" line="1089"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1144"/>
         <source>F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.ui" line="1108"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1163"/>
         <source>&lt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.ui" line="1127"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1182"/>
         <source>&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.ui" line="1146"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1201"/>
         <source>X</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.cpp" line="220"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1268"/>
+        <source>Refraction is the phenomenon of a change in the path of
+a light ray (or other waves), occurring at the interface between
+two media permeable to these waves, or within a medium
+with continuously varying properties.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1337"/>
+        <source>Snell law:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1362"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1402"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1549"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1710"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1830"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1991"/>
+        <source>Here should be a math formula</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1452"/>
+        <source>Plot of refractive index vs. wavelength
+of incedent radiation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1528"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1809"/>
+        <source>Dependence of the refraction angle on the impact parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1542"/>
+        <source>Primary rainbow:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1618"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1899"/>
+        <source>α₁ – angle of incidence
+α₂ – angle of refraction
+φ – output angle
+h – impact parameter
+r – radius of droplet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1672"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1953"/>
+        <source>λ=410
+
+λ=450
+
+λ=480
+
+λ=520
+
+λ=570
+
+λ=600
+
+λ=650</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1740"/>
+        <location filename="windows/MainWindow/mainwindow.ui" line="2021"/>
+        <source>– normalized impact
+parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.ui" line="1823"/>
+        <source>Secondary rainbow:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="35"/>
+        <source>Error: 0xDEADBEE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="35"/>
+        <source>Can&apos;t change language.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="241"/>
         <source>Analytical calculations</source>
         <translation>Calculs analytiques</translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.cpp" line="223"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="244"/>
         <source>Beams in a droplet</source>
         <translation>Rayons dans une goutte</translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.cpp" line="226"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="247"/>
         <source>Beam divergence</source>
         <translation>Divergence des rayons</translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.cpp" line="229"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="250"/>
         <source>Descartes&apos; rainbow</source>
         <translation>Arc-en-ciel Descartes</translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.cpp" line="232"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="253"/>
         <source>Ensemble of droplets</source>
         <translation>Ensemble de gouttes</translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.cpp" line="235"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="256"/>
         <source>Alexander&apos;s dark band</source>
         <translation>Trait sombre d&apos;Alexandre</translation>
     </message>
     <message>
-        <location filename="windows/MainWindow/mainwindow.cpp" line="238"/>
+        <location filename="windows/MainWindow/mainwindow.cpp" line="259"/>
         <source>Formation of a rainbow</source>
         <translation>Formation d&apos;un arc-en-ciel</translation>
     </message>
@@ -249,7 +359,6 @@
     <name>SettingsWindow</name>
     <message>
         <location filename="settingswindow.ui" line="14"/>
-        <location filename="settingswindow.cpp" line="122"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
@@ -304,27 +413,22 @@
     </message>
     <message>
         <location filename="settingswindow.ui" line="116"/>
-        <source>Save Settings</source>
-        <translation>Enregistrer les paramètres</translation>
+        <source>Save to file</source>
+        <translation type="unfinished">Enregistrer les paramètres</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="45"/>
-        <location filename="settingswindow.cpp" line="49"/>
-        <location filename="settingswindow.cpp" line="53"/>
+        <location filename="settingswindow.cpp" line="32"/>
         <source>Error: 0xDEADBEE</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="45"/>
-        <location filename="settingswindow.cpp" line="49"/>
-        <location filename="settingswindow.cpp" line="53"/>
+        <location filename="settingswindow.cpp" line="32"/>
         <source>Can&apos;t change language.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="122"/>
         <source>Settings saved successfully.</source>
-        <translation>Paramètres enregistrés avec succès.</translation>
+        <translation type="vanished">Paramètres enregistrés avec succès.</translation>
     </message>
 </context>
 </TS>
