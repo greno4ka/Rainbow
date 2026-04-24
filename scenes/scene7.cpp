@@ -41,6 +41,11 @@ double Scene7::getCoordY(double y0)
 
 void Scene7::drawRadiusDash(double x0, double y0)
 {
+    if (darkThemeEnabled)
+        glColor3ub(255,255,255);
+    else
+        glColor3ub(0,0,0);
+
     glEnable(GL_LINE_STIPPLE);
     glLineStipple(2, 0xFF00);
     glBegin(GL_LINES);

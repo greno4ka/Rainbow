@@ -135,6 +135,7 @@ void Scene1::rayProcess(Beam beam)
 
 void Scene1::display()
 {
+    glLineWidth(2);
     drawDrop();
     drawAxes();
     for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)

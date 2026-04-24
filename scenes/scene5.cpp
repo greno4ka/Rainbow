@@ -128,6 +128,7 @@ void Scene5::rayProcess(Beam beam)
 
 void Scene5::display()
 {
+    glLineWidth(2);
     for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)
         rayProcess(*beam);
 

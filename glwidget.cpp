@@ -76,7 +76,10 @@ void GLWidget::paintGL()
     QColor fontColor = palette().color(QPalette::WindowText);
     QFont font = painter.font();
     int minWidgetSize = std::min(width,height);
-    font.setPointSize(minWidgetSize/20);
+    if (sceneNumber != 3)
+        font.setPointSize(minWidgetSize/20);
+    else
+        font.setPointSize(minWidgetSize/40);
     painter.setFont(font);
     painter.setPen(fontColor);
     if (sceneNumber == 3 && scene3->getShowAngle() && scene3->getBestAngle()) {

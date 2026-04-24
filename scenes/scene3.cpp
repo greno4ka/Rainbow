@@ -196,6 +196,7 @@ void Scene3::rayProcess(Beam beam)
 
 void Scene3::display()
 {
+    glLineWidth(2);
     drawDrop();
     drawAxes();
 
@@ -204,7 +205,10 @@ void Scene3::display()
         rayProcess(*beam);
 
     if (showAngle && getBestAngle()) {
-        glColor3ub(255,255,255);
+        if (darkThemeEnabled)
+            glColor3ub(255,255,255);
+        else
+            glColor3ub(0,0,0);
         glBegin(GL_LINES);
         glVertex2f(x(coordX),y(coordY));
         if (displayMode == 1)

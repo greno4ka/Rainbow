@@ -40,7 +40,11 @@ void Scene6::drawWater()
 
 void Scene6::drawAxes()
 {
-    glColor3ub(255,255,255);
+    if (darkThemeEnabled)
+        glColor3ub(255,255,255);
+    else
+        glColor3ub(0,0,0);
+
     glEnable(GL_LINE_STIPPLE); // turn on - - - - - -
     glLineStipple(1, 0x1111);  // 1 , 1111 means tiny dashes
     glBegin(GL_LINES);
@@ -58,7 +62,10 @@ void Scene6::rayProcess()
            x1,y1,
            x2,y2;
 
-    glColor3ub(255,255,255);
+    if (darkThemeEnabled)
+        glColor3ub(255,255,255);
+    else
+        glColor3ub(0,0,0);
 
     beam.calculateInputPoint(&x0, &y0);
     beam.calculateInfinityPoint(x0, y0, &x1, &y1);

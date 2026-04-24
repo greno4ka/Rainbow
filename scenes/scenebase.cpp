@@ -21,6 +21,11 @@ void SceneBase::updateXY(int newX, int newY)
     Y = newY;
 }
 
+void SceneBase::setTheme(bool newDarkThemeEnabled)
+{
+    darkThemeEnabled = newDarkThemeEnabled;
+}
+
 void SceneBase::drawDrop()
 {
     glColor3ub(100,100,255);
@@ -37,7 +42,11 @@ void SceneBase::drawDrop()
 
 void SceneBase::drawAxes()
 {
-    glColor3ub(255,255,255);
+    if (darkThemeEnabled)
+        glColor3ub(255,255,255);
+    else
+        glColor3ub(0,0,0);
+
     glEnable(GL_LINE_STIPPLE); // turn on - - - - - -
     glLineStipple(1, 0x1111);  // 1 , 1111 means tiny dashes
     glBegin(GL_LINES);

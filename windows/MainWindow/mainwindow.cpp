@@ -343,6 +343,13 @@ void MainWindow::changeTheme(bool isDark)
         QColor background = palette().color(QPalette::Window);
         glClearColor(background.redF(), background.greenF(), background.blueF(), 1.0f);
         glWidget->update();
+        scene1->setTheme(darkThemeEnabled);
+        scene2->setTheme(darkThemeEnabled);
+        scene3->setTheme(darkThemeEnabled);
+        scene4->setTheme(darkThemeEnabled);
+        scene5->setTheme(darkThemeEnabled);
+        scene6->setTheme(darkThemeEnabled);
+        scene7->setTheme(darkThemeEnabled);
     }
 }
 

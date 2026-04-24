@@ -21,6 +21,8 @@ protected:
 
     int X, Y; // Window height and width
 
+    bool darkThemeEnabled;
+
     double offsetXFactor,
            offsetYFactor;
 
@@ -55,6 +57,8 @@ public:
     SceneBase(QObject *parent = nullptr);
 
     void updateXY(int newX, int newY);
+    void setTheme(bool newDarkThemeEnabled);
+
     virtual void display() = 0;
 };
 
