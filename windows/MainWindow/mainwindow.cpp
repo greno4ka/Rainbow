@@ -16,8 +16,6 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
 {
     ui->setupUi(this);
 
-    initUIDefaults();
-
     // Load initial settings before creating GLWidget
     configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
     settingsFilePath = configPath + "/settings.ini";
@@ -56,9 +54,7 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     connect(settingsWindow, &SettingsWindow::fullscreen_change,
             this, &MainWindow::changeFullscreen);
 
-    ui->label_for_image->setAlignment(Qt::AlignCenter);
-    ui->label_for_image->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    ui->label_for_image->setMinimumSize(1, 1);
+    initUIDefaults();
 
     glWidget = new GLWidget(this);
     glWidget3d = new GLWidget3D(this);
@@ -86,10 +82,10 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     scene4 = new Scene4();
     scene5 = new Scene5();
 
-    scenex = new SceneX();
-
     scene6 = new Scene6();
     scene7 = new Scene7();
+
+    scenex = new SceneX();
 
     glWidget->connectWithScene1(*scene1);
     glWidget->connectWithScene2(*scene2);
@@ -106,20 +102,22 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     changeTheme(darkThemeEnabled);
 
     // Apply fullscreen if needed
-    if (fullscreenEnabled) {
-        showFullScreen();
-    }
+    changeFullscreen(fullscreenEnabled);
+
     switchPage();
     ui->slideWidget->setCurrentIndex(currentSlideWidgetPage);
 
-    reInitializePlots();
-    reInitializeFormulas();
-
     QTimer::singleShot(0, this, &MainWindow::updateRainbowImage);
+    QTimer::singleShot(0, this, &MainWindow::reInitializeFormulas);
+    QTimer::singleShot(0, this, &MainWindow::reInitializePlots);
 }
 
 void MainWindow::initUIDefaults()
 {
+    ui->label_for_image->setAlignment(Qt::AlignCenter);
+    ui->label_for_image->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->label_for_image->setMinimumSize(1, 1);
+
     ui->doubleSpinBox_dist_page1->setValue(SCENE1_DISTANCE_08);
     ui->horizontalSlider_dist_page1->setValue(SCENE1_DISTANCE_08*100);
     ui->spinBox_wave_page1->setValue(SCENE1_WAVELENGTH_600);
@@ -342,11 +340,8 @@ void MainWindow::changeTheme(bool isDark)
     // Update GL widget background color
     if (glWidget) {
         glWidget->makeCurrent();
-        if (isDark) {
-            glClearColor(0.17f, 0.17f, 0.17f, 1.0f);  // Dark gray for dark theme
-        } else {
-            glClearColor(0.94f, 0.94f, 0.94f, 1.0f);  // Light gray for light theme
-        }
+        QColor background = palette().color(QPalette::Window);
+        glClearColor(background.redF(), background.greenF(), background.blueF(), 1.0f);
         glWidget->update();
     }
 }

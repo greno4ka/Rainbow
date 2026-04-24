@@ -3,7 +3,6 @@
 GLWidget::GLWidget(QWidget *parent) :
     QOpenGLWidget(parent)
 {
-    width = 800; height = 600;
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, [this]() { update(); });
 }
@@ -23,7 +22,7 @@ void GLWidget::setSceneNumber(int programMode)
 {
     sceneNumber = programMode;
 
-    switch (programMode) {
+    switch (sceneNumber) {
     case 1:
         scene = scene1;
         break;
@@ -51,16 +50,20 @@ void GLWidget::setSceneNumber(int programMode)
         scene = scene6;
         break;
     }
+
+    if (sceneNumber != 4) {
+        timerStop();
+    }
+
     connect(scene, &SceneBase::requestUpdate, this, [this]() { update(); });
-    connect(scene4, &Scene4::timerStart, this, &GLWidget::timerStart);
-    connect(scene4, &Scene4::timerStop, this, &GLWidget::timerStop);
 
     this->update();
 }
 
 void GLWidget::initializeGL()
 {
-        glClearColor(0.125f, 0.125f, 0.125f, 1.0f);
+    QColor background = palette().color(QPalette::Window);
+    glClearColor(background.redF(), background.greenF(), background.blueF(), 1.0f);
 }
 
 void GLWidget::paintGL()
@@ -81,34 +84,22 @@ void GLWidget::paintGL()
                          QString::number(scene3->getBestAngle(), 'f', 2));
     }
     if (sceneNumber == 6) {
-        painter.drawText(scene6->getCoordX(-3.9), scene6->getCoordY(7),
-                         QString("α₁"));
-        painter.drawText(scene6->getCoordX(0.8), scene6->getCoordY(-9),
-                         QString("α₂"));
-        painter.drawText(scene6->getCoordX(-15), scene6->getCoordY(5),
-                         QString("n₁"));
-        painter.drawText(scene6->getCoordX(-15), scene6->getCoordY(-5),
-                         QString("n₂"));
+        painter.drawText(scene6->getCoordX(-3.9), scene6->getCoordY(7), QString("α₁"));
+        painter.drawText(scene6->getCoordX(0.8), scene6->getCoordY(-9), QString("α₂"));
+        painter.drawText(scene6->getCoordX(-15), scene6->getCoordY(5), QString("n₁"));
+        painter.drawText(scene6->getCoordX(-15), scene6->getCoordY(-5), QString("n₂"));
     }
     if (sceneNumber == 7 && !scene7->getDisplaymode()) {
-        painter.drawText(scene7->getCoordX(-5.3), scene7->getCoordY(4.5),
-                         QString("α₁"));
-        painter.drawText(scene7->getCoordX(-1.5), scene7->getCoordY(2.4),
-                         QString("α₂"));
-        painter.drawText(scene7->getCoordX(-2.2), scene7->getCoordY(-6),
-                         QString("φ"));
-        painter.drawText(scene7->getCoordX(0.5), scene7->getCoordY(3.5),
-                         QString("h"));
+        painter.drawText(scene7->getCoordX(-5.3), scene7->getCoordY(4.5), QString("α₁"));
+        painter.drawText(scene7->getCoordX(-1.5), scene7->getCoordY(2.4), QString("α₂"));
+        painter.drawText(scene7->getCoordX(-2.2), scene7->getCoordY(-6), QString("φ"));
+        painter.drawText(scene7->getCoordX(0.5), scene7->getCoordY(3.5), QString("h"));
     }
     if (sceneNumber == 7 && scene7->getDisplaymode()) {
-        painter.drawText(scene7->getCoordX(-5.2), scene7->getCoordY(-5),
-                         QString("α₁"));
-        painter.drawText(scene7->getCoordX(-1.5), scene7->getCoordY(-3),
-                         QString("α₂"));
-        painter.drawText(scene7->getCoordX(-8.3), scene7->getCoordY(-5.3),
-                         QString("φ"));
-        painter.drawText(scene7->getCoordX(0.5), scene7->getCoordY(-4.5),
-                         QString("h"));
+        painter.drawText(scene7->getCoordX(-5.2), scene7->getCoordY(-5), QString("α₁"));
+        painter.drawText(scene7->getCoordX(-1.5), scene7->getCoordY(-3), QString("α₂"));
+        painter.drawText(scene7->getCoordX(-8.3), scene7->getCoordY(-5.3), QString("φ"));
+        painter.drawText(scene7->getCoordX(0.5), scene7->getCoordY(-4.5), QString("h"));
     }
 }
 
@@ -155,6 +146,9 @@ void GLWidget::connectWithScene3(Scene3 &originalScene3)
 void GLWidget::connectWithScene4(Scene4 &originalScene4)
 {
     scene4 = &originalScene4;
+
+    connect(scene4, &Scene4::timerStart, this, &GLWidget::timerStart, Qt::UniqueConnection);
+    connect(scene4, &Scene4::timerStop, this, &GLWidget::timerStop, Qt::UniqueConnection);
 }
 
 void GLWidget::connectWithScene5(Scene5 &originalScene5)

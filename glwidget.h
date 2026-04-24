@@ -23,19 +23,19 @@ class GLWidget : public QOpenGLWidget
 private:
     QTimer *timer = nullptr;
 
-    SceneBase *scene;
-    Scene1 *scene1;
-    Scene2 *scene2;
-    Scene3 *scene3;
-    Scene4 *scene4;
-    Scene5 *scene5;
+    SceneBase *scene = nullptr;
+    Scene1 *scene1 = nullptr;
+    Scene2 *scene2 = nullptr;
+    Scene3 *scene3 = nullptr;
+    Scene4 *scene4 = nullptr;
+    Scene5 *scene5 = nullptr;
 
-    Scene6 *scene6;
-    Scene7 *scene7;
+    Scene6 *scene6 = nullptr;
+    Scene7 *scene7 = nullptr;
 
-    int width, height;
+    int width = 0, height = 0;
 
-    int sceneNumber;
+    int sceneNumber = 0;
 
     void timerStart();
     void timerStop();
