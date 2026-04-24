@@ -1,14 +1,12 @@
 #include "formulaFactory.h"
 
 void mathToLabel(const QWidget *parent, QLabel* label, const QString& formula,
-                 bool darkThemeEnabled, int width, int height, int fontSize)
+                 int width, int height, int fontSize)
 {
-    QColor color = darkThemeEnabled ? Qt::white : Qt::black;
-
     JKQTMathText math;
     math.useXITS();
     math.setFontSize(fontSize);
-    math.setFontColor(color);
+    math.setFontColor(parent->palette().color(QPalette::WindowText));
     math.parse(formula);
 
     double dpr = parent->devicePixelRatioF();

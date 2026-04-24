@@ -118,18 +118,6 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     QTimer::singleShot(0, this, &MainWindow::updateRainbowImage);
 }
 
-void MainWindow::reInitializeFormulas()
-{
-    mathToLabel(this, ui->label_snell2_slide1, "$n_1 \\cdot \\sin(\\alpha_1) = n_2 \\cdot \\sin(\\alpha_2)$", darkThemeEnabled, 300, 30);
-    mathToLabel(this, ui->label_snell3_slide1, "$n_1 < n_2$", darkThemeEnabled, 100, 30);
-
-    mathToLabel(this, ui->label_formula1_slide2, "$\\varphi = 4\\alpha_2 - 2\\alpha_1\\ \\ ;\\ \\ \\varphi = 4\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$", darkThemeEnabled);
-    mathToLabel(this, ui->label_formula2_slide2, "$y = \\frac{h}{r}$", darkThemeEnabled, 100, 100);
-
-    mathToLabel(this, ui->label_formula1_slide3, "$\\varphi = \\pi - 6\\alpha_2 + 2\\alpha_1\\ \\ ;\\ \\ \\varphi = \\pi + 6\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$", darkThemeEnabled);
-    mathToLabel(this, ui->label_formula2_slide3, "$y = \\frac{h}{r}$", darkThemeEnabled, 100, 100);
-}
-
 void MainWindow::initUIDefaults()
 {
     ui->doubleSpinBox_dist_page1->setValue(SCENE1_DISTANCE_08);
@@ -152,6 +140,7 @@ void MainWindow::initUIDefaults()
     ui->spinBox_dispersion_quality_page5->setValue(SCENE5_BEAM_QUALITY_10);
     ui->horizontalSlider_dispersion_quality_page5->setValue(SCENE5_BEAM_QUALITY_10);
 }
+
 void MainWindow::reInitializePlots()
 {
     // create only at start
@@ -192,6 +181,18 @@ void MainWindow::reInitializePlots()
     [](double y, double n) { return M_PI + 6*asin(y/n) - 2*asin(y); }, darkThemeEnabled
                                             );
     ui->qwtWidget_slide3->layout()->addWidget(secondaryRainbowPlot);
+}
+
+void MainWindow::reInitializeFormulas()
+{
+    mathToLabel(this, ui->label_snell2_slide1, "$n_1 \\cdot \\sin(\\alpha_1) = n_2 \\cdot \\sin(\\alpha_2)$", 300, 30);
+    mathToLabel(this, ui->label_snell3_slide1, "$n_1 < n_2$", 100, 30);
+
+    mathToLabel(this, ui->label_formula1_slide2, "$\\varphi = 4\\alpha_2 - 2\\alpha_1\\ \\ ;\\ \\ \\varphi = 4\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$");
+    mathToLabel(this, ui->label_formula2_slide2, "$y = \\frac{h}{r}$", 100, 100);
+
+    mathToLabel(this, ui->label_formula1_slide3, "$\\varphi = \\pi - 6\\alpha_2 + 2\\alpha_1\\ \\ ;\\ \\ \\varphi = \\pi + 6\\arcsin\\left(\\frac{y}{n}\\right) - 2\\arcsin(y)$");
+    mathToLabel(this, ui->label_formula2_slide3, "$y = \\frac{h}{r}$", 100, 100);
 }
 
 void MainWindow::updateRainbowImage()
