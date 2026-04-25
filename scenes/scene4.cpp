@@ -87,7 +87,7 @@ void Scene4::display()
         for (int i=0; i<NumberOfBeams; i++)
             sunlightPenetration[i] = (double)(rand()%500/100.0);
 
-    glLineWidth(2);
+    glLineWidth(dpiScale);
     drawRain();
 
     eyeX=x(ManPositionX)+6;

@@ -193,7 +193,7 @@ void Scene7::rayProcess()
 
 void Scene7::display()
 {
-    glLineWidth(5.0f);
+    glLineWidth(2.0*dpiScale);
     drawDrop();
     drawAxes();
     rayProcess();

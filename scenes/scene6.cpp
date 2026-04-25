@@ -82,7 +82,7 @@ void Scene6::rayProcess()
 
 void Scene6::display()
 {
-    glLineWidth(5.0f);
+    glLineWidth(2.0*dpiScale);
     drawWater();
     drawAxes();
     rayProcess();

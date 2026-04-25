@@ -104,7 +104,7 @@ void Scene2::rayProcess(Beam beam)
 
 void Scene2::display()
 {
-    glLineWidth(2);
+    glLineWidth(dpiScale);
     drawDrop();
     drawAxes();
     for (Beams::iterator beam=beams.begin(); beam!=beams.end(); beam++)

@@ -6,6 +6,8 @@ SceneBase::SceneBase(QObject *parent)
     X = 800;
     Y = 600;
 
+    dpiScale = 1;
+
     sceneScale = 10.0;
 
     offsetXFactor = 4.0;
@@ -24,6 +26,11 @@ void SceneBase::updateXY(int newX, int newY)
 void SceneBase::setTheme(bool newDarkThemeEnabled)
 {
     darkThemeEnabled = newDarkThemeEnabled;
+}
+
+void SceneBase::setDPIScale(double newDPIScale)
+{
+    dpiScale = newDPIScale;
 }
 
 void SceneBase::drawDrop()

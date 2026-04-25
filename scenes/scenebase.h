@@ -20,6 +20,7 @@ protected:
     static const int DropRadius = 5;
 
     int X, Y; // Window height and width
+    double dpiScale;
 
     bool darkThemeEnabled;
 
@@ -58,6 +59,7 @@ public:
 
     void updateXY(int newX, int newY);
     void setTheme(bool newDarkThemeEnabled);
+    void setDPIScale(double newDPIScale);
 
     virtual void display() = 0;
 };

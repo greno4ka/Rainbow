@@ -9,10 +9,10 @@ void mathToLabel(const QWidget *parent, QLabel* label, const QString& formula,
     math.setFontColor(parent->palette().color(QPalette::WindowText));
     math.parse(formula);
 
-    double dpr = parent->devicePixelRatioF();
+    double dpiScale = parent->devicePixelRatioF();
 
-    QImage image(width * dpr, height * dpr, QImage::Format_ARGB32);
-    image.setDevicePixelRatio(dpr);
+    QImage image(width * dpiScale, height * dpiScale, QImage::Format_ARGB32);
+    image.setDevicePixelRatio(dpiScale);
     image.fill(Qt::transparent);
 
     QPainter painter(&image);

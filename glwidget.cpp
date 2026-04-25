@@ -70,6 +70,7 @@ void GLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
+    scene->setDPIScale(devicePixelRatioF());
     scene->display();
 
     QPainter painter(this);

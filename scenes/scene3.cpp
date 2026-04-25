@@ -196,7 +196,7 @@ void Scene3::rayProcess(Beam beam)
 
 void Scene3::display()
 {
-    glLineWidth(2);
+    glLineWidth(dpiScale);
     drawDrop();
     drawAxes();
 
