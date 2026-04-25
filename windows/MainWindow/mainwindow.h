@@ -85,6 +85,8 @@ private:
     void initUIDefaults();
     void reInitializePlots();
     void reInitializeFormulas();
+    void reInitializeGLWidget();
+    void reInitializeGLWidget3D();
     void changePageName();
 
 private slots:

@@ -56,25 +56,6 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
 
     initUIDefaults();
 
-    glWidget = new GLWidget(this);
-    glWidget3d = new GLWidget3D(this);
-
-    QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    glWidget->setSizePolicy(sizePolicy);
-    glWidget3d->setSizePolicy(sizePolicy);
-
-    // Apply multisampling setting
-    QSurfaceFormat format;
-    format.setSamples(multisamplingEnabled ? 8 : 0);
-    glWidget->setFormat(format);
-    glWidget3d->setFormat(format);
-
-    ui->glWidgetLayout->addWidget(glWidget3d);
-    currentMenuWidgetPage = programMode;
-    currentSlideWidgetPage = 0;
-
-    ui->glWidgetLayout_slide1->addWidget(glWidget);
-
     // Create scenes
     scene1 = new Scene1();
     scene2 = new Scene2();
@@ -87,16 +68,8 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
 
     scenex = new SceneX();
 
-    glWidget->connectWithScene1(*scene1);
-    glWidget->connectWithScene2(*scene2);
-    glWidget->connectWithScene3(*scene3);
-    glWidget->connectWithScene4(*scene4);
-    glWidget->connectWithScene5(*scene5);
-
-    glWidget->connectWithScene6(*scene6);
-    glWidget->connectWithScene7(*scene7);
-
-    glWidget3d->connectWithSceneX(*scenex);
+ //   reInitializeGLWidget();
+//    reInitializeGLWidget3D();
 
     // Apply theme
     changeTheme(darkThemeEnabled);
@@ -104,12 +77,17 @@ MainWindow::MainWindow(int programMode, QTranslator *newTranslator, QWidget *par
     // Apply fullscreen if needed
     changeFullscreen(fullscreenEnabled);
 
-    switchPage();
+    currentMenuWidgetPage = programMode;
+    currentSlideWidgetPage = 0;
+//    switchPage();
     ui->slideWidget->setCurrentIndex(currentSlideWidgetPage);
 
     QTimer::singleShot(0, this, &MainWindow::updateRainbowImage);
     QTimer::singleShot(0, this, &MainWindow::reInitializeFormulas);
     QTimer::singleShot(0, this, &MainWindow::reInitializePlots);
+    QTimer::singleShot(0, this, &MainWindow::reInitializeGLWidget);
+    QTimer::singleShot(0, this, &MainWindow::reInitializeGLWidget3D);
+    QTimer::singleShot(0, this, &MainWindow::switchPage);
 }
 
 void MainWindow::initUIDefaults()
@@ -358,15 +336,82 @@ void MainWindow::changeTheme(bool isDark)
     }
 }
 
+void MainWindow::reInitializeGLWidget()
+{
+    QSurfaceFormat format;
+    format.setSamples(multisamplingEnabled ? 8 : 0);
+    //format.setVersion(3,3);
+    format.setProfile(QSurfaceFormat::CompatibilityProfile);
+
+    GLWidget *old = nullptr;
+    if (glWidget)
+        old = glWidget;
+
+    glWidget = new GLWidget(this);
+
+    glWidget->connectWithScene1(*scene1);
+    glWidget->connectWithScene2(*scene2);
+    glWidget->connectWithScene3(*scene3);
+    glWidget->connectWithScene4(*scene4);
+    glWidget->connectWithScene5(*scene5);
+
+    glWidget->connectWithScene6(*scene6);
+    glWidget->connectWithScene7(*scene7);
+
+    QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    glWidget->setSizePolicy(sizePolicy);
+
+    if (old) {
+        ui->glWidgetLayout_slide1->removeWidget(old);
+        old->setParent(nullptr);
+        old->deleteLater();
+    }
+
+    ui->glWidgetLayout_slide1->addWidget(glWidget);
+}
+
+void MainWindow::reInitializeGLWidget3D()
+{
+    QSurfaceFormat format;
+    format.setSamples(multisamplingEnabled ? 8 : 0);
+    //format.setVersion(3,3);
+    format.setProfile(QSurfaceFormat::CompatibilityProfile);
+    QSurfaceFormat::setDefaultFormat(format);
+
+    GLWidget3D *old = nullptr;
+    if (glWidget3d)
+        old = glWidget3d;
+
+    glWidget3d = new GLWidget3D(this);
+    glWidget3d->connectWithSceneX(*scenex);
+
+    if (old)
+        glWidget3d->setState(old->getState());
+
+
+    QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    glWidget3d->setSizePolicy(sizePolicy);
+
+    if (old) {
+        ui->glWidgetLayout->removeWidget(old);
+        old->setParent(nullptr);
+        old->deleteLater();
+    }
+
+    ui->glWidgetLayout->addWidget(glWidget3d);
+
+}
+
 void MainWindow::changeMultisampling(bool enabled)
 {
-    if (glWidget) {
-        QSurfaceFormat format = glWidget->format();
-        format.setSamples(enabled ? 8 : 0);
-        glWidget->setFormat(format);
-        glWidget->hide();  // Force a context recreation
-        glWidget->show();
-    }
+    multisamplingEnabled = enabled;
+    QSurfaceFormat format;
+    format.setSamples(multisamplingEnabled ? 8 : 0);
+    //format.setVersion(3,3);
+    format.setProfile(QSurfaceFormat::CompatibilityProfile);
+
+    reInitializeGLWidget();
+    reInitializeGLWidget3D();
 }
 
 void MainWindow::changeFullscreen(bool enabled)

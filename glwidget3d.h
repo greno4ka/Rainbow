@@ -9,6 +9,33 @@
 
 #include "scenes/scenex.h"
 
+struct GLWidget3DState
+{
+    bool cameraMode = 0;
+
+    /// Static camera stuff
+    QVector3D camera;
+    QVector3D target;
+    QVector3D worldUp;
+
+    double          // note that angles in radians
+        phi,        // horizontal angle
+        psy,        // vertical angle
+        distance;   // distance of camera from center
+
+    /// Flying camera stuff
+    bool flying = false;
+    bool resetting = false; // special type of flight
+
+    QVector3D startCamera, endCamera;
+    QVector3D startTarget, endTarget;
+    double startPhi, startPsy, startDistance;
+    double endPhi, endPsy, endDistance;
+
+    double flyTime = 0.0;
+    bool flyDirection = 1;
+};
+
 class GLWidget3D : public QOpenGLWidget
 {
     Q_OBJECT
@@ -25,34 +52,11 @@ private:
     static constexpr double DefaultPsy = M_PI/8.0;      // vertical angle
     static constexpr double DefaultDistance = 400;      // distance of camera from center
 
-    bool cameraMode = 0;
-
-    /// Static camera stuff
-    QVector3D camera;
-    QVector3D target;
-    QVector3D worldUp;
-
-    double
-        phi,        // horizontal angle
-        psy,        // vertical angle
-        distance;   // distance of camera from center
-
-    /// Flying camera stuff
-    bool flying = false;
-    bool resetting = false; // special type of flight
-
-    QVector3D startCamera, endCamera;
-    QVector3D startTarget, endTarget;
-    double startPhi, startPsy, startDistance;
-    double endPhi, endPsy, endDistance;
-
-    double flyTime = 0.0;
-    bool flyDirection = 1;
-
-
-    QTimer *timer = nullptr;
+    GLWidget3DState state;
 
     SceneX *scenex;
+
+    QTimer *timer = nullptr;
 
     int mouse_x, mouse_y; // for mouse tracking
     int mouse_button; // mouse pressed flag: 0 - mouse up, 1 - mouse down
@@ -77,6 +81,7 @@ public:
     static constexpr QVector3D DefaultTarget = { 0.0, 0.0, 50.0 };
 
     explicit GLWidget3D(QWidget *parent = 0);
+    ~GLWidget3D();
 
     void flyTo(QVector3D destCamera, QVector3D destTarget);
     void switchCameraMode();
@@ -87,6 +92,9 @@ public:
     void resetCamera();
 
     void connectWithSceneX(SceneX &originalSceneX);
+
+    GLWidget3DState getState() const;
+    void setState(const GLWidget3DState &newState);
 };
 
 #endif // GLWIDGET3D_H

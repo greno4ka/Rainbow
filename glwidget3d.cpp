@@ -4,89 +4,113 @@
 GLWidget3D::GLWidget3D(QWidget *parent) :
     QOpenGLWidget(parent)
 {
-    this->setMouseTracking(true);
+    setMouseTracking(true);
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, [this]() { update(); });
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout,
+            this,
+            static_cast<void (QWidget::*)()>(&QWidget::update));
     timer->start(1);
 
-    mouse_button=0;
+    mouse_button = 0;
 
-    // note that angles in radians
-    phi = DefaultPhi;
-    psy = DefaultPsy;
-    distance = DefaultDistance;
+    state.phi = DefaultPhi;
+    state.psy = DefaultPsy;
+    state.distance = DefaultDistance;
 
-    camera = { 0.0, 0.0, 0.0 };
-    target = DefaultTarget;
-    worldUp = {0.0, 0.0, 1.0 };
+    state.camera = { 0.0, 0.0, 0.0 };
+    state.target = DefaultTarget;
+    state.worldUp = {0.0, 0.0, 1.0 };
 
-    startCamera = camera;
-    startTarget = target;
+    state.startCamera = state.camera;
+    state.startTarget = state.target;
 
     updateCamera();
 }
 
+GLWidget3D::~GLWidget3D()
+{
+    if (timer) {
+        timer->stop();
+        timer->deleteLater();
+        timer = nullptr;
+    }
+}
+
+GLWidget3DState GLWidget3D::getState() const
+{
+    return state;
+}
+
+void GLWidget3D::setState(const GLWidget3DState &newState)
+{
+    state = newState;
+
+    updateCamera();
+    update();
+}
+
 void GLWidget3D::resetCamera()
 {
-    QVector3D defaultCamera = QVector3D(
+    QVector3D defaultCamera(
         DefaultTarget.x() + cos(DefaultPsy) * sin(DefaultPhi) * DefaultDistance,
         DefaultTarget.y() + cos(DefaultPsy) * cos(DefaultPhi) * DefaultDistance,
         DefaultTarget.z() + sin(DefaultPsy) * DefaultDistance
-    );
+        );
 
-    resetting = true;
+    state.resetting = true;
 
-    flyTo(defaultCamera,DefaultTarget);
+    flyTo(defaultCamera, DefaultTarget);
 }
 
 void GLWidget3D::updateCamera()
 {
-    if (cameraMode == 0) {
-        camera = QVector3D(
-            target.x() + cos(psy) * sin(phi) * distance,
-            target.y() + cos(psy) * cos(phi) * distance,
-            target.z() + sin(psy) * distance
-        );
+    if (state.cameraMode == 0) {
+        state.camera = QVector3D(
+            state.target.x() + cos(state.psy) * sin(state.phi) * state.distance,
+            state.target.y() + cos(state.psy) * cos(state.phi) * state.distance,
+            state.target.z() + sin(state.psy) * state.distance
+            );
     }
     else {
         QVector3D forward(
-            -cos(psy) * sin(phi),
-            cos(psy) * cos(phi),
-            sin(psy)
-        );
-        camera = scenex->getEye();
-        target = camera + forward * distance;
+            -cos(state.psy) * sin(state.phi),
+            cos(state.psy) * cos(state.phi),
+            sin(state.psy)
+            );
+
+        state.camera = scenex->getEye();
+        state.target = state.camera + forward * state.distance;
     }
 }
 
 void GLWidget3D::flyTo(QVector3D destCamera, QVector3D destTarget)
 {
-    if (cameraMode == 1) {
+    if (state.cameraMode == 1) {
         switchCameraMode();
         // In person based camera we use vertical angle in other way
-        psy = -psy;
-        flyDirection = 0;
+        state.psy = -state.psy;
+        state.flyDirection = 0;
     }
 
-    startCamera = camera;
-    startTarget = target;
+    state.startCamera = state.camera;
+    state.startTarget = state.target;
 
-    endCamera = destCamera;
-    endTarget = destTarget;
+    state.endCamera = destCamera;
+    state.endTarget = destTarget;
 
     QVector3D destDistance = destCamera - destTarget;
 
-    endDistance = destDistance.length();
-    endPsy = asin(destDistance.z() / destDistance.length());
-    endPhi = atan2(destDistance.x(), destDistance.y());
+    state.endDistance = destDistance.length();
+    state.endPsy = asin(destDistance.z() / destDistance.length());
+    state.endPhi = atan2(destDistance.x(), destDistance.y());
 
-    startPhi = phi;
-    startPsy = psy;
-    startDistance = distance;
+    state.startPhi = state.phi;
+    state.startPsy = state.psy;
+    state.startDistance = state.distance;
 
-    flyTime = 0.0;
-    flying = true;
+    state.flyTime = 0.0;
+    state.flying = true;
 }
 
 void GLWidget3D::connectWithSceneX(SceneX &originalSceneX)
@@ -96,22 +120,22 @@ void GLWidget3D::connectWithSceneX(SceneX &originalSceneX)
 
 void GLWidget3D::switchCameraMode()
 {
-    cameraMode = !cameraMode;
+    state.cameraMode = !state.cameraMode;
 }
 
 bool GLWidget3D::getCameraMode()
 {
-    return cameraMode;
+    return state.cameraMode;
 }
 
 QVector3D GLWidget3D::getLastCamera()
 {
-    return startCamera;
+    return state.startCamera;
 }
 
 QVector3D GLWidget3D::getLastTarget()
 {
-    return startTarget;
+    return state.startTarget;
 }
 
 void GLWidget3D::initializeGL()
@@ -126,41 +150,43 @@ void GLWidget3D::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glLoadIdentity();
+
     QMatrix4x4 view;
-    view.lookAt(camera, target, worldUp);
+    view.lookAt(state.camera, state.target, state.worldUp);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadMatrixf(view.constData());
 
-    if (flying) {
-        flyTime += FlyFrame;
-        double t = std::min(flyTime, FlyDuration);
+    if (state.flying) {
+        state.flyTime += FlyFrame;
+        double t = std::min(state.flyTime, FlyDuration);
 
         // smoothstep
         double s = t * t * (3 - 2 * t);
 
-        target = startTarget * (1 - s) + endTarget * s;
+        state.target = state.startTarget * (1 - s) + state.endTarget * s;
 
-        phi = startPhi + (endPhi - startPhi) * s;
-        psy = startPsy + (endPsy - startPsy) * s;
-        distance = startDistance + (endDistance - startDistance) * s;
+        state.phi = state.startPhi + (state.endPhi - state.startPhi) * s;
+        state.psy = state.startPsy + (state.endPsy - state.startPsy) * s;
+        state.distance = state.startDistance + (state.endDistance - state.startDistance) * s;
 
         if (t == FlyDuration) {
-            flying = false;
+            state.flying = false;
 
-            if (flyDirection == 1 && !resetting) {
+            if (state.flyDirection == 1 && !state.resetting) {
                 switchCameraMode();
-                psy = -psy;
-                flyDirection = 0;
-            } else
-                flyDirection = 1;
-            if (resetting)
-                resetting = false;
+                state.psy = -state.psy;
+                state.flyDirection = 0;
+            } else {
+                state.flyDirection = 1;
+            }
+
+            if (state.resetting)
+                state.resetting = false;
         }
     }
 
     updateCamera();
-
     scenex->display();
 }
 
@@ -197,30 +223,29 @@ void GLWidget3D::mouseMoveEvent(QMouseEvent *event)
     int dx = event->position().x() - mouse_x;
     int dy = event->position().y() - mouse_y;
 
-    if(mouse_button == 1) {
-        phi += dx * M_PI / 180.0 / 4.0; // horizontal angle
-        psy += dy * M_PI / 180.0 / 4.0; // vertical angle
+    if (mouse_button == 1) {
+        state.phi += dx * M_PI / 180.0 / 4.0; // horizontal angle
+        state.psy += dy * M_PI / 180.0 / 4.0; // vertical angle
 
-        phi = std::fmod(phi, 2.0*M_PI);
+        state.phi = std::fmod(state.phi, 2.0 * M_PI);
 
-        psy = std::min(psy, M_PI/2.0);
-        psy = std::max(psy, -M_PI/2.0);
+        state.psy = std::min(state.psy, M_PI/2.0);
+        state.psy = std::max(state.psy, -M_PI/2.0);
 
         updateCamera();
     }
 
-    if(mouse_button == 2) {
-        double panSpeed = distance / PanFactor;
+    if (mouse_button == 2) {
+        double panSpeed = state.distance / PanFactor;
 
         // Construct camera basis (forward/right/up vectors) from view direction
-        QVector3D forward = (target - camera).normalized();
-        QVector3D right = QVector3D::crossProduct(forward, worldUp).normalized();
-        QVector3D up    = QVector3D::crossProduct(right, forward).normalized();
+        QVector3D forward = (state.target - state.camera).normalized();
+        QVector3D right = QVector3D::crossProduct(forward, state.worldUp).normalized();
+        QVector3D up = QVector3D::crossProduct(right, forward).normalized();
 
         QVector3D delta = (-right*dx + up*dy) * panSpeed;
 
-        target += QVector3D(delta.x(), delta.y(), delta.z());
-
+        state.target += delta;
         updateCamera();
     }
 
@@ -250,12 +275,10 @@ void GLWidget3D::mouseReleaseEvent(QMouseEvent *event)
 
 void GLWidget3D::wheelEvent(QWheelEvent *event)
 {
-    // Qt reports wheel delta in units of 1/8 of a degree
-    // A typical mouse wheel step is 15 degrees → 15 * 8 = 120 units
     int numDegrees = event->angleDelta().y() / 8;
 
-    distance += numDegrees / ZoomFactor;
-    distance = std::max(distance, 0.005);
+    state.distance += numDegrees / ZoomFactor;
+    state.distance = std::max(state.distance, 0.005);
 
     updateCamera();
 
