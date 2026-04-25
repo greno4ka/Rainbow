@@ -126,11 +126,11 @@ void GLWidget3D::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glLoadIdentity();
-    gluLookAt(
-        camera.x(), camera.y(), camera.z(),
-        target.x(), target.y(), target.z(),
-        worldUp.x(), worldUp.y(), worldUp.z()
-    );
+    QMatrix4x4 view;
+    view.lookAt(camera, target, worldUp);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadMatrixf(view.constData());
 
     if (flying) {
         flyTime += FlyFrame;
@@ -172,7 +172,11 @@ void GLWidget3D::resizeGL(int w, int h)
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(60.0, static_cast<double>(width)/height, 0.01, 11000);
+    QMatrix4x4 projection;
+    projection.perspective(60.0f, float(width)/float(height), 0.01f, 11000.0f);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixf(projection.constData());
     glMatrixMode(GL_MODELVIEW);
 }
 

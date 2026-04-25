@@ -4,11 +4,23 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets opengl openglwidgets
-win32: QT += openglwidgets concurrent
+QT       += core gui widgets opengl openglwidgets concurrent
 
-LIBS +=  -lGLU -lqwt-qt6 -lJKQTMathText6 -lQt6Concurrent
-win32: LIBS += -lopengl32
+unix {
+    INCLUDEPATH += \
+        /usr/include/qt6/qwt \
+        /usr/include/jkqtmathtext
+
+    LIBS += -lqwt-qt6 -lJKQTMathText6 -lQt6Concurrent
+}
+
+win32 {
+    INCLUDEPATH += \
+        $$PWD/qwt \
+        $$PWD/jkqtmathtext
+
+    LIBS += -L$$PWD -lqwt -ljkqtmathtextlib -lopengl32
+}
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 
@@ -73,8 +85,3 @@ TRANSLATIONS = rainbow_en.ts \
 RESOURCES += \
     styles/styles.qrc \
     images/images.qrc
-
-INCLUDEPATH += \
-    $$PWD \
-    /usr/include/qt6/qwt \
-    /usr/include/jkqtmathtext \

@@ -7,8 +7,6 @@
 #include <QtOpenGL>
 #include <QTimer>
 
-#include <GL/glu.h> // for gluPerspective
-
 #include "scenes/scenex.h"
 
 class GLWidget3D : public QOpenGLWidget
